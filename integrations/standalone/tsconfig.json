@@ -1,0 +1,12 @@
+{
+  "extends": "../../config/tsconfig.integration.json",
+  "compilerOptions": {
+    "types": ["vite/client", "node"],
+    "jsx": "preserve",
+    "rootDir": ".",
+    "rootDirs": ["src"],
+    "outDir": "lib"
+  },
+  "include": ["src"],
+  "references": [{ "path": "../../packages/editor/tsconfig.json" }]
+}

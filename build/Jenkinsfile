@@ -1,0 +1,40 @@
+pipeline {
+  agent any
+
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
+  }
+
+  triggers {
+    cron '@midnight'
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        script {
+          catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+            docker.build('node', '-f build/Dockerfile .').inside {
+              sh 'npm run ci'
+            }
+          }
+          withChecks('ESLint') {
+            recordIssues enabledForFailure: true, publishAllIssues: true, aggregatingResults: true, tools: [esLint(pattern: 'packages/**/eslint.xml,integrations/**/eslint.xml')], qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]]
+          }
+          withChecks('Test') {
+            junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: 'packages/**/report.xml'
+          }
+        }
+      }
+    }
+  }
+  post {
+    always {
+      discoverGitReferenceBuild defaultBranch: 'master'
+    }
+  }
+}
+
+def isReleaseOrMasterBranch() {
+  return env.BRANCH_NAME == 'master' || env.BRANCH_NAME.startsWith('release/') 
+}

@@ -1,0 +1,20 @@
+{
+  // Use IntelliSense to learn about possible Node.js debug attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Standalone (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000?server=localhost:8081&app=designer&pmv=workflow-demos&file=/processes/Humantask/ProcurementRequestParallel.p.json",
+      "presentation": {
+        "group": "4. Standalone",
+        "order": 1
+      },
+      "preLaunchTask": "Start Standalone",
+      "postDebugTask": "Terminate All Tasks"
+    }
+  ]
+}
