@@ -1,0 +1,12 @@
+{
+  "extends": "../../config/tsconfig.package.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib",
+    "paths": {
+      "test-utils": ["./src/test-utils/test-utils"]
+    },
+    "types": ["vitest/globals"]
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,13 @@
+.palette-item {
+  background: var(--background);
+  border: var(--basic-border);
+  border-radius: var(--border-radius);
+  padding: var(--size-2);
+  font-size: 12px;
+  flex: 1 0 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50px;
+  cursor: grab;
+}

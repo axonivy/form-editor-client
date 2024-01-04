@@ -1,0 +1,9 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.input:has(input[required]) span:after {
+  content: ' *';
+}

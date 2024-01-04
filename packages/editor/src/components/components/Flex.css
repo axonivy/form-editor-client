@@ -1,0 +1,23 @@
+.flex {
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-1);
+  flex-wrap: wrap;
+}
+.flex-column {
+  flex: 1 1 calc(50% - var(--size-1));
+}
+.flex-column:empty:before {
+  margin: 5px;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  opacity: 0.3;
+  border-radius: var(--border-radius);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  content: 'Column';
+}

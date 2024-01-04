@@ -1,0 +1,8 @@
+.properties {
+  display: flex;
+  flex-direction: column;
+}
+.properties-title {
+  background-color: var(--N200);
+  padding: var(--size-2);
+}
