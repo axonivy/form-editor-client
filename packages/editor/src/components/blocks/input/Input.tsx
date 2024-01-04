@@ -1,4 +1,4 @@
-import type { ComponentConfig } from './component';
+import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './Input.css';
 
 type InputProps = {
@@ -9,7 +9,7 @@ type InputProps = {
 };
 
 export const defaultInputProps = {
-  label: 'label',
+  label: 'My label',
   value: 'data.value',
   required: false,
   type: 'text'
@@ -37,7 +37,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   }
 };
 
-const Input = ({ label, required, value }: InputProps) => (
+const Input = ({ label, required, value }: UiComponentProps<InputProps>) => (
   <label className='input'>
     <span>{label}</span>
     <input onChange={() => {}} value={value} required={required} />

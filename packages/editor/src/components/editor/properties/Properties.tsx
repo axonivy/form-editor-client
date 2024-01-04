@@ -1,5 +1,5 @@
-import type { Config } from '../../components/component';
-import { useData } from '../../data/useData';
+import type { Config } from '../../../types/config';
+import { useData } from '../../../data/useData';
 import './Properties.css';
 import { PropertyItem } from './PropertyItem';
 

@@ -1,6 +1,6 @@
-import { useAppContext } from '../../data/useData';
-import type { ContentData } from '../../data/data';
-import type { ComponentConfig } from '../../components/component';
+import { useAppContext } from '../../../data/useData';
+import type { ContentData } from '../../../data/data';
+import type { ComponentConfig } from '../../../types/config';
 import './Draggable.css';
 import { useDraggable } from '@dnd-kit/core';
 

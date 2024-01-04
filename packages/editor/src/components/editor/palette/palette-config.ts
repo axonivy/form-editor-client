@@ -1,3 +1,3 @@
-import type { ComponentConfig } from '../../components/component';
+import type { ComponentConfig } from '../../../types/config';
 
 export type PaletteConfig = Omit<ComponentConfig, 'render' | 'defaultProps' | 'fields'>;

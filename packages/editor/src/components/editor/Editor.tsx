@@ -13,11 +13,12 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core';
-import { type ComponentConfig, componentByName, componentsGroupByCategroy, config } from '../components/component';
+import type { ComponentConfig } from '../../types/config';
 import { PaletteItemOverlay } from './palette/PaletteItem';
-import { AppProvider } from '../data/useData';
-import type { ContentData, UiEditorData } from '../data/data';
+import { AppProvider } from '../../data/useData';
+import type { ContentData, UiEditorData } from '../../data/data';
 import { v4 as uuid } from 'uuid';
+import { componentByName, componentsGroupByCategroy, config } from '../components';
 
 const targetIndex = (data: ContentData[], target: UniqueIdentifier) => {
   const id = `${target}`.replace('DropZone-', '');

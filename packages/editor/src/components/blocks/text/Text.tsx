@@ -1,4 +1,4 @@
-import type { ComponentConfig } from './component';
+import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './Text.css';
 
 type TextProps = {
@@ -21,4 +21,4 @@ export const TextComponent: ComponentConfig<TextProps> = {
   }
 };
 
-const Text = ({ textContent }: TextProps) => <p className='text'>{textContent}</p>;
+const Text = ({ textContent }: UiComponentProps<TextProps>) => <p className='text'>{textContent}</p>;

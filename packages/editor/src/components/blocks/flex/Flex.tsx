@@ -1,5 +1,5 @@
-import { DropZone } from '../editor/canvas/DropZone';
-import type { ComponentConfig, UiComponentProps } from './component';
+import { DropZone } from '../../editor/canvas/DropZone';
+import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './Flex.css';
 
 type FlexProps = {
