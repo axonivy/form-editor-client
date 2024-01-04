@@ -1,10 +1,15 @@
-import { PaletteItem } from './PaletteItem';
 import type { PaletteConfig } from './palette-config';
 import './Palette.css';
 import { IvyIcons } from '@axonivy/editor-icons';
+import { PaletteDropdown } from './PaletteDropdown';
 
 type PaletteProps = {
   items: Record<string, PaletteConfig[]>;
+};
+
+export type PaletteDetails = {
+  name: string;
+  items: PaletteConfig[];
 };
 
 export const Palette = ({ items }: PaletteProps) => {
@@ -17,9 +22,7 @@ export const Palette = ({ items }: PaletteProps) => {
             {category}
           </span>
           <div className='palette-category-items'>
-            {groupItems.map(item => (
-              <PaletteItem key={item.name} item={item} />
-            ))}
+            <PaletteDropdown name={category} items={groupItems} />
           </div>
         </div>
       ))}

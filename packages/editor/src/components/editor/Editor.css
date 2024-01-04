@@ -1,13 +1,17 @@
-.form-editor-root {
+.editor-area {
   display: grid;
   width: 100%;
-  grid-template-areas: 'palette canvas properties';
-  grid-auto-columns: minmax(150px, 250px) minmax(250px, 100%) minmax(150px, 250px);
+  grid-template-areas: 'canvas properties';
+  grid-auto-columns: minmax(250px, 100%) minmax(150px, 250px);
 }
 .palette-sidebar {
   grid-area: palette;
   height: 100vh;
   border-right: var(--basic-border);
+}
+.palette-header {
+  grid-area: palette;
+  width: 100vw;
 }
 .canvas-block {
   grid-area: canvas;

@@ -1,9 +1,9 @@
 .palette {
   display: flex;
-  flex-direction: column;
-  /* user-select: none; */
+  flex-direction: row;
+  border-bottom: 1px solid black;
+  justify-content: center;
 }
-
 .palette-category {
   display: flex;
   flex-direction: column;

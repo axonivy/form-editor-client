@@ -29,14 +29,16 @@ export const Editor = () => {
     <AppProvider value={{ data, setData, selectedElement, setSelectedElement }}>
       <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors} collisionDetection={pointerWithin}>
         <div className='form-editor-root'>
-          <div className='palette-sidebar'>
+          <div className='palette-header'>
             <Palette items={componentsGroupByCategroy()} />
           </div>
-          <div className='canvas-block'>
-            <Canvas config={config} />
-          </div>
-          <div className='properties-sidebar'>
-            <Properties config={config} />
+          <div className='editor-area'>
+            <div className='canvas-block'>
+              <Canvas config={config} />
+            </div>
+            <div className='properties-sidebar'>
+              <Properties config={config} />
+            </div>
           </div>
         </div>
         <DragOverlay dropAnimation={null}>
