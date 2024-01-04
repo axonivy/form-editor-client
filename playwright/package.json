@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "@axonivy/form-editor-playwright",
+  "version": "11.3.0-next",
+  "description": "Playwright tests for the Axon Ivy form editor",
+  "author": "Axon Ivy AG",
+  "homepage": "https://developer.axonivy.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axonivy/form-editor-client"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.40.1"
+  },
+  "type": "module",
+  "scripts": {
+    "type": "tsc --noEmit",
+    "build": "tsc --build",
+    "lint": "eslint --ext .ts,.tsx ./tests",
+    "lint:fix": "eslint --fix --ext .ts,.tsx ./tests",
+    "start:standalone": "npm --prefix .. run dev ",
+    "webtest": "playwright test -c ./tests/standalone"
+  }
+}

@@ -21,6 +21,7 @@
     "dev": "npm --prefix integrations/standalone run dev",
     "test": "npm --prefix packages/editor run test",
     "test:ci": "lerna run test:ci",
+    "webtest": "lerna run webtest --",
     "publish:next": "lerna publish --exact --canary --preid next --tag-version-prefix beta --pre-dist-tag next --no-git-tag-version --no-push --ignore-scripts --yes"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
   },
   "workspaces": [
     "packages/*",
-    "integrations/*"
+    "integrations/*",
+    "playwright"
   ]
 }

@@ -75,7 +75,7 @@ export const Editor = () => {
   return (
     <AppProvider value={{ data, setData, setSelectedElement, selectedElement }}>
       <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
-        <div className='editor-root'>
+        <div className='form-editor-root'>
           <div className='palette-sidebar'>
             <Palette items={componentsGroupByCategroy()} />
           </div>
