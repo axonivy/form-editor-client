@@ -1,4 +1,4 @@
-.editor-root {
+.form-editor-root {
   display: grid;
   width: 100%;
   grid-template-areas: 'palette canvas properties';
