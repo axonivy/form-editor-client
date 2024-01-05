@@ -1,8 +1,10 @@
+import type { PrimitiveValue } from '../../../../types/config';
+
 type TextareaFieldProps = {
-  value: string;
+  value?: PrimitiveValue;
   onChange: (value: string) => void;
 };
 
 export const TextareaField = ({ value, onChange }: TextareaFieldProps) => (
-  <textarea value={value} onChange={e => onChange(e.target.value)} />
+  <textarea value={(value ?? '') as string} onChange={e => onChange(e.target.value)} />
 );

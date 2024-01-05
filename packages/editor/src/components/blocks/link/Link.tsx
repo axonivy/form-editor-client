@@ -1,4 +1,4 @@
-import type { ComponentConfig } from './component';
+import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 
 type LinkProps = {
   link: string;
@@ -23,4 +23,4 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   }
 };
 
-const Link = ({ link, ...props }: LinkProps) => <a {...props}>{link}</a>;
+const Link = ({ link, ...props }: UiComponentProps<LinkProps>) => <a {...props}>{link}</a>;

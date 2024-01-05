@@ -1,7 +1,7 @@
 import './Canvas.css';
-import type { Config } from '../../components/component';
+import type { Config } from '../../../types/config';
 import { Draggable } from './Draggable';
-import { useAppContext } from '../../data/useData';
+import { useAppContext } from '../../../data/useData';
 import { DropZone } from './DropZone';
 import { Fragment } from 'react';
 
