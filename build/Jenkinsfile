@@ -18,6 +18,8 @@ pipeline {
               sh 'npm run ci'
             }
           }
+          archiveArtifacts artifacts: '**/integrations/standalone/build/**', allowEmptyArchive: true
+          currentBuild.description = "<a href=${BUILD_URL}artifact/integrations/standalone/build/index.html>Form Editor UI</a>"
           withChecks('ESLint') {
             recordIssues enabledForFailure: true, publishAllIssues: true, aggregatingResults: true, tools: [esLint(pattern: 'packages/**/eslint.xml,integrations/**/eslint.xml')], qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]]
           }
