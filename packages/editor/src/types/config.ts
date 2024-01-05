@@ -6,6 +6,13 @@ export type DefaultComponentProps = { [key: string]: PrimitiveValue };
 
 type UiComponent<Props extends DefaultComponentProps = DefaultComponentProps> = (props: UiComponentProps<Props>) => JSX.Element;
 
+export type FieldOptionValues<TOptions extends Readonly<FieldOption[]>> = TOptions[number]['value'];
+
+export type FieldOption = {
+  label: string;
+  value: PrimitiveValue;
+};
+
 export type BaseField = {
   label?: string;
 };
@@ -14,10 +21,7 @@ export type TextField = BaseField & {
 };
 export type SelectField = BaseField & {
   type: 'select' | 'radio';
-  options: {
-    label: string;
-    value: string | number | boolean;
-  }[];
+  options: readonly FieldOption[];
 };
 
 export type Field = TextField | SelectField;
@@ -28,7 +32,7 @@ type Fields<ComponentProps extends DefaultComponentProps = DefaultComponentProps
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: string;
-  category: 'Basic' | 'Layout';
+  category: 'Basic' | 'Layout' | 'Action';
   icon: string;
   description: string;
   render: UiComponent<ComponentProps>;

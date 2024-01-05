@@ -5,6 +5,6 @@ test.describe('palette', () => {
   test('has sections', async ({ page }) => {
     const processEditor = await FormEditor.open(page);
     const palette = processEditor.palette();
-    await palette.expectCategoryCount(2);
+    await palette.expectCategoryCount(3);
   });
 });
