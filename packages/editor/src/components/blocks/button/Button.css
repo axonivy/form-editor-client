@@ -1,0 +1,34 @@
+.block-button {
+  --button-bg: var(--N600);
+  --button-color: var(--body);
+  background-color: var(--button-bg);
+  color: var(--button-color);
+  display: flex;
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: 0 none;
+  border-radius: var(--border-radius);
+}
+.block-button:hover {
+  background-color: color-mix(in srgb, var(--button-bg), transparent 10%);
+}
+.block-button span {
+  padding: var(--size-2) var(--size-4);
+}
+.block-button[data-variant='primary'] {
+  --button-bg: var(--A300);
+  --button-color: var(--background);
+}
+.block-button[data-variant='success'] {
+  --button-bg: var(--success-color);
+  --button-color: var(--body);
+}
+.block-button[data-variant='danger'] {
+  --button-bg: var(--error-color);
+  --button-color: var(--background);
+}
+.block-button[data-variant='warning'] {
+  --button-bg: var(--warning-color);
+  --button-color: var(--body);
+}

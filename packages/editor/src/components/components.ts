@@ -1,5 +1,6 @@
 import type { Config } from '../types/config';
 import { groupBy } from '../utils/array';
+import { ButtonComponent } from './blocks/button/Button';
 import { FlexComponent } from './blocks/flex/Flex';
 import { InputComponent } from './blocks/input/Input';
 import { LinkComponent } from './blocks/link/Link';
@@ -10,7 +11,8 @@ export const config: Config = {
     Input: InputComponent,
     Text: TextComponent,
     Link: LinkComponent,
-    Flex: FlexComponent
+    Flex: FlexComponent,
+    Button: ButtonComponent
   }
 };
 

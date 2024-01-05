@@ -24,7 +24,7 @@ export const FlexComponent: ComponentConfig<FlexProps> = {
 
 const Flex = ({ itemCount, id }: UiComponentProps<FlexProps>) => {
   return (
-    <div className='flex'>
+    <div className='block-flex'>
       {Array.from(Array(itemCount).keys()).map(column => (
         <div className='flex-column' key={column}>
           <DropZone id={`${id}-column${column}`} visible={true} />

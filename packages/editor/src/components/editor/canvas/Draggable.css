@@ -1,4 +1,11 @@
+.draggable {
+  padding: var(--size-1);
+}
+.draggable:hover {
+  background-color: var(--A50);
+}
 .draggable:where(.selected, .dragging) {
   outline: 2px #88b0da solid;
   background-color: var(--background);
+  z-index: 2;
 }

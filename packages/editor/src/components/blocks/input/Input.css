@@ -1,9 +1,24 @@
-.input {
+.block-input {
   display: flex;
   flex-direction: column;
   gap: var(--size-1);
 }
 
-.input:has(input[required]) span:after {
+.block-input input {
+  flex: 1 0 auto;
+  padding: var(--size-2);
+  color: var(--N900);
+  border: var(--basic-border);
+  outline: 0 none;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.block-input[data-label-pos='left'] {
+  flex-direction: row;
+  align-items: center;
+}
+
+.block-input:has(input[required]) span:after {
   content: ' *';
 }

@@ -21,4 +21,4 @@ export const TextComponent: ComponentConfig<TextProps> = {
   }
 };
 
-const Text = ({ textContent }: UiComponentProps<TextProps>) => <p className='text'>{textContent}</p>;
+const Text = ({ textContent }: UiComponentProps<TextProps>) => <p className='block-text'>{textContent}</p>;
