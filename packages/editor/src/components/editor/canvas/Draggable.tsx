@@ -10,8 +10,7 @@ type DraggableProps = {
 };
 
 export const Draggable = ({ config, data }: DraggableProps) => {
-  const { isDragging, attributes, listeners, setNodeRef, transform } = useDraggable({ id: data.id });
-  const style = transform ? { transform: `translate(${transform.x}px, ${transform.y}px)` } : undefined;
+  const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ id: data.id });
   const appContext = useAppContext();
   const isSelected = appContext.selectedElement === data.id;
   return (
@@ -19,11 +18,14 @@ export const Draggable = ({ config, data }: DraggableProps) => {
       onClick={() => appContext.setSelectedElement(data.id)}
       className={`draggable${isSelected ? ' selected' : ''}${isDragging ? ' dragging' : ''}`}
       ref={setNodeRef}
-      style={style}
       {...listeners}
       {...attributes}
     >
       {config.render({ id: data.id, ...data.props })}
     </div>
   );
+};
+
+export const DraggableOverlay = ({ config, data }: DraggableProps) => {
+  return <div className='draggable dragging'>{config.render({ id: data.id, ...data.props })}</div>;
 };
