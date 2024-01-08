@@ -29,5 +29,5 @@ export const useData = () => {
     newData.content[index] = element;
     setData(newData);
   };
-  return { element, setElement };
+  return { data, element, setElement };
 };

@@ -6,3 +6,9 @@ export const groupBy = <T>(arr: T[], fn: (item: T) => string) => {
     return { ...prev, [groupKey]: group };
   }, {});
 };
+
+export const move = <TArr extends object>(arr: TArr[], fromIndex: number, toIndex: number) => {
+  const element = arr[fromIndex];
+  arr.splice(fromIndex, 1);
+  arr.splice(toIndex, 0, element);
+};

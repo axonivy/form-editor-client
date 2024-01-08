@@ -3,69 +3,21 @@ import { Palette } from './palette/Palette';
 import { Properties } from './properties/Properties';
 import './Editor.css';
 import { useState } from 'react';
-import {
-  DndContext,
-  type DragEndEvent,
-  DragOverlay,
-  type DragStartEvent,
-  MouseSensor,
-  type UniqueIdentifier,
-  useSensor,
-  useSensors
-} from '@dnd-kit/core';
-import type { ComponentConfig } from '../../types/config';
-import { PaletteItemOverlay } from './palette/PaletteItem';
+import { DndContext, DragOverlay, MouseSensor, useSensor, useSensors, pointerWithin } from '@dnd-kit/core';
+import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 import { AppProvider } from '../../data/useData';
-import type { ContentData, UiEditorData } from '../../data/data';
-import { v4 as uuid } from 'uuid';
-import { componentByName, componentsGroupByCategroy, config } from '../components';
-
-const targetIndex = (data: ContentData[], target: UniqueIdentifier) => {
-  const id = `${target}`.replace('DropZone-', '');
-  const targetIndex = data.findIndex(obj => obj.id === id);
-  if (targetIndex === -1) {
-    return data.length - 1;
-  }
-  return targetIndex;
-};
-
-const arraymove = <TArr extends object>(arr: TArr[], fromIndex: number, toIndex: number) => {
-  const element = arr[fromIndex];
-  arr.splice(fromIndex, 1);
-  arr.splice(toIndex, 0, element);
-};
-
-const addNewComponent = (component: ComponentConfig, data: ContentData[], target: UniqueIdentifier) => {
-  data.push({ id: `${component.name}-${uuid()}`, type: component.name, props: structuredClone(component.defaultProps) });
-  arraymove(data, data.length - 1, targetIndex(data, target));
-};
-
-const moveComponent = (id: string, data: ContentData[], target: UniqueIdentifier) => {
-  const element = data.find(obj => obj.id === id);
-  if (element) {
-    const fromIndex = data.indexOf(element);
-    arraymove(data, fromIndex, targetIndex(data, target));
-  }
-};
+import { modifyData, type UiEditorData } from '../../data/data';
+import { componentsGroupByCategroy, config } from '../components';
+import { ItemDragOverlay } from './ItemDragOverlay';
 
 export const Editor = () => {
-  const [data, setData] = useState<UiEditorData>({
-    root: {},
-    content: []
-  });
+  const [data, setData] = useState<UiEditorData>({ root: {}, content: [] });
   const [selectedElement, setSelectedElement] = useState('');
   const [activeId, setActiveId] = useState<string | undefined>();
   const handleDragEnd = (event: DragEndEvent) => {
     const target = event.over?.id;
     if (target && activeId) {
-      const newData = structuredClone(data);
-      const component = componentByName(activeId);
-      if (component) {
-        addNewComponent(component, newData.content, target);
-      } else {
-        moveComponent(activeId, newData.content, target);
-      }
-      setData(newData);
+      setData(oldData => modifyData(oldData, activeId, target));
     }
     setActiveId(undefined);
   };
@@ -74,8 +26,8 @@ export const Editor = () => {
   const sensors = useSensors(mouseSensor);
 
   return (
-    <AppProvider value={{ data, setData, setSelectedElement, selectedElement }}>
-      <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
+    <AppProvider value={{ data, setData, selectedElement, setSelectedElement }}>
+      <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors} collisionDetection={pointerWithin}>
         <div className='form-editor-root'>
           <div className='palette-sidebar'>
             <Palette items={componentsGroupByCategroy()} />
@@ -87,7 +39,9 @@ export const Editor = () => {
             <Properties config={config} />
           </div>
         </div>
-        <DragOverlay dropAnimation={null}>{activeId ? <PaletteItemOverlay item={componentByName(activeId)} /> : null}</DragOverlay>
+        <DragOverlay dropAnimation={null}>
+          <ItemDragOverlay activeId={activeId} />
+        </DragOverlay>
       </DndContext>
     </AppProvider>
   );

@@ -9,3 +9,6 @@
   background-color: var(--background);
   z-index: 2;
 }
+.draggable.dragging {
+  opacity: 0.5;
+}
