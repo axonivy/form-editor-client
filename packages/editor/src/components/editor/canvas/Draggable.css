@@ -5,7 +5,7 @@
   background-color: var(--A50);
 }
 .draggable:where(.selected, .dragging) {
-  outline: 2px #88b0da solid;
+  outline: var(--activ-border);
   background-color: var(--background);
   z-index: 2;
 }
