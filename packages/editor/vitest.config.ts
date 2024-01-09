@@ -6,8 +6,6 @@ export default defineConfig({
     dir: 'src',
     include: ['**/*.test.ts?(x)'],
     alias: {
-      '@axonivy/inscription-protocol': resolve(__dirname, '../../packages/protocol/src'),
-      '@axonivy/editor-icons': resolve(__dirname, '../../packages/icons/src-gen'),
       'test-utils': resolve(__dirname, 'src/test-utils/test-utils.tsx')
     },
     globals: true,
