@@ -1,6 +1,5 @@
 import type { PaletteConfig } from './palette-config';
 import './Palette.css';
-import { IvyIcons } from '@axonivy/editor-icons';
 import { PaletteDropdown } from './PaletteDropdown';
 
 type PaletteProps = {
@@ -17,10 +16,6 @@ export const Palette = ({ items }: PaletteProps) => {
     <div className='palette'>
       {Object.entries(items).map(([category, groupItems]) => (
         <div key={category} className='palette-category'>
-          <span className='palette-category-title'>
-            <i className={`ivy ivy-${IvyIcons.Home}`} />
-            {category}
-          </span>
           <div className='palette-category-items'>
             <PaletteDropdown name={category} items={groupItems} />
           </div>

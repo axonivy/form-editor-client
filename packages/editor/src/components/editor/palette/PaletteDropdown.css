@@ -6,11 +6,8 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  position: relative;
 }
-.palette-dropdown:hover > div {
-  /*visibility: visible;*/
-}
+
 .dropdown-items {
   gap: 5px;
   align-content: space-between;
@@ -21,10 +18,23 @@
   height: fit-content;
   visibility: collapse;
   padding: 5px;
+  position: absolute;
   background-color: white;
   border: var(--basic-border);
   position: absolute;
-  top: 100%;
   left: 50%;
-  transform: translate(-50%, 0);
+  translate: -50%;
+  top: 100%;
+}
+
+.ignore-pointer-events {
+  pointer-events: none;
+}
+
+.show {
+  visibility: visible;
+}
+
+.rotate90 {
+  transform: rotate(90deg);
 }
