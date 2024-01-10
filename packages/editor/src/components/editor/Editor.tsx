@@ -1,5 +1,5 @@
 import { Canvas } from './canvas/Canvas';
-import { Palette } from './palette/Palette';
+import { Palette } from './palette/middle-buttons/Palette';
 import { Properties } from './properties/Properties';
 import './Editor.css';
 import { useState } from 'react';
@@ -9,6 +9,8 @@ import { AppProvider } from '../../data/useData';
 import { modifyData, type UiEditorData } from '../../data/data';
 import { componentsGroupByCategroy, config } from '../components';
 import { ItemDragOverlay } from './ItemDragOverlay';
+import { IvyIcons } from '@axonivy/editor-icons';
+import { RightSection } from './palette/right-buttons/RightSection';
 
 export const Editor = () => {
   const [data, setData] = useState<UiEditorData>({ root: {}, content: [] });
@@ -30,14 +32,21 @@ export const Editor = () => {
       <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors} collisionDetection={pointerWithin}>
         <div className='form-editor-root'>
           <div className='palette-header'>
-            <Palette items={componentsGroupByCategroy()} />
+            <div className='palette-header-wrapper'>
+              <div className='undo'>
+                <i className={`ivy ivy-${IvyIcons.Undo}`} />
+                <i className={`ivy ivy-${IvyIcons.Redo}`} />
+              </div>
+              <Palette items={componentsGroupByCategroy()} />
+              <RightSection />
+            </div>
+            <div className='properties-sidebar'>
+              <Properties config={config} />
+            </div>
           </div>
           <div className='editor-area'>
             <div className='canvas-block'>
               <Canvas config={config} />
-            </div>
-            <div className='properties-sidebar'>
-              <Properties config={config} />
             </div>
           </div>
         </div>

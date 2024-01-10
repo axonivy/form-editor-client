@@ -10,8 +10,19 @@
   border-right: var(--basic-border);
 }
 .palette-header {
-  grid-area: palette;
-  width: 100vw;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  background-color: var(--background);
+  box-shadow: var(--editor-shadow);
+  position: relative;
+}
+.palette-header-wrapper {
+  margin: 6px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 .canvas-block {
   grid-area: canvas;
@@ -20,6 +31,15 @@
 }
 .properties-sidebar {
   grid-area: properties;
+  right: 0;
+  top: 0;
+  background-color: white;
+  width: 20vw;
   height: 100vh;
   border-left: var(--basic-border);
+  visibility: collapse;
+}
+
+.show {
+  visibility: visible;
 }
