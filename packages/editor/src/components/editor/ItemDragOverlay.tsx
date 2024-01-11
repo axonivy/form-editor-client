@@ -1,7 +1,7 @@
 import { useData } from '../../data/useData';
 import { componentByName } from '../components';
 import { DraggableOverlay } from './canvas/Draggable';
-import { PaletteItemOverlay } from './palette/middle-buttons/PaletteItem';
+import { PaletteItemOverlay } from './toolbar/center/PaletteItem';
 
 export const ItemDragOverlay = ({ activeId }: { activeId?: string }) => {
   const { data } = useData();
