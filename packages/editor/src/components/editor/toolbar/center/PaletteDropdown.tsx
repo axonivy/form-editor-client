@@ -11,7 +11,7 @@ const changeVisibility = (id: string) => {
 };
 
 window.onclick = event => {
-  if (event.target instanceof Element && !event.target.matches('.palette-dropdown')) {
+  if (event.target instanceof Element && !event.target.matches('.dropdown-button') && !event.target.matches('.dropdown-items')) {
     hideAll();
   }
 };
@@ -29,12 +29,15 @@ const hideAll = (toIgnore: string[] = []) => {
 export const PaletteDropdown = (category: PaletteDetails) => {
   const dropdownId: string = 'dropdown-' + category.name;
   return (
-    <div className='palette-dropdown' onClick={() => changeVisibility(dropdownId)}>
-      <p className='dropdown-title ignore-pointer-events'>
-        {category.name}
-        <i className={`ivy ivy-${IvyIcons.Home}`} />
-        <i className={`ivy ivy-${IvyIcons.Chevron}` + ' rotate90'} />
-      </p>
+    <div className='category-dropdown'>
+      <button className='dropdown-button' onClick={() => changeVisibility(dropdownId)}>
+        <p className='dropdown-title ignore-pointer-events'>{category.name}</p>
+        <div className='dropdown-icons ignore-pointer-events'>
+          <i className={`ivy ivy-${IvyIcons.Home}`} />
+          <i className={`ivy ivy-${IvyIcons.Chevron}` + ' rotate90'} />
+        </div>
+      </button>
+
       <div className='dropdown-items' id={dropdownId}>
         {category.items.map(item => (
           <PaletteItem key={item.name} item={item} />

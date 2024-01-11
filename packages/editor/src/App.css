@@ -34,6 +34,7 @@
   --selected-row-text-color: var(--background);
 
   --toolbar-hover-color: #f5f5f5;
+  --toolbar-title-color: #8d8d8d;
 
   /* ------borders------*/
   --basic-border: 1px solid var(--N200);

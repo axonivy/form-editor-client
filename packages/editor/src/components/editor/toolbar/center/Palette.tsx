@@ -15,11 +15,7 @@ export const Palette = ({ items }: PaletteProps) => {
   return (
     <div className='palette'>
       {Object.entries(items).map(([category, groupItems]) => (
-        <div key={category} className='palette-category'>
-          <div className='palette-category-items'>
-            <PaletteDropdown name={category} items={groupItems} />
-          </div>
-        </div>
+        <PaletteDropdown key={category} name={category} items={groupItems} />
       ))}
     </div>
   );

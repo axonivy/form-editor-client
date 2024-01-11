@@ -1,19 +1,16 @@
 import { componentsGroupByCategroy } from '../../components';
-import { Palette } from "./center/Palette"
-import { RightSection } from "./right/RightSection"
+import { Palette } from './center/Palette';
+import { RightSection } from './right/RightSection';
 import { IvyIcons } from '@axonivy/editor-icons';
+import './Toolbar.css';
+import { LeftSection } from './left/LeftSection';
 
 export const Toolbar = () => {
-
-
-    return (
-        <div className='palette-header-wrapper'>
-        <div className='undo'>
-          <i className={`ivy ivy-${IvyIcons.Undo}`} />
-          <i className={`ivy ivy-${IvyIcons.Redo}`} />
-        </div>
-        <Palette items={componentsGroupByCategroy()} />
-        <RightSection />
-      </div>
-    )
-}
+  return (
+    <div className='toolbar'>
+      <LeftSection />
+      <Palette items={componentsGroupByCategroy()} />
+      <RightSection />
+    </div>
+  );
+};

@@ -1,0 +1,40 @@
+.toolbar {
+  margin: 6px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.toolbar * {
+  background-color: var(--background);
+}
+
+.toolbar button {
+  border: 0;
+  height: 2.25rem;
+}
+
+.toolbar button:hover {
+  background-color: var(--toolbar-hover-color);
+}
+
+.toolbar i {
+  font-size: 18px;
+}
+
+.toolbar p {
+  margin: 0;
+  padding: 0;
+}
+
+.ignore-pointer-events {
+  pointer-events: none;
+}
+
+.show {
+  visibility: visible;
+}
+
+.rotate90 {
+  transform: rotate(90deg);
+}

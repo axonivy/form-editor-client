@@ -18,12 +18,6 @@
   box-shadow: var(--editor-shadow);
   position: relative;
 }
-.palette-header-wrapper {
-  margin: 6px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
 .canvas-block {
   grid-area: canvas;
   height: calc(100vh - 2rem);
