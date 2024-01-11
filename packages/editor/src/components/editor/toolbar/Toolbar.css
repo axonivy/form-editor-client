@@ -12,6 +12,7 @@
 .toolbar button {
   border: 0;
   height: 2.25rem;
+  padding: 0;
 }
 
 .toolbar button:hover {

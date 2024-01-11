@@ -14,9 +14,7 @@ const changeVisibility = (id: string, btnId: string) => {
 const getArrowPos = (id: string, btnId: string) => {
   const dropdown: DOMRect = (document.getElementById(id) as Element).getBoundingClientRect();
   const dropdownBtn: DOMRect = (document.getElementById(btnId) as Element).getBoundingClientRect();
-  const diff = Math.abs(dropdown.x - dropdownBtn.x + dropdown.width / 2);
-  console.log(dropdown);
-  console.log(diff);
+  const diff = Math.abs(dropdown.x - dropdownBtn.x) + dropdownBtn.width / 2 - 5; // -5 because of arrow width
   return diff;
 };
 
