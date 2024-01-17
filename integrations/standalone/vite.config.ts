@@ -9,7 +9,8 @@ export default defineConfig({
   resolve: {
     alias: {
       path: 'path-browserify',
-      '@axonivy/form-editor': resolve(__dirname, '../../packages/editor/src')
+      '@axonivy/form-editor': resolve(__dirname, '../../packages/editor/src'),
+      '@axonivy/form-editor-protocol': resolve(__dirname, '../../packages/protocol/src')
     }
   },
   base: './'

@@ -18,6 +18,7 @@
     "lint": "lerna run lint --",
     "lint:ci": "npm run lint -- -o eslint.xml -f checkstyle",
     "lint:fix": "lerna run lint:fix --",
+    "protocol": "npm run --workspace=@axonivy/form-editor-protocol",
     "dev": "npm --prefix integrations/standalone run dev",
     "test": "npm --prefix packages/editor run test",
     "test:ci": "lerna run test:ci",

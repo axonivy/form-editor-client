@@ -8,6 +8,10 @@
       "path": "."
     },
     {
+      "name": "package/protocol",
+      "path": "./packages/protocol"
+    },
+    {
       "name": "package/editor",
       "path": "./packages/editor"
     },
