@@ -6,25 +6,51 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type ComponentConfig = (InputConfig | ButtonConfig)
-export type ButtonVariant = "primary" | "secondary" | "danger";
-export type ComponentType = "ButtonConfig" | "InputConfig";
+export type Renderer = "JSF"
+export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
+export type TextType = "RAW" | "MARKDOWN";
+export type InputType = "TEXT" | "EMAIL" | "PASSWORD";
 
 export interface Form {
-  components: Component[];
-  config: FormConfig;
+  $schema: string;
   id: string;
+  config: FormConfig;
+  components: Component[];
+}
+export interface FormConfig {
+  renderer: Renderer;
+  theme: string;
 }
 export interface Component {
-  config: ComponentConfig;
   id: string;
-  type: ComponentType;
+  type: "Button" | "Input" | "Layout" | "Link" | "Text";
+  config: Link | Button | Layout | Text | Input;
 }
-export interface InputConfig {}
-export interface ButtonConfig {
+export interface Link {
+  href: string;
+  id: string;
+  name: string;
+}
+export interface Button {
   action: string;
   icon: string;
+  id: string;
   name: string;
   variant: ButtonVariant;
 }
-export interface FormConfig {}
+export interface Layout {
+  components: Component[];
+  id: string;
+}
+export interface Text {
+  content: string;
+  id: string;
+  type: TextType;
+}
+export interface Input {
+  id: string;
+  label: string;
+  required: boolean;
+  type: InputType;
+  value: string;
+}
