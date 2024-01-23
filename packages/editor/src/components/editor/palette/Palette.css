@@ -1,20 +1,5 @@
-.palette {
-  display: flex;
-  flex-direction: column;
-  /* user-select: none; */
-}
-
-.palette-category {
-  display: flex;
-  flex-direction: column;
-}
-.palette-category-title {
-  background-color: var(--N200);
-  padding: var(--size-2);
-}
 .palette-category-items {
   display: flex;
   flex-wrap: wrap;
   gap: var(--size-1);
-  padding: var(--size-1);
 }

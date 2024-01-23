@@ -5,12 +5,15 @@ import './Editor.css';
 import { useState } from 'react';
 import { DndContext, DragOverlay, MouseSensor, useSensor, useSensors, pointerWithin } from '@dnd-kit/core';
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
-import { AppProvider } from '../../data/useData';
+import { AppProvider, DEFAULT_SIDEBARS } from '../../data/useData';
 import { modifyData, type UiEditorData } from '../../data/data';
 import { componentsGroupByCategroy, config } from '../components';
 import { ItemDragOverlay } from './ItemDragOverlay';
+import { Flex, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@axonivy/ui-components';
+import { FormToolbar } from './Toolbar';
 
 export const Editor = () => {
+  const [sideBars, setSideBars] = useState(DEFAULT_SIDEBARS);
   const [data, setData] = useState<UiEditorData>({ root: {}, content: [] });
   const [selectedElement, setSelectedElement] = useState('');
   const [activeId, setActiveId] = useState<string | undefined>();
@@ -26,19 +29,34 @@ export const Editor = () => {
   const sensors = useSensors(mouseSensor);
 
   return (
-    <AppProvider value={{ data, setData, selectedElement, setSelectedElement }}>
+    <AppProvider value={{ data, setData, selectedElement, setSelectedElement, sideBars, setSideBars }}>
       <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors} collisionDetection={pointerWithin}>
-        <div className='form-editor-root'>
-          <div className='palette-sidebar'>
-            <Palette items={componentsGroupByCategroy()} />
-          </div>
-          <div className='canvas-block'>
-            <Canvas config={config} />
-          </div>
-          <div className='properties-sidebar'>
-            <Properties config={config} />
-          </div>
-        </div>
+        <ResizablePanelGroup direction='horizontal'>
+          {sideBars.components && (
+            <>
+              <ResizablePanel defaultSize={25} minSize={10} className='sidebar'>
+                <Palette items={componentsGroupByCategroy()} />
+              </ResizablePanel>
+              <ResizableHandle />
+            </>
+          )}
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <Flex direction='column'>
+              <FormToolbar />
+              <div className='canvas-block'>
+                <Canvas config={config} />
+              </div>
+            </Flex>
+          </ResizablePanel>
+          {sideBars.properties && (
+            <>
+              <ResizableHandle />
+              <ResizablePanel defaultSize={25} minSize={10} className='sidebar'>
+                <Properties config={config} />
+              </ResizablePanel>
+            </>
+          )}
+        </ResizablePanelGroup>
         <DragOverlay dropAnimation={null}>
           <ItemDragOverlay activeId={activeId} />
         </DragOverlay>

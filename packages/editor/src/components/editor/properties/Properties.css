@@ -1,9 +1,0 @@
-.properties {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-2);
-}
-.properties-title {
-  background-color: var(--N200);
-  padding: var(--size-2);
-}
