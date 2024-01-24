@@ -5,14 +5,11 @@
   width: 100%;
 }
 
-.toolbar * {
-  background-color: var(--background);
-}
-
 .toolbar button {
   border: 0;
   height: 2.25rem;
   padding: 0;
+  background-color: var(--background);
 }
 
 .toolbar button:hover {
