@@ -4,12 +4,12 @@ export class Palette {
   protected readonly page: Page;
   protected readonly palette: Locator;
 
-  constructor(page: Page, parent: Locator) {
+  constructor(page: Page) {
     this.page = page;
-    this.palette = parent.locator('.palette-sidebar');
+    this.palette = page.locator('.palette');
   }
 
-  async expectCategoryCount(count: number) {
-    await expect(this.palette.locator('.palette-category')).toHaveCount(count);
+  async expectItemCount(count: number) {
+    await expect(this.palette.locator('.palette-item')).toHaveCount(count);
   }
 }

@@ -15,7 +15,8 @@
   ],
   "dependencies": {
     "@axonivy/form-editor-protocol": "11.3.0-next",
-    "@axonivy/editor-icons": "11.3.0-next.915",
+    "@axonivy/ui-icons": "11.3.0-next.37",
+    "@axonivy/ui-components": "11.3.0-next.37",
     "@dnd-kit/core": "^6.1.0",
     "react": "^18.2.0",
     "uuid": "9.0.1"

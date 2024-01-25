@@ -1,13 +1,11 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import { Palette } from './palette';
 
 export class FormEditor {
   protected readonly page: Page;
-  protected readonly editor: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.editor = this.page.locator('.form-editor-root');
   }
 
   static async open(page: Page) {
@@ -18,6 +16,6 @@ export class FormEditor {
   }
 
   palette() {
-    return new Palette(this.page, this.editor);
+    return new Palette(this.page);
   }
 }

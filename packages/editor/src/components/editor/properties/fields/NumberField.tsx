@@ -1,11 +1,17 @@
-import type { Field, PrimitiveValue } from '../../../../types/config';
+import { Flex, Label, Input } from '@axonivy/ui-components';
+import type { PrimitiveValue } from '../../../../types/config';
 
 type InputFieldProps = {
-  field: Field;
+  label: string;
   value?: PrimitiveValue;
   onChange: (value: string | number) => void;
 };
 
-export const NumberField = ({ field, value, onChange }: InputFieldProps) => {
-  return <input type={field.type} value={(value ?? 0) as number} onChange={e => onChange(Number(e.target.value))} />;
+export const NumberField = ({ label, value, onChange }: InputFieldProps) => {
+  return (
+    <Flex direction='column' gap={1}>
+      <Label htmlFor='number'>{label}</Label>
+      <Input id='number' type='number' value={(value ?? 0) as number} onChange={e => onChange(Number(e.target.value))} />
+    </Flex>
+  );
 };

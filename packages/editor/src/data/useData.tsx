@@ -1,17 +1,24 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, type SetStateAction, type Dispatch } from 'react';
 import type { ContentData, UiEditorData } from './data';
+
+export type SideBars = { components: boolean; properties: boolean };
+export const DEFAULT_SIDEBARS: SideBars = { components: true, properties: true };
 
 export type AppContext = {
   data: UiEditorData;
   setData: (data: UiEditorData) => void;
   selectedElement?: string;
   setSelectedElement: (element: string) => void;
+  sideBars: SideBars;
+  setSideBars: Dispatch<SetStateAction<SideBars>>;
 };
 
 export const appContext = createContext<AppContext>({
   data: { root: {}, content: [] },
   setData: data => data,
-  setSelectedElement: () => {}
+  setSelectedElement: () => {},
+  sideBars: DEFAULT_SIDEBARS,
+  setSideBars: () => {}
 });
 
 export const AppProvider = appContext.Provider;

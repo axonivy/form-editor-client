@@ -26,28 +26,21 @@ export const PropertyItem = ({ fieldName, field }: PropertyItemProps) => {
   useEffect(() => {
     setValue(element ? element.props[fieldName] : '');
   }, [element, fieldName]);
-  const inputFor = (field: Field) => {
+  const inputFor = (field: Field, label: string) => {
     switch (field.type) {
       case 'text':
-        return <InputField field={field} value={value} onChange={onChange} />;
+        return <InputField label={label} value={value} onChange={onChange} />;
       case 'number':
-        return <NumberField field={field} value={value} onChange={onChange} />;
+        return <NumberField label={label} value={value} onChange={onChange} />;
       case 'checkbox':
-        return <CheckboxField field={field} value={value} onChange={onChange} />;
+        return <CheckboxField label={label} value={value} onChange={onChange} />;
       case 'textarea':
-        return <TextareaField value={value} onChange={onChange} />;
+        return <TextareaField label={label} onChange={onChange} />;
       case 'select':
-        return <SelectField field={field} value={value} onChange={onChange} />;
+        return <SelectField field={field} label={label} value={value} onChange={onChange} />;
       default:
         return <p>unknown field type</p>;
     }
   };
-  return (
-    <div className='property-item'>
-      <label>
-        <span>{field.label ? field.label : fieldName}</span>
-        {inputFor(field)}
-      </label>
-    </div>
-  );
+  return <div className='property-item'>{inputFor(field, field.label ? field.label : fieldName)}</div>;
 };

@@ -1,6 +1,6 @@
 import { Editor } from './components/editor/Editor';
-import './App.css';
-import '@axonivy/editor-icons/lib/ivy-icons.css';
+import '@axonivy/ui-icons/lib/ivy-icons.css';
+import '@axonivy/ui-components/lib/style.css';
 
 function App() {
   return <Editor />;
