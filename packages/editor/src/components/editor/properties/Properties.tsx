@@ -17,7 +17,9 @@ export const Properties = ({ config }: PropertiesProps) => {
       <Flex direction='column' gap={2} style={{ paddingBlock: 'var(--size-2)' }}>
         {propertyConfig &&
           propertyConfig.fields &&
-          Object.entries(propertyConfig.fields).map(([key, field]) => <PropertyItem key={key} fieldName={key} field={field} />)}
+          Object.entries(propertyConfig.fields)
+            .filter(([, field]) => field.type !== 'hidden')
+            .map(([key, field]) => <PropertyItem key={key} fieldName={key} field={field} />)}
       </Flex>
     </Flex>
   );

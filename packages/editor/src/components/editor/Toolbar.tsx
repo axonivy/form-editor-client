@@ -1,9 +1,10 @@
-import { Button, Flex, Separator, Toolbar, ToolbarContainer } from '@axonivy/ui-components';
+import { Button, Flex, Separator, Toolbar, ToolbarContainer, useTheme } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../../data/useData';
 
 export const FormToolbar = () => {
   const { setSideBars } = useAppContext();
+  const { theme, setTheme } = useTheme();
   return (
     <Toolbar>
       <Flex>
@@ -26,7 +27,9 @@ export const FormToolbar = () => {
           </Flex>
         </ToolbarContainer>
       </Flex>
-      <Flex>
+      <Flex gap={1}>
+        <Button icon={IvyIcons.Download} size='large' onClick={() => setSideBars(old => ({ ...old, dataStructure: !old.dataStructure }))} />
+        <Button icon={IvyIcons.DarkMode} size='large' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
           size='large'

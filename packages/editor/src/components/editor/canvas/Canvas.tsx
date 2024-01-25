@@ -13,7 +13,7 @@ export const Canvas = ({ config }: CanvasProps) => {
   const { data } = useAppContext();
   return (
     <div className='canvas'>
-      {data.content.map(obj => (
+      {data.components.map(obj => (
         <Fragment key={obj.id}>
           <DropZone id={obj.id}>
             <Draggable key={obj.id} config={config.components[obj.type]} data={obj} />

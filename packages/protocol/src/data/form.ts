@@ -8,8 +8,8 @@
 
 export type Renderer = "JSF"
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
-export type TextType = "RAW" | "MARKDOWN";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD";
+export type TextType = "RAW" | "MARKDOWN";
 
 export interface Form {
   $schema: string;
@@ -24,33 +24,28 @@ export interface FormConfig {
 export interface Component {
   id: string;
   type: "Button" | "Input" | "Layout" | "Link" | "Text";
-  config: Link | Button | Layout | Text | Input;
-}
-export interface Link {
-  href: string;
-  id: string;
-  name: string;
+  config: Button | Link | Layout | Input | Text;
 }
 export interface Button {
   action: string;
   icon: string;
-  id: string;
   name: string;
   variant: ButtonVariant;
 }
+export interface Link {
+  href: string;
+  name: string;
+}
 export interface Layout {
   components: Component[];
-  id: string;
-}
-export interface Text {
-  content: string;
-  id: string;
-  type: TextType;
 }
 export interface Input {
-  id: string;
   label: string;
   required: boolean;
   type: InputType;
   value: string;
+}
+export interface Text {
+  content: string;
+  type: TextType;
 }

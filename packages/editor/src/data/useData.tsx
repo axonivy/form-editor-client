@@ -1,20 +1,21 @@
+import { EMPTY_FORM, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
 import { createContext, useContext, type SetStateAction, type Dispatch } from 'react';
-import type { ContentData, UiEditorData } from './data';
+import type { UpdateConsumer } from '../types/lambda';
 
-export type SideBars = { components: boolean; properties: boolean };
-export const DEFAULT_SIDEBARS: SideBars = { components: true, properties: true };
+export type SideBars = { components: boolean; properties: boolean; dataStructure: boolean };
+export const DEFAULT_SIDEBARS: SideBars = { components: true, properties: true, dataStructure: false };
 
 export type AppContext = {
-  data: UiEditorData;
-  setData: (data: UiEditorData) => void;
+  data: FormData;
+  setData: UpdateConsumer<FormData>;
   selectedElement?: string;
-  setSelectedElement: (element: string) => void;
+  setSelectedElement: Dispatch<SetStateAction<string>>;
   sideBars: SideBars;
   setSideBars: Dispatch<SetStateAction<SideBars>>;
 };
 
 export const appContext = createContext<AppContext>({
-  data: { root: {}, content: [] },
+  data: EMPTY_FORM,
   setData: data => data,
   setSelectedElement: () => {},
   sideBars: DEFAULT_SIDEBARS,
@@ -29,12 +30,12 @@ export const useAppContext = () => {
 
 export const useData = () => {
   const { data, setData, selectedElement } = useAppContext();
-  const element = data.content.find(obj => obj.id === selectedElement);
-  const setElement = (element: ContentData) => {
+  const element = data.components.find(obj => obj.id === selectedElement);
+  const setElement = (element: ComponentData) => {
     const newData = structuredClone(data);
-    const index = newData.content.findIndex(obj => obj.id === element.id);
-    newData.content[index] = element;
-    setData(newData);
+    const index = newData.components.findIndex(obj => obj.id === element.id);
+    newData.components[index] = element;
+    setData(() => newData);
   };
   return { data, element, setElement };
 };

@@ -6,6 +6,8 @@ export type ValuesAsUnionDeep<T> = {
   [V in keyof T]: T[V] extends object ? ValuesAsUnionDeep<T[V]> : T[V];
 }[keyof T];
 
+export type KeysOfUnion<T> = T extends T ? keyof T : never;
+
 declare const brand: unique symbol;
 
 export type Brand<T, TBrand> = T & { [brand]: TBrand };

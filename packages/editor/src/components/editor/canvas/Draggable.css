@@ -2,7 +2,7 @@
   padding: var(--size-1);
 }
 .draggable:hover {
-  background-color: var(--A50);
+  background-color: var(--P50);
 }
 .draggable:where(.selected, .dragging) {
   outline: var(--activ-border);

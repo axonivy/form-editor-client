@@ -12,7 +12,7 @@ export const ItemDragOverlay = ({ activeId }: { activeId?: string }) => {
   if (component) {
     return <PaletteItemOverlay item={component} />;
   }
-  const element = data.content.find(obj => obj.id === activeId);
+  const element = data.components.find(obj => obj.id === activeId);
   if (element) {
     const component = componentByName(element.type);
     return <DraggableOverlay config={component} data={element} />;

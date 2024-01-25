@@ -1,31 +1,30 @@
 import { DropZone } from '../../editor/canvas/DropZone';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
-import './Flex.css';
+import './Layout.css';
+import type { Layout, Prettify } from '@axonivy/form-editor-protocol';
 
-type FlexProps = {
-  itemCount: number;
+type LayoutProps = Prettify<Layout>;
+
+export const defaultFlexProps: LayoutProps = {
+  components: []
 };
 
-export const defaultFlexProps = {
-  itemCount: 2
-} as const satisfies FlexProps;
-
-export const FlexComponent: ComponentConfig<FlexProps> = {
-  name: 'Flex',
+export const LayoutComponent: ComponentConfig<LayoutProps> = {
+  name: 'Layout',
   category: 'Layout',
   icon: 'M2 20h8V4H2v16Zm-1 0V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1ZM13 20h8V4h-8v16Zm-1 0V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1Z',
   description: 'A flexable layout',
   defaultProps: defaultFlexProps,
-  render: props => <Flex {...props} />,
+  render: props => <LayoutBlock {...props} />,
   fields: {
-    itemCount: { type: 'number' }
+    components: { type: 'hidden' }
   }
 };
 
-const Flex = ({ itemCount, id }: UiComponentProps<FlexProps>) => {
+const LayoutBlock = ({ id, components }: UiComponentProps<LayoutProps>) => {
   return (
     <div className='block-flex'>
-      {Array.from(Array(itemCount).keys()).map(column => (
+      {Array.from(Array(components).keys()).map(column => (
         <div className='flex-column' key={column}>
           <DropZone id={`${id}-column${column}`} visible={true} />
         </div>
