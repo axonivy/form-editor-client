@@ -1,7 +1,7 @@
 import type { Config } from '../types/config';
 import { groupBy } from '../utils/array';
 import { ButtonComponent } from './blocks/button/Button';
-import { FlexComponent } from './blocks/flex/Flex';
+import { LayoutComponent } from './blocks/layout/Layout';
 import { InputComponent } from './blocks/input/Input';
 import { LinkComponent } from './blocks/link/Link';
 import { TextComponent } from './blocks/text/Text';
@@ -11,7 +11,7 @@ export const config: Config = {
     Input: InputComponent,
     Text: TextComponent,
     Link: LinkComponent,
-    Flex: FlexComponent,
+    Layout: LayoutComponent,
     Button: ButtonComponent
   }
 };

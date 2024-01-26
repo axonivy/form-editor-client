@@ -10,18 +10,13 @@ export interface Disposable {
 
 export interface FormClient {
   initialize(): Promise<boolean>;
-  data(context: any): Promise<any>;
-  saveData(saveData: any): Promise<any[]>;
-
-  validate(context: any): Promise<any[]>;
+  data(): Promise<any>;
+  saveData(saveData: any): Promise<void>;
 
   meta<TMeta extends keyof FormMetaRequestTypes>(
     path: TMeta,
     args: FormMetaRequestTypes[TMeta][0]
   ): Promise<FormMetaRequestTypes[TMeta][1]>;
 
-  action(action: any): void;
-
-  onDataChanged: Event<any>;
-  onValidation: Event<any[]>;
+  // onDataChanged: Event<void>;
 }
