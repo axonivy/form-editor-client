@@ -1,4 +1,4 @@
-import { useData } from '../../data/useData';
+import { useData } from '../../context/useData';
 import { componentByName } from '../components';
 import { DraggableOverlay } from './canvas/Draggable';
 import { PaletteItemOverlay } from './palette/PaletteItem';

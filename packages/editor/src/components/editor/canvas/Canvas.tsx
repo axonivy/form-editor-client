@@ -1,7 +1,7 @@
 import './Canvas.css';
 import type { Config } from '../../../types/config';
 import { Draggable } from './Draggable';
-import { useAppContext } from '../../../data/useData';
+import { useAppContext } from '../../../context/useData';
 import { DropZone } from './DropZone';
 import { Fragment } from 'react';
 
@@ -16,7 +16,7 @@ export const Canvas = ({ config }: CanvasProps) => {
       {data.components.map(obj => (
         <Fragment key={obj.id}>
           <DropZone id={obj.id}>
-            <Draggable key={obj.id} config={config.components[obj.type]} data={obj} />
+            <Draggable config={config.components[obj.type]} data={obj} />
           </DropZone>
         </Fragment>
       ))}

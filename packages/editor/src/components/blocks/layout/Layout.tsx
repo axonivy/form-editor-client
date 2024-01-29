@@ -2,6 +2,8 @@ import { DropZone } from '../../editor/canvas/DropZone';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './Layout.css';
 import type { Layout, Prettify } from '@axonivy/form-editor-protocol';
+import { Draggable } from '../../editor/canvas/Draggable';
+import { config } from '../../components';
 
 type LayoutProps = Prettify<Layout>;
 
@@ -24,11 +26,16 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
 const LayoutBlock = ({ id, components }: UiComponentProps<LayoutProps>) => {
   return (
     <div className='block-flex'>
-      {Array.from(Array(components).keys()).map(column => (
-        <div className='flex-column' key={column}>
-          <DropZone id={`${id}-column${column}`} visible={true} />
-        </div>
-      ))}
+      {Array.from(Array(components).keys()).map(column => {
+        const component = components[column];
+        return (
+          <div className='flex-column' key={column}>
+            <DropZone id={`${id}-column${column}`} visible={component === undefined}>
+              {component && <Draggable config={config.components[component.type]} data={component} />}
+            </DropZone>
+          </div>
+        );
+      })}
     </div>
   );
 };
