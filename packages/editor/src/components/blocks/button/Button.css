@@ -9,12 +9,13 @@
   padding: 0;
   outline: 0 none;
   border-radius: var(--border-radius);
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-2);
+  padding: var(--size-2) var(--size-4);
 }
 .block-button:hover {
   background-color: color-mix(in srgb, var(--button-bg), transparent 10%);
-}
-.block-button span {
-  padding: var(--size-2) var(--size-4);
 }
 .block-button[data-variant='primary'] {
   --button-bg: var(--P300);
