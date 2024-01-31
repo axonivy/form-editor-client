@@ -1,12 +1,12 @@
-import type { ComponentData } from '@axonivy/form-editor-protocol';
-import { useAppContext } from '../../../data/useData';
+import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
+import { useAppContext } from '../../../context/useData';
 import type { ComponentConfig } from '../../../types/config';
 import './Draggable.css';
 import { useDraggable } from '@dnd-kit/core';
 
 type DraggableProps = {
   config: ComponentConfig;
-  data: ComponentData;
+  data: Component | ComponentData;
 };
 
 export const Draggable = ({ config, data }: DraggableProps) => {

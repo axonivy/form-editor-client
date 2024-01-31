@@ -2,24 +2,24 @@ import { EMPTY_FORM, type ComponentData, type FormData } from '@axonivy/form-edi
 import { createContext, useContext, type SetStateAction, type Dispatch } from 'react';
 import type { UpdateConsumer } from '../types/lambda';
 
-export type SideBars = { components: boolean; properties: boolean; dataStructure: boolean };
-export const DEFAULT_SIDEBARS: SideBars = { components: true, properties: true, dataStructure: false };
+type UI = { components: boolean; properties: boolean; dataStructure: boolean };
+export const DEFAULT_UI: UI = { components: true, properties: true, dataStructure: false };
 
 export type AppContext = {
   data: FormData;
   setData: UpdateConsumer<FormData>;
   selectedElement?: string;
   setSelectedElement: Dispatch<SetStateAction<string>>;
-  sideBars: SideBars;
-  setSideBars: Dispatch<SetStateAction<SideBars>>;
+  ui: UI;
+  setUi: Dispatch<SetStateAction<UI>>;
 };
 
 export const appContext = createContext<AppContext>({
   data: EMPTY_FORM,
   setData: data => data,
   setSelectedElement: () => {},
-  sideBars: DEFAULT_SIDEBARS,
-  setSideBars: () => {}
+  ui: DEFAULT_UI,
+  setUi: () => {}
 });
 
 export const AppProvider = appContext.Provider;
@@ -37,5 +37,5 @@ export const useData = () => {
     newData.components[index] = element;
     setData(() => newData);
   };
-  return { data, element, setElement };
+  return { data, setData, element, setElement };
 };

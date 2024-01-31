@@ -1,9 +1,9 @@
 import { Button, Flex, Separator, Toolbar, ToolbarContainer, useTheme } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useAppContext } from '../../data/useData';
+import { useAppContext } from '../../context/useData';
 
 export const FormToolbar = () => {
-  const { setSideBars } = useAppContext();
+  const { setUi } = useAppContext();
   const { theme, setTheme } = useTheme();
   return (
     <Toolbar>
@@ -13,7 +13,7 @@ export const FormToolbar = () => {
             icon={IvyIcons.LayoutSidebarRightCollapse}
             size='large'
             rotate='180'
-            onClick={() => setSideBars(old => ({ ...old, components: !old.components }))}
+            onClick={() => setUi(old => ({ ...old, components: !old.components }))}
           />
           <Button icon={IvyIcons.SelectionTool} size='large' toggle={true} />
         </Flex>
@@ -28,12 +28,12 @@ export const FormToolbar = () => {
         </ToolbarContainer>
       </Flex>
       <Flex gap={1}>
-        <Button icon={IvyIcons.Download} size='large' onClick={() => setSideBars(old => ({ ...old, dataStructure: !old.dataStructure }))} />
+        <Button icon={IvyIcons.Download} size='large' onClick={() => setUi(old => ({ ...old, dataStructure: !old.dataStructure }))} />
         <Button icon={IvyIcons.DarkMode} size='large' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
           size='large'
-          onClick={() => setSideBars(old => ({ ...old, properties: !old.properties }))}
+          onClick={() => setUi(old => ({ ...old, properties: !old.properties }))}
         />
       </Flex>
     </Toolbar>

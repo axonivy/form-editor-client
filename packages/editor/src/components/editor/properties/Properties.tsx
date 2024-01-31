@@ -1,5 +1,5 @@
 import type { Config } from '../../../types/config';
-import { useData } from '../../../data/useData';
+import { useData } from '../../../context/useData';
 import { PropertyItem } from './PropertyItem';
 import { Flex, SidebarHeader } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
