@@ -78,7 +78,7 @@ pipeline {
   }
   post {
     always {
-      discoverGitReferenceBuild defaultBranch: 'master'
+      discoverGitReferenceBuild()
     }
   }
 }
