@@ -3,7 +3,8 @@ import type { Config } from '../../../types/config';
 import { Draggable } from './Draggable';
 import { useAppContext } from '../../../context/useData';
 import { DropZone } from './DropZone';
-import { Fragment } from 'react';
+import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
+import { CANVAS_DROPZONE_ID } from '../../../data/data';
 
 type CanvasProps = {
   config: Config;
@@ -14,13 +15,15 @@ export const Canvas = ({ config }: CanvasProps) => {
   return (
     <div className='canvas'>
       {data.components.map(obj => (
-        <Fragment key={obj.id}>
-          <DropZone id={obj.id}>
-            <Draggable config={config.components[obj.type]} data={obj} />
-          </DropZone>
-        </Fragment>
+        <ComponentBlock key={obj.id} component={obj} config={config} />
       ))}
-      <DropZone id='canvas' visible={true} />
+      <DropZone id={CANVAS_DROPZONE_ID} visible={true} />
     </div>
   );
 };
+
+export const ComponentBlock = ({ component, config }: { component: ComponentData | Component; config: Config }) => (
+  <DropZone id={component.id}>
+    <Draggable config={config.components[component.type]} data={component} />
+  </DropZone>
+);

@@ -17,9 +17,9 @@ export const DndContext = ({ children }: { children: ReactNode }) => {
   const { setData } = useData();
   const [activeId, setActiveId] = useState<string | undefined>();
   const handleDragEnd = (event: DragEndEvent) => {
-    const target = event.over?.id;
-    if (target && activeId) {
-      setData(oldData => modifyData(oldData, activeId, target));
+    const targetId = event.over?.id;
+    if (targetId && activeId) {
+      setData(oldData => modifyData(oldData, { type: 'dnd', data: { activeId, targetId } }));
     }
     setActiveId(undefined);
   };

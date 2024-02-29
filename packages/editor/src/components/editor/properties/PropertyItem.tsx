@@ -29,7 +29,7 @@ export const PropertyItem = ({ fieldName, field }: PropertyItemProps) => {
     }
   };
   useEffect(() => {
-    setValue(element ? element.config[fieldName] : '');
+    setValue(element ? (element.config[fieldName] as PrimitiveValue) : '');
   }, [element, fieldName]);
   const inputFor = (field: Field, label: string) => {
     switch (field.type) {
