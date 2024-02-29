@@ -17,6 +17,6 @@ export type FormData = Omit<Form, 'components' | '$schema'> & {
   components: Array<ComponentData>;
 };
 
-export const isLayout = (component: ComponentData): component is LayoutConfig => {
+export const isLayout = (component: Component | ComponentData): component is LayoutConfig => {
   return component.type === 'Layout' && 'components' in component.config;
 };

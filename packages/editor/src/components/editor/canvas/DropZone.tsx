@@ -1,19 +1,20 @@
 import { useDndContext, useDroppable } from '@dnd-kit/core';
 import './DropZone.css';
 import type { ReactNode } from 'react';
+import { isDropZoneDisabled } from './drag-data';
 
 type DropZoneProps = {
   id: string;
-  visible?: boolean;
+  preId?: string;
   children?: ReactNode;
 };
 
-export const DropZone = ({ id, visible, children }: DropZoneProps) => {
+export const DropZone = ({ id, preId, children }: DropZoneProps) => {
   const dnd = useDndContext();
-  const { isOver, setNodeRef } = useDroppable({ id, disabled: dnd.active?.id === id });
+  const { isOver, setNodeRef } = useDroppable({ id, disabled: isDropZoneDisabled(id, dnd.active, preId) });
   return (
     <div ref={setNodeRef} className={`drop-zone${isOver ? ' is-drop-target' : ''}`}>
-      <div className={`drop-zone-block${visible ? ' visible' : ''}`} />
+      <div className='drop-zone-block' />
       {children}
     </div>
   );

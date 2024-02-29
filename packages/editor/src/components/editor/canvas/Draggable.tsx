@@ -4,6 +4,7 @@ import type { ComponentConfig } from '../../../types/config';
 import './Draggable.css';
 import { useDraggable } from '@dnd-kit/core';
 import { modifyData } from '../../../data/data';
+import { dragData } from './drag-data';
 
 type DraggableProps = {
   config: ComponentConfig;
@@ -12,7 +13,7 @@ type DraggableProps = {
 
 export const Draggable = ({ config, data }: DraggableProps) => {
   const { setData } = useData();
-  const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ id: data.id });
+  const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ id: data.id, data: dragData(data) });
   const appContext = useAppContext();
   const isSelected = appContext.selectedElement === data.id;
   return (

@@ -18,6 +18,16 @@ export class FormClientMock implements FormClient {
           name: 'Proceed',
           variant: 'PRIMARY'
         }
+      },
+      {
+        id: '3',
+        type: 'Layout',
+        config: {
+          components: [
+            { id: '31', type: 'Text', config: { content: 'bla' } },
+            { id: '32', type: 'Button', config: { name: 'hi', variant: 'SECONDARY' } }
+          ]
+        }
       }
     ]
   };

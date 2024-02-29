@@ -1,24 +1,13 @@
 .block-flex {
   display: flex;
   flex-direction: row;
-  gap: var(--size-1);
+  gap: var(--size-4);
   flex-wrap: wrap;
-  border: var(--basic-border);
 }
-.block-flex .flex-column {
-  flex: 1 1 calc(50% - var(--size-1));
+.block-flex > div {
+  flex: 1 1 calc(50% - var(--size-4));
+  border: 2px solid transparent;
 }
-.block-flex .flex-column:empty:before {
-  margin: 5px;
-  background-color: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 30px;
-  opacity: 0.3;
-  border-radius: var(--border-radius);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  content: 'Column';
+.selected > .block-flex > div {
+  border: 2px dashed var(--P75);
 }

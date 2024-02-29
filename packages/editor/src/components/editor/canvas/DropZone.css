@@ -2,13 +2,8 @@
   height: 0;
   transition: height 0.1s ease-out;
 }
-.drop-zone .drop-zone-block.visible {
+.drop-zone.is-drop-target > .drop-zone-block {
   background: var(--P75);
-  height: 20px;
-  margin-block-start: 2px;
-}
-.drop-zone.is-drop-target .drop-zone-block {
-  background: var(--P75);
-  height: 30px;
+  height: var(--size-4);
   outline: 2px dashed var(--P300);
 }
