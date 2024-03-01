@@ -14,16 +14,22 @@ export const Canvas = ({ config }: CanvasProps) => {
   const { data } = useAppContext();
   return (
     <div className='canvas'>
-      {data.components.map(obj => (
-        <ComponentBlock key={obj.id} component={obj} config={config} />
+      {data.components.map((component, index) => (
+        <ComponentBlock key={component.id} component={component} config={config} preId={data.components[index - 1]?.id} />
       ))}
-      <DropZone id={CANVAS_DROPZONE_ID} visible={true} />
+      <EmtpyBlock id={CANVAS_DROPZONE_ID} preId={data.components[data.components.length - 1]?.id} />
     </div>
   );
 };
 
-export const ComponentBlock = ({ component, config }: { component: ComponentData | Component; config: Config }) => (
-  <DropZone id={component.id}>
+export const ComponentBlock = ({ component, config, preId }: { component: ComponentData | Component; config: Config; preId?: string }) => (
+  <DropZone id={component.id} preId={preId}>
     <Draggable config={config.components[component.type]} data={component} />
+  </DropZone>
+);
+
+export const EmtpyBlock = ({ id, preId }: { id: string; preId: string }) => (
+  <DropZone id={id} preId={preId}>
+    <div className='empty-block' />
   </DropZone>
 );

@@ -1,14 +1,15 @@
 .draggable {
-  padding: var(--size-1);
+  padding: var(--size-2) var(--size-4);
+  border: 1px solid transparent;
 }
-.draggable:hover {
+.draggable:hover:not(:has(.draggable:hover)) {
   background-color: var(--P50);
 }
-.draggable:where(.selected, .dragging) {
-  outline: var(--activ-border);
-  background-color: var(--background);
-  z-index: 2;
+.draggable.selected,
+.draggable.dragging {
+  border: var(--activ-border);
+  background-color: transparent;
 }
 .draggable.dragging {
-  opacity: 0.5;
+  opacity: 0.7;
 }

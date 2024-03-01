@@ -1,4 +1,5 @@
 import { useData } from '../../context/useData';
+import { findComponent } from '../../data/data';
 import { componentByName } from '../components';
 import { DraggableOverlay } from './canvas/Draggable';
 import { PaletteItemOverlay } from './palette/PaletteItem';
@@ -12,8 +13,9 @@ export const ItemDragOverlay = ({ activeId }: { activeId?: string }) => {
   if (component) {
     return <PaletteItemOverlay item={component} />;
   }
-  const element = data.components.find(obj => obj.id === activeId);
-  if (element) {
+  const find = findComponent(data.components, activeId);
+  if (find) {
+    const element = find.data[find.index];
     const component = componentByName(element.type);
     return <DraggableOverlay config={component} data={element} />;
   }

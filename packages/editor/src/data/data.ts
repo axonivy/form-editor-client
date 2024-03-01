@@ -8,7 +8,7 @@ import { isLayout, type ComponentData, type FormData } from '@axonivy/form-edito
 export const CANVAS_DROPZONE_ID = 'canvas';
 export const LAYOUT_DROPZONE_ID_PREFIX = 'layout-';
 
-const findComponent = (data: Array<ComponentData>, id: string): { data: Array<ComponentData>; index: number } | undefined => {
+export const findComponent = (data: Array<ComponentData>, id: string): { data: Array<ComponentData>; index: number } | undefined => {
   if (id === CANVAS_DROPZONE_ID) {
     return { data, index: data.length };
   }

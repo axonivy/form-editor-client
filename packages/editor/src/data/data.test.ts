@@ -1,6 +1,20 @@
 import { EMPTY_FORM, type ComponentData, type FormData, isLayout } from '@axonivy/form-editor-protocol';
-import { modifyData } from './data';
+import { findComponent, modifyData } from './data';
 import type { DeepPartial } from '../test-utils/type-utils';
+
+describe('findComponent', () => {
+  test('find', () => {
+    const data = filledData();
+    expect(findComponent(data.components, '3')).to.deep.equals({ data: data.components, index: 2 });
+    expect(findComponent(data.components, '5')).to.deep.equals(undefined);
+  });
+
+  test('find deep', () => {
+    const data = filledData();
+    expect(findComponent(data.components, '31')).to.deep.equals({ data: data.components[2].config.components, index: 0 });
+    expect(findComponent(data.components, '35')).to.deep.equals(undefined);
+  });
+});
 
 describe('modifyData', () => {
   describe('drag and drop', () => {
@@ -118,43 +132,43 @@ describe('modifyData', () => {
       expectOrder(modifyData(data, { type: 'moveDown', data: { id: '3' } }), ['1', '2', '3']);
     });
   });
-
-  const emptyData = () => {
-    return structuredClone(EMPTY_FORM);
-  };
-
-  const filledData = () => {
-    const prefilledData: DeepPartial<FormData> = {
-      components: [
-        { id: '1', type: 'Input', config: {} },
-        { id: '2', type: 'Button', config: {} },
-        {
-          id: '3',
-          type: 'Layout',
-          config: {
-            components: [
-              { id: '31', type: 'Text', config: {} },
-              { id: '32', type: 'Button', config: {} },
-              { id: '33', type: 'Input', config: {} }
-            ]
-          }
-        }
-      ]
-    };
-    const filledData = prefilledData as FormData;
-    expectOrder(filledData, ['1', '2', '3']);
-    expectOrderDeep(filledData, '3', ['31', '32', '33']);
-    return filledData;
-  };
-
-  const expectOrder = (data: FormData, order: string[]) => {
-    expect(data.components.map(c => c.id)).to.eql(order);
-  };
-
-  const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
-    const component = data.components.find(c => c.id === deepId);
-    if (component && isLayout(component)) {
-      expect(component.config.components.map(c => c.id)).to.eql(order);
-    }
-  };
 });
+
+const emptyData = () => {
+  return structuredClone(EMPTY_FORM);
+};
+
+const filledData = () => {
+  const prefilledData: DeepPartial<FormData> = {
+    components: [
+      { id: '1', type: 'Input', config: {} },
+      { id: '2', type: 'Button', config: {} },
+      {
+        id: '3',
+        type: 'Layout',
+        config: {
+          components: [
+            { id: '31', type: 'Text', config: {} },
+            { id: '32', type: 'Button', config: {} },
+            { id: '33', type: 'Input', config: {} }
+          ]
+        }
+      }
+    ]
+  };
+  const filledData = prefilledData as FormData;
+  expectOrder(filledData, ['1', '2', '3']);
+  expectOrderDeep(filledData, '3', ['31', '32', '33']);
+  return filledData;
+};
+
+const expectOrder = (data: FormData, order: string[]) => {
+  expect(data.components.map(c => c.id)).to.eql(order);
+};
+
+const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
+  const component = data.components.find(c => c.id === deepId);
+  if (component && isLayout(component)) {
+    expect(component.config.components.map(c => c.id)).to.eql(order);
+  }
+};

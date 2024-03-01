@@ -1,9 +1,8 @@
-import { DropZone } from '../../editor/canvas/DropZone';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './Layout.css';
 import type { Layout, Prettify } from '@axonivy/form-editor-protocol';
 import { config } from '../../components';
-import { ComponentBlock } from '../../editor/canvas/Canvas';
+import { ComponentBlock, EmtpyBlock } from '../../editor/canvas/Canvas';
 import { LAYOUT_DROPZONE_ID_PREFIX } from '../../../data/data';
 
 type LayoutProps = Prettify<Layout>;
@@ -27,16 +26,10 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
 const LayoutBlock = ({ id, components }: UiComponentProps<LayoutProps>) => {
   return (
     <div className='block-flex'>
-      {[...components].map((component, index) => {
-        return (
-          <div className='flex-column' key={index}>
-            <ComponentBlock component={component} config={config} />
-          </div>
-        );
+      {components.map((component, index) => {
+        return <ComponentBlock key={component.id} component={component} config={config} preId={components[index - 1]?.id} />;
       })}
-      <div className='flex-column'>
-        <DropZone id={`${LAYOUT_DROPZONE_ID_PREFIX}${id}`} visible={true} />
-      </div>
+      <EmtpyBlock id={`${LAYOUT_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.id} />
     </div>
   );
 };
