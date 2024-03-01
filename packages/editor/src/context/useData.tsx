@@ -1,6 +1,7 @@
 import { EMPTY_FORM, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
 import { createContext, useContext, type SetStateAction, type Dispatch } from 'react';
 import type { UpdateConsumer } from '../types/lambda';
+import { findComponentElement } from '../data/data';
 
 type UI = { components: boolean; properties: boolean; dataStructure: boolean };
 export const DEFAULT_UI: UI = { components: true, properties: true, dataStructure: false };
@@ -30,12 +31,15 @@ export const useAppContext = () => {
 
 export const useData = () => {
   const { data, setData, selectedElement } = useAppContext();
-  const element = data.components.find(obj => obj.id === selectedElement);
+  const element = selectedElement && findComponentElement(data, selectedElement);
   const setElement = (element: ComponentData) => {
-    const newData = structuredClone(data);
-    const index = newData.components.findIndex(obj => obj.id === element.id);
-    newData.components[index] = element;
-    setData(() => newData);
+    setData(oldData => {
+      let findElement = findComponentElement(oldData, element.id);
+      if (findElement) {
+        findElement = element;
+      }
+      return oldData;
+    });
   };
   return { data, setData, element, setElement };
 };
