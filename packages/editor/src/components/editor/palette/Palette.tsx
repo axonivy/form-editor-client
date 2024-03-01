@@ -12,7 +12,7 @@ export const Palette = ({ items }: PaletteProps) => {
   return (
     <Flex direction='column' className='palette'>
       <SidebarHeader icon={IvyIcons.LaneSwimlanes} title='Components' />
-      <Accordion type='single' defaultValue={Object.keys(items)[0]}>
+      <Accordion type='single' collapsible defaultValue={Object.keys(items)[0]}>
         {Object.entries(items).map(([category, groupItems]) => (
           <AccordionItem key={category} value={category}>
             <AccordionTrigger>{category}</AccordionTrigger>
