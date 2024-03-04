@@ -11,8 +11,8 @@ const typeOptions: FieldOption<InputType>[] = [
 ] as const;
 
 export const defaultInputProps: Input = {
-  label: 'My label',
-  value: 'data.value',
+  label: 'Label',
+  value: '',
   required: false,
   type: 'TEXT'
 } as const;

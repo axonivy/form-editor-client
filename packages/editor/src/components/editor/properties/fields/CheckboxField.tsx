@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Label } from '@axonivy/ui-components';
+import { Checkbox, Flex, Label, useFieldset } from '@axonivy/ui-components';
 
 type CheckboxFieldProps = {
   label: string;
@@ -6,9 +6,12 @@ type CheckboxFieldProps = {
   onChange: (value: boolean) => void;
 };
 
-export const CheckboxField = ({ label, value, onChange }: CheckboxFieldProps) => (
-  <Flex alignItems='center' gap={1}>
-    <Checkbox id='checkbox' checked={value} onCheckedChange={e => onChange(Boolean(e))} />
-    <Label htmlFor='checkbox'>{label}</Label>
-  </Flex>
-);
+export const CheckboxField = ({ label, value, onChange }: CheckboxFieldProps) => {
+  const fieldset = useFieldset();
+  return (
+    <Flex alignItems='center' gap={1}>
+      <Checkbox checked={value} onCheckedChange={e => onChange(Boolean(e))} {...fieldset.inputProps} />
+      <Label {...fieldset.labelProps}>{label}</Label>
+    </Flex>
+  );
+};

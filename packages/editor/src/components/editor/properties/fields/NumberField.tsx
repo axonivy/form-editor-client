@@ -1,4 +1,4 @@
-import { Flex, Label, Input } from '@axonivy/ui-components';
+import { Input, Fieldset } from '@axonivy/ui-components';
 
 type InputFieldProps = {
   label: string;
@@ -8,9 +8,8 @@ type InputFieldProps = {
 
 export const NumberField = ({ label, value, onChange }: InputFieldProps) => {
   return (
-    <Flex direction='column' gap={1}>
-      <Label htmlFor='number'>{label}</Label>
-      <Input id='number' type='number' value={value} onChange={e => onChange(Number(e.target.value))} />
-    </Flex>
+    <Fieldset label={label}>
+      <Input type='number' value={value} onChange={e => onChange(Number(e.target.value))} />
+    </Fieldset>
   );
 };

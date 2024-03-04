@@ -13,7 +13,7 @@ const variantOptions: FieldOption<ButtonVariant>[] = [
 
 export const defaultButtonProps: Button = {
   name: 'Proceed',
-  action: 'logic.proceed',
+  action: '',
   variant: 'PRIMARY',
   icon: ''
 } as const;

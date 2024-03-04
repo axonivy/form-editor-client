@@ -3,8 +3,25 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../../context/useData';
 
 export const FormToolbar = () => {
-  const { setUi } = useAppContext();
+  const { ui, setUi } = useAppContext();
   const { theme, setTheme } = useTheme();
+  const toggleResponsiveMode = () =>
+    setUi(old => {
+      const prev = old.responsiveMode;
+      let next = prev;
+      switch (prev) {
+        case 'desktop':
+          next = 'tablet';
+          break;
+        case 'tablet':
+          next = 'mobile';
+          break;
+        case 'mobile':
+          next = 'desktop';
+          break;
+      }
+      return { ...old, responsiveMode: next };
+    });
   return (
     <Toolbar>
       <Flex>
@@ -26,10 +43,34 @@ export const FormToolbar = () => {
             </Flex>
           </Flex>
         </ToolbarContainer>
+        <ToolbarContainer width={650}>
+          <Flex>
+            <Separator orientation='vertical' style={{ height: '26px' }} />
+            <Flex gap={1}>
+              <Button icon={IvyIcons.EventStart} size='large' onClick={toggleResponsiveMode} />
+            </Flex>
+          </Flex>
+        </ToolbarContainer>
       </Flex>
       <Flex gap={1}>
-        <Button icon={IvyIcons.Download} size='large' onClick={() => setUi(old => ({ ...old, dataStructure: !old.dataStructure }))} />
-        <Button icon={IvyIcons.DarkMode} size='large' onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
+        <Button
+          icon={IvyIcons.Download}
+          size='large'
+          onClick={() => setUi(old => ({ ...old, dataStructure: !old.dataStructure }))}
+          toggle={ui.dataStructure}
+        />
+        <Button
+          icon={IvyIcons.Helplines}
+          size='large'
+          onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
+          toggle={ui.helpPaddings}
+        />
+        <Button
+          icon={IvyIcons.DarkMode}
+          size='large'
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          toggle={theme === 'dark'}
+        />
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
           size='large'

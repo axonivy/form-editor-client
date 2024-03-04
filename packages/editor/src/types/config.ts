@@ -13,24 +13,32 @@ export type FieldOption<TValue = PrimitiveValue> = {
   value: TValue;
 };
 
-export type BaseField = {
+export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   label?: string;
+  hide?: (component: ComponentProps) => boolean;
 };
-export type TextField = BaseField & {
+export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'text' | 'number' | 'textarea' | 'checkbox';
 };
-export type SelectField = BaseField & {
+export type SelectField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'select' | 'radio';
   options: readonly FieldOption[];
 };
-export type HiddenField = {
+export type HiddenField = BaseField & {
   type: 'hidden';
 };
 
-export type Field = TextField | SelectField | HiddenField;
+export type Field<ComponentProps extends DefaultComponentProps = DefaultComponentProps> =
+  | TextField<ComponentProps>
+  | SelectField<ComponentProps>
+  | HiddenField;
+
+export const isNotHiddenField = (field: Field): field is Exclude<Field, HiddenField> => {
+  return field.type !== 'hidden';
+};
 
 type Fields<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
-  [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field;
+  [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field<ComponentProps>;
 };
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {

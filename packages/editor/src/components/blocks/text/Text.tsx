@@ -10,7 +10,7 @@ const typeOptions: FieldOption<TextType>[] = [
 ] as const;
 
 export const defaultTextProps: TextProps = {
-  content: 'Lorem ipsum',
+  content: 'This is a text',
   type: 'RAW'
 } as const;
 

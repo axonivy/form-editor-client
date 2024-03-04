@@ -6,10 +6,12 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Renderer = "JSF"
+export type InputType = ("TEXT" | "EMAIL" | "PASSWORD" | "NUMBER")
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
-export type InputType = "TEXT" | "EMAIL" | "PASSWORD";
 export type TextType = "RAW" | "MARKDOWN";
+export type LayoutGridVariant = "GRID2" | "GRID4";
+export type LayoutJustifyContent = "NORMAL" | "END";
+export type LayoutType = "GRID" | "FLEX";
 
 export interface Form {
   $schema: string;
@@ -18,26 +20,13 @@ export interface Form {
   components: Component[];
 }
 export interface FormConfig {
-  renderer: Renderer;
+  renderer: string;
   theme: string;
 }
 export interface Component {
   id: string;
   type: "Button" | "Input" | "Layout" | "Link" | "Text";
-  config: Button | Link | Layout | Input | Text;
-}
-export interface Button {
-  action: string;
-  icon: string;
-  name: string;
-  variant: ButtonVariant;
-}
-export interface Link {
-  href: string;
-  name: string;
-}
-export interface Layout {
-  components: Component[];
+  config: Input | Link | Button | Text | Layout;
 }
 export interface Input {
   label: string;
@@ -45,7 +34,23 @@ export interface Input {
   type: InputType;
   value: string;
 }
+export interface Link {
+  href: string;
+  name: string;
+}
+export interface Button {
+  action: string;
+  icon: string;
+  name: string;
+  variant: ButtonVariant;
+}
 export interface Text {
   content: string;
   type: TextType;
+}
+export interface Layout {
+  components: Component[];
+  gridVariant: LayoutGridVariant;
+  justifyContent: LayoutJustifyContent;
+  type: LayoutType;
 }

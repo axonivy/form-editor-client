@@ -1,16 +1,27 @@
-import type { Config } from '../../../types/config';
+import { isNotHiddenField, type Config } from '../../../types/config';
 import { useData } from '../../../context/useData';
 import { PropertyItem } from './PropertyItem';
 import { Flex, SidebarHeader } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
+import type { PrimitiveValue } from '@axonivy/form-editor-protocol';
 
 type PropertiesProps = {
   config: Config;
 };
 
 export const Properties = ({ config }: PropertiesProps) => {
-  const { element } = useData();
-  const propertyConfig = element ? config.components[element?.type] : undefined;
+  const { element, setElement } = useData();
+  if (element === undefined) {
+    return null;
+  }
+  const propertyConfig = config.components[element.type];
+  const elementConfig = { ...propertyConfig.defaultProps, ...element.config };
+  const updateElementConfig = (key: string) => {
+    return (change: PrimitiveValue) => {
+      element.config[key] = change;
+      setElement(element);
+    };
+  };
   return (
     <Flex direction='column' className='properties'>
       <SidebarHeader icon={IvyIcons.PenEdit} title='Properties' />
@@ -18,8 +29,16 @@ export const Properties = ({ config }: PropertiesProps) => {
         {propertyConfig &&
           propertyConfig.fields &&
           Object.entries(propertyConfig.fields)
-            .filter(([, field]) => field.type !== 'hidden')
-            .map(([key, field]) => <PropertyItem key={key} fieldName={key} field={field} />)}
+            .filter(([, field]) => isNotHiddenField(field))
+            .filter(([, field]) => field.hide === undefined || !field.hide(elementConfig))
+            .map(([key, field]) => (
+              <PropertyItem
+                key={key}
+                value={elementConfig[key]}
+                onChange={updateElementConfig(key)}
+                field={{ ...field, label: field.label ?? key }}
+              />
+            ))}
       </Flex>
     </Flex>
   );

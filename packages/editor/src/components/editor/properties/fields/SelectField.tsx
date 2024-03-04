@@ -1,4 +1,4 @@
-import { Flex, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@axonivy/ui-components';
+import { Fieldset, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@axonivy/ui-components';
 import type { FieldOption } from '../../../../types/config';
 
 type SelectFieldProps = {
@@ -9,11 +9,10 @@ type SelectFieldProps = {
 };
 
 export const SelectField = ({ options, label, value, onChange }: SelectFieldProps) => (
-  <Flex direction='column' gap={1}>
-    <Label htmlFor='select'>{label}</Label>
+  <Fieldset label={label}>
     <Select value={value} onValueChange={change => onChange(change)}>
-      <SelectTrigger id='select'>
-        <SelectValue placeholder='Select a option' />
+      <SelectTrigger>
+        <SelectValue placeholder='Select an option' />
       </SelectTrigger>
       <SelectContent>
         {options.map(option => (
@@ -23,5 +22,5 @@ export const SelectField = ({ options, label, value, onChange }: SelectFieldProp
         ))}
       </SelectContent>
     </Select>
-  </Flex>
+  </Fieldset>
 );

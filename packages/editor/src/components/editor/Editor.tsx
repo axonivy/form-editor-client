@@ -71,7 +71,7 @@ export const Editor = () => {
             </>
           )}
           <ResizablePanel id='canvas' order={2} defaultSize={50} minSize={30} className='panel'>
-            <Flex direction='column' style={{ height: '100%' }}>
+            <Flex direction='column' className='canvas-panel'>
               <FormToolbar />
               {ui.dataStructure ? <DataStructure /> : <Canvas config={config} />}
             </Flex>
