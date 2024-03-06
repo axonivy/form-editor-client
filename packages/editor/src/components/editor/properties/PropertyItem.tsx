@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { Field } from '../../../types/config';
-import { useData } from '../../../context/useData';
 import './PropertyItem.css';
 import { InputField } from './fields/InputField';
 import { CheckboxField } from './fields/CheckboxField';
@@ -10,7 +9,8 @@ import { NumberField } from './fields/NumberField';
 import type { PrimitiveValue } from '@axonivy/form-editor-protocol';
 
 type PropertyItemProps = {
-  fieldName: string;
+  value: PrimitiveValue;
+  onChange: (change: PrimitiveValue) => void;
   field: Field;
 };
 
@@ -18,31 +18,25 @@ const toString = (primitive?: PrimitiveValue) => `${primitive ?? ''}`;
 const toNumber = (primitive?: PrimitiveValue) => Number(primitive ?? 0);
 const toBoolean = (primitive?: PrimitiveValue) => Boolean(primitive ?? false);
 
-export const PropertyItem = ({ fieldName, field }: PropertyItemProps) => {
-  const { element, setElement } = useData();
-  const [value, setValue] = useState<PrimitiveValue>();
-  const onChange = (newValue: PrimitiveValue) => {
+export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItemProps) => {
+  const [value, setValue] = useState<PrimitiveValue>(initValue);
+  const updateValue = (newValue: PrimitiveValue) => {
     setValue(newValue);
-    if (element) {
-      element.config[fieldName] = newValue;
-      setElement(element);
-    }
+    onChange(newValue);
   };
-  useEffect(() => {
-    setValue(element ? (element.config[fieldName] as PrimitiveValue) : '');
-  }, [element, fieldName]);
-  const inputFor = (field: Field, label: string) => {
+  const inputFor = (field: Field) => {
+    const label = field.label!;
     switch (field.type) {
       case 'text':
-        return <InputField label={label} value={toString(value)} onChange={onChange} />;
+        return <InputField label={label} value={toString(value)} onChange={updateValue} />;
       case 'number':
-        return <NumberField label={label} value={toNumber(value)} onChange={onChange} />;
+        return <NumberField label={label} value={toNumber(value)} onChange={updateValue} />;
       case 'checkbox':
-        return <CheckboxField label={label} value={toBoolean(value)} onChange={onChange} />;
+        return <CheckboxField label={label} value={toBoolean(value)} onChange={updateValue} />;
       case 'textarea':
-        return <TextareaField label={label} value={toString(value)} onChange={onChange} />;
+        return <TextareaField label={label} value={toString(value)} onChange={updateValue} />;
       case 'select':
-        return <SelectField options={field.options} label={label} value={toString(value)} onChange={onChange} />;
+        return <SelectField options={field.options} label={label} value={toString(value)} onChange={updateValue} />;
       default:
         return <p>unknown field type</p>;
     }
@@ -50,5 +44,5 @@ export const PropertyItem = ({ fieldName, field }: PropertyItemProps) => {
   if (field.type === 'hidden') {
     return null;
   }
-  return <div className='property-item'>{inputFor(field, field.label ? field.label : fieldName)}</div>;
+  return <div className='property-item'>{inputFor(field)}</div>;
 };

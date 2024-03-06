@@ -7,8 +7,10 @@ export type ComponentConfigKeys = KeysOfUnion<Component['config']>;
 
 export type PrimitiveValue = string | boolean | number;
 
+export type ConfigData = Record<string, PrimitiveValue | Array<ComponentData>>;
+
 export type ComponentData = Omit<Component, 'config'> & {
-  config: Record<string, PrimitiveValue | Array<ComponentData>>;
+  config: ConfigData;
 };
 
 type LayoutConfig = ComponentData & { config: { components: Array<ComponentData> } };

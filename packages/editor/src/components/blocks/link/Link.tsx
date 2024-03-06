@@ -5,8 +5,8 @@ import './Link.css';
 type LinkProps = Prettify<Link>;
 
 export const defaultLinkProps: LinkProps = {
-  name: 'link to somewhere',
-  href: 'dev.axonivy.com'
+  name: 'link',
+  href: ''
 } as const;
 
 export const LinkComponent: ComponentConfig<LinkProps> = {

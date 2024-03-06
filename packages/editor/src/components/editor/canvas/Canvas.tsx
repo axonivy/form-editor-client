@@ -11,9 +11,9 @@ type CanvasProps = {
 };
 
 export const Canvas = ({ config }: CanvasProps) => {
-  const { data } = useAppContext();
+  const { ui, data } = useAppContext();
   return (
-    <div className='canvas'>
+    <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.responsiveMode}>
       {data.components.map((component, index) => (
         <ComponentBlock key={component.id} component={component} config={config} preId={data.components[index - 1]?.id} />
       ))}

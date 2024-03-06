@@ -3,8 +3,14 @@ import { createContext, useContext, type SetStateAction, type Dispatch } from 'r
 import type { UpdateConsumer } from '../types/lambda';
 import { findComponentElement } from '../data/data';
 
-type UI = { components: boolean; properties: boolean; dataStructure: boolean };
-export const DEFAULT_UI: UI = { components: true, properties: true, dataStructure: false };
+type UI = {
+  components: boolean;
+  properties: boolean;
+  dataStructure: boolean;
+  helpPaddings: boolean;
+  responsiveMode: 'desktop' | 'tablet' | 'mobile';
+};
+export const DEFAULT_UI: UI = { components: true, properties: true, dataStructure: false, helpPaddings: true, responsiveMode: 'desktop' };
 
 export type AppContext = {
   data: FormData;
@@ -31,7 +37,8 @@ export const useAppContext = () => {
 
 export const useData = () => {
   const { data, setData, selectedElement } = useAppContext();
-  const element = selectedElement && findComponentElement(data, selectedElement);
+  //don't always evaluate element. just hold element instead of id
+  const element = selectedElement !== undefined ? findComponentElement(data, selectedElement) : undefined;
   const setElement = (element: ComponentData) => {
     setData(oldData => {
       let findElement = findComponentElement(oldData, element.id);

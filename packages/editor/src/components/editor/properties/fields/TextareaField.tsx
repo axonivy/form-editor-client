@@ -1,4 +1,4 @@
-import { Flex, Label, Textarea } from '@axonivy/ui-components';
+import { Fieldset, Textarea } from '@axonivy/ui-components';
 
 type TextareaFieldProps = {
   label: string;
@@ -7,8 +7,7 @@ type TextareaFieldProps = {
 };
 
 export const TextareaField = ({ label, value, onChange }: TextareaFieldProps) => (
-  <Flex direction='column' gap={1}>
-    <Label htmlFor='textarea'>{label}</Label>
-    <Textarea id='textarea' value={value} onChange={e => onChange(e.target.value)} autoResize={true} />
-  </Flex>
+  <Fieldset label={label}>
+    <Textarea value={value} onChange={e => onChange(e.target.value)} autoResize={true} />
+  </Fieldset>
 );

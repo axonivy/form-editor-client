@@ -16,6 +16,7 @@ export const Draggable = ({ config, data }: DraggableProps) => {
   const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ id: data.id, data: dragData(data) });
   const appContext = useAppContext();
   const isSelected = appContext.selectedElement === data.id;
+  const elementConfig = { ...config.defaultProps, ...data.config };
   return (
     <div
       onClick={e => {
@@ -39,7 +40,7 @@ export const Draggable = ({ config, data }: DraggableProps) => {
       {...listeners}
       {...attributes}
     >
-      {config.render({ ...data.config, id: data.id })}
+      {config.render({ ...elementConfig, id: data.id })}
     </div>
   );
 };
