@@ -37,7 +37,6 @@ export const useAppContext = () => {
 
 export const useData = () => {
   const { data, setData, selectedElement } = useAppContext();
-  //don't always evaluate element. just hold element instead of id
   const element = selectedElement !== undefined ? findComponentElement(data, selectedElement) : undefined;
   const setElement = (element: ComponentData) => {
     setData(oldData => {
