@@ -3,7 +3,7 @@
   "id": "a5c1d16e-1d08-4e1f-a9f0-436c553a3881",
   "config": {
     "renderer": "JSF",
-    "theme": "freya-ivy"
+    "theme": ""
   },
   "components": [
     {
@@ -18,7 +18,9 @@
               "label": "Firstname",
               "value": "data.value",
               "required": true,
-              "type": "TEXT"
+              "type": "TEXT",
+              "mdSpan": "6",
+              "lgSpan": "8"
             }
           },
           {
@@ -28,29 +30,19 @@
               "label": "Lastname",
               "value": "data.value",
               "required": false,
-              "type": "TEXT"
+              "type": "TEXT",
+              "mdSpan": "6",
+              "lgSpan": "4"
             }
-          }
-        ],
-        "type": "GRID",
-        "gridVariant": "GRID2"
-      }
-    },
-    {
-      "id": "Input-360dd44c-050a-4a2e-b66d-84f7ce49e759",
-      "type": "Input",
-      "config": {
-        "label": "Address",
-        "value": "Baarerstrasse 12",
-        "required": false,
-        "type": "TEXT"
-      }
-    },
-    {
-      "id": "Layout-01b5192d-3d58-429e-9bea-844e148aad7a",
-      "type": "Layout",
-      "config": {
-        "components": [
+          },
+          {
+            "id": "Input-1",
+            "type": "Input",
+            "config": {
+              "label": "Address",
+              "lgSpan": "12"
+            }
+          },
           {
             "id": "Input-360dd44c-050a-4a2e-b66d-84f7ce49e758",
             "type": "Input",
@@ -58,43 +50,37 @@
               "label": "City",
               "value": "data.value",
               "required": false,
-              "type": "TEXT"
+              "type": "TEXT",
+              "mdSpan": "4"
             }
           },
           {
-            "id": "Layout-f5b19382-2514-4599-8ade-712fe6fc905e",
-            "type": "Layout",
+            "id": "Input-c01b43e9-72f3-40a4-8a94-70552890dc48",
+            "type": "Input",
             "config": {
-              "components": [
-                {
-                  "id": "Input-c01b43e9-72f3-40a4-8a94-70552890dc48",
-                  "type": "Input",
-                  "config": {
-                    "label": "State",
-                    "value": "data.value",
-                    "required": false,
-                    "type": "TEXT"
-                  }
-                },
-                {
-                  "id": "Input-fd6e7cf6-0d5d-4245-95ec-7fd53c0fbec3",
-                  "type": "Input",
-                  "config": {
-                    "label": "Zip",
-                    "value": "data.value",
-                    "required": false,
-                    "type": "TEXT"
-                  }
-                }
-              ],
-              "type": "GRID",
-              "justifyContent": "NORMAL",
-              "gridVariant": "GRID2"
+              "label": "State",
+              "value": "data.value",
+              "required": false,
+              "type": "TEXT",
+              "mdSpan": "4",
+              "lgSpan": "4"
+            }
+          },
+          {
+            "id": "Input-fd6e7cf6-0d5d-4245-95ec-7fd53c0fbec3",
+            "type": "Input",
+            "config": {
+              "label": "Zip",
+              "value": "data.value",
+              "required": false,
+              "type": "TEXT",
+              "lgSpan": "2",
+              "mdSpan": "4"
             }
           }
         ],
         "type": "GRID",
-        "gridVariant": "GRID2"
+        "gridVariant": "FREE"
       }
     },
     {

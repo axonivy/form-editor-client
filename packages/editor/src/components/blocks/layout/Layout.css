@@ -13,6 +13,9 @@
 .block-layout.grid.grid4 {
   grid-template-columns: repeat(4, 1fr);
 }
+.block-layout.grid.free {
+  grid-template-columns: repeat(12, 1fr);
+}
 .block-layout.grid.grid4[data-responsive-mode='tablet'] {
   grid-template-columns: repeat(2, 1fr);
 }
@@ -21,13 +24,55 @@
   grid-template-columns: 1fr;
 }
 
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+.col-span-4 {
+  grid-column: span 4 / span 4;
+}
+.col-span-6 {
+  grid-column: span 6 / span 6;
+}
+.col-span-8 {
+  grid-column: span 8 / span 8;
+}
+.col-span-10 {
+  grid-column: span 10 / span 10;
+}
+.col-span-12 {
+  grid-column: span 12 / span 12;
+}
+.block-layout.grid.free[data-responsive-mode='tablet'] {
+  .col-md-span-2 {
+    grid-column: span 2 / span 2;
+  }
+  .col-md-span-4 {
+    grid-column: span 4 / span 4;
+  }
+  .col-md-span-6 {
+    grid-column: span 6 / span 6;
+  }
+  .col-md-span-8 {
+    grid-column: span 8 / span 8;
+  }
+  .col-md-span-10 {
+    grid-column: span 10 / span 10;
+  }
+  .col-md-span-12 {
+    grid-column: span 12 / span 12;
+  }
+}
+.block-layout.grid.free[data-responsive-mode='mobile'] [class*='col-span-'] {
+  grid-column: span 12 / span 12;
+}
+
 .block-layout.flex.justify-end {
   justify-content: flex-end;
 }
 
 .block-layout > div {
-  border: var(--layout-border-size) solid transparent;
+  border: var(--layout-border-size, 2px) solid transparent;
 }
 .selected > .block-layout > div {
-  border: var(--layout-border-size) dashed var(--P75);
+  border: var(--layout-border-size, 2px) dashed var(--P75);
 }

@@ -1,12 +1,14 @@
 import type { Link, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './Link.css';
+import { baseComponentFields, defaultBaseComponent } from '../base';
 
 type LinkProps = Prettify<Link>;
 
 export const defaultLinkProps: LinkProps = {
   name: 'link',
-  href: ''
+  href: '',
+  ...defaultBaseComponent
 } as const;
 
 export const LinkComponent: ComponentConfig<LinkProps> = {
@@ -18,7 +20,8 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   render: props => <LinkBlock {...props} />,
   fields: {
     name: { type: 'text' },
-    href: { type: 'text' }
+    href: { type: 'text' },
+    ...baseComponentFields
   }
 };
 

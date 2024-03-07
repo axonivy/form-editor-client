@@ -1,6 +1,7 @@
 import type { Input, InputType, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
 import './Input.css';
+import { baseComponentFields, defaultBaseComponent } from '../base';
 
 type InputProps = Prettify<Input>;
 
@@ -14,7 +15,8 @@ export const defaultInputProps: Input = {
   label: 'Label',
   value: '',
   required: false,
-  type: 'TEXT'
+  type: 'TEXT',
+  ...defaultBaseComponent
 } as const;
 
 export const InputComponent: ComponentConfig<InputProps> = {
@@ -28,7 +30,8 @@ export const InputComponent: ComponentConfig<InputProps> = {
     label: { type: 'text' },
     required: { type: 'checkbox' },
     value: { type: 'text' },
-    type: { type: 'select', options: typeOptions }
+    type: { type: 'select', options: typeOptions },
+    ...baseComponentFields
   }
 };
 

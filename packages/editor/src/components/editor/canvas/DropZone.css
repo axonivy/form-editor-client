@@ -8,7 +8,6 @@
   transition: height 0.1s ease-out;
 }
 .drop-zone.is-drop-target > .drop-zone-block {
-  background: var(--P75);
-  height: var(--size-4);
-  outline: 2px dashed var(--P300);
+  background: var(--P300);
+  height: 4px;
 }

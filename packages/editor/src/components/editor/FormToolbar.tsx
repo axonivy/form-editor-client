@@ -33,6 +33,7 @@ export const FormToolbar = () => {
             onClick={() => setUi(old => ({ ...old, components: !old.components }))}
           />
           <Button icon={IvyIcons.SelectionTool} size='large' toggle={true} />
+          <Button icon={IvyIcons.EventStart} size='large' onClick={toggleResponsiveMode} />
         </Flex>
         <ToolbarContainer width={450}>
           <Flex>
@@ -40,14 +41,6 @@ export const FormToolbar = () => {
             <Flex gap={1}>
               <Button icon={IvyIcons.Undo} size='large' />
               <Button icon={IvyIcons.Redo} size='large' />
-            </Flex>
-          </Flex>
-        </ToolbarContainer>
-        <ToolbarContainer width={650}>
-          <Flex>
-            <Separator orientation='vertical' style={{ height: '26px' }} />
-            <Flex gap={1}>
-              <Button icon={IvyIcons.EventStart} size='large' onClick={toggleResponsiveMode} />
             </Flex>
           </Flex>
         </ToolbarContainer>

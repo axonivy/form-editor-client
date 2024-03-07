@@ -2,7 +2,7 @@ import './Canvas.css';
 import type { Config } from '../../../types/config';
 import { Draggable } from './Draggable';
 import { useAppContext } from '../../../context/useData';
-import { DropZone } from './DropZone';
+import { DropZone, type DropZoneProps } from './DropZone';
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 import { CANVAS_DROPZONE_ID } from '../../../data/data';
 
@@ -22,8 +22,14 @@ export const Canvas = ({ config }: CanvasProps) => {
   );
 };
 
-export const ComponentBlock = ({ component, config, preId }: { component: ComponentData | Component; config: Config; preId?: string }) => (
-  <DropZone id={component.id} preId={preId}>
+type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
+  component: ComponentData | Component;
+  config: Config;
+  preId?: string;
+};
+
+export const ComponentBlock = ({ component, config, preId, ...props }: ComponentBlockProps) => (
+  <DropZone id={component.id} preId={preId} {...props}>
     <Draggable config={config.components[component.type]} data={component} />
   </DropZone>
 );
