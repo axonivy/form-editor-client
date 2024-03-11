@@ -16,6 +16,7 @@ export type FieldOption<TValue = PrimitiveValue> = {
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   label?: string;
   hide?: (component: ComponentProps) => boolean;
+  section?: 'Layout';
 };
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'text' | 'number' | 'textarea' | 'checkbox';
@@ -37,7 +38,7 @@ export const isNotHiddenField = (field: Field): field is Exclude<Field, HiddenFi
   return field.type !== 'hidden';
 };
 
-type Fields<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
+export type Fields<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field<ComponentProps>;
 };
 

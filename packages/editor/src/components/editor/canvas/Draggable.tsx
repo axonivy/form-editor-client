@@ -46,5 +46,6 @@ export const Draggable = ({ config, data }: DraggableProps) => {
 };
 
 export const DraggableOverlay = ({ config, data }: DraggableProps) => {
-  return <div className='draggable dragging'>{config.render({ ...data.config, id: data.id })}</div>;
+  const elementConfig = { ...config.defaultProps, ...data.config };
+  return <div className='draggable dragging'>{config.render({ ...elementConfig, id: data.id })}</div>;
 };

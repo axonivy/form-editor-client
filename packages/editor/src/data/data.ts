@@ -8,22 +8,26 @@ import { isLayout, type ComponentData, type FormData } from '@axonivy/form-edito
 export const CANVAS_DROPZONE_ID = 'canvas';
 export const LAYOUT_DROPZONE_ID_PREFIX = 'layout-';
 
-const findComponent = (data: Array<ComponentData>, id: string): { data: Array<ComponentData>; index: number } | undefined => {
+const findComponent = (
+  data: Array<ComponentData>,
+  id: string,
+  parent?: ComponentData
+): { data: Array<ComponentData>; index: number; parent?: ComponentData } | undefined => {
   if (id === CANVAS_DROPZONE_ID) {
     return { data, index: data.length };
   }
   if (id.startsWith(LAYOUT_DROPZONE_ID_PREFIX)) {
     return findLayoutComponent(data, id.replace(LAYOUT_DROPZONE_ID_PREFIX, ''));
   }
-  return findComponentDeep(data, id);
+  return findComponentDeep(data, id, parent);
 };
 
-const findComponentDeep = (data: Array<ComponentData>, id: string) => {
+const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: ComponentData) => {
   const index = data.findIndex(obj => obj.id === id);
   if (index < 0) {
     for (const element of data) {
       if (isLayout(element)) {
-        const find = findComponent(element.config.components, id);
+        const find = findComponent(element.config.components, id, element);
         if (find) {
           return find;
         }
@@ -31,7 +35,7 @@ const findComponentDeep = (data: Array<ComponentData>, id: string) => {
     }
     return;
   }
-  return { data, index };
+  return { data, index, parent };
 };
 
 const findLayoutComponent = (data: Array<ComponentData>, id: string) => {
@@ -129,7 +133,7 @@ export const modifyData = (data: FormData, action: ModifyAction) => {
 export const findComponentElement = (data: FormData, id: string) => {
   const find = findComponent(data.components, id);
   if (find) {
-    return find.data[find.index];
+    return { element: find.data[find.index], parent: find.parent };
   }
   return;
 };

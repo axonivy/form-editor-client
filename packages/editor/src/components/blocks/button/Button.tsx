@@ -2,6 +2,7 @@ import type { Button, ButtonVariant, Prettify } from '@axonivy/form-editor-proto
 import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
 import './Button.css';
 import { IvyIcons } from '@axonivy/ui-icons/lib';
+import { baseComponentFields, defaultBaseComponent } from '../base';
 
 type ButtonProps = Prettify<Button>;
 
@@ -15,7 +16,8 @@ export const defaultButtonProps: Button = {
   name: 'Proceed',
   action: '',
   variant: 'PRIMARY',
-  icon: ''
+  icon: '',
+  ...defaultBaseComponent
 } as const;
 
 const iconOptions: FieldOption<`ivy ivy-${IvyIcons}`>[] = (Object.keys(IvyIcons) as (keyof typeof IvyIcons)[]).map(key => ({
@@ -34,7 +36,8 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
     name: { label: 'Name', type: 'text' },
     action: { label: 'Action', type: 'text' },
     variant: { label: 'Variant', type: 'select', options: variantOptions },
-    icon: { label: 'Icon', type: 'select', options: iconOptions }
+    icon: { label: 'Icon', type: 'select', options: iconOptions },
+    ...baseComponentFields
   }
 };
 

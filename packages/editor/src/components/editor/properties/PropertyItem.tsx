@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { Field } from '../../../types/config';
-import './PropertyItem.css';
 import { InputField } from './fields/InputField';
 import { CheckboxField } from './fields/CheckboxField';
 import { TextareaField } from './fields/TextareaField';

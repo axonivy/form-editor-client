@@ -1,20 +1,42 @@
-import { isNotHiddenField, type Config } from '../../../types/config';
+import { isNotHiddenField, type Config, type Fields } from '../../../types/config';
 import { useData } from '../../../context/useData';
 import { PropertyItem } from './PropertyItem';
-import { Flex, SidebarHeader } from '@axonivy/ui-components';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Flex, SidebarHeader } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import type { PrimitiveValue } from '@axonivy/form-editor-protocol';
+import { isFreeLayout, type ConfigData, type PrimitiveValue, type ComponentData } from '@axonivy/form-editor-protocol';
+import { groupBy } from '../../../utils/array';
 
 type PropertiesProps = {
   config: Config;
 };
 
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T][];
+
+const visibleFields = (fields: Fields, elementConfig: ConfigData) => {
+  return Object.entries(fields)
+    .filter(([, field]) => isNotHiddenField(field))
+    .filter(([, field]) => field.hide === undefined || !field.hide(elementConfig))
+    .map(([key, field]) => ({ key, field }));
+};
+
+const visibleSections = (fields: ReturnType<typeof visibleFields>, parent?: ComponentData) => {
+  const sections = groupBy(fields, field => field.field.section ?? 'Properties');
+  return new Map(
+    (Object.entries(sections) as Entries<typeof sections>).filter(([section]) => section !== 'Layout' || isFreeLayout(parent))
+  );
+};
+
 export const Properties = ({ config }: PropertiesProps) => {
-  const { element, setElement } = useData();
+  const { element, setElement, parent } = useData();
   if (element === undefined) {
     return null;
   }
   const propertyConfig = config.components[element.type];
+  if (propertyConfig === undefined || propertyConfig.fields === undefined) {
+    return null;
+  }
   const elementConfig = { ...propertyConfig.defaultProps, ...element.config };
   const updateElementConfig = (key: string) => {
     return (change: PrimitiveValue) => {
@@ -22,24 +44,30 @@ export const Properties = ({ config }: PropertiesProps) => {
       setElement(element);
     };
   };
+  const fields = visibleFields(propertyConfig.fields, elementConfig);
+  const sections = visibleSections(fields, parent);
   return (
     <Flex direction='column' className='properties'>
-      <SidebarHeader icon={IvyIcons.PenEdit} title='Properties' />
-      <Flex direction='column' gap={2} style={{ paddingBlock: 'var(--size-2)' }}>
-        {propertyConfig &&
-          propertyConfig.fields &&
-          Object.entries(propertyConfig.fields)
-            .filter(([, field]) => isNotHiddenField(field))
-            .filter(([, field]) => field.hide === undefined || !field.hide(elementConfig))
-            .map(([key, field]) => (
-              <PropertyItem
-                key={key}
-                value={elementConfig[key]}
-                onChange={updateElementConfig(key)}
-                field={{ ...field, label: field.label ?? key }}
-              />
-            ))}
-      </Flex>
+      <SidebarHeader icon={IvyIcons.PenEdit} title={element.type} />
+      <Accordion type='single' collapsible defaultValue='Properties'>
+        {[...sections].map(([section, fields]) => (
+          <AccordionItem key={section} value={section}>
+            <AccordionTrigger>{section}</AccordionTrigger>
+            <AccordionContent>
+              <Flex direction='column' gap={2}>
+                {fields.map(({ key, field }) => (
+                  <PropertyItem
+                    key={`${element.id}-${key}`}
+                    value={elementConfig[key]}
+                    onChange={updateElementConfig(key)}
+                    field={{ ...field, label: field.label ?? key }}
+                  />
+                ))}
+              </Flex>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </Flex>
   );
 };

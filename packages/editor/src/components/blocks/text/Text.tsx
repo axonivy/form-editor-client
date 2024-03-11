@@ -1,6 +1,7 @@
 import type { Prettify, Text, TextType } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
 import './Text.css';
+import { baseComponentFields, defaultBaseComponent } from '../base';
 
 type TextProps = Prettify<Text>;
 
@@ -11,7 +12,8 @@ const typeOptions: FieldOption<TextType>[] = [
 
 export const defaultTextProps: TextProps = {
   content: 'This is a text',
-  type: 'RAW'
+  type: 'RAW',
+  ...defaultBaseComponent
 } as const;
 
 export const TextComponent: ComponentConfig<TextProps> = {
@@ -23,7 +25,8 @@ export const TextComponent: ComponentConfig<TextProps> = {
   render: props => <TextBlock {...props} />,
   fields: {
     content: { type: 'textarea' },
-    type: { type: 'select', options: typeOptions }
+    type: { type: 'select', options: typeOptions },
+    ...baseComponentFields
   }
 };
 

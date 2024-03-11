@@ -2,17 +2,20 @@ import { EMPTY_FORM, type ComponentData, type FormData, isLayout } from '@axoniv
 import { findComponentElement, modifyData } from './data';
 import type { DeepPartial } from '../test-utils/type-utils';
 
-describe('findComponent', () => {
+describe('findComponentElement', () => {
   test('find', () => {
     const data = filledData();
-    expect(findComponentElement(data, '3')).to.deep.equals(data.components[2]);
+    expect(findComponentElement(data, '3')).to.deep.equals({ element: data.components[2], parent: undefined });
     expect(findComponentElement(data, '5')).to.deep.equals(undefined);
   });
 
   test('find deep', () => {
     const data = filledData();
-    // @ts-ignore
-    expect(findComponentElement(data, '31')).to.deep.equals(data.components[2].config.components[0]);
+    expect(findComponentElement(data, '31')).to.deep.equals({
+      // @ts-ignore
+      element: data.components[2].config.components[0],
+      parent: data.components[2]
+    });
     expect(findComponentElement(data, '35')).to.deep.equals(undefined);
   });
 });

@@ -9,7 +9,7 @@
 export type InputType = ("TEXT" | "EMAIL" | "PASSWORD" | "NUMBER")
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type TextType = "RAW" | "MARKDOWN";
-export type LayoutGridVariant = "GRID2" | "GRID4";
+export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
 export type LayoutJustifyContent = "NORMAL" | "END";
 export type LayoutType = "GRID" | "FLEX";
 
@@ -30,27 +30,37 @@ export interface Component {
 }
 export interface Input {
   label: string;
+  lgSpan: string;
+  mdSpan: string;
   required: boolean;
   type: InputType;
   value: string;
 }
 export interface Link {
   href: string;
+  lgSpan: string;
+  mdSpan: string;
   name: string;
 }
 export interface Button {
   action: string;
   icon: string;
+  lgSpan: string;
+  mdSpan: string;
   name: string;
   variant: ButtonVariant;
 }
 export interface Text {
   content: string;
+  lgSpan: string;
+  mdSpan: string;
   type: TextType;
 }
 export interface Layout {
   components: Component[];
   gridVariant: LayoutGridVariant;
   justifyContent: LayoutJustifyContent;
+  lgSpan: string;
+  mdSpan: string;
   type: LayoutType;
 }
