@@ -14,11 +14,8 @@
     "src"
   ],
   "dependencies": {
-    "monaco-editor": "^0.44.0",
-    "monaco-editor-workers": "^0.44.0",
-    "monaco-languageclient": "^6.6.1",
+    "@axonivy/form-editor-protocol": "11.3.0-next",
     "vscode-jsonrpc": "^8.2.0",
-    "vscode-languageserver-protocol": "^3.17.5",
     "vscode-ws-jsonrpc": "^3.0.0"
   },
   "type": "module",

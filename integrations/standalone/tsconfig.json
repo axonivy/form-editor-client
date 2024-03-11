@@ -10,6 +10,7 @@
   "include": ["src"],
   "references": [
     { "path": "../../packages/editor/tsconfig.json" },
-    { "path": "../../packages/protocol/tsconfig.json" }
+    { "path": "../../packages/protocol/tsconfig.json" },
+    { "path": "../../packages/core/tsconfig.json" }
   ]
 }

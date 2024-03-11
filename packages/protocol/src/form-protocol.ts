@@ -3,11 +3,10 @@ export interface FormMetaRequestTypes {
 }
 
 export interface FormRequestTypes extends FormMetaRequestTypes {
-  initialize: [void, boolean];
   data: [any, any];
   saveData: [any, void];
 }
 
 export interface FormNotificationTypes {
-  // dataChanged: any;
+  dataChanged: void;
 }

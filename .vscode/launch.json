@@ -8,7 +8,19 @@
       "name": "Launch Standalone (Chrome)",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:3000?server=localhost:8081&app=designer&pmv=workflow-demos&file=/processes/Humantask/ProcurementRequestParallel.p.json",
+      "url": "http://localhost:3000/?server=localhost:8081&app=designer&pmv=jsf-renderer&file=/jsf/renderer/test/test.f.json",
+      "presentation": {
+        "group": "4. Standalone",
+        "order": 1
+      },
+      "preLaunchTask": "Start Standalone",
+      "postDebugTask": "Terminate All Tasks"
+    },
+    {
+      "name": "Launch Standalone Mock (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000/mock.html",
       "presentation": {
         "group": "4. Standalone",
         "order": 1

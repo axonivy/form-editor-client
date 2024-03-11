@@ -2,7 +2,7 @@ import { Canvas } from './canvas/Canvas';
 import { Palette } from './palette/Palette';
 import { Properties } from './properties/Properties';
 import './Editor.css';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AppProvider, DEFAULT_UI } from '../../context/useData';
 import { componentsGroupByCategroy, config } from '../components';
 import { Flex, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@axonivy/ui-components';
@@ -10,11 +10,15 @@ import { FormToolbar } from './FormToolbar';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../../context/useClient';
 import type { Unary } from '../../types/lambda';
-import type { FormData } from '@axonivy/form-editor-protocol';
+import type { FormContext, FormData, FormEditorData } from '@axonivy/form-editor-protocol';
 import { DataStructure } from './data-structure/DataStructure';
 import { DndContext } from '../../context/DndContext';
 
-export const Editor = () => {
+export const Editor = (props: FormContext) => {
+  const [context, setContext] = useState(props);
+  useEffect(() => {
+    setContext(props);
+  }, [props]);
   const [ui, setUi] = useState(DEFAULT_UI);
   const [selectedElement, setSelectedElement] = useState('');
 
@@ -30,21 +34,21 @@ export const Editor = () => {
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: queryKeys.data(),
-    queryFn: () => client.data(),
+    queryFn: () => client.data(context),
     structuralSharing: false
   });
 
   const mutation = useMutation({
     mutationKey: queryKeys.saveData(),
     mutationFn: (updateData: Unary<FormData>) => {
-      const saveData = queryClient.setQueryData<FormData>(queryKeys.data(), prevData => {
+      const saveData = queryClient.setQueryData<FormEditorData>(queryKeys.data(), prevData => {
         if (prevData) {
-          return updateData(prevData);
+          return { ...prevData, data: updateData(prevData.data) };
         }
         return undefined;
       });
       if (saveData) {
-        return client.saveData(saveData);
+        return client.saveData({ context, data: saveData.data });
       }
       return Promise.resolve();
     }
@@ -59,7 +63,7 @@ export const Editor = () => {
   }
 
   return (
-    <AppProvider value={{ data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi }}>
+    <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi }}>
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
           {ui.components && (
