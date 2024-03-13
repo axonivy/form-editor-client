@@ -1,47 +1,55 @@
-import { EMPTY_FORM, type FormClient, type FormData, type FormMetaRequestTypes } from '@axonivy/form-editor-protocol';
+import {
+  EMPTY_FORM,
+  type Event,
+  type FormClient,
+  type FormEditorData,
+  type FormMetaRequestTypes,
+  type FormSaveDataArgs
+} from '@axonivy/form-editor-protocol';
 
 export class FormClientMock implements FormClient {
-  private formData: FormData = {
-    ...EMPTY_FORM,
-    components: [
-      {
-        id: '1',
-        type: 'Input',
-        config: {
-          label: 'test'
+  private formData: FormEditorData = {
+    context: { app: '', pmv: '', file: '' },
+    readonly: false,
+    defaults: {},
+    data: {
+      ...EMPTY_FORM,
+      components: [
+        {
+          id: '1',
+          type: 'Input',
+          config: {
+            label: 'test'
+          }
+        },
+        {
+          id: '2',
+          type: 'Button',
+          config: {
+            name: 'Proceed',
+            variant: 'PRIMARY'
+          }
+        },
+        {
+          id: '3',
+          type: 'Layout',
+          config: {
+            components: [
+              { id: '31', type: 'Text', config: { content: 'bla' } },
+              { id: '32', type: 'Button', config: { name: 'hi', variant: 'SECONDARY' } }
+            ]
+          }
         }
-      },
-      {
-        id: '2',
-        type: 'Button',
-        config: {
-          name: 'Proceed',
-          variant: 'PRIMARY'
-        }
-      },
-      {
-        id: '3',
-        type: 'Layout',
-        config: {
-          components: [
-            { id: '31', type: 'Text', config: { content: 'bla' } },
-            { id: '32', type: 'Button', config: { name: 'hi', variant: 'SECONDARY' } }
-          ]
-        }
-      }
-    ]
+      ]
+    }
   };
 
-  initialize(): Promise<boolean> {
-    return Promise.resolve(true);
-  }
-
-  data(): Promise<FormData> {
+  data(): Promise<FormEditorData> {
     return Promise.resolve(this.formData);
   }
 
-  saveData(saveData: FormData): Promise<void> {
-    this.formData = saveData;
+  saveData(saveData: FormSaveDataArgs): Promise<void> {
+    this.formData.data = saveData.data;
     return Promise.resolve();
   }
 
@@ -52,4 +60,6 @@ export class FormClientMock implements FormClient {
         throw Error('mock meta path not programmed');
     }
   }
+
+  onDataChanged: Event<void>;
 }

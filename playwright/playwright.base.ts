@@ -25,7 +25,7 @@ export default defineConfig({
   reporter: process.env.CI ? [['../custom-reporter.ts'], ['junit', { outputFile: 'report.xml' }], ['list']] : 'html',
   use: {
     actionTimeout: 0,
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3000/mock.html',
     trace: 'retain-on-failure',
     headless: process.env.CI ? true : false
   },

@@ -5,6 +5,8 @@ import { useAppContext } from '../../../context/useData';
 import { DropZone, type DropZoneProps } from './DropZone';
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 import { CANVAS_DROPZONE_ID } from '../../../data/data';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from './ErrorFallback';
 
 type CanvasProps = {
   config: Config;
@@ -14,10 +16,12 @@ export const Canvas = ({ config }: CanvasProps) => {
   const { ui, data } = useAppContext();
   return (
     <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.responsiveMode}>
-      {data.components.map((component, index) => (
-        <ComponentBlock key={component.id} component={component} config={config} preId={data.components[index - 1]?.id} />
-      ))}
-      <EmtpyBlock id={CANVAS_DROPZONE_ID} preId={data.components[data.components.length - 1]?.id} />
+      <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[ui.dataStructure]}>
+        {data.components.map((component, index) => (
+          <ComponentBlock key={component.id} component={component} config={config} preId={data.components[index - 1]?.id} />
+        ))}
+        <EmtpyBlock id={CANVAS_DROPZONE_ID} preId={data.components[data.components.length - 1]?.id} />
+      </ErrorBoundary>
     </div>
   );
 };

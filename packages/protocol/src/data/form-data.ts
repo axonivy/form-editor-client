@@ -26,3 +26,17 @@ export const isLayout = (component?: Component | ComponentData): component is La
 export const isFreeLayout = (component?: Component | ComponentData): component is LayoutConfig => {
   return isLayout(component) && component.config.gridVariant === 'FREE';
 };
+
+export type FormContext = { app: string; pmv: string; file: string };
+
+export type FormEditorData = {
+  context: FormContext;
+  defaults: any;
+  readonly: boolean;
+  data: FormData;
+};
+
+export type FormSaveDataArgs = {
+  context: FormContext;
+  data: FormData;
+};

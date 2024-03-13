@@ -1,26 +1,20 @@
 import './index.css';
 import { App, ClientContextProvider, QueryProvider, initQueryClient } from '@axonivy/form-editor';
-import { FormClientJsonRpc } from '@axonivy/form-editor-core';
 import { ThemeProvider } from '@axonivy/ui-components';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { URLParams } from './url-helper';
+import { FormClientMock } from './mock/form-client-mock';
 
 export async function start(): Promise<void> {
-  const server = URLParams.webSocketBase();
-  const app = URLParams.app();
-  const pmv = URLParams.pmv();
-  const file = URLParams.file();
-
-  const client = await FormClientJsonRpc.startWebSocketClient(server);
+  const formClient = new FormClientMock();
   const queryClient = initQueryClient();
 
   createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <ThemeProvider defaultTheme='light'>
-        <ClientContextProvider client={client}>
+        <ClientContextProvider client={formClient}>
           <QueryProvider client={queryClient}>
-            <App app={app} pmv={pmv} file={file} />
+            <App app={''} pmv={''} file={''} />
           </QueryProvider>
         </ClientContextProvider>
       </ThemeProvider>
