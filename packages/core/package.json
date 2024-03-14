@@ -15,8 +15,7 @@
   ],
   "dependencies": {
     "@axonivy/form-editor-protocol": "11.3.0-next",
-    "vscode-jsonrpc": "^8.2.0",
-    "vscode-ws-jsonrpc": "^3.0.0"
+    "@axonivy/jsonrpc": "11.3.0-next.71"
   },
   "type": "module",
   "types": "lib/index",
