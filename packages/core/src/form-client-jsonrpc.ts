@@ -7,12 +7,16 @@ import type {
   FormEditorData,
   FormSaveDataArgs
 } from '@axonivy/form-editor-protocol';
-import type { Disposable } from 'vscode-jsonrpc';
-import { createMessageConnection, Emitter } from 'vscode-jsonrpc';
-import { ConnectionUtil, type MessageConnection } from './connection-util';
-import { BaseRcpClient } from './rcp-client';
+import {
+  BaseRpcClient,
+  createWebSocketConnection,
+  createMessageConnection,
+  Emitter,
+  type Connection,
+  type Disposable
+} from '@axonivy/jsonrpc';
 
-export class FormClientJsonRpc extends BaseRcpClient implements FormClient {
+export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
   protected onDataChangedEmitter = new Emitter<void>();
   onDataChanged = this.onDataChangedEmitter.event;
   protected override setupConnection(): void {
@@ -45,12 +49,12 @@ export class FormClientJsonRpc extends BaseRcpClient implements FormClient {
   }
 
   public static async startWebSocketClient(url: string): Promise<FormClient> {
-    const webSocketUrl = ConnectionUtil.buildWebSocketUrl(url, 'ivy-form-lsp');
-    const connection = await ConnectionUtil.createWebSocketConnection(webSocketUrl);
+    const webSocketUrl = new URL('ivy-form-lsp', url);
+    const connection = await createWebSocketConnection(webSocketUrl);
     return FormClientJsonRpc.startClient(connection);
   }
 
-  public static async startClient(connection: MessageConnection): Promise<FormClient> {
+  public static async startClient(connection: Connection): Promise<FormClient> {
     const messageConnection = createMessageConnection(connection.reader, connection.writer);
     const client = new FormClientJsonRpc(messageConnection);
     client.start();
