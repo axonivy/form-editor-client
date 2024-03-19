@@ -16,6 +16,14 @@ export namespace URLParams {
     return parameter('file') ?? '';
   }
 
+  export function theme(): 'dark' | 'light' {
+    const theme = parameter('theme');
+    if (theme === 'dark') {
+      return theme;
+    }
+    return 'light';
+  }
+
   export function webSocketBase(): string {
     return `${isSecureConnection() ? 'wss' : 'ws'}://${server()}`;
   }
