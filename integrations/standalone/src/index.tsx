@@ -11,13 +11,14 @@ export async function start(): Promise<void> {
   const app = URLParams.app();
   const pmv = URLParams.pmv();
   const file = URLParams.file();
+  const theme = URLParams.theme();
 
   const client = await FormClientJsonRpc.startWebSocketClient(server);
   const queryClient = initQueryClient();
 
   createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <ThemeProvider defaultTheme='light'>
+      <ThemeProvider defaultTheme={theme}>
         <ClientContextProvider client={client}>
           <QueryProvider client={queryClient}>
             <App app={app} pmv={pmv} file={file} />
