@@ -9,6 +9,7 @@ import type {
 } from '@axonivy/form-editor-protocol';
 import {
   BaseRpcClient,
+  urlBuilder,
   createWebSocketConnection,
   createMessageConnection,
   Emitter,
@@ -49,7 +50,7 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
   }
 
   public static async startWebSocketClient(url: string): Promise<FormClient> {
-    const webSocketUrl = new URL('ivy-form-lsp', url);
+    const webSocketUrl = urlBuilder(url, 'ivy-form-lsp');
     const connection = await createWebSocketConnection(webSocketUrl);
     return FormClientJsonRpc.startClient(connection);
   }
