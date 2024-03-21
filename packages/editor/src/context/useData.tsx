@@ -16,7 +16,7 @@ export type AppContext = {
   data: FormData;
   setData: UpdateConsumer<FormData>;
   selectedElement?: string;
-  setSelectedElement: Dispatch<SetStateAction<string>>;
+  setSelectedElement: Dispatch<SetStateAction<string | undefined>>;
   ui: UI;
   setUi: Dispatch<SetStateAction<UI>>;
 };

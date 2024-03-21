@@ -13,6 +13,8 @@ import type { Unary } from '../../types/lambda';
 import type { FormContext, FormData, FormEditorData } from '@axonivy/form-editor-protocol';
 import { DataStructure } from './data-structure/DataStructure';
 import { DndContext } from '../../context/DndContext';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from './canvas/ErrorFallback';
 
 export const Editor = (props: FormContext) => {
   const [context, setContext] = useState(props);
@@ -20,7 +22,7 @@ export const Editor = (props: FormContext) => {
     setContext(props);
   }, [props]);
   const [ui, setUi] = useState(DEFAULT_UI);
-  const [selectedElement, setSelectedElement] = useState('');
+  const [selectedElement, setSelectedElement] = useState<string>();
 
   const client = useClient();
   const queryClient = useQueryClient();
@@ -77,7 +79,9 @@ export const Editor = (props: FormContext) => {
           <ResizablePanel id='canvas' order={2} defaultSize={50} minSize={30} className='panel'>
             <Flex direction='column' className='canvas-panel'>
               <FormToolbar />
-              {ui.dataStructure ? <DataStructure /> : <Canvas config={config} />}
+              <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[ui.dataStructure]}>
+                {ui.dataStructure ? <DataStructure /> : <Canvas config={config} />}
+              </ErrorBoundary>
             </Flex>
           </ResizablePanel>
           {ui.properties && (
