@@ -90,6 +90,23 @@ pipeline {
         }
       }
     }
+    stage('Publish (NPM)') {
+      when {
+        expression { isReleaseOrMasterBranch() && currentBuild.changeSets.size() > 0 }
+      }
+      steps {
+        script {
+          docker.build('node', '-f build/Dockerfile .').inside {
+            sh 'npm run build'
+            sh 'git checkout .'
+            withCredentials([string(credentialsId: 'npmjs-registry.ivyteam.ch-auth-token', variable: 'NPM_AUTH_TOKEN')]) {
+              sh 'npm set "//npmjs-registry.ivyteam.ch/:_authToken = $NPM_AUTH_TOKEN"'
+              sh 'npm run publish:next'
+            }
+          }
+        }
+      }
+    }
   }
   post {
     always {
