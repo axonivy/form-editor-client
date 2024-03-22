@@ -58,12 +58,14 @@ export const FormToolbar = () => {
           onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
           toggle={ui.helpPaddings}
         />
-        <Button
-          icon={IvyIcons.DarkMode}
-          size='large'
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          toggle={theme === 'dark'}
-        />
+        {theme !== 'system' && (
+          <Button
+            icon={IvyIcons.DarkMode}
+            size='large'
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            toggle={theme === 'dark'}
+          />
+        )}
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
           size='large'
