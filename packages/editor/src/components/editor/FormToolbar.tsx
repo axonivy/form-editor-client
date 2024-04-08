@@ -29,7 +29,7 @@ export const FormToolbar = () => {
           <Button
             icon={IvyIcons.LayoutSidebarRightCollapse}
             size='large'
-            rotate='180'
+            rotate={180}
             onClick={() => setUi(old => ({ ...old, components: !old.components }))}
           />
           <Button icon={IvyIcons.SelectionTool} size='large' toggle={true} />
