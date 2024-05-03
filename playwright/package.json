@@ -19,6 +19,7 @@
     "lint": "eslint --ext .ts,.tsx ./tests",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./tests",
     "start:standalone": "npm --prefix .. run dev ",
-    "webtest": "playwright test -c ./tests/standalone"
+    "webtest": "playwright test -c ./tests/standalone",
+    "webtest:screenshot": "playwright test -c ./tests/screenshots"
   }
 }
