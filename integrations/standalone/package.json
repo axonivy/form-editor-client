@@ -1,6 +1,6 @@
 {
   "name": "@axonivy/form-editor-standalone",
-  "version": "11.3.0-next",
+  "version": "11.4.0-next",
   "private": true,
   "author": "Axon Ivy AG",
   "homepage": "https://developer.axonivy.com/",
@@ -9,8 +9,8 @@
     "url": "https://github.com/axonivy/form-editor-client"
   },
   "dependencies": {
-    "@axonivy/form-editor": "11.3.0-next",
-    "@axonivy/form-editor-core": "11.3.0-next",
+    "@axonivy/form-editor": "11.4.0-next",
+    "@axonivy/form-editor-core": "11.4.0-next",
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
