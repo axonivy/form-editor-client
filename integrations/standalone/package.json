@@ -9,8 +9,8 @@
     "url": "https://github.com/axonivy/form-editor-client"
   },
   "dependencies": {
-    "@axonivy/form-editor": "11.4.0-next",
-    "@axonivy/form-editor-core": "11.4.0-next",
+    "@axonivy/form-editor": "*",
+    "@axonivy/form-editor-core": "*",
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
