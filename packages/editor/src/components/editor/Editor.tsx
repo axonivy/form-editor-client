@@ -3,7 +3,7 @@ import { Palette } from './palette/Palette';
 import { Properties } from './properties/Properties';
 import './Editor.css';
 import { useEffect, useMemo, useState } from 'react';
-import { AppProvider, DEFAULT_UI } from '../../context/useData';
+import { AppProvider, useUiState } from '../../context/useData';
 import { componentsGroupByCategroy, config } from '../components';
 import { Flex, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@axonivy/ui-components';
 import { FormToolbar } from './FormToolbar';
@@ -21,7 +21,7 @@ export const Editor = (props: FormContext) => {
   useEffect(() => {
     setContext(props);
   }, [props]);
-  const [ui, setUi] = useState(DEFAULT_UI);
+  const { ui, setUi } = useUiState();
   const [selectedElement, setSelectedElement] = useState<string>();
 
   const client = useClient();

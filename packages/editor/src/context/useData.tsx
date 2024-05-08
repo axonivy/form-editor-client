@@ -1,7 +1,8 @@
 import { EMPTY_FORM, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
-import { createContext, useContext, type SetStateAction, type Dispatch } from 'react';
+import { createContext, useContext, type SetStateAction, type Dispatch, useState, useEffect } from 'react';
 import type { UpdateConsumer } from '../types/lambda';
 import { findComponentElement } from '../data/data';
+import { useReadonly } from '@axonivy/ui-components';
 
 type UI = {
   components: boolean;
@@ -10,7 +11,19 @@ type UI = {
   helpPaddings: boolean;
   responsiveMode: 'desktop' | 'tablet' | 'mobile';
 };
-export const DEFAULT_UI: UI = { components: true, properties: true, dataStructure: false, helpPaddings: true, responsiveMode: 'desktop' };
+
+const DEFAULT_UI: UI = { components: true, properties: true, dataStructure: false, helpPaddings: true, responsiveMode: 'desktop' };
+
+export const useUiState = () => {
+  const readonly = useReadonly();
+  const [ui, setUi] = useState(DEFAULT_UI);
+  useEffect(() => {
+    if (readonly) {
+      setUi(old => ({ ...old, helpPaddings: false, components: false }));
+    }
+  }, [readonly]);
+  return { ui, setUi };
+};
 
 export type AppContext = {
   data: FormData;
