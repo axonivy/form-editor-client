@@ -1,7 +1,7 @@
 import './index.css';
 import { App, ClientContextProvider, QueryProvider, initQueryClient } from '@axonivy/form-editor';
 import { FormClientJsonRpc } from '@axonivy/form-editor-core';
-import { ThemeProvider } from '@axonivy/ui-components';
+import { ThemeProvider, ReadonlyProvider } from '@axonivy/ui-components';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { URLParams } from './url-helper';
@@ -12,6 +12,7 @@ export async function start(): Promise<void> {
   const pmv = URLParams.pmv();
   const file = URLParams.file();
   const theme = URLParams.theme();
+  const readonly = URLParams.readonly();
 
   const client = await FormClientJsonRpc.startWebSocketClient(server);
   const queryClient = initQueryClient();
@@ -21,7 +22,9 @@ export async function start(): Promise<void> {
       <ThemeProvider defaultTheme={theme}>
         <ClientContextProvider client={client}>
           <QueryProvider client={queryClient}>
-            <App app={app} pmv={pmv} file={file} />
+            <ReadonlyProvider readonly={readonly}>
+              <App app={app} pmv={pmv} file={file} />
+            </ReadonlyProvider>
           </QueryProvider>
         </ClientContextProvider>
       </ThemeProvider>
