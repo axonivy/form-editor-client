@@ -30,7 +30,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   fields: {
     label: { subsection: 'General', type: 'text' },
     required: { subsection: 'General', type: 'checkbox' },
-    value: { subsection: 'General', type: 'text' },
+    value: { subsection: 'General', type: 'textBrowser' },
     type: { subsection: 'General', type: 'select', options: typeOptions },
     ...baseComponentFields
   }

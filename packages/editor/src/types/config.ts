@@ -22,7 +22,7 @@ export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComp
   section?: 'Layout';
 };
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
-  type: 'text' | 'number' | 'textarea' | 'checkbox';
+  type: 'text' | 'number' | 'textarea' | 'checkbox' | 'textBrowser';
 };
 export type SelectField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'select' | 'radio';

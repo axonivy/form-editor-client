@@ -55,7 +55,7 @@ export class FormClientMock implements FormClient {
 
   meta<TMeta extends keyof FormMetaRequestTypes>(path: TMeta): Promise<FormMetaRequestTypes[TMeta][1]> {
     switch (path) {
-      case 'meta/form':
+      case 'meta/data/attributes':
       default:
         throw Error('mock meta path not programmed');
     }

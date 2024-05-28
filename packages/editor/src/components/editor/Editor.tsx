@@ -14,6 +14,7 @@ import { DataStructure } from './data-structure/DataStructure';
 import { DndContext } from '../../context/DndContext';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './canvas/ErrorFallback';
+import { genQueryKey } from '../../query';
 
 export const Editor = (props: FormEditorProps) => {
   const [context, setContext] = useState(props.context);
@@ -30,8 +31,8 @@ export const Editor = (props: FormEditorProps) => {
 
   const queryKeys = useMemo(() => {
     return {
-      data: () => ['form-editor', 'data', context],
-      saveData: () => ['saveData']
+      data: () => genQueryKey('data', context),
+      saveData: () => genQueryKey('saveData', context)
     };
   }, [context]);
 
@@ -68,7 +69,7 @@ export const Editor = (props: FormEditorProps) => {
   }
 
   return (
-    <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi }}>
+    <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi, context }}>
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
           <ResizablePanel
