@@ -23,7 +23,16 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime', 'react-dom']
+      external: [
+        '@dnd-kit/core',
+        '@tanstack/react-query',
+        '@tanstack/react-query-devtools',
+        'react',
+        'react-error-boundary',
+        'react/jsx-runtime',
+        'react-dom',
+        'uuid'
+      ]
     }
   }
 });
