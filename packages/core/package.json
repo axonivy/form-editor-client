@@ -17,14 +17,17 @@
     "@axonivy/form-editor-protocol": "~11.4.0-next",
     "@axonivy/jsonrpc": "~11.4.0-next.160"
   },
+  "devDependencies": {
+    "vite": "^5.2.8"
+  },
   "type": "module",
-  "types": "lib/index",
-  "module": "lib/index",
-  "source": "src/index",
+  "types": "lib/index.d.ts",
+  "main": "lib/core.js",
+  "module": "lib/core.js",
   "scripts": {
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "build": "tsc --build && tscp",
-    "package": "tsc && tscp",
+    "package": "npm run clean && vite build && npm run build",
     "build:clean": "npm clean && npm build",
     "type": "tsc --noEmit",
     "lint": "eslint --ext .ts,.tsx ./src",
