@@ -29,10 +29,10 @@ export const Editor = (props: FormContext) => {
 
   const queryKeys = useMemo(() => {
     return {
-      data: () => ['data'],
+      data: () => ['form-editor', 'data', context],
       saveData: () => ['saveData']
     };
-  }, []);
+  }, [context]);
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: queryKeys.data(),
