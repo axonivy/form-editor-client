@@ -6,7 +6,7 @@
 
   <groupId>ch.ivyteam.form</groupId>
   <artifactId>form-editor</artifactId>
-  <version>11.3.1-SNAPSHOT</version>
+  <version>11.3.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <distributionManagement>
