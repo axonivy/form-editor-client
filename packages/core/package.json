@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@axonivy/form-editor-protocol": "11.3.2-next",
-    "@axonivy/jsonrpc": "11.3.1-next.156"
+    "@axonivy/jsonrpc": "11.3.2-next.160"
   },
   "type": "module",
   "types": "lib/index",
