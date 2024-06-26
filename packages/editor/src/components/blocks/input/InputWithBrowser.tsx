@@ -11,10 +11,6 @@ const supportedFields: { [value: string]: BrowserType[] } = {
 
 export const InputWithBrowser = ({ label, value, onChange }: InputFieldProps) => {
   const [open, setOpen] = useState(false);
-  //const triggerStyle: React.CSSProperties = browserTypes ? { visibility: 'visible' } : { visibility: 'collapse' }; // TODO: Decide on method to decide
-  const triggerStyle: React.CSSProperties = Object.keys(supportedFields).includes(label)
-    ? { visibility: 'visible' }
-    : { visibility: 'collapse' };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Fieldset label={label}>
