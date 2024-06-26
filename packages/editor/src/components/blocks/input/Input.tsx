@@ -29,7 +29,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   fields: {
     label: { type: 'text' },
     required: { type: 'checkbox' },
-    value: { type: 'text' },
+    value: { type: 'textBrowser' },
     type: { type: 'select', options: typeOptions },
     ...baseComponentFields
   }

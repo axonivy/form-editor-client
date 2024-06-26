@@ -1,5 +1,6 @@
 import { BrowsersView, useBrowser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
+import './browser.css';
 
 export const enum BrowserType {
   Attribute = 'Attribute'
@@ -32,9 +33,9 @@ export const Browser = ({ applyFn, browserTypes }: { applyFn: (value?: string) =
   return (
     <BrowsersView
       browsers={[
-        { name: BrowserType.Attribute, icon: IvyIcons.Attribute, browser: attributes, infoProvider: row => row?.original.info }
+        { name: BrowserType.Attribute, icon: IvyIcons.Attribute, browser: attributes, infoProvider: (row: any) => row?.original.info }
       ].filter(browser => browserTypes?.includes(browser.name))}
-      apply={(value, type) => {
+      apply={value => {
         if (value) {
           applyFn('#{data' + createPath(value!.cursor, attrData) + '}');
         } else {
@@ -48,7 +49,7 @@ export const Browser = ({ applyFn, browserTypes }: { applyFn: (value?: string) =
 const createPath = (value: string, data: Array<BrowserNode>) => {
   let path = undefined;
   data.forEach(n => {
-    let retVal = pathFinder(value, n, '');
+    const retVal = pathFinder(value, n, '');
     if (retVal) path = retVal;
   });
   return path;

@@ -6,6 +6,7 @@ import { SelectField } from './fields/SelectField';
 import { NumberField } from './fields/NumberField';
 import type { PrimitiveValue } from '@axonivy/form-editor-protocol';
 import { InputWithBrowser } from '../../blocks/input/InputWithBrowser';
+import { InputField } from './fields/InputField';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
@@ -27,6 +28,8 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
     const label = field.label!;
     switch (field.type) {
       case 'text':
+        return <InputField label={label} value={toString(value)} onChange={updateValue} />;
+      case 'textBrowser':
         return <InputWithBrowser label={label} value={toString(value)} onChange={updateValue} />;
       case 'number':
         return <NumberField label={label} value={toNumber(value)} onChange={updateValue} />;
