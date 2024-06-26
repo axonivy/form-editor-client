@@ -5,9 +5,17 @@ import { Browser, BrowserType } from '../../browser/Browser';
 import './Input.css';
 import type { InputFieldProps } from '../../editor/properties/fields/InputField';
 
-const supportedFields: { [value: string]: BrowserType[] } = {
-  value: [BrowserType.Attribute]
-};
+const supportedFields = (() => {
+  const fields: { [value: string]: BrowserType[] } = {
+    value: [BrowserType.Attribute],
+    content: [BrowserType.Attribute],
+    name: [BrowserType.Attribute]
+  };
+
+  return {
+    get: (key: string) => fields[key.toLowerCase()] ?? []
+  };
+})();
 
 export const InputWithBrowser = ({ label, value, onChange }: InputFieldProps) => {
   const [open, setOpen] = useState(false);
@@ -28,7 +36,7 @@ export const InputWithBrowser = ({ label, value, onChange }: InputFieldProps) =>
               if (value) onChange(value);
               setOpen(false);
             }}
-            browserTypes={supportedFields[label]}
+            browserTypes={supportedFields.get(label)}
           />
         </DialogContent>
       </DialogPortal>

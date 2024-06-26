@@ -19,8 +19,8 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   defaultProps: defaultLinkProps,
   render: props => <LinkBlock {...props} />,
   fields: {
-    name: { type: 'text' },
-    href: { type: 'text' },
+    name: { type: 'textBrowser' },
+    href: { type: 'textBrowser' },
     ...baseComponentFields
   }
 };

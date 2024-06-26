@@ -33,7 +33,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   defaultProps: defaultButtonProps,
   render: props => <ButtonBlock {...props} />,
   fields: {
-    name: { label: 'Name', type: 'text' },
+    name: { label: 'Name', type: 'textBrowser' },
     action: { label: 'Action', type: 'text' },
     variant: { label: 'Variant', type: 'select', options: variantOptions },
     icon: { label: 'Icon', type: 'select', options: iconOptions },
