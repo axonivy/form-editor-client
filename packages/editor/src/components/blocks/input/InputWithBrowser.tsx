@@ -16,7 +16,7 @@ export const InputWithBrowser = ({ label, value, onChange }: InputFieldProps) =>
       <Fieldset label={label}>
         <InputGroup>
           <Input value={value} onChange={e => onChange(e.target.value)} />
-          <DialogTrigger asChild style={triggerStyle}>
+          <DialogTrigger asChild>
             <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
           </DialogTrigger>
         </InputGroup>
