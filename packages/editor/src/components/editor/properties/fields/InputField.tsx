@@ -1,6 +1,6 @@
 import { Fieldset, Input } from '@axonivy/ui-components';
 
-type InputFieldProps = {
+export type InputFieldProps = {
   label: string;
   value: string;
   onChange: (value: string) => void;

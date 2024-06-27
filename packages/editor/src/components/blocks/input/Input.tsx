@@ -27,9 +27,9 @@ export const InputComponent: ComponentConfig<InputProps> = {
   defaultProps: defaultInputProps,
   render: props => <UiInput {...props} />,
   fields: {
-    label: { type: 'text' },
+    label: { type: 'textBrowser' },
     required: { type: 'checkbox' },
-    value: { type: 'text' },
+    value: { type: 'textBrowser' },
     type: { type: 'select', options: typeOptions },
     ...baseComponentFields
   }
