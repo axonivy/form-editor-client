@@ -18,6 +18,10 @@ import {
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../../context/useData';
+import { componentsByCategoryGroupBySubcategory } from '../components';
+import { useEffect, useState } from 'react';
+import { useDndContext } from '@dnd-kit/core';
+import { PaletteCategoryPopover } from './palette/PaletteCategoryPopup';
 
 export const FormToolbar = () => {
   const { ui, setUi } = useAppContext();
@@ -40,19 +44,24 @@ export const FormToolbar = () => {
       }
       return { ...old, responsiveMode: next };
     });
+
+  const [elementsPanelOpen, setElementsPanelOpen] = useState(false);
+  const [structurePanelOpen, setStructurePanelOpen] = useState(false);
+  const [actionPanelOpen, setActionPanelOpen] = useState(false);
+  const { active } = useDndContext();
+
+  useEffect(() => {
+    if (active !== undefined) {
+      setElementsPanelOpen(false);
+      setStructurePanelOpen(false);
+      setActionPanelOpen(false);
+    }
+  }, [active]);
+
   return (
     <Toolbar>
       <Flex>
         <Flex gap={1}>
-          {editable && (
-            <Button
-              icon={IvyIcons.LayoutSidebarRightCollapse}
-              size='large'
-              rotate={180}
-              onClick={() => setUi(old => ({ ...old, components: !old.components }))}
-            />
-          )}
-          <Button icon={IvyIcons.SelectionTool} size='large' toggle={true} />
           <Button icon={IvyIcons.EventStart} size='large' onClick={toggleResponsiveMode} />
         </Flex>
         {editable && (
@@ -67,6 +76,31 @@ export const FormToolbar = () => {
           </ToolbarContainer>
         )}
       </Flex>
+
+      <Flex gap={4} className='palette-section'>
+        <PaletteCategoryPopover
+          label='Structure'
+          icon={IvyIcons.LaneSwimlanes}
+          items={componentsByCategoryGroupBySubcategory('Structure')}
+          open={elementsPanelOpen}
+          onOpenChange={setElementsPanelOpen}
+        />
+        <PaletteCategoryPopover
+          label='Elements'
+          icon={IvyIcons.ChangeType}
+          items={componentsByCategoryGroupBySubcategory('Elements')}
+          open={structurePanelOpen}
+          onOpenChange={setStructurePanelOpen}
+        />
+        <PaletteCategoryPopover
+          label='Action'
+          icon={IvyIcons.MultiSelection}
+          items={componentsByCategoryGroupBySubcategory('Action')}
+          open={actionPanelOpen}
+          onOpenChange={setActionPanelOpen}
+        />
+      </Flex>
+
       <Flex gap={1}>
         <Popover>
           <PopoverTrigger asChild>

@@ -28,6 +28,7 @@ const iconOptions: FieldOption<`ivy ivy-${IvyIcons}`>[] = (Object.keys(IvyIcons)
 export const ButtonComponent: ComponentConfig<ButtonProps> = {
   name: 'Button',
   category: 'Action',
+  subcategory: 'General',
   icon: 'M22 9c0-.6-.5-1-1.3-1H3.4C2.5 8 2 8.4 2 9v6c0 .6.5 1 1.3 1h17.4c.8 0 1.3-.4 1.3-1V9zm-1 6H3V9h18v6z M4 11.5h16v1H4z',
   description: 'A button for fire actions',
   defaultProps: defaultButtonProps,

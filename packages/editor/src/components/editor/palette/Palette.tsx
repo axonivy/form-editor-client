@@ -1,31 +1,38 @@
 import { PaletteItem } from './PaletteItem';
 import type { PaletteConfig } from './palette-config';
 import './Palette.css';
-import { IvyIcons } from '@axonivy/ui-icons';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Flex, SidebarHeader } from '@axonivy/ui-components';
+import { Flex, SearchInput, Separator } from '@axonivy/ui-components';
+import { useState } from 'react';
 
 type PaletteProps = {
   items: Record<string, PaletteConfig[]>;
 };
 
 export const Palette = ({ items }: PaletteProps) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
   return (
     <Flex direction='column' className='palette'>
-      <SidebarHeader icon={IvyIcons.LaneSwimlanes} title='Components' />
-      <Accordion type='single' collapsible defaultValue={Object.keys(items)[0]}>
-        {Object.entries(items).map(([category, groupItems]) => (
-          <AccordionItem key={category} value={category}>
-            <AccordionTrigger>{category}</AccordionTrigger>
-            <AccordionContent>
+      <SearchInput placeholder='Search...' value={searchTerm} onChange={setSearchTerm} />
+      {Object.entries(items).map(([category, groupItems], index) => {
+        const filteredItems = groupItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        if (filteredItems.length > 0) {
+          return (
+            <div key={category}>
+              {index !== 0 && <Separator />}
+              <h3>{category}</h3>
               <div className='palette-category-items'>
-                {groupItems.map(item => (
-                  <PaletteItem key={item.name} item={item} />
-                ))}
+                <div className='palette-items-grid'>
+                  {filteredItems.map(item => (
+                    <PaletteItem key={item.name} item={item} />
+                  ))}
+                </div>
               </div>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+            </div>
+          );
+        }
+        return null;
+      })}
     </Flex>
   );
 };

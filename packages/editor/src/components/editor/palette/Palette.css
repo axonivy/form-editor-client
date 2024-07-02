@@ -1,5 +1,9 @@
-.palette-category-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--size-1);
+.palette {
+  width: 100%;
+}
+
+.palette-items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
