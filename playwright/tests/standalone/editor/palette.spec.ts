@@ -4,7 +4,9 @@ import { FormEditor } from '../../page-objects/form-editor';
 test.describe('palette', () => {
   test('has sections', async ({ page }) => {
     const processEditor = await FormEditor.open(page);
-    const palette = processEditor.palette();
-    await palette.expectItemCount(3);
+    const toolbar = processEditor.toolbar();
+    await toolbar.expectCategoryCount(3);
+    await toolbar.expectItemInCategoryCount(0, 1);
+    await toolbar.expectItemInCategoryCount(1, 2);
   });
 });

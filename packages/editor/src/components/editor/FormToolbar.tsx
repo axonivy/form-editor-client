@@ -18,6 +18,7 @@ import {
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../../context/useData';
+import { PaletteCategoryPopover } from './palette/PaletteCategoryPopup';
 
 export const FormToolbar = () => {
   const { ui, setUi } = useAppContext();
@@ -40,19 +41,11 @@ export const FormToolbar = () => {
       }
       return { ...old, responsiveMode: next };
     });
+
   return (
     <Toolbar>
       <Flex>
         <Flex gap={1}>
-          {editable && (
-            <Button
-              icon={IvyIcons.LayoutSidebarRightCollapse}
-              size='large'
-              rotate={180}
-              onClick={() => setUi(old => ({ ...old, components: !old.components }))}
-            />
-          )}
-          <Button icon={IvyIcons.SelectionTool} size='large' toggle={true} />
           <Button icon={IvyIcons.EventStart} size='large' onClick={toggleResponsiveMode} />
         </Flex>
         {editable && (
@@ -67,6 +60,13 @@ export const FormToolbar = () => {
           </ToolbarContainer>
         )}
       </Flex>
+
+      <Flex gap={4} className='palette-section'>
+        <PaletteCategoryPopover label='Structure' icon={IvyIcons.LaneSwimlanes} />
+        <PaletteCategoryPopover label='Elements' icon={IvyIcons.ChangeType} />
+        <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
+      </Flex>
+
       <Flex gap={1}>
         <Popover>
           <PopoverTrigger asChild>
