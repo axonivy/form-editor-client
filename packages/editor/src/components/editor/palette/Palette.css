@@ -1,9 +1,17 @@
 .palette {
-  width: 100%;
+  width: 320px;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .palette-items-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
+}
+
+@media (max-width: 500px) {
+  .palette {
+    width: 210px;
+  }
 }

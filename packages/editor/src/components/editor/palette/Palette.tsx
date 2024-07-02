@@ -1,8 +1,8 @@
-import { PaletteItem } from './PaletteItem';
 import type { PaletteConfig } from './palette-config';
 import './Palette.css';
 import { Flex, SearchInput, Separator } from '@axonivy/ui-components';
 import { useState } from 'react';
+import { PaletteSection } from './PaletteSection';
 
 type PaletteProps = {
   items: Record<string, PaletteConfig[]>;
@@ -20,14 +20,7 @@ export const Palette = ({ items }: PaletteProps) => {
           return (
             <div key={category}>
               {index !== 0 && <Separator />}
-              <h3>{category}</h3>
-              <div className='palette-category-items'>
-                <div className='palette-items-grid'>
-                  {filteredItems.map(item => (
-                    <PaletteItem key={item.name} item={item} />
-                  ))}
-                </div>
-              </div>
+              <PaletteSection items={filteredItems} title={category} />
             </div>
           );
         }

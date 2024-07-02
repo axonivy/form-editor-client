@@ -20,7 +20,7 @@ export const componentByName = (name: string) => {
   return config.components[name];
 };
 
-export const componentsByCategoryGroupBySubcategory = (category: itemCategory) => {
+export const componentsByCategory = (category: itemCategory) => {
   const filteredComponents = Object.values(config.components).filter(component => component.category === category);
   return groupBy(Object.values(filteredComponents), item => item.subcategory);
 };
