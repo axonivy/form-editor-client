@@ -5,14 +5,13 @@ import { findComponentElement } from '../data/data';
 import { useReadonly } from '@axonivy/ui-components';
 
 type UI = {
-  components: boolean;
   properties: boolean;
   dataStructure: boolean;
   helpPaddings: boolean;
   responsiveMode: 'desktop' | 'tablet' | 'mobile';
 };
 
-const DEFAULT_UI: UI = { components: true, properties: true, dataStructure: false, helpPaddings: true, responsiveMode: 'desktop' };
+const DEFAULT_UI: UI = { properties: true, dataStructure: false, helpPaddings: true, responsiveMode: 'desktop' };
 
 export const useUiState = () => {
   const readonly = useReadonly();

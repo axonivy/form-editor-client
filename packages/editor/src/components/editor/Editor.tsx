@@ -1,10 +1,9 @@
 import { Canvas } from './canvas/Canvas';
-import { Palette } from './palette/Palette';
 import { Properties } from './properties/Properties';
 import './Editor.css';
 import { useEffect, useMemo, useState } from 'react';
 import { AppProvider, useUiState } from '../../context/useData';
-import { componentsGroupByCategroy, config } from '../components';
+import { config } from '../components';
 import { Flex, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@axonivy/ui-components';
 import { FormToolbar } from './FormToolbar';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -68,14 +67,6 @@ export const Editor = (props: FormContext) => {
     <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi }}>
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
-          {ui.components && (
-            <>
-              <ResizablePanel id='components' order={1} defaultSize={25} minSize={10} className='panel'>
-                <Palette items={componentsGroupByCategroy()} />
-              </ResizablePanel>
-              <ResizableHandle />
-            </>
-          )}
           <ResizablePanel id='canvas' order={2} defaultSize={50} minSize={30} className='panel'>
             <Flex direction='column' className='canvas-panel'>
               <FormToolbar />

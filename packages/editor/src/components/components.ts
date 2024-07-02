@@ -1,4 +1,4 @@
-import type { Config } from '../types/config';
+import type { Config, itemCategory } from '../types/config';
 import { groupBy } from '../utils/array';
 import { ButtonComponent } from './blocks/button/Button';
 import { LayoutComponent } from './blocks/layout/Layout';
@@ -16,10 +16,11 @@ export const config: Config = {
   }
 };
 
-export const componentsGroupByCategroy = () => {
-  return groupBy(Object.values(config.components), item => item.category);
-};
-
 export const componentByName = (name: string) => {
   return config.components[name];
+};
+
+export const componentsByCategory = (category: itemCategory) => {
+  const filteredComponents = Object.values(config.components).filter(component => component.category === category);
+  return groupBy(Object.values(filteredComponents), item => item.subcategory);
 };

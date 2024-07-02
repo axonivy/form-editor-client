@@ -42,9 +42,13 @@ export type Fields<ComponentProps extends DefaultComponentProps = DefaultCompone
   [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field<ComponentProps>;
 };
 
+export type itemCategory = 'Elements' | 'Structure' | 'Action';
+export type itemSubcategory = 'General' | 'Input' | 'Interactions' | 'Text';
+
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: ComponentType;
-  category: 'Basic' | 'Layout' | 'Action';
+  category: itemCategory;
+  subcategory: itemSubcategory;
   icon: string;
   description: string;
   render: UiComponent<ComponentProps>;
