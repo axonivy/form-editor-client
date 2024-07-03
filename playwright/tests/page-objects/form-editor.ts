@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import { Palette } from './palette';
+import { Toolbar } from './toolbar';
 
 export class FormEditor {
   protected readonly page: Page;
@@ -15,7 +15,7 @@ export class FormEditor {
     return new FormEditor(page);
   }
 
-  palette() {
-    return new Palette(this.page);
+  toolbar() {
+    return new Toolbar(this.page);
   }
 }

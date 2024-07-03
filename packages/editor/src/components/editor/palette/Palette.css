@@ -1,5 +1,17 @@
-.palette-category-items {
+.palette {
+  width: 320px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.palette-items-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--size-1);
+  gap: 16px;
+}
+
+@media (max-width: 500px) {
+  .palette {
+    width: 210px;
+  }
 }
