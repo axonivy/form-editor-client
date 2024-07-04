@@ -12,6 +12,8 @@ import {
   Separator,
   Switch,
   Toolbar,
+  ToggleGroup,
+  ToggleGroupItem,
   ToolbarContainer,
   useReadonly,
   useTheme
@@ -20,34 +22,36 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../../context/useData';
 import { PaletteCategoryPopover } from './palette/PaletteCategoryPopup';
 
+type ResponsiveMode = 'desktop' | 'tablet' | 'mobile';
+
 export const FormToolbar = () => {
   const { ui, setUi } = useAppContext();
   const { theme, setTheme } = useTheme();
   const editable = !useReadonly();
-  const toggleResponsiveMode = () =>
-    setUi(old => {
-      const prev = old.responsiveMode;
-      let next = prev;
-      switch (prev) {
-        case 'desktop':
-          next = 'tablet';
-          break;
-        case 'tablet':
-          next = 'mobile';
-          break;
-        case 'mobile':
-          next = 'desktop';
-          break;
-      }
-      return { ...old, responsiveMode: next };
-    });
+
+  const changeResponsiveMode = (value: ResponsiveMode) => {
+    if (value) {
+      setUi(old => {
+        return { ...old, responsiveMode: value };
+      });
+    }
+  };
 
   return (
     <Toolbar>
       <Flex>
-        <Flex gap={1}>
-          <Button icon={IvyIcons.EventStart} size='large' onClick={toggleResponsiveMode} />
-        </Flex>
+        <ToggleGroup type='single' onValueChange={changeResponsiveMode} defaultValue='desktop' gap={1} aria-label='Class selection'>
+          <ToggleGroupItem value='mobile' asChild>
+            <Button icon={IvyIcons.DeviceMobile} size='large' />
+          </ToggleGroupItem>
+          <ToggleGroupItem value='tablet' asChild>
+            <Button icon={IvyIcons.DeviceTablet} size='large' />
+          </ToggleGroupItem>
+          <ToggleGroupItem value='desktop' asChild>
+            <Button icon={IvyIcons.EventStart} size='large' />
+          </ToggleGroupItem>
+        </ToggleGroup>
+
         {editable && (
           <ToolbarContainer width={450}>
             <Flex>
@@ -67,7 +71,15 @@ export const FormToolbar = () => {
         <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
       </Flex>
 
-      <Flex gap={1}>
+      <Flex gap={1} alignItems='center'>
+        {editable && (
+          <Switch
+            icon={{ icon: IvyIcons.Eye }}
+            defaultChecked={ui.helpPaddings}
+            onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
+            size='large'
+          />
+        )}
         <Popover>
           <PopoverTrigger asChild>
             <Button icon={IvyIcons.Settings} size='large' />
@@ -84,21 +96,6 @@ export const FormToolbar = () => {
                       </Flex>
                     </Label>
                     <Switch defaultChecked={theme === 'dark'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} size='small' />
-                  </Field>
-                )}
-                {editable && (
-                  <Field direction='row' alignItems='center' justifyContent='space-between' gap={4}>
-                    <Label>
-                      <Flex alignItems='center' gap={1}>
-                        <IvyIcon icon={IvyIcons.Helplines} />
-                        Help Paddings
-                      </Flex>
-                    </Label>
-                    <Switch
-                      defaultChecked={ui.helpPaddings}
-                      onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
-                      size='small'
-                    />
                   </Field>
                 )}
                 <Field direction='row' alignItems='center' justifyContent='space-between' gap={4}>
