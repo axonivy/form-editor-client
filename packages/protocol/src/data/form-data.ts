@@ -27,7 +27,7 @@ export const isFreeLayout = (component?: Component | ComponentData): component i
   return isLayout(component) && component.config.gridVariant === 'FREE';
 };
 
-export type FormContext = { app: string; pmv: string; file: string };
+export type FormContext = { app: string; pmv: string; file: string; directSave?: boolean };
 
 export type FormEditorData = {
   context: FormContext;
