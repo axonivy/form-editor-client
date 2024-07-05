@@ -34,10 +34,10 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   defaultProps: defaultButtonProps,
   render: props => <ButtonBlock {...props} />,
   fields: {
-    name: { label: 'Name', type: 'text' },
-    action: { label: 'Action', type: 'text' },
-    variant: { label: 'Variant', type: 'select', options: variantOptions },
-    icon: { label: 'Icon', type: 'select', options: iconOptions },
+    name: { subsection: 'General', label: 'Name', type: 'text' },
+    action: { subsection: 'General', label: 'Action', type: 'text' },
+    variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
+    icon: { subsection: 'General', label: 'Icon', type: 'select', options: iconOptions },
     ...baseComponentFields
   }
 };

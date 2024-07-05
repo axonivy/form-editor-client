@@ -13,7 +13,10 @@ export type FieldOption<TValue = PrimitiveValue> = {
   value: TValue;
 };
 
+type Subsection = 'General' | 'Styling' | 'Behaviour';
+
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
+  subsection: Subsection;
   label?: string;
   hide?: (component: ComponentProps) => boolean;
   section?: 'Layout';

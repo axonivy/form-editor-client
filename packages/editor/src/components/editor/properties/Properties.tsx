@@ -1,7 +1,17 @@
-import { isNotHiddenField, type Config, type Fields } from '../../../types/config';
+import { isNotHiddenField, type Config, type DefaultComponentProps, type Field, type Fields } from '../../../types/config';
 import { useData } from '../../../context/useData';
 import { PropertyItem } from './PropertyItem';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Flex, SidebarHeader } from '@axonivy/ui-components';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Flex,
+  SidebarHeader
+} from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { isFreeLayout, type ConfigData, type PrimitiveValue, type ComponentData } from '@axonivy/form-editor-protocol';
 import { groupBy } from '../../../utils/array';
@@ -19,6 +29,19 @@ const visibleFields = (fields: Fields, elementConfig: ConfigData) => {
     .filter(([, field]) => isNotHiddenField(field))
     .filter(([, field]) => field.hide === undefined || !field.hide(elementConfig))
     .map(([key, field]) => ({ key, field }));
+};
+
+const groupFieldsBySubsection = (fields: ReturnType<typeof visibleFields>) => {
+  const subsections = new Map<string, { title: string; fields: { key: string; field: Field<DefaultComponentProps> }[] }>();
+  fields.forEach(({ key, field }) => {
+    const title = field.subsection;
+    if (!subsections.has(title)) {
+      subsections.set(title, { title, fields: [] });
+    }
+    subsections.get(title)!.fields.push({ key, field });
+  });
+
+  return Array.from(subsections.values());
 };
 
 const visibleSections = (fields: ReturnType<typeof visibleFields>, parent?: ComponentData) => {
@@ -55,13 +78,24 @@ export const Properties = ({ config }: PropertiesProps) => {
             <AccordionTrigger>{section}</AccordionTrigger>
             <AccordionContent>
               <Flex direction='column' gap={2}>
-                {fields.map(({ key, field }) => (
-                  <PropertyItem
-                    key={`${element.id}-${key}`}
-                    value={elementConfig[key]}
-                    onChange={updateElementConfig(key)}
-                    field={{ ...field, label: field.label ?? key }}
-                  />
+                {groupFieldsBySubsection(fields).map(({ title, fields }) => (
+                  <div key={title}>
+                    <Collapsible defaultOpen={true}>
+                      <CollapsibleTrigger>{title}</CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <Flex direction='column' gap={2}>
+                          {fields.map(({ key, field }) => (
+                            <PropertyItem
+                              key={`${element.id}-${key}`}
+                              value={elementConfig[key]}
+                              onChange={updateElementConfig(key)}
+                              field={{ ...field, label: field.label ?? key }}
+                            />
+                          ))}
+                        </Flex>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  </div>
                 ))}
               </Flex>
             </AccordionContent>
