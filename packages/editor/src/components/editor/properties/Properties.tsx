@@ -15,6 +15,7 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import { isFreeLayout, type ConfigData, type PrimitiveValue, type ComponentData } from '@axonivy/form-editor-protocol';
 import { groupBy } from '../../../utils/array';
+import { EmptyDetail } from './EmptyDetail';
 
 type PropertiesProps = {
   config: Config;
@@ -54,7 +55,7 @@ const visibleSections = (fields: ReturnType<typeof visibleFields>, parent?: Comp
 export const Properties = ({ config }: PropertiesProps) => {
   const { element, setElement, parent } = useData();
   if (element === undefined) {
-    return null;
+    return <EmptyDetail message='Nothing there yet. Select an Element to edit its properties.' />;
   }
   const propertyConfig = config.components[element.type];
   if (propertyConfig === undefined || propertyConfig.fields === undefined) {

@@ -1,0 +1,15 @@
+.empty-detail {
+  display: flex;
+  height: 100%;
+  color: var(--N800);
+}
+
+.empty-detail .empty-detail-icon {
+  font-size: 54px;
+}
+
+.empty-detail .empty-detail-message {
+  font-size: 14px;
+  text-align: center;
+  width: 70%;
+}
