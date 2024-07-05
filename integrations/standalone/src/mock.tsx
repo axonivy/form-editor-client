@@ -14,7 +14,7 @@ export async function start(): Promise<void> {
       <ThemeProvider defaultTheme='light'>
         <ClientContextProvider client={formClient}>
           <QueryProvider client={queryClient}>
-            <App app={''} pmv={''} file={''} />
+            <App context={{ app: '', pmv: '', file: '' }} />
           </QueryProvider>
         </ClientContextProvider>
       </ThemeProvider>
