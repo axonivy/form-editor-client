@@ -42,15 +42,17 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   defaultProps: defaultLayoutProps,
   render: props => <LayoutBlock {...props} />,
   fields: {
-    components: { type: 'hidden' },
-    type: { type: 'select', options: typeOptions },
+    components: { subsection: 'General', type: 'hidden' },
+    type: { subsection: 'General', type: 'select', options: typeOptions },
     justifyContent: {
+      subsection: 'General',
       type: 'select',
       label: 'Justify content',
       options: justifyContentOptions,
       hide: data => data.type !== 'FLEX'
     },
     gridVariant: {
+      subsection: 'General',
       type: 'select',
       label: 'Columns',
       options: gridVariantOptions,

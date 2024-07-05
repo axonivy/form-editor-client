@@ -17,6 +17,6 @@ const spanOptions: FieldOption<string>[] = [
 ] as const;
 
 export const baseComponentFields: Fields<BaseComponentProps> = {
-  lgSpan: { type: 'select', label: 'Large Span', options: spanOptions, section: 'Layout' },
-  mdSpan: { type: 'select', label: 'Medium Span', options: spanOptions, section: 'Layout' }
+  lgSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Large Span', options: spanOptions },
+  mdSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Medium Span', options: spanOptions }
 };

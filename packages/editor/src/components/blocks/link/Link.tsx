@@ -20,8 +20,8 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   defaultProps: defaultLinkProps,
   render: props => <LinkBlock {...props} />,
   fields: {
-    name: { type: 'text' },
-    href: { type: 'text' },
+    name: { subsection: 'General', type: 'text' },
+    href: { subsection: 'General', type: 'text' },
     ...baseComponentFields
   }
 };
