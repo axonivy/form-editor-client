@@ -23,7 +23,7 @@ export async function start(): Promise<void> {
         <ClientContextProvider client={client}>
           <QueryProvider client={queryClient}>
             <ReadonlyProvider readonly={readonly}>
-              <App app={app} pmv={pmv} file={file} />
+              <App context={{ app, pmv, file }} />
             </ReadonlyProvider>
           </QueryProvider>
         </ClientContextProvider>

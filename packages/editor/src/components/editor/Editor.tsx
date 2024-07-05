@@ -9,16 +9,18 @@ import { FormToolbar } from './FormToolbar';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../../context/useClient';
 import type { Unary } from '../../types/lambda';
-import type { FormContext, FormData, FormEditorData } from '@axonivy/form-editor-protocol';
+import type { FormData, FormEditorData, FormEditorProps } from '@axonivy/form-editor-protocol';
 import { DataStructure } from './data-structure/DataStructure';
 import { DndContext } from '../../context/DndContext';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './canvas/ErrorFallback';
 
-export const Editor = (props: FormContext) => {
-  const [context, setContext] = useState(props);
+export const Editor = (props: FormEditorProps) => {
+  const [context, setContext] = useState(props.context);
+  const [directSave, setDirectSave] = useState(props.directSave);
   useEffect(() => {
-    setContext(props);
+    setContext(props.context);
+    setDirectSave(props.directSave);
   }, [props]);
   const { ui, setUi } = useUiState();
   const [selectedElement, setSelectedElement] = useState<string>();
@@ -49,7 +51,7 @@ export const Editor = (props: FormContext) => {
         return undefined;
       });
       if (saveData) {
-        return client.saveData({ context, data: saveData.data });
+        return client.saveData({ context, data: saveData.data, directSave });
       }
       return Promise.resolve();
     }

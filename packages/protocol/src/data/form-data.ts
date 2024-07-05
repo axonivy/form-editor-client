@@ -29,6 +29,8 @@ export const isFreeLayout = (component?: Component | ComponentData): component i
 
 export type FormContext = { app: string; pmv: string; file: string };
 
+export type FormEditorProps = { context: FormContext; directSave?: boolean };
+
 export type FormEditorData = {
   context: FormContext;
   defaults: any;
@@ -39,4 +41,5 @@ export type FormEditorData = {
 export type FormSaveDataArgs = {
   context: FormContext;
   data: FormData;
+  directSave?: boolean;
 };
