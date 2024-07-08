@@ -1,6 +1,6 @@
-import type { IvyIcons } from '@axonivy/ui-icons';
+import { IvyIcons } from '@axonivy/ui-icons';
 import type { itemCategory } from '../../../types/config';
-import { Button, Fieldset, Flex, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
+import { Button, Fieldset, Flex, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
 import { Palette } from './Palette';
 import { componentsByCategory } from '../../components';
 import { useDndContext } from '@dnd-kit/core';
@@ -26,9 +26,15 @@ export const PaletteCategoryPopover = ({ label, icon }: CategoryPopoverProps) =>
       <Fieldset label={label} />
       <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
         <PopoverTrigger asChild>
-          <Button icon={icon} size='large' />
+          <Button icon={icon} size='large'>
+            <IvyIcon
+              icon={IvyIcons.Chevron}
+              rotate={popoverOpen ? 270 : 90}
+              style={{ transition: 'transform 200ms cubic-bezier(0.87, 0, 0.13, 1)' }}
+            />
+          </Button>
         </PopoverTrigger>
-        <PopoverContent sideOffset={12}>
+        <PopoverContent sideOffset={12} hideWhenDetached={true}>
           <Palette items={componentsByCategory(label)} />
           <PopoverArrow />
         </PopoverContent>
