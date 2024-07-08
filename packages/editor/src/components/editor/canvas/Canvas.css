@@ -4,10 +4,12 @@
   display: flex;
   flex-direction: column;
   margin: var(--size-4);
+  padding: var(--size-2);
   overflow: auto;
-
+  border-radius: var(--border-r2);
   --draw-padding: var(--size-2) var(--size-4);
-  --select-border-size: 1px;
+  --draw-margin: var(--size-2);
+  --select-border: 2px dashed var(--N100);
   --layout-border-size: 2px;
 }
 .canvas[data-responsive-mode='tablet'] {
@@ -22,15 +24,17 @@
   padding: var(--size-2);
   gap: var(--size-2);
   --draw-padding: 0;
-  --select-border-size: 0;
+  --select-border: 0;
   --layout-border-size: 0;
+  --draw-margin: 0;
 }
 
 .canvas[data-help-paddings='false'] .empty-block {
   display: none;
 }
+
 .empty-block:before {
-  margin: var(--size-1);
+  margin: var(--size-2);
   padding: var(--size-3);
   background-color: var(--N300);
   display: flex;

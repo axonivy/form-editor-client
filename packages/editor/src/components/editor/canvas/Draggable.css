@@ -1,14 +1,17 @@
 .draggable {
   padding: var(--draw-padding, var(--size-2) var(--size-4));
-  border: var(--select-border-size, 1px) solid transparent;
+  border: var(--select-border);
+  border-radius: var(--border-r2);
+  margin: var(--draw-margin);
 }
 .draggable:hover:not(:has(.draggable:hover)) {
   background-color: var(--P50);
+  border: 2px dashed var(--P75);
 }
 .draggable.selected,
 .draggable.dragging {
-  border: var(--activ-border);
-  background-color: transparent;
+  border: 2px dashed var(--P75);
+  background-color: var(--P50);
 }
 .draggable.dragging {
   opacity: 0.5;
