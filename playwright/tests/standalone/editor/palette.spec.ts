@@ -5,7 +5,7 @@ test.describe('palette', () => {
   test('has sections', async ({ page }) => {
     const processEditor = await FormEditor.open(page);
     const toolbar = processEditor.toolbar();
-    await toolbar.expectCategoryCount(3);
+    await toolbar.expectCategoryCount(4);
     await toolbar.expectItemInCategoryCount(0, 1);
     await toolbar.expectItemInCategoryCount(1, 2);
   });
