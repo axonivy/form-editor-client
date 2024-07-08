@@ -48,7 +48,7 @@ export const useAppContext = () => {
 };
 
 export const useData = () => {
-  const { data, setData, selectedElement } = useAppContext();
+  const { data, setData, selectedElement, setSelectedElement } = useAppContext();
   const foundElement = selectedElement !== undefined ? findComponentElement(data, selectedElement) : undefined;
   const setElement = (element: ComponentData) => {
     setData(oldData => {
@@ -59,5 +59,5 @@ export const useData = () => {
       return oldData;
     });
   };
-  return { data, setData, element: foundElement?.element, setElement, parent: foundElement?.parent };
+  return { data, setData, element: foundElement?.element, setElement, setSelectedElement, parent: foundElement?.parent };
 };

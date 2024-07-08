@@ -69,7 +69,18 @@ export const Editor = (props: FormEditorProps) => {
     <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi }}>
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
-          <ResizablePanel id='canvas' order={2} defaultSize={50} minSize={30} className='panel'>
+          <ResizablePanel
+            id='canvas'
+            order={2}
+            defaultSize={50}
+            minSize={30}
+            className='panel'
+            onClick={e => {
+              if (e.target !== e.currentTarget) {
+                setSelectedElement(undefined);
+              }
+            }}
+          >
             <Flex direction='column' className='canvas-panel'>
               <FormToolbar />
               <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[ui.dataStructure]}>

@@ -14,7 +14,7 @@ import { modifyData } from '../data/data';
 import { ItemDragOverlay } from '../components/editor/ItemDragOverlay';
 
 export const DndContext = ({ children }: { children: ReactNode }) => {
-  const { setData } = useData();
+  const { setData, setSelectedElement } = useData();
   const [activeId, setActiveId] = useState<string | undefined>();
   const handleDragEnd = (event: DragEndEvent) => {
     const targetId = event.over?.id;
@@ -23,7 +23,10 @@ export const DndContext = ({ children }: { children: ReactNode }) => {
     }
     setActiveId(undefined);
   };
-  const handleDragStart = (event: DragStartEvent) => setActiveId(`${event.active.id}`);
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(`${event.active.id}`);
+    setSelectedElement(`${event.active.id}`);
+  };
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 15 } });
   const sensors = useSensors(mouseSensor);
   return (
