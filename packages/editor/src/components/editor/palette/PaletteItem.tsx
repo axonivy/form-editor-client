@@ -1,6 +1,8 @@
 import { useDraggable } from '@dnd-kit/core';
 import type { PaletteConfig } from './palette-config';
 import './PaletteItem.css';
+import { config } from '../../components';
+import useDraggableOverWidth from '../../../utils/useDraggableOverWidth';
 
 type PaletteItemProps = {
   item: PaletteConfig;
@@ -19,14 +21,13 @@ export const PaletteItem = ({ item }: PaletteItemProps) => {
 };
 
 export const PaletteItemOverlay = ({ item }: Partial<PaletteItemProps>) => {
+  const width = useDraggableOverWidth();
+
   return (
     <>
       {item && (
-        <div className='palette-item'>
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-            <path fill='currentColor' d={item.icon}></path>
-          </svg>
-          <span>{item.name}</span>
+        <div className='draggable dragging' style={{ width }}>
+          {config.components[item.name].render(config.components[item.name].defaultProps)}
         </div>
       )}
     </>
