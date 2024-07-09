@@ -6,6 +6,7 @@ import { useDraggable } from '@dnd-kit/core';
 import { modifyData } from '../../../data/data';
 import { dragData } from './drag-data';
 import { useReadonly } from '@axonivy/ui-components';
+import useDraggableOverWidth from '../../../utils/useDraggableOverWidth';
 
 type DraggableProps = {
   config: ComponentConfig;
@@ -49,5 +50,10 @@ export const Draggable = ({ config, data }: DraggableProps) => {
 
 export const DraggableOverlay = ({ config, data }: DraggableProps) => {
   const elementConfig = { ...config.defaultProps, ...data.config };
-  return <div className='draggable dragging'>{config.render({ ...elementConfig, id: data.id })}</div>;
+  const width = useDraggableOverWidth();
+  return (
+    <div className='draggable dragging' style={{ width }}>
+      {config.render({ ...elementConfig, id: data.id })}
+    </div>
+  );
 };
