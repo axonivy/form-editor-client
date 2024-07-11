@@ -55,7 +55,7 @@ const visibleSections = (fields: ReturnType<typeof visibleFields>, parent?: Comp
 export const Properties = ({ config }: PropertiesProps) => {
   const { element, setElement, parent } = useData();
   if (element === undefined) {
-    return <EmptyDetail message='Nothing there yet. Select an Element to edit its properties.' />;
+    return <EmptyDetail message='Nothing there yet. Select an Element to edit its properties.' mode='column' />;
   }
   const propertyConfig = config.components[element.type];
   if (propertyConfig === undefined || propertyConfig.fields === undefined) {
