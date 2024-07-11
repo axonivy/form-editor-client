@@ -88,7 +88,7 @@ const LayoutBlock = ({ id, components, type, justifyContent, gridVariant }: UiCo
           );
         })}
       </div>
-      <EmtpyBlock id={`${LAYOUT_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.id} />
+      <EmtpyBlock id={`${LAYOUT_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.id} forLayout={true} />
     </>
   );
 };
