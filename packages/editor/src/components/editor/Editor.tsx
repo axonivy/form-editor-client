@@ -1,7 +1,7 @@
 import { Canvas } from './canvas/Canvas';
 import { Properties } from './properties/Properties';
 import './Editor.css';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AppProvider, useUiState } from '../../context/useData';
 import { config } from '../components';
 import { Flex, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@axonivy/ui-components';
@@ -41,6 +41,8 @@ export const Editor = (props: FormEditorProps) => {
     structuralSharing: false
   });
 
+  const toolbarDiv = useRef<HTMLDivElement>(null);
+
   const mutation = useMutation({
     mutationKey: queryKeys.saveData(),
     mutationFn: (updateData: Unary<FormData>) => {
@@ -76,13 +78,13 @@ export const Editor = (props: FormEditorProps) => {
             minSize={30}
             className='panel'
             onClick={e => {
-              if (e.target !== e.currentTarget) {
+              if (e.target !== e.currentTarget && !toolbarDiv.current?.contains(e.target as Node)) {
                 setSelectedElement(undefined);
               }
             }}
           >
             <Flex direction='column' className='canvas-panel'>
-              <FormToolbar />
+              <FormToolbar ref={toolbarDiv} />
               <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[ui.dataStructure]}>
                 {ui.dataStructure ? <DataStructure /> : <Canvas config={config} />}
               </ErrorBoundary>

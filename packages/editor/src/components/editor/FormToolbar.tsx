@@ -21,13 +21,18 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../../context/useData';
 import { PaletteCategoryPopover } from './palette/PaletteCategoryPopup';
+import { forwardRef, useEffect } from 'react';
 
 type ResponsiveMode = 'desktop' | 'tablet' | 'mobile';
 
-export const FormToolbar = () => {
-  const { ui, setUi } = useAppContext();
+export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
+  const { ui, setUi, selectedElement } = useAppContext();
   const { theme, setTheme } = useTheme();
   const editable = !useReadonly();
+
+  useEffect(() => {
+    setUi(old => ({ ...old, properties: selectedElement === undefined ? false : true }));
+  }, [selectedElement, setUi]);
 
   const changeResponsiveMode = (value: ResponsiveMode) => {
     if (value) {
@@ -38,7 +43,7 @@ export const FormToolbar = () => {
   };
 
   return (
-    <Toolbar>
+    <Toolbar ref={ref}>
       <Flex>
         <ToggleGroup type='single' onValueChange={changeResponsiveMode} defaultValue='desktop' gap={1} aria-label='Class selection'>
           <ToggleGroupItem value='mobile' asChild>
@@ -130,4 +135,4 @@ export const FormToolbar = () => {
       </Flex>
     </Toolbar>
   );
-};
+});
