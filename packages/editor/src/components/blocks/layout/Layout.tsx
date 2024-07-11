@@ -64,6 +64,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
 
 const LayoutBlock = ({ id, components, type, justifyContent, gridVariant }: UiComponentProps<LayoutProps>) => {
   const { ui } = useAppContext();
+
   return (
     <>
       <div
@@ -88,7 +89,12 @@ const LayoutBlock = ({ id, components, type, justifyContent, gridVariant }: UiCo
           );
         })}
       </div>
-      <EmtpyBlock id={`${LAYOUT_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.id} forLayout={true} />
+      <EmtpyBlock
+        id={`${LAYOUT_DROPZONE_ID_PREFIX}${id}`}
+        preId={components[components.length - 1]?.id}
+        forLayout={true}
+        dragHint={{ display: components.length === 0, message: 'Drag first element inside the layout', mode: 'row' }}
+      />
     </>
   );
 };

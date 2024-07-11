@@ -56,16 +56,18 @@ const addNewComponent = (data: Array<ComponentData>, component: ComponentConfig,
     type: component.name,
     config: structuredClone(component.defaultProps) as Extract<ComponentData, 'config'>
   };
-  addComponent(data, newComponent, target);
+
+  return addComponent(data, newComponent, target);
 };
 
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {
   const find = findComponent(data, id);
   if (find) {
     add(find.data, component, find.index);
-    return;
+    return component.id;
   }
   data.push(component);
+  return component.id;
 };
 
 const removeComponent = (data: Array<ComponentData>, id: string) => {
@@ -102,20 +104,22 @@ type ModifyAction =
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
   const component = componentByName(action.activeId);
   if (component) {
-    addNewComponent(data, component, action.targetId as string);
+    return addNewComponent(data, component, action.targetId as string);
   } else {
     const removed = removeComponent(data, action.activeId);
     if (removed) {
-      addComponent(data, removed, action.targetId as string);
+      return addComponent(data, removed, action.targetId as string);
     }
+    return undefined;
   }
 };
 
 export const modifyData = (data: FormData, action: ModifyAction) => {
   const newData = structuredClone(data);
+  let newComponentId;
   switch (action.type) {
     case 'dnd':
-      dndModify(newData.components, action.data);
+      newComponentId = dndModify(newData.components, action.data);
       break;
     case 'remove':
       removeComponent(newData.components, action.data.id);
@@ -127,7 +131,7 @@ export const modifyData = (data: FormData, action: ModifyAction) => {
       moveComponent(newData.components, action.data.id, 1);
       break;
   }
-  return newData;
+  return { newData, newComponentId };
 };
 
 export const findComponentElement = (data: FormData, id: string) => {

@@ -6,6 +6,7 @@ import { isDropZoneDisabled } from './drag-data';
 export type DropZoneProps = ComponentProps<'div'> & {
   id: string;
   preId?: string;
+  dragHint?: boolean;
 };
 
 export const DropZone = ({ id, preId, className, children }: DropZoneProps) => {
