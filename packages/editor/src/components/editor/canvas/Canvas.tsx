@@ -34,8 +34,8 @@ export const ComponentBlock = ({ component, config, preId, ...props }: Component
   </DropZone>
 );
 
-export const EmtpyBlock = ({ id, preId }: { id: string; preId: string }) => (
+export const EmtpyBlock = ({ id, preId, forLayout }: { id: string; preId: string; forLayout?: boolean }) => (
   <DropZone id={id} preId={preId}>
-    <div className='empty-block' />
+    <div className={`empty-block${forLayout ? ' for-layout' : ''}`} />
   </DropZone>
 );

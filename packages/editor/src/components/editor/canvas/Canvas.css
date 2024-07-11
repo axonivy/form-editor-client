@@ -33,16 +33,10 @@
   display: none;
 }
 
-.empty-block:before {
-  margin: var(--size-2);
-  padding: var(--size-3);
-  background-color: var(--N300);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  content: 'DropZone';
+.empty-block {
+  height: 1px;
+}
+
+.empty-block.for-layout {
+  height: var(--size-4);
 }
