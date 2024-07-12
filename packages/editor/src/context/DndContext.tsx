@@ -15,7 +15,6 @@ import { useState, type ReactNode } from 'react';
 import { useData } from './useData';
 import { modifyData } from '../data/data';
 import { ItemDragOverlay } from '../components/editor/ItemDragOverlay';
-import type { ComponentData } from '@axonivy/form-editor-protocol';
 
 const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...args }) => {
   const rectIntersectionCollisions = rectIntersection({
@@ -31,11 +30,6 @@ const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...arg
   return pointerWithin({ droppableContainers, ...args });
 };
 
-const findNewComponent = (oldComponents: ComponentData[], newComponents: ComponentData[]) => {
-  const oldIds = new Set(oldComponents.map(component => component.id));
-  return newComponents.find(component => !oldIds.has(component.id));
-};
-
 export const DndContext = ({ children }: { children: ReactNode }) => {
   const { setData, setSelectedElement } = useData();
   const [activeId, setActiveId] = useState<string | undefined>();
@@ -44,11 +38,12 @@ export const DndContext = ({ children }: { children: ReactNode }) => {
     const targetId = event.over?.id;
     if (targetId && activeId) {
       setData(oldData => {
-        const newData = modifyData(oldData, { type: 'dnd', data: { activeId, targetId } });
-        const newComponent = findNewComponent(oldData.components, newData.components);
-        if (newComponent) {
-          setSelectedElement(newComponent.id);
-          setActiveId(newComponent.id);
+        const modifiedData = modifyData(oldData, { type: 'dnd', data: { activeId, targetId } });
+        const newData = modifiedData.newData;
+        const newComponentId = modifiedData.newComponentId;
+        if (newComponentId) {
+          setSelectedElement(newComponentId);
+          setActiveId(newComponentId);
         } else {
           setSelectedElement(activeId);
         }

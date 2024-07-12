@@ -29,13 +29,14 @@ export const Draggable = ({ config, data }: DraggableProps) => {
       onKeyUp={e => {
         e.stopPropagation();
         if (e.key === 'Delete') {
-          setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.id } }));
+          setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.id } }).newData);
+          appContext.setSelectedElement(undefined);
         }
         if (e.key === 'ArrowUp') {
-          setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.id } }));
+          setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.id } }).newData);
         }
         if (e.key === 'ArrowDown') {
-          setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.id } }));
+          setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.id } }).newData);
         }
       }}
       className={`draggable${isSelected ? ' selected' : ''}${isDragging ? ' dragging' : ''}`}
