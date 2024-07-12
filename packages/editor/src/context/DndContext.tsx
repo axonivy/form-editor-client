@@ -36,11 +36,20 @@ export const DndContext = ({ children }: { children: ReactNode }) => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const targetId = event.over?.id;
-
     if (targetId && activeId) {
-      setData(oldData => modifyData(oldData, { type: 'dnd', data: { activeId, targetId } }));
+      setData(oldData => {
+        const modifiedData = modifyData(oldData, { type: 'dnd', data: { activeId, targetId } });
+        const newData = modifiedData.newData;
+        const newComponentId = modifiedData.newComponentId;
+        if (newComponentId) {
+          setSelectedElement(newComponentId);
+          setActiveId(newComponentId);
+        } else {
+          setSelectedElement(activeId);
+        }
+        return newData;
+      });
     }
-    setActiveId(undefined);
   };
 
   const handleDragStart = (event: DragStartEvent) => {

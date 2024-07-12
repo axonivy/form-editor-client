@@ -4,10 +4,13 @@
   border-radius: var(--border-r2);
   margin: var(--draw-margin);
 }
-.draggable:hover:not(:has(.draggable:hover)) {
+
+.draggable:hover:not(:has(.draggable:hover)),
+.draggable:hover:not(:has(.draggable:hover)) > .block-layout > div {
   background-color: var(--P50);
   border: 2px dashed var(--P75);
 }
+
 .draggable.selected,
 .draggable.dragging {
   border: 2px dashed var(--P75);

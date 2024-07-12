@@ -37,6 +37,16 @@
   height: 1px;
 }
 
+.drag-hint {
+  margin: 0px;
+  padding: 5px;
+  border-radius: var(--border-r2);
+  color: var(--N800);
+}
+.drag-hint.column {
+  padding: 30px;
+}
+
 .empty-block.for-layout {
   height: var(--size-4);
 }
