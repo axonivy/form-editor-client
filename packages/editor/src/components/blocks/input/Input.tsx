@@ -28,10 +28,10 @@ export const InputComponent: ComponentConfig<InputProps> = {
   defaultProps: defaultInputProps,
   render: props => <UiInput {...props} />,
   fields: {
-    label: { subsection: 'General', type: 'text' },
-    required: { subsection: 'General', type: 'checkbox' },
-    value: { subsection: 'General', type: 'textBrowser' },
-    type: { subsection: 'General', type: 'select', options: typeOptions },
+    label: { subsection: 'General', label: 'Label', type: 'text' },
+    required: { subsection: 'General', label: 'Required', type: 'checkbox' },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
+    type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     ...baseComponentFields
   }
 };

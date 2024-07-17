@@ -69,18 +69,16 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           </ToolbarContainer>
         )}
       </Flex>
-      <ToolbarContainer maxWidth={650}>
-        <Flex gap={4} className='palette-section'>
-          <PaletteCategoryPopover label='Structure' icon={IvyIcons.LaneSwimlanes} />
-          <PaletteCategoryPopover label='Elements' icon={IvyIcons.ChangeType} />
-          <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
-        </Flex>
-      </ToolbarContainer>
-      <ToolbarContainer minWidth={650}>
-        <Flex gap={4} className='palette-section'>
-          <PaletteCategoryPopover label='All Components' icon={IvyIcons.Task} />
-        </Flex>
-      </ToolbarContainer>
+      <Flex gap={3} className='palette-section'>
+        <PaletteCategoryPopover label='All Components' icon={IvyIcons.Task} />
+        <ToolbarContainer maxWidth={650}>
+          <Flex gap={3}>
+            <PaletteCategoryPopover label='Structure' icon={IvyIcons.LaneSwimlanes} />
+            <PaletteCategoryPopover label='Elements' icon={IvyIcons.ChangeType} />
+            <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
+          </Flex>
+        </ToolbarContainer>
+      </Flex>
 
       <Flex gap={1} alignItems='center'>
         {editable && (

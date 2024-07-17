@@ -1,10 +1,11 @@
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { itemCategory } from '../../../types/config';
-import { Button, Fieldset, Flex, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
+import { Button, Flex, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
 import { Palette } from './Palette';
 import { componentsByCategory } from '../../components';
 import { useDndContext } from '@dnd-kit/core';
 import { useEffect, useState } from 'react';
+import './PaletteCategoryPopup.css';
 
 type CategoryPopoverProps = {
   label: itemCategory;
@@ -22,8 +23,8 @@ export const PaletteCategoryPopover = ({ label, icon }: CategoryPopoverProps) =>
   }, [active]);
 
   return (
-    <Flex direction='column' alignItems={'center'} className='category-popover'>
-      <Fieldset label={label} />
+    <Flex direction='column' alignItems={'center'} gap={1} className='category-popover'>
+      <span className='category-label'>{label}</span>
       <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
         <PopoverTrigger asChild>
           <Button icon={icon} size='large'>

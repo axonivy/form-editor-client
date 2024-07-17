@@ -43,7 +43,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   render: props => <LayoutBlock {...props} />,
   fields: {
     components: { subsection: 'General', type: 'hidden' },
-    type: { subsection: 'General', type: 'select', options: typeOptions },
+    type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     justifyContent: {
       subsection: 'General',
       type: 'select',
