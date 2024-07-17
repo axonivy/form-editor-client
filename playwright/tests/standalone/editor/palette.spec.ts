@@ -6,7 +6,7 @@ test.describe('palette', () => {
     const processEditor = await FormEditor.open(page);
     const toolbar = processEditor.toolbar();
     await toolbar.expectCategoryCount(4);
-    await toolbar.expectItemInCategoryCount(0, 1);
-    await toolbar.expectItemInCategoryCount(1, 2);
+    await toolbar.expectItemInCategoryCount(1, 1);
+    await toolbar.expectItemInCategoryCount(2, 2);
   });
 });
