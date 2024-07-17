@@ -43,3 +43,15 @@ export type FormSaveDataArgs = {
   data: FormData;
   directSave?: boolean;
 };
+
+export interface VariableInfo {
+  types: Record<string, Variable[]>;
+  variables: Variable[];
+}
+
+export interface Variable {
+  attribute: string;
+  description: string;
+  simpleType: string;
+  type: string;
+}

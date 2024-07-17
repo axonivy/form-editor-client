@@ -1,4 +1,4 @@
-import { EMPTY_FORM, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
+import { EMPTY_FORM, type ComponentData, type FormContext, type FormData } from '@axonivy/form-editor-protocol';
 import { createContext, useContext, type SetStateAction, type Dispatch, useState, useEffect } from 'react';
 import type { UpdateConsumer } from '../types/lambda';
 import { findComponentElement } from '../data/data';
@@ -31,6 +31,7 @@ export type AppContext = {
   setSelectedElement: Dispatch<SetStateAction<string | undefined>>;
   ui: UI;
   setUi: Dispatch<SetStateAction<UI>>;
+  context: FormContext;
 };
 
 export const appContext = createContext<AppContext>({
@@ -38,7 +39,8 @@ export const appContext = createContext<AppContext>({
   setData: data => data,
   setSelectedElement: () => {},
   ui: DEFAULT_UI,
-  setUi: () => {}
+  setUi: () => {},
+  context: { app: '', pmv: '', file: '' }
 });
 
 export const AppProvider = appContext.Provider;

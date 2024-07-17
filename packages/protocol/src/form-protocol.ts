@@ -1,10 +1,12 @@
+import type { FormContext, FormEditorData, FormSaveDataArgs, VariableInfo } from './data';
+
 export interface FormMetaRequestTypes {
-  'meta/form': [any, any[]];
+  'meta/data/attributes': [FormContext, VariableInfo];
 }
 
 export interface FormRequestTypes extends FormMetaRequestTypes {
-  data: [any, any];
-  saveData: [any, void];
+  data: [FormContext, FormEditorData];
+  saveData: [FormSaveDataArgs, void];
 }
 
 export interface FormNotificationTypes {

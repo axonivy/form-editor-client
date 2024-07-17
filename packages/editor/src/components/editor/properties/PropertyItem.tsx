@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import type { Field } from '../../../types/config';
-import { InputField } from './fields/InputField';
 import { CheckboxField } from './fields/CheckboxField';
 import { TextareaField } from './fields/TextareaField';
 import { SelectField } from './fields/SelectField';
 import { NumberField } from './fields/NumberField';
 import type { PrimitiveValue } from '@axonivy/form-editor-protocol';
+import { InputField } from './fields/InputField';
+import { InputFieldWithBrowser } from './fields/InputFieldWithBrowser';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
@@ -28,6 +29,8 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
     switch (field.type) {
       case 'text':
         return <InputField label={label} value={toString(value)} onChange={updateValue} />;
+      case 'textBrowser':
+        return <InputFieldWithBrowser label={label} value={toString(value)} onChange={updateValue} />;
       case 'number':
         return <NumberField label={label} value={toNumber(value)} onChange={updateValue} />;
       case 'checkbox':
