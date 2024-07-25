@@ -1,6 +1,5 @@
 import { PaletteItem } from './PaletteItem';
 import type { PaletteConfig } from './palette-config';
-import './Palette.css';
 
 type PaletteSectionProps = {
   title: string;

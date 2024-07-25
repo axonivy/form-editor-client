@@ -45,7 +45,7 @@ export type Fields<ComponentProps extends DefaultComponentProps = DefaultCompone
   [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field<ComponentProps>;
 };
 
-export type itemCategory = 'All Components' | 'Elements' | 'Structure' | 'Action';
+export type itemCategory = 'Elements' | 'Structure' | 'Action';
 export type itemSubcategory = 'General' | 'Input' | 'Interactions' | 'Text';
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
