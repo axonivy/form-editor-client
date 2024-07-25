@@ -1,16 +1,14 @@
 .palette-item {
-  background: var(--N50);
-  border-radius: var(--border-r2);
-  padding: var(--size-2);
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 60px;
-  width: 80px;
   cursor: grab;
 }
 
-.palette-item svg path {
-  fill: var(--N600);
+.palette-item-icon {
+  background: var(--N50);
+  border-radius: var(--border-r2);
+  height: 32px;
+  width: 60px;
+}
+
+.palette-item-icon svg path {
+  stroke: var(--N600);
 }

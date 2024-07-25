@@ -4,15 +4,16 @@ import { Button, Flex, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTr
 import { Palette } from './Palette';
 import { componentsByCategory } from '../../components';
 import { useDndContext } from '@dnd-kit/core';
-import { useEffect, useState } from 'react';
-import './PaletteCategoryPopup.css';
+import { useEffect, useState, type ReactNode } from 'react';
+import './PalettePopover.css';
 
-type CategoryPopoverProps = {
-  label: itemCategory;
+type PalettePopoverProps = {
+  label: string;
   icon: IvyIcons;
+  children: ReactNode;
 };
 
-export const PaletteCategoryPopover = ({ label, icon }: CategoryPopoverProps) => {
+export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const { active } = useDndContext();
 
@@ -28,18 +29,20 @@ export const PaletteCategoryPopover = ({ label, icon }: CategoryPopoverProps) =>
       <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
         <PopoverTrigger asChild>
           <Button icon={icon} size='large'>
-            <IvyIcon
-              icon={IvyIcons.Chevron}
-              rotate={popoverOpen ? 270 : 90}
-              style={{ transition: 'transform 200ms cubic-bezier(0.87, 0, 0.13, 1)' }}
-            />
+            <IvyIcon icon={IvyIcons.Chevron} className='category-icon' rotate={popoverOpen ? 270 : 90} />
           </Button>
         </PopoverTrigger>
-        <PopoverContent sideOffset={12} hideWhenDetached={true}>
-          <Palette items={componentsByCategory(label)} />
+        <PopoverContent sideOffset={5} hideWhenDetached={true}>
+          {children}
           <PopoverArrow />
         </PopoverContent>
       </Popover>
     </Flex>
   );
 };
+
+export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children'> & { label: itemCategory }) => (
+  <PalettePopover {...props}>
+    <Palette items={componentsByCategory(props.label)} />
+  </PalettePopover>
+);

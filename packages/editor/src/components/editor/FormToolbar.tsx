@@ -20,8 +20,10 @@ import {
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../../context/useData';
-import { PaletteCategoryPopover } from './palette/PaletteCategoryPopup';
+import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect } from 'react';
+import { allComponentsByCategory } from '../components';
+import { Palette } from './palette/Palette';
 
 type ResponsiveMode = 'desktop' | 'tablet' | 'mobile';
 
@@ -70,7 +72,9 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
         )}
       </Flex>
       <Flex gap={3} className='palette-section'>
-        <PaletteCategoryPopover label='All Components' icon={IvyIcons.Task} />
+        <PalettePopover label='All Components' icon={IvyIcons.Task}>
+          <Palette items={allComponentsByCategory()} />
+        </PalettePopover>
         <ToolbarContainer maxWidth={650}>
           <Flex gap={3}>
             <PaletteCategoryPopover label='Structure' icon={IvyIcons.LaneSwimlanes} />

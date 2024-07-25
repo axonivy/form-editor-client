@@ -6,7 +6,7 @@
     "paths": {
       "test-utils": ["./src/test-utils/test-utils"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "vite-plugin-svgr/client"]
   },
   "include": ["src"],
   "references": [{ "path": "../../packages/protocol/tsconfig.json" }]

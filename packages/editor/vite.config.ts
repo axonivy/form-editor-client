@@ -4,9 +4,10 @@ import { defineConfig } from 'vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [veVitePlugin(), visualizer(), react(), dts({ tsconfigPath: './tsconfig.production.json' })],
+  plugins: [veVitePlugin(), visualizer(), react(), dts({ tsconfigPath: './tsconfig.production.json' }), svgr()],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src')
