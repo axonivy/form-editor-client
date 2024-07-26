@@ -1,3 +1,4 @@
+import { Flex } from '@axonivy/ui-components';
 import { PaletteItem } from './PaletteItem';
 import type { PaletteConfig } from './palette-config';
 
@@ -11,11 +12,11 @@ export const PaletteSection = ({ items, title }: PaletteSectionProps) => {
     <>
       <h3>{title}</h3>
       <div className='palette-category-items'>
-        <div className='palette-items-grid'>
+        <Flex gap={4} style={{ flexWrap: 'wrap' }}>
           {items.map(item => (
             <PaletteItem key={item.name} item={item} />
           ))}
-        </div>
+        </Flex>
       </div>
     </>
   );

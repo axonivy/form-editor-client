@@ -3,6 +3,7 @@ import type { PaletteConfig } from './palette-config';
 import './PaletteItem.css';
 import { config } from '../../components';
 import useDraggableOverWidth from '../../../utils/useDraggableOverWidth';
+import { Flex } from '@axonivy/ui-components';
 
 type PaletteItemProps = {
   item: PaletteConfig;
@@ -11,12 +12,14 @@ type PaletteItemProps = {
 export const PaletteItem = ({ item }: PaletteItemProps) => {
   const { attributes, listeners, setNodeRef } = useDraggable({ id: item.name });
   return (
-    <div className='palette-item' title={item.description} ref={setNodeRef} {...listeners} {...attributes}>
-      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
-        <path d={item.icon}></path>
-      </svg>
-      <span>{item.name}</span>
-    </div>
+    <Flex className='palette-item' direction='column' gap={1} title={item.description} ref={setNodeRef} {...listeners} {...attributes}>
+      <Flex className='palette-item-icon' justifyContent='center' alignItems='center'>
+        {config.components[item.name].icon}
+      </Flex>
+      <Flex className='palette-item-name' justifyContent='center'>
+        {item.name}
+      </Flex>
+    </Flex>
   );
 };
 

@@ -6,6 +6,7 @@ import { ComponentBlock, EmtpyBlock } from '../../editor/canvas/Canvas';
 import { LAYOUT_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { useAppContext } from '../../../context/useData';
 import { defaultBaseComponent, baseComponentFields } from '../base';
+import IconSvg from './Layout.svg?react';
 
 type LayoutProps = Prettify<Layout>;
 
@@ -37,7 +38,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   name: 'Layout',
   category: 'Structure',
   subcategory: 'General',
-  icon: 'M2 20h8V4H2v16Zm-1 0V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1ZM13 20h8V4h-8v16Zm-1 0V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1Z',
+  icon: <IconSvg />,
   description: 'A flexable layout',
   defaultProps: defaultLayoutProps,
   render: props => <LayoutBlock {...props} />,
