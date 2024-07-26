@@ -21,9 +21,10 @@ export const componentByName = (name: string) => {
 };
 
 export const componentsByCategory = (category: itemCategory) => {
-  if (category === 'All Components') {
-    return groupBy(Object.values(config.components), item => item.category);
-  }
   const filteredComponents = Object.values(config.components).filter(component => component.category === category);
   return groupBy(Object.values(filteredComponents), item => item.subcategory);
+};
+
+export const allComponentsByCategory = () => {
+  return groupBy(Object.values(config.components), item => item.category);
 };

@@ -1,4 +1,5 @@
 import type { ComponentType, PrimitiveValue } from '@axonivy/form-editor-protocol';
+import type { ReactNode } from 'react';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
 
@@ -45,14 +46,14 @@ export type Fields<ComponentProps extends DefaultComponentProps = DefaultCompone
   [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field<ComponentProps>;
 };
 
-export type itemCategory = 'All Components' | 'Elements' | 'Structure' | 'Action';
+export type itemCategory = 'Elements' | 'Structure' | 'Action';
 export type itemSubcategory = 'General' | 'Input' | 'Interactions' | 'Text';
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: ComponentType;
   category: itemCategory;
   subcategory: itemSubcategory;
-  icon: string;
+  icon: ReactNode;
   description: string;
   render: UiComponent<ComponentProps>;
   defaultProps: DefaultProps;

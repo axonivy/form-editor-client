@@ -4,15 +4,14 @@ import { Flex, SearchInput, Separator } from '@axonivy/ui-components';
 import { useState } from 'react';
 import { PaletteSection } from './PaletteSection';
 
-type PaletteProps = {
+export type PaletteProps = {
   items: Record<string, PaletteConfig[]>;
 };
 
 export const Palette = ({ items }: PaletteProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-
   return (
-    <Flex direction='column' className='palette'>
+    <Flex direction='column'>
       <SearchInput placeholder='Search...' value={searchTerm} onChange={setSearchTerm} />
       {Object.entries(items).map(([category, groupItems], index) => {
         const filteredItems = groupItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
