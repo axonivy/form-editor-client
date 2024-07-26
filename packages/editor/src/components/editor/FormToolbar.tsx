@@ -23,7 +23,7 @@ import { useAppContext } from '../../context/useData';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect } from 'react';
 import { allComponentsByCategory } from '../components';
-import { Palette } from './palette/Palette';
+import { DataClassPalette, Palette } from './palette/Palette';
 
 type ResponsiveMode = 'desktop' | 'tablet' | 'mobile';
 
@@ -73,7 +73,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       </Flex>
       <Flex gap={3} className='palette-section'>
         <PalettePopover label='All Components' icon={IvyIcons.Task}>
-          <Palette items={allComponentsByCategory()} />
+          <Palette sections={allComponentsByCategory()} />
         </PalettePopover>
         <ToolbarContainer maxWidth={650}>
           <Flex gap={3}>
@@ -82,6 +82,9 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
             <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
           </Flex>
         </ToolbarContainer>
+        <PalettePopover label='Data Class' icon={IvyIcons.DatabaseLink}>
+          <DataClassPalette />
+        </PalettePopover>
       </Flex>
 
       <Flex gap={1} alignItems='center'>

@@ -25,6 +25,7 @@ export const TextComponent: ComponentConfig<TextProps> = {
   description: 'Text output',
   defaultProps: defaultTextProps,
   render: props => <TextBlock {...props} />,
+  create: ({ value }) => ({ ...defaultTextProps, content: value }),
   fields: {
     content: { subsection: 'General', label: 'Content', type: 'textarea' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },

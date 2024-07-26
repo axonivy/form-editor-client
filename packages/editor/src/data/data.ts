@@ -1,5 +1,5 @@
 import type { UniqueIdentifier } from '@dnd-kit/core';
-import type { ComponentConfig } from '../types/config';
+import type { ComponentConfig, CreateData } from '../types/config';
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
 import { v4 as uuid } from 'uuid';
@@ -50,16 +50,6 @@ const findLayoutComponent = (data: Array<ComponentData>, id: string) => {
   return;
 };
 
-const addNewComponent = (data: Array<ComponentData>, component: ComponentConfig, target: string) => {
-  const newComponent: ComponentData = {
-    id: `${component.name}-${uuid()}`,
-    type: component.name,
-    config: structuredClone(component.defaultProps) as Extract<ComponentData, 'config'>
-  };
-
-  return addComponent(data, newComponent, target);
-};
-
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {
   const find = findComponent(data, id);
   if (find) {
@@ -94,6 +84,7 @@ type ModifyAction =
       data: {
         activeId: string;
         targetId: UniqueIdentifier;
+        create?: CreateData;
       };
     }
   | {
@@ -104,7 +95,7 @@ type ModifyAction =
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
   const component = componentByName(action.activeId);
   if (component) {
-    return addNewComponent(data, component, action.targetId as string);
+    return addComponent(data, createComponentData(component, action.create), action.targetId as string);
   } else {
     const removed = removeComponent(data, action.activeId);
     if (removed) {
@@ -141,3 +132,9 @@ export const findComponentElement = (data: FormData, id: string) => {
   }
   return;
 };
+
+const createComponentData = (config: ComponentConfig, data?: CreateData): ComponentData => ({
+  id: `${config.name}-${uuid()}`,
+  type: config.name,
+  config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
+});

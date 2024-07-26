@@ -9,3 +9,7 @@
     width: 210px;
   }
 }
+
+.palette .ui-separator:last-child {
+  display: none;
+}
