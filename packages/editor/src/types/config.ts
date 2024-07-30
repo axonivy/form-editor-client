@@ -14,6 +14,10 @@ export type FieldOption<TValue = PrimitiveValue> = {
   value: TValue;
 };
 
+export type CreateData = { componentName: string; label: string; value: string };
+
+export const isCreateData = (data: unknown): data is CreateData => typeof data === 'object' && data !== null && 'componentName' in data;
+
 type Subsection = 'General' | 'Styling' | 'Behaviour';
 
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
@@ -56,6 +60,7 @@ export type ComponentConfig<ComponentProps extends DefaultComponentProps = Defau
   icon: ReactNode;
   description: string;
   render: UiComponent<ComponentProps>;
+  create: (data: CreateData) => DefaultProps;
   defaultProps: DefaultProps;
   fields: Fields<ComponentProps>;
 };

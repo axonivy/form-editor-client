@@ -20,6 +20,7 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   description: 'Link to somewhere',
   defaultProps: defaultLinkProps,
   render: props => <LinkBlock {...props} />,
+  create: () => defaultLinkProps,
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
     href: { subsection: 'General', label: 'Href', type: 'text' },

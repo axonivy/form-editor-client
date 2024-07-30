@@ -1,36 +1,35 @@
 import { useDraggable } from '@dnd-kit/core';
-import type { PaletteConfig } from './palette-config';
 import './PaletteItem.css';
-import { config } from '../../components';
+import { componentByName } from '../../components';
 import useDraggableOverWidth from '../../../utils/useDraggableOverWidth';
 import { Flex } from '@axonivy/ui-components';
+import type { CreateData } from '../../../types/config';
 
-type PaletteItemProps = {
-  item: PaletteConfig;
+export type PaletteConfig = {
+  name: string;
+  description: string;
+  data?: CreateData;
 };
 
-export const PaletteItem = ({ item }: PaletteItemProps) => {
-  const { attributes, listeners, setNodeRef } = useDraggable({ id: item.name });
+export const PaletteItem = ({ name, description, data }: PaletteConfig) => {
+  const { attributes, listeners, setNodeRef } = useDraggable({ id: name, data });
+  const componentName = data?.componentName ?? name;
   return (
-    <Flex className='palette-item' direction='column' gap={1} title={item.description} ref={setNodeRef} {...listeners} {...attributes}>
+    <Flex className='palette-item' direction='column' gap={1} title={description} ref={setNodeRef} {...listeners} {...attributes}>
       <Flex className='palette-item-icon' justifyContent='center' alignItems='center'>
-        {config.components[item.name].icon}
+        {componentByName(componentName).icon}
       </Flex>
-      <Flex justifyContent='center'>{item.name}</Flex>
+      <Flex justifyContent='center'>{name}</Flex>
     </Flex>
   );
 };
 
-export const PaletteItemOverlay = ({ item }: Partial<PaletteItemProps>) => {
+export const PaletteItemOverlay = ({ name, data }: PaletteConfig) => {
   const width = useDraggableOverWidth();
-
+  const component = componentByName(data?.componentName ?? name);
   return (
-    <>
-      {item && (
-        <div className='draggable dragging' style={{ width }}>
-          {config.components[item.name].render(config.components[item.name].defaultProps)}
-        </div>
-      )}
-    </>
+    <div className='draggable dragging' style={{ width }}>
+      {component.render(data ? component.create(data) : component.defaultProps)}
+    </div>
   );
 };

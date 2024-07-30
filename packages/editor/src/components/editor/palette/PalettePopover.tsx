@@ -43,6 +43,6 @@ export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) =
 
 export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children'> & { label: itemCategory }) => (
   <PalettePopover {...props}>
-    <Palette items={componentsByCategory(props.label)} />
+    <Palette sections={componentsByCategory(props.label)} />
   </PalettePopover>
 );
