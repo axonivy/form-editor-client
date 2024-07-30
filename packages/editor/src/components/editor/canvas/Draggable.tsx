@@ -6,7 +6,6 @@ import { useDraggable } from '@dnd-kit/core';
 import { modifyData } from '../../../data/data';
 import { dragData } from './drag-data';
 import { useReadonly } from '@axonivy/ui-components';
-import useDraggableOverWidth from '../../../utils/useDraggableOverWidth';
 
 type DraggableProps = {
   config: ComponentConfig;
@@ -14,6 +13,7 @@ type DraggableProps = {
 };
 
 export const Draggable = ({ config, data }: DraggableProps) => {
+  const { setUi } = useAppContext();
   const { setData } = useData();
   const readonly = useReadonly();
   const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ disabled: readonly, id: data.id, data: dragData(data) });
@@ -25,6 +25,10 @@ export const Draggable = ({ config, data }: DraggableProps) => {
       onClick={e => {
         e.stopPropagation();
         appContext.setSelectedElement(data.id);
+      }}
+      onDoubleClick={e => {
+        e.stopPropagation();
+        setUi(old => ({ ...old, properties: true }));
       }}
       onKeyUp={e => {
         e.stopPropagation();
@@ -51,10 +55,5 @@ export const Draggable = ({ config, data }: DraggableProps) => {
 
 export const DraggableOverlay = ({ config, data }: DraggableProps) => {
   const elementConfig = { ...config.defaultProps, ...data.config };
-  const width = useDraggableOverWidth();
-  return (
-    <div className='draggable dragging' style={{ width }}>
-      {config.render({ ...elementConfig, id: data.id })}
-    </div>
-  );
+  return <div className='draggable dragging'>{config.render({ ...elementConfig, id: data.id })}</div>;
 };

@@ -1,7 +1,6 @@
 import { useDraggable } from '@dnd-kit/core';
 import './PaletteItem.css';
 import { componentByName } from '../../components';
-import useDraggableOverWidth from '../../../utils/useDraggableOverWidth';
 import { Flex } from '@axonivy/ui-components';
 import type { CreateData } from '../../../types/config';
 
@@ -25,10 +24,9 @@ export const PaletteItem = ({ name, description, data }: PaletteConfig) => {
 };
 
 export const PaletteItemOverlay = ({ name, data }: PaletteConfig) => {
-  const width = useDraggableOverWidth();
   const component = componentByName(data?.componentName ?? name);
   return (
-    <div className='draggable dragging' style={{ width }}>
+    <div className='draggable dragging' style={{ width: 400 }}>
       {component.render(data ? component.create(data) : component.defaultProps)}
     </div>
   );

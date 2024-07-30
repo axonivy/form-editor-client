@@ -8,10 +8,10 @@ type UI = {
   properties: boolean;
   dataStructure: boolean;
   helpPaddings: boolean;
-  responsiveMode: 'desktop' | 'tablet' | 'mobile';
+  deviceMode: 'desktop' | 'tablet' | 'mobile';
 };
 
-const DEFAULT_UI: UI = { properties: true, dataStructure: false, helpPaddings: true, responsiveMode: 'desktop' };
+const DEFAULT_UI: UI = { properties: true, dataStructure: false, helpPaddings: true, deviceMode: 'desktop' };
 
 export const useUiState = () => {
   const readonly = useReadonly();
