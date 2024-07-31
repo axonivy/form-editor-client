@@ -17,7 +17,7 @@ export const Canvas = ({ config }: CanvasProps) => {
   const { droppableContainers } = useDndContext();
 
   return (
-    <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.responsiveMode}>
+    <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.deviceMode}>
       {data.components.map((component, index) => (
         <ComponentBlock key={component.id} component={component} config={config} preId={data.components.at(index - 1)?.id} />
       ))}

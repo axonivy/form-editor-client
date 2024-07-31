@@ -73,7 +73,7 @@ const LayoutBlock = ({ id, components, type, justifyContent, gridVariant }: UiCo
         className={`block-layout${type === 'GRID' ? ' grid' : ' flex'}${
           justifyContent === 'END' ? ' justify-end' : ''
         } ${`${gridVariant.toLocaleLowerCase()}`}`}
-        data-responsive-mode={ui.responsiveMode}
+        data-responsive-mode={ui.deviceMode}
       >
         {components.map((component, index) => {
           let componentCols = '';

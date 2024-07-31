@@ -25,29 +25,22 @@ import { forwardRef, useEffect } from 'react';
 import { allComponentsByCategory } from '../components';
 import { DataClassPalette, Palette } from './palette/Palette';
 
-type ResponsiveMode = 'desktop' | 'tablet' | 'mobile';
+type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { ui, setUi, selectedElement } = useAppContext();
   const { theme, setTheme } = useTheme();
   const editable = !useReadonly();
-
   useEffect(() => {
-    setUi(old => ({ ...old, properties: selectedElement === undefined ? false : true }));
-  }, [selectedElement, setUi]);
-
-  const changeResponsiveMode = (value: ResponsiveMode) => {
-    if (value) {
-      setUi(old => {
-        return { ...old, responsiveMode: value };
-      });
+    if (selectedElement === undefined) {
+      setUi(old => ({ ...old, properties: false }));
     }
-  };
-
+  }, [selectedElement, setUi]);
+  const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
   return (
     <Toolbar ref={ref}>
       <Flex>
-        <ToggleGroup type='single' onValueChange={changeResponsiveMode} defaultValue='desktop' gap={1} aria-label='Class selection'>
+        <ToggleGroup type='single' onValueChange={changeDeviceMode} defaultValue='desktop' gap={1} aria-label='Device mode'>
           <ToggleGroupItem value='mobile' asChild>
             <Button icon={IvyIcons.DeviceMobile} size='large' />
           </ToggleGroupItem>
