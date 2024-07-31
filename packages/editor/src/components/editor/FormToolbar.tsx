@@ -23,7 +23,8 @@ import { useAppContext } from '../../context/useData';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect } from 'react';
 import { allComponentsByCategory } from '../components';
-import { DataClassPalette, Palette } from './palette/Palette';
+import { Palette } from './palette/Palette';
+import { DataClassPalette } from './palette/data-class/DataClassPalette';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
