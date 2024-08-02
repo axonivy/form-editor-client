@@ -11,6 +11,7 @@ export async function start(): Promise<void> {
   const app = URLParams.app();
   const pmv = URLParams.pmv();
   const file = URLParams.file();
+  const directSave = URLParams.directSave();
   const theme = URLParams.theme();
   const readonly = URLParams.readonly();
 
@@ -23,7 +24,7 @@ export async function start(): Promise<void> {
         <ClientContextProvider client={client}>
           <QueryProvider client={queryClient}>
             <ReadonlyProvider readonly={readonly}>
-              <App context={{ app, pmv, file }} />
+              <App context={{ app, pmv, file }} directSave={directSave} />
             </ReadonlyProvider>
           </QueryProvider>
         </ClientContextProvider>

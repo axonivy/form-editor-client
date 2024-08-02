@@ -7,9 +7,10 @@ import IconSvg from './Input.svg?react';
 type InputProps = Prettify<Input>;
 
 const typeOptions: FieldOption<InputType>[] = [
+  { label: 'Text', value: 'TEXT' },
   { label: 'Email', value: 'EMAIL' },
   { label: 'Password', value: 'PASSWORD' },
-  { label: 'Text', value: 'TEXT' }
+  { label: 'Number', value: 'NUMBER' }
 ] as const;
 
 export const defaultInputProps: Input = {
@@ -28,7 +29,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   description: 'A simple input with a label',
   defaultProps: defaultInputProps,
   render: props => <UiInput {...props} />,
-  create: ({ label, value }) => ({ ...defaultInputProps, label, value }),
+  create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     required: { subsection: 'General', label: 'Required', type: 'checkbox' },
@@ -41,6 +42,6 @@ export const InputComponent: ComponentConfig<InputProps> = {
 const UiInput = ({ label, required, value }: UiComponentProps<InputProps>) => (
   <label className='block-input'>
     <span>{label}</span>
-    <input onChange={() => {}} value={value} required={required} />
+    <input onChange={() => {}} value={value} required={required} disabled />
   </label>
 );

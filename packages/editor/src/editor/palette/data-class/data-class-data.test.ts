@@ -41,14 +41,14 @@ test('of', () => {
   const items = paletteItems(variableInfo);
   expect(Object.keys(items)).toEqual(['data', 'data.address']);
   expect(items.data[0].name).toEqual('age');
-  expect(items.data[0].data).toEqual({ componentName: 'Input', label: 'Age', value: 'data.age' });
+  expect(items.data[0].data).toEqual({ componentName: 'Input', label: 'Age', value: '#{data.age}', type: 'NUMBER' });
   expect(items.data[1].name).toEqual('firstName');
-  expect(items.data[1].data).toEqual({ componentName: 'Input', label: 'First Name', value: 'data.firstName' });
+  expect(items.data[1].data).toEqual({ componentName: 'Input', label: 'First Name', value: '#{data.firstName}' });
   expect(items['data.address']).toHaveLength(2);
   expect(items['data.address'][0].name).toEqual('street');
-  expect(items['data.address'][0].data).toEqual({ componentName: 'Input', label: 'Street', value: 'data.address.street' });
+  expect(items['data.address'][0].data).toEqual({ componentName: 'Input', label: 'Street', value: '#{data.address.street}' });
   expect(items['data.address'][1].name).toEqual('zip');
-  expect(items['data.address'][1].data).toEqual({ componentName: 'Input', label: 'Zip', value: 'data.address.zip' });
+  expect(items['data.address'][1].data).toEqual({ componentName: 'Input', label: 'Zip', value: '#{data.address.zip}', type: 'NUMBER' });
 });
 
 test('of endless', () => {

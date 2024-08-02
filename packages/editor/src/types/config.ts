@@ -14,7 +14,7 @@ export type FieldOption<TValue = PrimitiveValue> = {
   value: TValue;
 };
 
-export type CreateData = { componentName: string; label: string; value: string };
+export type CreateData = { componentName: string; label: string; value: string; defaultProps?: Record<string, unknown> };
 
 export const isCreateData = (data: unknown): data is CreateData => typeof data === 'object' && data !== null && 'componentName' in data;
 
