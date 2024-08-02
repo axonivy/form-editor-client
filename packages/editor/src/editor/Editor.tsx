@@ -2,19 +2,19 @@ import { Canvas } from './canvas/Canvas';
 import { Properties } from './properties/Properties';
 import './Editor.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AppProvider, useUiState } from '../../context/useData';
-import { config } from '../components';
+import { AppProvider, useUiState } from '../context/useData';
+import { config } from '../components/components';
 import { Flex, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@axonivy/ui-components';
 import { FormToolbar } from './FormToolbar';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useClient } from '../../context/useClient';
-import type { Unary } from '../../types/lambda';
+import { useClient } from '../context/useClient';
+import type { Unary } from '../types/lambda';
 import type { FormData, FormEditorData, FormEditorProps } from '@axonivy/form-editor-protocol';
 import { DataStructure } from './data-structure/DataStructure';
-import { DndContext } from '../../context/DndContext';
+import { DndContext } from '../context/DndContext';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './canvas/ErrorFallback';
-import { genQueryKey } from '../../query';
+import { genQueryKey } from '../query/query-client';
 
 export const Editor = (props: FormEditorProps) => {
   const [context, setContext] = useState(props.context);

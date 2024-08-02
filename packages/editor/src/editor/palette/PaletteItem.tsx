@@ -1,8 +1,8 @@
 import { useDraggable } from '@dnd-kit/core';
 import './PaletteItem.css';
-import { componentByName } from '../../components';
+import { componentByName } from '../../components/components';
 import { Flex } from '@axonivy/ui-components';
-import type { CreateData } from '../../../types/config';
+import type { CreateData } from '../../types/config';
 
 export type PaletteConfig = {
   name: string;

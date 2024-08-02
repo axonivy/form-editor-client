@@ -1,5 +1,5 @@
 import { Fieldset, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@axonivy/ui-components';
-import type { FieldOption } from '../../../../types/config';
+import type { FieldOption } from '../../../types/config';
 
 type SelectFieldProps = {
   options: readonly FieldOption[];

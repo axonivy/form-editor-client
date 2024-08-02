@@ -14,7 +14,7 @@ import {
 import { useState, type ReactNode } from 'react';
 import { useData } from './useData';
 import { findComponentElement, modifyData } from '../data/data';
-import { ItemDragOverlay } from '../components/editor/ItemDragOverlay';
+import { ItemDragOverlay } from '../editor/ItemDragOverlay';
 import { isCreateData, type CreateData } from '../types/config';
 
 const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...args }) => {

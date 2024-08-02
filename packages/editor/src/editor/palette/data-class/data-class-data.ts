@@ -1,7 +1,7 @@
 import type { Variable, VariableInfo } from '@axonivy/form-editor-protocol';
 import type { PaletteConfig } from '../PaletteItem';
-import { componentsByType } from '../../../components';
-import { labelText } from '../../../../utils/string';
+import { componentsByType } from '../../../components/components';
+import { labelText } from '../../../utils/string';
 
 export const paletteItems = (dataClass: VariableInfo): Record<string, Array<PaletteConfig>> => {
   const paletteItems: Record<string, Array<PaletteConfig>> = {};

@@ -1,6 +1,6 @@
-import { useData } from '../../context/useData';
-import type { CreateData } from '../../types/config';
-import { componentByName } from '../components';
+import { useData } from '../context/useData';
+import type { CreateData } from '../types/config';
+import { componentByName } from '../components/components';
 import { DraggableOverlay } from './canvas/Draggable';
 import { PaletteItemOverlay } from './palette/PaletteItem';
 

@@ -1,4 +1,4 @@
-import { useAppContext } from '../../../context/useData';
+import { useAppContext } from '../../context/useData';
 import { Textarea } from '@axonivy/ui-components';
 
 export const DataStructure = () => {
