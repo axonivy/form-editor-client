@@ -19,10 +19,10 @@ import {
   useTheme
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useAppContext } from '../../context/useData';
+import { useAppContext } from '../context/useData';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect } from 'react';
-import { allComponentsByCategory } from '../components';
+import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
 import { DataClassPalette } from './palette/data-class/DataClassPalette';
 

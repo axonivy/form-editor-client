@@ -1,7 +1,7 @@
 import type { FormMetaRequestTypes } from '@axonivy/form-editor-protocol';
 import { useClient } from './useClient';
 import { useQuery } from '@tanstack/react-query';
-import { genQueryKey } from '../query';
+import { genQueryKey } from '../query/query-client';
 
 type NonUndefinedGuard<T> = T extends undefined ? never : T;
 

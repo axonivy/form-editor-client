@@ -1,10 +1,10 @@
 import './Canvas.css';
-import type { Config } from '../../../types/config';
+import type { Config } from '../../types/config';
 import { Draggable } from './Draggable';
-import { useAppContext } from '../../../context/useData';
+import { useAppContext } from '../../context/useData';
 import { DropZone, type DropZoneProps } from './DropZone';
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
-import { CANVAS_DROPZONE_ID } from '../../../data/data';
+import { CANVAS_DROPZONE_ID } from '../../data/data';
 import { EmptyDetail } from '@axonivy/ui-components';
 import { useDndContext } from '@dnd-kit/core';
 

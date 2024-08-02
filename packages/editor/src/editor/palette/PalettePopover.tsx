@@ -1,8 +1,8 @@
 import { IvyIcons } from '@axonivy/ui-icons';
-import type { itemCategory } from '../../../types/config';
+import type { itemCategory } from '../../types/config';
 import { Button, Flex, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
 import { Palette } from './Palette';
-import { componentsByCategory } from '../../components';
+import { componentsByCategory } from '../../components/components';
 import { useDndContext } from '@dnd-kit/core';
 import { useEffect, useState, type ReactNode } from 'react';
 import './PalettePopover.css';

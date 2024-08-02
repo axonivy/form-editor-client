@@ -1,6 +1,6 @@
 import type { FormData } from '@axonivy/form-editor-protocol';
 import { dragData, isDropZoneDisabled, type DragData } from './drag-data';
-import type { DeepPartial } from '../../../test-utils/type-utils';
+import type { DeepPartial } from '../../test-utils/type-utils';
 import type { Active } from '@dnd-kit/core';
 
 describe('dragData', () => {

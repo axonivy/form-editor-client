@@ -1,7 +1,7 @@
 import { useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useMeta } from '../../../../../context/useMeta';
-import { useAppContext } from '../../../../../context/useData';
+import { useMeta } from '../../../../context/useMeta';
+import { useAppContext } from '../../../../context/useData';
 import { variableTreeData } from './variable-tree-data';
 import { useCallback, useEffect, useState } from 'react';
 import type { Row } from '@tanstack/table-core';

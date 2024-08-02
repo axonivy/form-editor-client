@@ -1,6 +1,6 @@
 import { isLayout, type Component, type ComponentData } from '@axonivy/form-editor-protocol';
 import type { Active } from '@dnd-kit/core';
-import { LAYOUT_DROPZONE_ID_PREFIX } from '../../../data/data';
+import { LAYOUT_DROPZONE_ID_PREFIX } from '../../data/data';
 
 export type DragData = { disabledIds: Array<string> };
 
