@@ -16,6 +16,10 @@ export namespace URLParams {
     return parameter('file') ?? '';
   }
 
+  export function directSave(): boolean {
+    return parameter('directSave') !== undefined;
+  }
+
   export function theme(): 'dark' | 'light' {
     const theme = parameter('theme');
     if (theme === 'dark') {

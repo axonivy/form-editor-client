@@ -1,7 +1,7 @@
 import type { Variable, VariableInfo } from '@axonivy/form-editor-protocol';
 import type { PaletteConfig } from '../PaletteItem';
-import { componentsByType } from '../../../components/components';
 import { labelText } from '../../../utils/string';
+import { config } from '../../../components/components';
 
 export const paletteItems = (dataClass: VariableInfo): Record<string, Array<PaletteConfig>> => {
   const paletteItems: Record<string, Array<PaletteConfig>> = {};
@@ -22,14 +22,35 @@ export const paletteItems = (dataClass: VariableInfo): Record<string, Array<Pale
 
 const toPaletteConfigs = (dataClass: VariableInfo, parent: Variable): Array<PaletteConfig> =>
   dataClass.types[parent.type]
-    ?.map(variable => {
-      const components = componentsByType(variable.type);
-      const paletteConfigs = components.map<PaletteConfig>(component => ({
-        ...component,
+    ?.filter(variable => blockForType(variable.type) !== undefined)
+    .map(variable => {
+      const block = blockForType(variable.type)!;
+      return {
+        ...block.component,
         name: variable.attribute,
         description: variable.description,
-        data: { componentName: component.name, label: labelText(variable.attribute), value: `${parent.attribute}.${variable.attribute}` }
-      }));
-      return paletteConfigs[0];
+        data: {
+          componentName: block.component.name,
+          label: labelText(variable.attribute),
+          value: `#{${parent.attribute}.${variable.attribute}}`,
+          ...block.defaultProps
+        }
+      };
     })
     .filter(Boolean);
+
+const blockForType = (type: 'String' | 'Number' | 'Boolean' | 'Date' | 'DateTime' | 'Time' | 'File' | string) => {
+  switch (type) {
+    case 'String':
+      return { component: config.components.Input };
+    case 'Number':
+      return { component: config.components.Input, defaultProps: { type: 'NUMBER' } };
+    case 'Boolean':
+    case 'Date':
+    case 'DateTime':
+    case 'Time':
+    case 'File':
+    default:
+      return undefined;
+  }
+};
