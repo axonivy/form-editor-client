@@ -41,7 +41,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   icon: <IconSvg />,
   description: 'A flexable layout',
   defaultProps: defaultLayoutProps,
-  render: props => <LayoutBlock {...props} />,
+  render: props => <UiBlock {...props} />,
   create: () => defaultLayoutProps,
   fields: {
     components: { subsection: 'General', type: 'hidden' },
@@ -64,7 +64,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   }
 };
 
-const LayoutBlock = ({ id, components, type, justifyContent, gridVariant }: UiComponentProps<LayoutProps>) => {
+const UiBlock = ({ id, components, type, justifyContent, gridVariant }: UiComponentProps<LayoutProps>) => {
   const { ui } = useAppContext();
 
   return (

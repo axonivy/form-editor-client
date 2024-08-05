@@ -6,12 +6,12 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type InputType = ("TEXT" | "EMAIL" | "PASSWORD" | "NUMBER")
-export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
-export type TextType = "RAW" | "MARKDOWN";
+export type ButtonVariant = ("PRIMARY" | "SECONDARY" | "DANGER")
+export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
 export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
 export type LayoutJustifyContent = "NORMAL" | "END";
 export type LayoutType = "GRID" | "FLEX";
+export type TextType = "RAW" | "MARKDOWN";
 
 export interface Form {
   $schema: string;
@@ -25,22 +25,8 @@ export interface FormConfig {
 }
 export interface Component {
   id: string;
-  type: "Button" | "Input" | "Layout" | "Link" | "Text";
-  config: Input | Link | Button | Text | Layout;
-}
-export interface Input {
-  label: string;
-  lgSpan: string;
-  mdSpan: string;
-  required: boolean;
-  type: InputType;
-  value: string;
-}
-export interface Link {
-  href: string;
-  lgSpan: string;
-  mdSpan: string;
-  name: string;
+  type: "Button" | "Checkbox" | "Input" | "Layout" | "Link" | "Text";
+  config: Button | Checkbox | Input | Layout | Link | Text;
 }
 export interface Button {
   action: string;
@@ -50,11 +36,19 @@ export interface Button {
   name: string;
   variant: ButtonVariant;
 }
-export interface Text {
-  content: string;
+export interface Checkbox {
+  label: string;
   lgSpan: string;
   mdSpan: string;
-  type: TextType;
+  selected: string;
+}
+export interface Input {
+  label: string;
+  lgSpan: string;
+  mdSpan: string;
+  required: boolean;
+  type: InputType;
+  value: string;
 }
 export interface Layout {
   components: Component[];
@@ -63,4 +57,16 @@ export interface Layout {
   lgSpan: string;
   mdSpan: string;
   type: LayoutType;
+}
+export interface Link {
+  href: string;
+  lgSpan: string;
+  mdSpan: string;
+  name: string;
+}
+export interface Text {
+  content: string;
+  lgSpan: string;
+  mdSpan: string;
+  type: TextType;
 }

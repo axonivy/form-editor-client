@@ -1,0 +1,19 @@
+.block-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.block-checkbox button:hover {
+  color: var(--N900);
+  border: var(--basic-border);
+  background-color: var(--N25);
+  cursor: default;
+}
+
+.block-checkbox button[data-state='checked']:hover {
+  color: var(--N900);
+  border: var(--activ-border);
+  background-color: var(--P50);
+  cursor: default;
+}

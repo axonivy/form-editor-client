@@ -24,7 +24,7 @@ export const TextComponent: ComponentConfig<TextProps> = {
   icon: <IconSvg />,
   description: 'Text output',
   defaultProps: defaultTextProps,
-  render: props => <TextBlock {...props} />,
+  render: props => <UiBlock {...props} />,
   create: ({ value }) => ({ ...defaultTextProps, content: value }),
   fields: {
     content: { subsection: 'General', label: 'Content', type: 'textarea' },
@@ -33,4 +33,4 @@ export const TextComponent: ComponentConfig<TextProps> = {
   }
 };
 
-const TextBlock = ({ content }: UiComponentProps<TextProps>) => <p className='block-text'>{content}</p>;
+const UiBlock = ({ content }: UiComponentProps<TextProps>) => <p className='block-text'>{content}</p>;

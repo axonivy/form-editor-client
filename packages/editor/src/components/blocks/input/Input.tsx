@@ -28,7 +28,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   icon: <IconSvg />,
   description: 'A simple input with a label',
   defaultProps: defaultInputProps,
-  render: props => <UiInput {...props} />,
+  render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
@@ -39,7 +39,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   }
 };
 
-const UiInput = ({ label, required, value }: UiComponentProps<InputProps>) => (
+const UiBlock = ({ label, required, value }: UiComponentProps<InputProps>) => (
   <div className='block-input'>
     <span className='block-input__label'>
       {label}

@@ -33,7 +33,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   icon: <IconSvg />,
   description: 'A button for fire actions',
   defaultProps: defaultButtonProps,
-  render: props => <ButtonBlock {...props} />,
+  render: props => <UiBlock {...props} />,
   create: ({ label, value }) => ({ ...defaultButtonProps, name: label, action: value }),
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
@@ -44,7 +44,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   }
 };
 
-const ButtonBlock = ({ name, icon, variant }: UiComponentProps<ButtonProps>) => (
+const UiBlock = ({ name, icon, variant }: UiComponentProps<ButtonProps>) => (
   <button className='block-button' data-variant={variant.toLocaleLowerCase()}>
     {icon && <i className={icon} />}
     <span>{name}</span>
