@@ -9,7 +9,7 @@ import {
 
 export class FormClientMock implements FormClient {
   private formData: FormEditorData = {
-    context: { app: '', pmv: '', file: '' },
+    context: { app: 'mock', pmv: 'mock', file: 'mock.f.json' },
     readonly: false,
     defaults: {},
     data: {
