@@ -4,7 +4,7 @@ import './Editor.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AppProvider, useUiState } from '../context/useData';
 import { config } from '../components/components';
-import { Flex, ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@axonivy/ui-components';
+import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGroup, Spinner } from '@axonivy/ui-components';
 import { FormToolbar } from './FormToolbar';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../context/useClient';
@@ -15,6 +15,7 @@ import { DndContext } from '../context/DndContext';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './canvas/ErrorFallback';
 import { genQueryKey } from '../query/query-client';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export const Editor = (props: FormEditorProps) => {
   const [context, setContext] = useState(props.context);
@@ -61,11 +62,17 @@ export const Editor = (props: FormEditorProps) => {
   });
 
   if (isPending) {
-    return <p>Loading...</p>;
+    return (
+      <Flex alignItems='center' justifyContent='center' style={{ width: '100%', height: '100%' }}>
+        <Spinner />
+      </Flex>
+    );
   }
-
   if (isError) {
-    return <p>{'An error has occurred: ' + error}</p>;
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message={`An error has occurred: ${error.message}`} />;
+  }
+  if (data.context.app === '') {
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message='Form not found' />;
   }
 
   return (
