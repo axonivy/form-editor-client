@@ -5,8 +5,9 @@ import { useAppContext } from '../../context/useData';
 import { DropZone, type DropZoneProps } from './DropZone';
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 import { CANVAS_DROPZONE_ID } from '../../data/data';
-import { cn, PanelMessage } from '@axonivy/ui-components';
+import { cn, Flex, PanelMessage } from '@axonivy/ui-components';
 import { useDndContext } from '@dnd-kit/core';
+import { DataClassDialog } from './data-class/DataClassDialog';
 
 type CanvasProps = {
   config: Config;
@@ -24,7 +25,7 @@ export const Canvas = ({ config }: CanvasProps) => {
       <EmtpyBlock
         id={CANVAS_DROPZONE_ID}
         preId={data.components.at(-1)?.id ?? ''}
-        dragHint={{ display: droppableContainers.size === 1, message: 'Drag first element inside the canvase', mode: 'column' }}
+        dragHint={{ display: droppableContainers.size === 1, message: 'Drag first element inside the canvas', mode: 'column' }}
       />
     </div>
   );
@@ -52,7 +53,14 @@ type EmptyBlockProps = {
 export const EmtpyBlock = ({ id, preId, forLayout, dragHint }: EmptyBlockProps) => (
   <DropZone id={id} preId={preId}>
     {dragHint?.display ? (
-      <PanelMessage message={dragHint.message} mode={dragHint.mode} className={cn('drag-hint', dragHint.mode)} />
+      <>
+        <PanelMessage message={dragHint.message} mode={dragHint.mode} className={cn('drag-hint', dragHint.mode)} />
+        {!forLayout && (
+          <Flex justifyContent='center'>
+            <DataClassDialog />
+          </Flex>
+        )}
+      </>
     ) : (
       <div className={cn('empty-block', forLayout && 'for-layout')} />
     )}

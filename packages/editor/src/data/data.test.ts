@@ -109,6 +109,25 @@ describe('modifyData', () => {
     });
   });
 
+  test('add', () => {
+    const empty = modifyData(emptyData(), { type: 'add', data: { creates: [] } }).newData;
+    expect(empty).toEqual(emptyData());
+
+    const data = modifyData(emptyData(), {
+      type: 'add',
+      data: {
+        creates: [
+          { componentName: 'Input', label: 'Age', value: 'age' },
+          { componentName: 'Checkbox', label: 'Approve', value: 'approve' }
+        ]
+      }
+    }).newData;
+    expect(data).not.toEqual(emptyData());
+    expect(data.components).toHaveLength(2);
+    expect(data.components[0].type).to.equals('Input');
+    expect(data.components[1].type).to.equals('Checkbox');
+  });
+
   describe('move', () => {
     test('down', () => {
       const data = filledData();
