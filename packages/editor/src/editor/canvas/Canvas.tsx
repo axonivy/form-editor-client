@@ -5,7 +5,7 @@ import { useAppContext } from '../../context/useData';
 import { DropZone, type DropZoneProps } from './DropZone';
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 import { CANVAS_DROPZONE_ID } from '../../data/data';
-import { EmptyDetail } from '@axonivy/ui-components';
+import { cn, PanelMessage } from '@axonivy/ui-components';
 import { useDndContext } from '@dnd-kit/core';
 
 type CanvasProps = {
@@ -52,9 +52,9 @@ type EmptyBlockProps = {
 export const EmtpyBlock = ({ id, preId, forLayout, dragHint }: EmptyBlockProps) => (
   <DropZone id={id} preId={preId}>
     {dragHint?.display ? (
-      <EmptyDetail message={dragHint.message} mode={dragHint.mode} className={`drag-hint ${dragHint.mode === 'column' ? 'column' : ''}`} />
+      <PanelMessage message={dragHint.message} mode={dragHint.mode} className={cn('drag-hint', dragHint.mode)} />
     ) : (
-      <div className={`empty-block${forLayout ? ' for-layout' : ''}`} />
+      <div className={cn('empty-block', forLayout && 'for-layout')} />
     )}
   </DropZone>
 );
