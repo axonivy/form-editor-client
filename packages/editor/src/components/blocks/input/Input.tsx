@@ -40,8 +40,11 @@ export const InputComponent: ComponentConfig<InputProps> = {
 };
 
 const UiInput = ({ label, required, value }: UiComponentProps<InputProps>) => (
-  <label className='block-input'>
-    <span>{label}</span>
-    <input onChange={() => {}} value={value} required={required} disabled />
-  </label>
+  <div className='block-input'>
+    <span className='block-input__label'>
+      {label}
+      {required && ' *'}
+    </span>
+    <span className='block-input__input'>{value}</span>
+  </div>
 );
