@@ -19,7 +19,7 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   icon: <IconSvg />,
   description: 'Link to somewhere',
   defaultProps: defaultLinkProps,
-  render: props => <LinkBlock {...props} />,
+  render: props => <UiBlock {...props} />,
   create: () => defaultLinkProps,
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
@@ -28,7 +28,7 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   }
 };
 
-const LinkBlock = ({ name, ...props }: UiComponentProps<LinkProps>) => (
+const UiBlock = ({ name, ...props }: UiComponentProps<LinkProps>) => (
   <a className='block-link' {...props}>
     {name}
   </a>
