@@ -71,7 +71,7 @@ export const Editor = (props: FormEditorProps) => {
   if (isError) {
     return <PanelMessage icon={IvyIcons.ErrorXMark} message={`An error has occurred: ${error.message}`} />;
   }
-  if (data.context.app === '') {
+  if (data.data.components === undefined) {
     return <PanelMessage icon={IvyIcons.ErrorXMark} message='Form not found' />;
   }
 
