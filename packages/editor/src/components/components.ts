@@ -30,3 +30,20 @@ export const componentsByCategory = (category: itemCategory) => {
 export const allComponentsByCategory = () => {
   return groupBy(Object.values(config.components), item => item.category);
 };
+
+export const componentForType = (type: 'String' | 'Number' | 'Boolean' | 'Date' | 'DateTime' | 'Time' | 'File' | string) => {
+  switch (type) {
+    case 'String':
+      return { component: config.components.Input };
+    case 'Number':
+      return { component: config.components.Input, defaultProps: { type: 'NUMBER' } };
+    case 'Boolean':
+      return { component: config.components.Checkbox };
+    case 'Date':
+    case 'DateTime':
+    case 'Time':
+    case 'File':
+    default:
+      return undefined;
+  }
+};

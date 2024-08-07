@@ -87,6 +87,7 @@ type ModifyAction =
         create?: CreateData;
       };
     }
+  | { type: 'add'; data: { creates: Array<CreateData> } }
   | {
       type: 'remove' | 'moveUp' | 'moveDown';
       data: { id: string };
@@ -111,6 +112,11 @@ export const modifyData = (data: FormData, action: ModifyAction) => {
   switch (action.type) {
     case 'dnd':
       newComponentId = dndModify(newData.components, action.data);
+      break;
+    case 'add':
+      action.data.creates.forEach(create =>
+        addComponent(newData.components, createComponentData(componentByName(create.componentName), create), CANVAS_DROPZONE_ID)
+      );
       break;
     case 'remove':
       removeComponent(newData.components, action.data.id);
