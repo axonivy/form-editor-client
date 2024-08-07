@@ -13,7 +13,7 @@ export type ComponentData = Omit<Component, 'config'> & {
   config: ConfigData;
 };
 
-type LayoutConfig = ComponentData & { config: Omit<Layout, 'components'> & { components: Array<ComponentData> } };
+export type LayoutConfig = ComponentData & { config: Omit<Layout, 'components'> & { components: Array<ComponentData> } };
 
 export type FormData = Omit<Form, 'components' | '$schema'> & {
   components: Array<ComponentData>;

@@ -1,5 +1,5 @@
-import { EMPTY_FORM, type ComponentData, type FormData, isLayout } from '@axonivy/form-editor-protocol';
-import { findComponentElement, modifyData } from './data';
+import { EMPTY_FORM, type ComponentData, type FormData, isLayout, type LayoutConfig } from '@axonivy/form-editor-protocol';
+import { createInitForm, findComponentElement, modifyData } from './data';
 import type { DeepPartial } from '../test-utils/type-utils';
 
 describe('findComponentElement', () => {
@@ -110,22 +110,10 @@ describe('modifyData', () => {
   });
 
   test('add', () => {
-    const empty = modifyData(emptyData(), { type: 'add', data: { creates: [] } }).newData;
-    expect(empty).toEqual(emptyData());
-
-    const data = modifyData(emptyData(), {
-      type: 'add',
-      data: {
-        creates: [
-          { componentName: 'Input', label: 'Age', value: 'age' },
-          { componentName: 'Checkbox', label: 'Approve', value: 'approve' }
-        ]
-      }
-    }).newData;
+    const data = modifyData(emptyData(), { type: 'add', data: { create: { componentName: 'Input', label: 'Age', value: 'age' } } }).newData;
     expect(data).not.toEqual(emptyData());
-    expect(data.components).toHaveLength(2);
+    expect(data.components).toHaveLength(1);
     expect(data.components[0].type).to.equals('Input');
-    expect(data.components[1].type).to.equals('Checkbox');
   });
 
   describe('move', () => {
@@ -154,6 +142,27 @@ describe('modifyData', () => {
       expectOrder(modifyData(data, { type: 'moveUp', data: { id: '1' } }).newData, ['1', '2', '3']);
       expectOrder(modifyData(data, { type: 'moveDown', data: { id: '3' } }).newData, ['1', '2', '3']);
     });
+  });
+});
+
+describe('createInitForm', () => {
+  test('create', () => {
+    const data = createInitForm(emptyData(), [{ componentName: 'Input', label: 'Age', value: 'age' }], false);
+    expect(data).not.toEqual(emptyData());
+    expect(data.components).toHaveLength(1);
+    expect(data.components[0].type).toEqual('Input');
+  });
+
+  test('create with workflow buttons', () => {
+    const data = createInitForm(emptyData(), [{ componentName: 'Input', label: 'Age', value: 'age' }], true);
+    expect(data).not.toEqual(emptyData());
+    expect(data.components).toHaveLength(2);
+    expect(data.components[0].type).toEqual('Input');
+    const layout = data.components[1] as LayoutConfig;
+    expect(layout.type).toEqual('Layout');
+    expect(layout.config.components).toHaveLength(2);
+    expect(layout.config.components[0].config.action).toEqual('#{ivyWorkflowView.cancel()}');
+    expect(layout.config.components[1].config.action).toEqual('#{logic.close}');
   });
 });
 

@@ -42,7 +42,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   description: 'A flexable layout',
   defaultProps: defaultLayoutProps,
   render: props => <UiBlock {...props} />,
-  create: () => defaultLayoutProps,
+  create: ({ defaultProps }) => ({ ...defaultLayoutProps, ...defaultProps }),
   fields: {
     components: { subsection: 'General', type: 'hidden' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
