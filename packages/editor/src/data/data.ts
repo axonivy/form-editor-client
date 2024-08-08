@@ -1,4 +1,3 @@
-import type { UniqueIdentifier } from '@dnd-kit/core';
 import type { ComponentConfig, CreateData } from '../types/config';
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
@@ -83,11 +82,11 @@ type ModifyAction =
       type: 'dnd';
       data: {
         activeId: string;
-        targetId: UniqueIdentifier;
+        targetId: string;
         create?: CreateData;
       };
     }
-  | { type: 'add'; data: { creates: Array<CreateData> } }
+  | { type: 'add'; data: { create: CreateData; targetId?: string } }
   | {
       type: 'remove' | 'moveUp' | 'moveDown';
       data: { id: string };
@@ -96,15 +95,21 @@ type ModifyAction =
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
   const component = componentByName(action.activeId);
   if (component) {
-    return addComponent(data, createComponentData(component, action.create), action.targetId as string);
+    return addComponent(data, createComponentData(component, action.create), action.targetId);
   } else {
     const removed = removeComponent(data, action.activeId);
     if (removed) {
-      return addComponent(data, removed, action.targetId as string);
+      return addComponent(data, removed, action.targetId);
     }
     return undefined;
   }
 };
+
+const createComponentData = (config: ComponentConfig, data?: CreateData): ComponentData => ({
+  id: `${config.name}-${uuid()}`,
+  type: config.name,
+  config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
+});
 
 export const modifyData = (data: FormData, action: ModifyAction) => {
   const newData = structuredClone(data);
@@ -114,8 +119,10 @@ export const modifyData = (data: FormData, action: ModifyAction) => {
       newComponentId = dndModify(newData.components, action.data);
       break;
     case 'add':
-      action.data.creates.forEach(create =>
-        addComponent(newData.components, createComponentData(componentByName(create.componentName), create), CANVAS_DROPZONE_ID)
+      newComponentId = addComponent(
+        newData.components,
+        createComponentData(componentByName(action.data.create.componentName), action.data.create),
+        action.data.targetId ?? CANVAS_DROPZONE_ID
       );
       break;
     case 'remove':
@@ -139,8 +146,30 @@ export const findComponentElement = (data: FormData, id: string) => {
   return;
 };
 
-const createComponentData = (config: ComponentConfig, data?: CreateData): ComponentData => ({
-  id: `${config.name}-${uuid()}`,
-  type: config.name,
-  config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
-});
+export const createInitForm = (data: FormData, creates: Array<CreateData>, workflowButtons: boolean) => {
+  creates.forEach(create => {
+    data = modifyData(data, { type: 'add', data: { create } }).newData;
+  });
+  if (workflowButtons) {
+    const { newData, newComponentId } = modifyData(data, {
+      type: 'add',
+      data: { create: { componentName: 'Layout', label: '', value: '', defaultProps: { type: 'FLEX', justifyContent: 'END' } } }
+    });
+    const layoutId = `${LAYOUT_DROPZONE_ID_PREFIX}${newComponentId}`;
+    data = modifyData(newData, {
+      type: 'add',
+      data: {
+        create: { componentName: 'Button', label: 'Cancel', value: '#{ivyWorkflowView.cancel()}', defaultProps: { variant: 'SECONDARY' } },
+        targetId: layoutId
+      }
+    }).newData;
+    data = modifyData(data, {
+      type: 'add',
+      data: {
+        create: { componentName: 'Button', label: 'Proceed', value: '#{logic.close}', defaultProps: { variant: 'PRIMARY' } },
+        targetId: layoutId
+      }
+    }).newData;
+  }
+  return data;
+};

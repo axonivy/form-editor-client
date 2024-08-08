@@ -1,6 +1,10 @@
 import type { Variable, VariableInfo } from '@axonivy/form-editor-protocol';
 import type { BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
+import type { Row } from '@tanstack/react-table';
+import { componentForType } from '../components/components';
+import { labelText } from '../utils/string';
+import type { CreateData } from '../types/config';
 
 export const variableTreeData = () => {
   const of = (paramInfo: VariableInfo): Array<BrowserNode<Variable>> => {
@@ -41,4 +45,25 @@ export const variableTreeData = () => {
     })) ?? [];
 
   return { of, loadChildrenFor };
+};
+
+export const fullVariablePath = (row: Row<BrowserNode>): string => {
+  return `${row
+    .getParentRows()
+    .map(parent => parent.original.value)
+    .join('.')}.${row.original.value}`;
+};
+
+export const rowToCreateData = (row: Row<BrowserNode>): CreateData | undefined => {
+  const node = row.original;
+  const component = componentForType(node.info);
+  if (component === undefined) {
+    return undefined;
+  }
+  return {
+    componentName: component.component.name,
+    label: labelText(node.value),
+    value: `#{${fullVariablePath(row)}}`,
+    ...component.defaultProps
+  };
 };

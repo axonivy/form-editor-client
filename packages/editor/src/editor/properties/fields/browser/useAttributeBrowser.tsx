@@ -2,21 +2,11 @@ import { useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-componen
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../../context/useMeta';
 import { useAppContext } from '../../../../context/useData';
-import { variableTreeData } from './variable-tree-data';
+import { fullVariablePath, variableTreeData } from '../../../../data/variable-tree-data';
 import { useCallback, useEffect, useState } from 'react';
-import type { Row } from '@tanstack/table-core';
 import type { Variable } from '@axonivy/form-editor-protocol';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute' as const;
-
-const fullPath = (row: Row<BrowserNode>): string => {
-  const value = row.original.value;
-  const parent = row.getParentRow();
-  if (parent) {
-    return `${fullPath(parent)}.${value}`;
-  }
-  return value;
-};
 
 export const useAttributeBrowser = (): Browser => {
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
@@ -33,6 +23,6 @@ export const useAttributeBrowser = (): Browser => {
     icon: IvyIcons.Attribute,
     browser: attributes,
     infoProvider: row => row?.original.info,
-    applyModifier: row => ({ value: fullPath(row) })
+    applyModifier: row => ({ value: fullVariablePath(row) })
   };
 };

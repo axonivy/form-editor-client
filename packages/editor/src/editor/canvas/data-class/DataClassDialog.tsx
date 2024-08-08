@@ -1,4 +1,5 @@
 import {
+  BasicCheckbox,
   Button,
   Dialog,
   DialogClose,
@@ -21,12 +22,9 @@ import { useMeta } from '../../../context/useMeta';
 import { useAppContext } from '../../../context/useData';
 import { useCallback, useEffect, useState } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
-import { variableTreeData } from '../../properties/fields/browser/variable-tree-data';
+import { rowToCreateData, variableTreeData } from '../../../data/variable-tree-data';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
-import { modifyData } from '../../../data/data';
-import type { CreateData } from '../../../types/config';
-import { componentForType } from '../../../components/components';
-import { labelText } from '../../../utils/string';
+import { createInitForm } from '../../../data/data';
 
 export const DataClassDialog = () => (
   <Dialog>
@@ -47,6 +45,7 @@ export const DataClassDialog = () => (
 const DataClassSelect = () => {
   const { context, setData } = useAppContext();
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
+  const [workflowButtons, setWorkflowButtons] = useState(true);
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   useEffect(() => setTree(variableTreeData().of(dataClass)), [dataClass]);
   const loadChildren = useCallback<(row: Row<BrowserNode>) => void>(
@@ -87,24 +86,14 @@ const DataClassSelect = () => {
       ...select.tableState
     }
   });
-  const createFromSelection = () => {
-    const creates = table
-      .getSelectedRowModel()
-      .flatRows.filter(row => componentForType(row.original.info) !== undefined)
-      .map<CreateData>(row => {
-        const node = row.original;
-        const component = componentForType(node.info)!;
-        return {
-          componentName: component.component.name,
-          label: labelText(node.value),
-          value: `#{${row
-            .getParentRows()
-            .map(parent => parent.original.value)
-            .join('.')}.${node.value}}`,
-          ...component.defaultProps
-        };
-      });
-    setData(data => modifyData(data, { type: 'add', data: { creates } }).newData);
+  const createForm = () => {
+    setData(data => {
+      const creates = table
+        .getSelectedRowModel()
+        .flatRows.map(rowToCreateData)
+        .filter(create => create !== undefined);
+      return createInitForm(data, creates, workflowButtons);
+    });
   };
   return (
     <>
@@ -119,9 +108,14 @@ const DataClassSelect = () => {
           ))}
         </TableBody>
       </Table>
+      <BasicCheckbox
+        checked={workflowButtons}
+        onCheckedChange={change => setWorkflowButtons(Boolean(change))}
+        label='Create proceed and cancel buttons'
+      />
       <DialogFooter>
         <DialogClose asChild>
-          <Button variant='primary' onClick={createFromSelection}>
+          <Button variant='primary' onClick={createForm}>
             Create
           </Button>
         </DialogClose>

@@ -34,7 +34,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   description: 'A button for fire actions',
   defaultProps: defaultButtonProps,
   render: props => <UiBlock {...props} />,
-  create: ({ label, value }) => ({ ...defaultButtonProps, name: label, action: value }),
+  create: ({ label, value, defaultProps }) => ({ ...defaultButtonProps, name: label, action: value, ...defaultProps }),
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
     action: { subsection: 'General', label: 'Action', type: 'text' },
