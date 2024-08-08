@@ -25,8 +25,8 @@ export interface FormConfig {
 }
 export interface Component {
   id: string;
-  type: "Button" | "Checkbox" | "Input" | "Layout" | "Link" | "Text";
-  config: Button | Checkbox | Input | Layout | Link | Text;
+  type: "Button" | "Checkbox" | "Input" | "Layout" | "Link" | "Select" | "Text";
+  config: Button | Checkbox | Input | Layout | Link | Select | Text;
 }
 export interface Button {
   action: string;
@@ -63,6 +63,18 @@ export interface Link {
   lgSpan: string;
   mdSpan: string;
   name: string;
+}
+export interface Select {
+  items: SelectItem[];
+  itemsValue: string;
+  label: string;
+  lgSpan: string;
+  mdSpan: string;
+  value: string;
+}
+export interface SelectItem {
+  label: string;
+  value: string;
 }
 export interface Text {
   content: string;

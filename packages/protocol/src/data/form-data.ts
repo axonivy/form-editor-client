@@ -5,7 +5,7 @@ export type ComponentType = Component['type'];
 
 export type ComponentConfigKeys = KeysOfUnion<Component['config']>;
 
-export type PrimitiveValue = string | boolean | number;
+export type PrimitiveValue = string | boolean | number | any[];
 
 export type ConfigData = Record<string, PrimitiveValue | Array<ComponentData>>;
 

@@ -4,9 +4,10 @@ import { CheckboxField } from './fields/CheckboxField';
 import { TextareaField } from './fields/TextareaField';
 import { SelectField } from './fields/SelectField';
 import { NumberField } from './fields/NumberField';
-import type { PrimitiveValue } from '@axonivy/form-editor-protocol';
+import type { PrimitiveValue, SelectItem } from '@axonivy/form-editor-protocol';
 import { InputField } from './fields/InputField';
 import { InputFieldWithBrowser } from './fields/InputFieldWithBrowser';
+import { SelectTableField } from './fields/table-field/SelectTableField';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
@@ -17,6 +18,7 @@ type PropertyItemProps = {
 const toString = (primitive?: PrimitiveValue) => `${primitive ?? ''}`;
 const toNumber = (primitive?: PrimitiveValue) => Number(primitive ?? 0);
 const toBoolean = (primitive?: PrimitiveValue) => Boolean(primitive ?? false);
+const toArray = (primitive?: PrimitiveValue): unknown[] => (Array.isArray(primitive) ? primitive : []);
 
 export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItemProps) => {
   const [value, setValue] = useState<PrimitiveValue>(initValue);
@@ -31,6 +33,8 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
         return <InputField label={label} value={toString(value)} onChange={updateValue} />;
       case 'textBrowser':
         return <InputFieldWithBrowser label={label} value={toString(value)} onChange={updateValue} />;
+      case 'selectTable':
+        return <SelectTableField label={label} data={toArray(value) as SelectItem[]} onChange={updateValue} />;
       case 'number':
         return <NumberField label={label} value={toNumber(value)} onChange={updateValue} />;
       case 'checkbox':

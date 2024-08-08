@@ -29,6 +29,11 @@ export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComp
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'text' | 'number' | 'textarea' | 'checkbox' | 'textBrowser';
 };
+
+export type TableField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
+  type: 'selectTable';
+};
+
 export type SelectField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'select' | 'radio';
   options: readonly FieldOption[];
@@ -40,6 +45,7 @@ export type HiddenField = BaseField & {
 export type Field<ComponentProps extends DefaultComponentProps = DefaultComponentProps> =
   | TextField<ComponentProps>
   | SelectField<ComponentProps>
+  | TableField<ComponentProps>
   | HiddenField;
 
 export const isNotHiddenField = (field: Field): field is Exclude<Field, HiddenField> => {

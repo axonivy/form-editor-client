@@ -6,6 +6,7 @@ import { InputComponent } from './blocks/input/Input';
 import { LinkComponent } from './blocks/link/Link';
 import { TextComponent } from './blocks/text/Text';
 import { CheckboxComponent } from './blocks/checkbox/Checkbox';
+import { SelectComponent } from './blocks/select/Select';
 
 export const config: Config = {
   components: {
@@ -14,7 +15,8 @@ export const config: Config = {
     Link: LinkComponent,
     Layout: LayoutComponent,
     Button: ButtonComponent,
-    Checkbox: CheckboxComponent
+    Checkbox: CheckboxComponent,
+    Select: SelectComponent
   }
 };
 
