@@ -30,12 +30,12 @@ export const DataClassDialog = () => (
   <Dialog>
     <DialogTrigger asChild>
       <Button icon={IvyIcons.DatabaseLink} variant='outline'>
-        Create from data class
+        Create from data
       </Button>
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Create from data class</DialogTitle>
+        <DialogTitle>Create from data</DialogTitle>
       </DialogHeader>
       <DataClassSelect />
     </DialogContent>
