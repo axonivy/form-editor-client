@@ -48,3 +48,36 @@
 .empty-block.for-layout {
   height: var(--size-4);
 }
+
+.delete-drop-zone {
+  display: none;
+  position: fixed;
+  --zone-size: 3rem;
+  --zone-font-size: 1rem;
+  bottom: calc(var(--zone-size) / -2);
+  left: calc(50% - var(--zone-size) / 2);
+  width: var(--zone-size);
+  height: var(--zone-size);
+  background-color: var(--N100);
+  border-radius: 50%;
+  border: 1px dashed var(--error-color);
+  font-size: var(--zone-font-size);
+  .delete-icon {
+    position: absolute;
+    top: calc(var(--zone-size) / 2 - var(--zone-font-size) - 2px);
+    width: 100%;
+    text-align: center;
+  }
+  &.dnd-active {
+    display: block;
+  }
+  &.is-drop-target {
+    border: 1px solid var(--error-color);
+    --zone-size: 4rem;
+    --zone-font-size: 20px;
+    background-color: rgb(from var(--error-color) r g b / 0.2);
+    .delete-icon {
+      color: var(--error-color);
+    }
+  }
+}

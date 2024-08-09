@@ -4,10 +4,11 @@ import { Draggable } from './Draggable';
 import { useAppContext } from '../../context/useData';
 import { DropZone, type DropZoneProps } from './DropZone';
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
-import { CANVAS_DROPZONE_ID } from '../../data/data';
-import { cn, Flex, PanelMessage } from '@axonivy/ui-components';
-import { useDndContext } from '@dnd-kit/core';
+import { CANVAS_DROPZONE_ID, DELETE_DROPZONE_ID } from '../../data/data';
+import { cn, Flex, IvyIcon, PanelMessage } from '@axonivy/ui-components';
+import { useDndContext, useDroppable } from '@dnd-kit/core';
 import { DataClassDialog } from './data-class/DataClassDialog';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 type CanvasProps = {
   config: Config;
@@ -27,6 +28,7 @@ export const Canvas = ({ config }: CanvasProps) => {
         preId={data.components.at(-1)?.id ?? ''}
         dragHint={{ display: droppableContainers.size === 1, message: 'Drag first element inside the canvas', mode: 'column' }}
       />
+      <DeleteDropZone />
     </div>
   );
 };
@@ -66,3 +68,13 @@ export const EmtpyBlock = ({ id, preId, forLayout, dragHint }: EmptyBlockProps) 
     )}
   </DropZone>
 );
+
+const DeleteDropZone = () => {
+  const dnd = useDndContext();
+  const { isOver, setNodeRef } = useDroppable({ id: DELETE_DROPZONE_ID });
+  return (
+    <div ref={setNodeRef} className={cn('delete-drop-zone', dnd.active && 'dnd-active', isOver && 'is-drop-target')}>
+      <IvyIcon icon={IvyIcons.Trash} className='delete-icon' />
+    </div>
+  );
+};

@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { isLayout, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
 
 export const CANVAS_DROPZONE_ID = 'canvas';
+export const DELETE_DROPZONE_ID = 'delete';
 export const LAYOUT_DROPZONE_ID_PREFIX = 'layout-';
 
 const findComponent = (
@@ -98,7 +99,7 @@ const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { t
     return addComponent(data, createComponentData(component, action.create), action.targetId);
   } else {
     const removed = removeComponent(data, action.activeId);
-    if (removed) {
+    if (removed && action.targetId !== DELETE_DROPZONE_ID) {
       return addComponent(data, removed, action.targetId);
     }
     return undefined;
