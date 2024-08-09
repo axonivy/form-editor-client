@@ -76,7 +76,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
             <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
           </Flex>
         </ToolbarContainer>
-        <PalettePopover label='Data Class' icon={IvyIcons.DatabaseLink}>
+        <PalettePopover label='Data' icon={IvyIcons.DatabaseLink}>
           <DataClassPalette />
         </PalettePopover>
       </Flex>
