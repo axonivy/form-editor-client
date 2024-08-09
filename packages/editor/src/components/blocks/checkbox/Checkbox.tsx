@@ -9,7 +9,7 @@ type CheckboxProps = Prettify<Checkbox>;
 
 export const defaultCheckboxProps: Checkbox = {
   label: 'Label',
-  selected: 'false',
+  selected: 'true',
   ...defaultBaseComponent
 } as const;
 
@@ -29,8 +29,8 @@ export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
   }
 };
 
-const UiBlock = ({ label }: UiComponentProps<CheckboxProps>) => (
+const UiBlock = ({ label, selected }: UiComponentProps<CheckboxProps>) => (
   <div className='block-checkbox'>
-    <BasicCheckbox label={label} checked={true} />
+    <BasicCheckbox label={label} checked={selected.toLowerCase() == 'false' ? false : true} />
   </div>
 );
