@@ -1,5 +1,5 @@
 import { EMPTY_FORM, type ComponentData, type FormData, isLayout, type LayoutConfig } from '@axonivy/form-editor-protocol';
-import { createInitForm, findComponentElement, modifyData } from './data';
+import { createInitForm, DELETE_DROPZONE_ID, findComponentElement, modifyData } from './data';
 import type { DeepPartial } from '../test-utils/type-utils';
 
 describe('findComponentElement', () => {
@@ -91,6 +91,11 @@ describe('modifyData', () => {
       const data = modifyData(filledData(), { type: 'dnd', data: { activeId: '32', targetId: '2' } }).newData;
       expectOrder(data, ['1', '32', '2', '3']);
       expectOrderDeep(data, '3', ['31', '33']);
+    });
+
+    test('move to delete', () => {
+      const data = filledData();
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: DELETE_DROPZONE_ID } }).newData, ['2', '3']);
     });
   });
 
