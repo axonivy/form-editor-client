@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { useAttributeBrowser } from './browser/useAttributeBrowser';
 import type { InputFieldProps } from './InputField';
 
-export const InputFieldWithBrowser = ({ label, value, onChange }: InputFieldProps) => {
+export const InputFieldWithBrowser = ({ label, value, onChange, onBlur }: InputFieldProps) => {
   const [open, setOpen] = useState(false);
   const attrBrowser = useAttributeBrowser();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Fieldset label={label}>
         <InputGroup>
-          <Input value={value} onChange={e => onChange(e.target.value)} />
+          <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} />
           <DialogTrigger asChild>
             <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
           </DialogTrigger>
