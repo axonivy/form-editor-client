@@ -19,17 +19,19 @@ import {
   useTheme
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useAppContext } from '../context/useData';
+import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect } from 'react';
 import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
 import { DataClassPalette } from './palette/data-class/DataClassPalette';
+import { useData } from '../data/data';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
-  const { ui, setUi, selectedElement } = useAppContext();
+  const { ui, setUi, selectedElement, history } = useAppContext();
+  const { setUnhistoricisedData } = useData();
   const { theme, setTheme } = useTheme();
   const editable = !useReadonly();
   useEffect(() => {
@@ -58,8 +60,8 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
             <Flex>
               <Separator orientation='vertical' style={{ height: '26px' }} />
               <Flex gap={1}>
-                <Button icon={IvyIcons.Undo} size='large' />
-                <Button icon={IvyIcons.Redo} size='large' />
+                <Button icon={IvyIcons.Undo} size='large' onClick={() => history.undo(setUnhistoricisedData)} disabled={!history.canUndo} />
+                <Button icon={IvyIcons.Redo} size='large' onClick={() => history.redo(setUnhistoricisedData)} disabled={!history.canRedo} />
               </Flex>
             </Flex>
           </ToolbarContainer>

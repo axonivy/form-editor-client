@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useAppContext } from '../../../context/useData';
+import { useAppContext } from '../../../context/AppContext';
 import { useMeta } from '../../../context/useMeta';
 import { Palette } from '../Palette';
 import { paletteItems } from './data-class-data';

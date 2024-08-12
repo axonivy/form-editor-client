@@ -1,9 +1,9 @@
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
-import { useAppContext, useData } from '../../context/useData';
+import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './Draggable.css';
 import { useDraggable } from '@dnd-kit/core';
-import { modifyData } from '../../data/data';
+import { modifyData, useData } from '../../data/data';
 import { dragData } from './drag-data';
 import { useReadonly } from '@axonivy/ui-components';
 

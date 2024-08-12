@@ -19,7 +19,7 @@ import {
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../context/useMeta';
-import { useAppContext } from '../../../context/useData';
+import { useAppContext } from '../../../context/AppContext';
 import { useCallback, useEffect, useState } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { rowToCreateData, variableTreeData } from '../../../data/variable-tree-data';

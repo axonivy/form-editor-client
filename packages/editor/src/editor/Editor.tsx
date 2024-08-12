@@ -1,21 +1,18 @@
-import { Canvas } from './canvas/Canvas';
 import { Properties } from './properties/Properties';
 import './Editor.css';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { AppProvider, useUiState } from '../context/useData';
+import { useEffect, useMemo, useState } from 'react';
+import { AppProvider, useUiState } from '../context/AppContext';
 import { config } from '../components/components';
 import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGroup, Spinner } from '@axonivy/ui-components';
-import { FormToolbar } from './FormToolbar';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useClient } from '../context/useClient';
+import { useClient } from '../context/ClientContext';
 import type { Unary } from '../types/lambda';
 import type { FormData, FormEditorData, FormEditorProps } from '@axonivy/form-editor-protocol';
-import { DataStructure } from './data-structure/DataStructure';
 import { DndContext } from '../context/DndContext';
-import { ErrorBoundary } from 'react-error-boundary';
-import ErrorFallback from './canvas/ErrorFallback';
 import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { useHistoryData } from '../data/useHistoryData';
+import { MasterPart } from './MasterPart';
 
 export const Editor = (props: FormEditorProps) => {
   const [context, setContext] = useState(props.context);
@@ -26,6 +23,8 @@ export const Editor = (props: FormEditorProps) => {
   }, [props]);
   const { ui, setUi } = useUiState();
   const [selectedElement, setSelectedElement] = useState<string>();
+  const [initialData, setInitalData] = useState<FormData | undefined>(undefined);
+  const history = useHistoryData();
 
   const client = useClient();
   const queryClient = useQueryClient();
@@ -43,7 +42,12 @@ export const Editor = (props: FormEditorProps) => {
     structuralSharing: false
   });
 
-  const toolbarDiv = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (data?.data !== undefined && initialData === undefined) {
+      setInitalData(data.data);
+      history.pushHistory(data.data);
+    }
+  }, [data?.data, history, initialData]);
 
   const mutation = useMutation({
     mutationKey: queryKeys.saveData(),
@@ -76,28 +80,10 @@ export const Editor = (props: FormEditorProps) => {
   }
 
   return (
-    <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi, context }}>
+    <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi, context, history }}>
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
-          <ResizablePanel
-            id='canvas'
-            order={2}
-            defaultSize={50}
-            minSize={30}
-            className='panel'
-            onClick={e => {
-              if (e.target !== e.currentTarget && !toolbarDiv.current?.contains(e.target as Node)) {
-                setSelectedElement(undefined);
-              }
-            }}
-          >
-            <Flex direction='column' className='canvas-panel'>
-              <FormToolbar ref={toolbarDiv} />
-              <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[ui.dataStructure]}>
-                {ui.dataStructure ? <DataStructure /> : <Canvas config={config} />}
-              </ErrorBoundary>
-            </Flex>
-          </ResizablePanel>
+          <MasterPart />
           {ui.properties && (
             <>
               <ResizableHandle />

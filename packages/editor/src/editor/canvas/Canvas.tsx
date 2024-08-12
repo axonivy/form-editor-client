@@ -1,7 +1,7 @@
 import './Canvas.css';
 import type { Config } from '../../types/config';
 import { Draggable } from './Draggable';
-import { useAppContext } from '../../context/useData';
+import { useAppContext } from '../../context/AppContext';
 import { DropZone, type DropZoneProps } from './DropZone';
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 import { CANVAS_DROPZONE_ID, DELETE_DROPZONE_ID } from '../../data/data';
@@ -16,8 +16,6 @@ type CanvasProps = {
 
 export const Canvas = ({ config }: CanvasProps) => {
   const { ui, data } = useAppContext();
-  const { droppableContainers } = useDndContext();
-
   return (
     <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.deviceMode}>
       {data.components.map((component, index) => (
@@ -26,7 +24,7 @@ export const Canvas = ({ config }: CanvasProps) => {
       <EmtpyBlock
         id={CANVAS_DROPZONE_ID}
         preId={data.components.at(-1)?.id ?? ''}
-        dragHint={{ display: droppableContainers.size === 1, message: 'Drag first element inside the canvas', mode: 'column' }}
+        dragHint={{ display: data.components.length === 0, message: 'Drag first element inside the canvas', mode: 'column' }}
       />
       <DeleteDropZone />
     </div>
