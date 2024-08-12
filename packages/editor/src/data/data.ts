@@ -3,6 +3,8 @@ import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
 import { v4 as uuid } from 'uuid';
 import { isLayout, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
+import { useAppContext } from '../context/AppContext';
+import type { UpdateConsumer } from '../types/lambda';
 
 export const CANVAS_DROPZONE_ID = 'canvas';
 export const DELETE_DROPZONE_ID = 'delete';
@@ -173,4 +175,34 @@ export const createInitForm = (data: FormData, creates: Array<CreateData>, workf
     }).newData;
   }
   return data;
+};
+
+export const useData = () => {
+  const { data, setData, selectedElement, setSelectedElement, history } = useAppContext();
+  const foundElement = selectedElement !== undefined ? findComponentElement(data, selectedElement) : undefined;
+  const setHistoricisedData: UpdateConsumer<FormData> = updateData => {
+    setData(old => {
+      const newData = updateData(old);
+      history.pushHistory(newData);
+      return newData;
+    });
+  };
+  const setElement = (element: ComponentData) => {
+    setHistoricisedData(oldData => {
+      const findElement = findComponentElement(oldData, element.id);
+      if (findElement) {
+        findElement.element = element;
+      }
+      return oldData;
+    });
+  };
+  return {
+    data,
+    setData: setHistoricisedData,
+    setUnhistoricisedData: setData,
+    element: foundElement?.element,
+    setElement,
+    setSelectedElement,
+    parent: foundElement?.parent
+  };
 };

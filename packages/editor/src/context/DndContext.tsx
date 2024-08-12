@@ -12,8 +12,7 @@ import {
 } from '@dnd-kit/core';
 
 import { useState, type ReactNode } from 'react';
-import { useData } from './useData';
-import { findComponentElement, modifyData } from '../data/data';
+import { findComponentElement, modifyData, useData } from '../data/data';
 import { ItemDragOverlay } from '../editor/ItemDragOverlay';
 import { isCreateData, type CreateData } from '../types/config';
 

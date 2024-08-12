@@ -1,8 +1,8 @@
-import { EMPTY_FORM, type ComponentData, type FormContext, type FormData } from '@axonivy/form-editor-protocol';
+import { EMPTY_FORM, type FormContext, type FormData } from '@axonivy/form-editor-protocol';
 import { createContext, useContext, type SetStateAction, type Dispatch, useState, useEffect } from 'react';
 import type { UpdateConsumer } from '../types/lambda';
-import { findComponentElement } from '../data/data';
 import { useReadonly } from '@axonivy/ui-components';
+import type { useHistoryData } from '../data/useHistoryData';
 
 type UI = {
   properties: boolean;
@@ -32,6 +32,7 @@ export type AppContext = {
   ui: UI;
   setUi: Dispatch<SetStateAction<UI>>;
   context: FormContext;
+  history: ReturnType<typeof useHistoryData>;
 };
 
 export const appContext = createContext<AppContext>({
@@ -40,26 +41,12 @@ export const appContext = createContext<AppContext>({
   setSelectedElement: () => {},
   ui: DEFAULT_UI,
   setUi: () => {},
-  context: { app: '', pmv: '', file: '' }
+  context: { app: '', pmv: '', file: '' },
+  history: { pushHistory: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false }
 });
 
 export const AppProvider = appContext.Provider;
 
 export const useAppContext = () => {
   return useContext(appContext);
-};
-
-export const useData = () => {
-  const { data, setData, selectedElement, setSelectedElement } = useAppContext();
-  const foundElement = selectedElement !== undefined ? findComponentElement(data, selectedElement) : undefined;
-  const setElement = (element: ComponentData) => {
-    setData(oldData => {
-      const findElement = findComponentElement(oldData, element.id);
-      if (findElement) {
-        findElement.element = element;
-      }
-      return oldData;
-    });
-  };
-  return { data, setData, element: foundElement?.element, setElement, setSelectedElement, parent: foundElement?.parent };
 };

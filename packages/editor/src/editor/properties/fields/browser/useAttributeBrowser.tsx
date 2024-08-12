@@ -1,7 +1,7 @@
 import { useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../../context/useMeta';
-import { useAppContext } from '../../../../context/useData';
+import { useAppContext } from '../../../../context/AppContext';
 import { fullVariablePath, variableTreeData } from '../../../../data/variable-tree-data';
 import { useCallback, useEffect, useState } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';

@@ -1,5 +1,5 @@
 import type { FormMetaRequestTypes } from '@axonivy/form-editor-protocol';
-import { useClient } from './useClient';
+import { useClient } from './ClientContext';
 import { useQuery } from '@tanstack/react-query';
 import { genQueryKey } from '../query/query-client';
 

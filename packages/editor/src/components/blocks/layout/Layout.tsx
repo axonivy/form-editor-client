@@ -4,7 +4,7 @@ import type { Layout, LayoutGridVariant, LayoutJustifyContent, LayoutType, Prett
 import { config } from '../../components';
 import { ComponentBlock, EmtpyBlock } from '../../../editor/canvas/Canvas';
 import { LAYOUT_DROPZONE_ID_PREFIX } from '../../../data/data';
-import { useAppContext } from '../../../context/useData';
+import { useAppContext } from '../../../context/AppContext';
 import { defaultBaseComponent, baseComponentFields } from '../base';
 import IconSvg from './Layout.svg?react';
 

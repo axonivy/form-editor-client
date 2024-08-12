@@ -1,5 +1,4 @@
 import { isNotHiddenField, type Config, type DefaultComponentProps, type Field, type Fields } from '../../types/config';
-import { useData } from '../../context/useData';
 import { PropertyItem } from './PropertyItem';
 import {
   Accordion,
@@ -16,6 +15,7 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import { isFreeLayout, type ConfigData, type PrimitiveValue, type ComponentData } from '@axonivy/form-editor-protocol';
 import { groupBy } from '../../utils/array';
+import { useData } from '../../data/data';
 
 type PropertiesProps = {
   config: Config;
