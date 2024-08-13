@@ -10,7 +10,7 @@
     "url": "https://github.com/axonivy/form-editor-client"
   },
   "devDependencies": {
-    "@playwright/test": "1.43.0"
+    "@playwright/test": "1.46.0"
   },
   "type": "module",
   "scripts": {
@@ -18,8 +18,11 @@
     "build": "tsc --build",
     "lint": "eslint --ext .ts,.tsx ./tests",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./tests",
-    "start:standalone": "npm --prefix .. run dev ",
-    "webtest": "playwright test -c ./tests/standalone",
-    "webtest:screenshot": "playwright test -c ./tests/screenshots"
+    "webtest": "playwright test --project=integration-chrome",
+    "webtest:screenshots": "playwright test --project=screenshots",
+    "webtest:*": "playwright test --project=integration-*",
+    "webtest:chrome": "playwright test --project=integration-chrome",
+    "webtest:firefox": "playwright test --project=integration-firefox",
+    "webtest:webkit": "playwright test --project=integration-webkit"
   }
 }
