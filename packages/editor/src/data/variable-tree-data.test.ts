@@ -1,5 +1,5 @@
 import type { VariableInfo } from '@axonivy/form-editor-protocol';
-import { fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
+import { findListVariables, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
 import type { BrowserNode } from '@axonivy/ui-components';
 import type { Row } from '@tanstack/react-table';
 
@@ -60,6 +60,18 @@ const endlessParamInfo: VariableInfo = {
         type: 'demo.Endless',
         simpleType: 'Endless',
         description: ''
+      },
+      {
+        attribute: 'endlessList',
+        type: 'List<demo.Endless>',
+        simpleType: 'List<demo.Endless>',
+        description: ''
+      },
+      {
+        attribute: 'something',
+        type: 'String',
+        simpleType: 'String',
+        description: ''
       }
     ]
   }
@@ -114,6 +126,13 @@ describe('variableTreeData', () => {
     expect(tree[0].children[0].children[0].isLoaded).toBeTruthy();
     expect(tree[0].children[0].children[0].children[0].isLoaded).toBeFalsy();
   });
+});
+
+test('of endless', () => {
+  const list = findListVariables(endlessParamInfo);
+  expect(list.length).toEqual(1);
+  expect(list[0].value).toEqual('param.Endless.endlessList');
+  expect(list[0].info).toEqual('List<demo.Endless>');
 });
 
 const row = {

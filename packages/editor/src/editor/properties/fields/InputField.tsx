@@ -1,4 +1,5 @@
 import { Fieldset, Input } from '@axonivy/ui-components';
+import type { TextFieldOptions } from '../../../types/config';
 
 export type InputFieldProps = {
   label: string;
@@ -7,10 +8,10 @@ export type InputFieldProps = {
   onBlur?: () => void;
 };
 
-export const InputField = ({ label, value, onChange, onBlur }: InputFieldProps) => {
+export const InputField = ({ label, value, onChange, onBlur, options }: InputFieldProps & { options?: TextFieldOptions }) => {
   return (
     <Fieldset label={label}>
-      <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} />
+      <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
     </Fieldset>
   );
 };

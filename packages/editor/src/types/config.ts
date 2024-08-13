@@ -20,7 +20,7 @@ export type CreateComponentData = { componentName: string } & CreateData;
 export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
   typeof data === 'object' && data !== null && 'componentName' in data;
 
-type Subsection = 'General' | 'Styling' | 'Behaviour';
+type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Static Options' | 'Dynamic Options';
 
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   subsection: Subsection;
@@ -28,8 +28,23 @@ export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComp
   hide?: (component: ComponentProps) => boolean;
   section?: 'Layout';
 };
+
+export type TextFieldOptions = {
+  placeholder?: string;
+};
+
+export type TextBrowserFieldOptions = TextFieldOptions & {
+  displayOnlyListTypes?: boolean;
+};
+
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
-  type: 'text' | 'number' | 'textarea' | 'checkbox' | 'textBrowser';
+  type: 'text' | 'number' | 'textarea' | 'checkbox';
+  options?: TextFieldOptions;
+};
+
+export type TextBrowserField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
+  type: 'textBrowser';
+  options?: TextBrowserFieldOptions;
 };
 
 export type TableField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
@@ -46,6 +61,7 @@ export type HiddenField = BaseField & {
 
 export type Field<ComponentProps extends DefaultComponentProps = DefaultComponentProps> =
   | TextField<ComponentProps>
+  | TextBrowserField<ComponentProps>
   | SelectField<ComponentProps>
   | TableField<ComponentProps>
   | HiddenField;

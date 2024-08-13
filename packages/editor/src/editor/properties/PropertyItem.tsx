@@ -30,9 +30,9 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
     const label = field.label!;
     switch (field.type) {
       case 'text':
-        return <InputField label={label} value={toString(value)} onChange={updateValue} />;
+        return <InputField label={label} value={toString(value)} onChange={updateValue} options={field.options} />;
       case 'textBrowser':
-        return <InputFieldWithBrowser label={label} value={toString(value)} onChange={updateValue} />;
+        return <InputFieldWithBrowser label={label} value={toString(value)} onChange={updateValue} options={field.options} />;
       case 'selectTable':
         return <SelectTableField label={label} data={toArray(value) as SelectItem[]} onChange={updateValue} />;
       case 'number':

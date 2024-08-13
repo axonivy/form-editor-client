@@ -67,3 +67,41 @@ export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | un
     ...component.defaultProps
   };
 };
+
+export const findListVariables = (variableInfo: VariableInfo, maxDepth: number = 10): Array<BrowserNode<Variable>> => {
+  const result: Array<BrowserNode<Variable>> = [];
+  const visitedTypes = new Set<string>();
+
+  const traverse = (currentType: string, path: string[], depth: number): void => {
+    if (depth > maxDepth) return;
+
+    const variables = variableInfo.types[currentType];
+    if (!variables || visitedTypes.has(currentType)) return;
+
+    visitedTypes.add(currentType);
+
+    for (const variable of variables) {
+      const newPath = [...path, variable.attribute];
+      if (variable.type.includes('List<')) {
+        result.push({
+          value: newPath.join('.'),
+          info: variable.type,
+          icon: IvyIcons.Attribute,
+          data: variable,
+          children: [],
+          isLoaded: true
+        });
+      } else {
+        traverse(variable.type, newPath, depth + 1);
+      }
+    }
+
+    visitedTypes.delete(currentType);
+  };
+
+  for (const rootVariable of variableInfo.variables) {
+    traverse(rootVariable.type, [rootVariable.attribute], 0);
+  }
+
+  return result;
+};
