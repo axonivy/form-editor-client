@@ -29,7 +29,7 @@
     "package": "vite build",
     "type": "tsc --noEmit",
     "dev": "vite",
-    "preview": "vite preview",
+    "serve": "vite preview",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src"
   },

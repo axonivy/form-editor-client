@@ -14,7 +14,7 @@ pipeline {
       steps {
         script {
           catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-            docker.build('node', '-f build/Dockerfile .').inside {
+            docker.build('node', '-f build/Dockerfile.node .').inside {
               sh 'npm run update:axonivy:next'
               sh 'npm run ci'
             }
@@ -32,54 +32,9 @@ pipeline {
         }
       }
     }
-    stage('IT Tests') {
-      steps {
-        script {
-          catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-            docker.image('mcr.microsoft.com/playwright:v1.43.0-jammy').inside {
-              sh 'npm run webtest'
-            }
-          }
-          archiveArtifacts artifacts: '**/playwright/test-results/**', allowEmptyArchive: true
-          withChecks('IT WebTest') {
-            junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: 'playwright/**/report.xml'
-          }
-        }
-      }
-    }
-    stage('Protocol') {
-      when {
-        expression { isReleaseOrMasterBranch() }
-      }
-      steps {
-        script {
-          catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-            docker.build('node', '-f build/Dockerfile .').inside {
-              def branchName = env.BRANCH_NAME.replace("/", "%252F")
-              sh '''
-                npm install
-                npm run protocol clean
-
-                artifacts="https://jenkins.ivyteam.io/job/core_json-schema/job/'''+branchName+'''/lastSuccessfulBuild/artifact"
-                devSchema="${artifacts}/workspace/ch.ivyteam.ivy.dialog.form.schema/target/schema/form/*/form-tsgen.json/*zip*/schema.zip"
-                curl -o schema.zip ${devSchema}
-                unzip -j schema.zip
-                mv $PWD/form-tsgen.json $PWD/form.json
-                npm run protocol generate $PWD/form.json
-
-                npm run build && npm run lint:ci
-              '''
-            }
-          }
-          withChecks('Integration Protocol ESLint') {
-            recordIssues enabledForFailure: true, publishAllIssues: true, aggregatingResults: true, tools: [esLint(id: 'latest', pattern: 'packages/**/eslint.xml,integrations/**/eslint.xml')], qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]]
-          }
-        }
-      }
-    }
     stage('Deploy (Maven)') {
       when {
-        expression { isReleaseOrMasterBranch() }
+        expression { isReleasingBranch() }
       }
       steps {
         script {
@@ -92,11 +47,11 @@ pipeline {
     }
     stage('Publish (NPM)') {
       when {
-        expression { isReleaseOrMasterBranch() && currentBuild.changeSets.size() > 0 }
+        expression { isReleasingBranch() && currentBuild.changeSets.size() > 0 }
       }
       steps {
         script {
-          docker.build('node', '-f build/Dockerfile .').inside {
+          docker.build('node', '-f build/Dockerfile.node .').inside {
             sh 'npm run build'
             sh 'git checkout .'
             withCredentials([string(credentialsId: 'npmjs-registry.ivyteam.ch-auth-token', variable: 'NPM_AUTH_TOKEN')]) {
@@ -113,8 +68,4 @@ pipeline {
       discoverGitReferenceBuild()
     }
   }
-}
-
-def isReleaseOrMasterBranch() {
-  return env.BRANCH_NAME == 'master' || env.BRANCH_NAME.startsWith('release/') 
 }

@@ -1,0 +1,128 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/form/11.3.0/form.json",
+  "id" : "a5c1d16e-1d08-4e1f-a9f0-436c553a3881",
+  "config" : {
+    "renderer" : "JSF",
+    "theme" : "freya-ivy"
+  },
+  "components" : [ {
+    "id" : "Input-2f95d0ea-8108-4892-97ea-a0ee69bd5b60",
+    "type" : "Input",
+    "config" : {
+      "lgSpan" : "6",
+      "mdSpan" : "12",
+      "label" : "Label",
+      "required" : false,
+      "value" : "",
+      "type" : "TEXT"
+    }
+  }, {
+    "id" : "Text-642f44ef-19ac-43be-bcb0-8613594e75d6",
+    "type" : "Text",
+    "config" : {
+      "lgSpan" : "6",
+      "mdSpan" : "12",
+      "type" : "RAW",
+      "content" : "This is a text"
+    }
+  }, {
+    "id" : "Layout-0679249e-43df-4a08-b20b-6f3262c1fc76",
+    "type" : "Layout",
+    "config" : {
+      "lgSpan" : "6",
+      "mdSpan" : "12",
+      "components" : [ {
+        "id" : "Input-6d48ad0f-c1c1-4596-b35d-a4d880cd6805",
+        "type" : "Input",
+        "config" : {
+          "lgSpan" : "6",
+          "mdSpan" : "12",
+          "label" : "City",
+          "required" : false,
+          "value" : "data.value",
+          "type" : "TEXT"
+        }
+      }, {
+        "id" : "Layout-f5b19382-2514-4599-8ade-712fe6fc905e",
+        "type" : "Layout",
+        "config" : {
+          "lgSpan" : "6",
+          "mdSpan" : "12",
+          "components" : [ {
+            "id" : "Input-c01b43e9-72f3-40a4-8a94-70552890dc48",
+            "type" : "Input",
+            "config" : {
+              "lgSpan" : "6",
+              "mdSpan" : "12",
+              "label" : "State",
+              "required" : false,
+              "value" : "data.value",
+              "type" : "TEXT"
+            }
+          }, {
+            "id" : "Input-fd6e7cf6-0d5d-4245-95ec-7fd53c0fbec3",
+            "type" : "Input",
+            "config" : {
+              "lgSpan" : "6",
+              "mdSpan" : "12",
+              "label" : "Zip",
+              "required" : false,
+              "value" : "data.value",
+              "type" : "TEXT"
+            }
+          } ],
+          "type" : "GRID",
+          "gridVariant" : "GRID2",
+          "justifyContent" : "NORMAL"
+        }
+      } ],
+      "type" : "GRID",
+      "gridVariant" : "FREE",
+      "justifyContent" : "NORMAL"
+    }
+  }, {
+    "id" : "Input-360dd44c-050a-4a2e-b66d-84f7ce49e759",
+    "type" : "Input",
+    "config" : {
+      "lgSpan" : "6",
+      "mdSpan" : "12",
+      "label" : "Address",
+      "required" : false,
+      "value" : "Baarerstrasse 12",
+      "type" : "TEXT"
+    }
+  }, {
+    "id" : "Layout-98a996ec-0acd-4e60-9001-80b0a7c3d294",
+    "type" : "Layout",
+    "config" : {
+      "lgSpan" : "6",
+      "mdSpan" : "12",
+      "components" : [ {
+        "id" : "Button-6a868ed3-323d-4187-b8ac-30f576e1853b",
+        "type" : "Button",
+        "config" : {
+          "lgSpan" : "6",
+          "mdSpan" : "12",
+          "name" : "Cancel",
+          "action" : "#{ivyWorkflowView.cancel()}",
+          "variant" : "SECONDARY",
+          "icon" : ""
+        }
+      }, {
+        "id" : "Button-7f311e7a-1450-456c-8628-50a09240f18e",
+        "type" : "Button",
+        "config" : {
+          "lgSpan" : "6",
+          "mdSpan" : "12",
+          "name" : "Proceed",
+          "action" : "#{logic.close}",
+          "variant" : "PRIMARY",
+          "icon" : ""
+        }
+      } ],
+      "type" : "FLEX",
+      "gridVariant" : "GRID2",
+      "justifyContent" : "END"
+    }
+  } ]
+}

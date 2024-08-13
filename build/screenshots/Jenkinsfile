@@ -14,15 +14,15 @@ pipeline {
       steps {
         script {
           catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-            docker.image('mcr.microsoft.com/playwright:v1.43.0-jammy').inside {
-              sh 'npm install'
+            docker.build('node-webtest', '-f build/Dockerfile.playwright .').inside {
+              sh 'npm install && npm run package'
               dir ('playwright') {
-                sh 'npm run webtest:screenshot'
+                sh 'npm run webtest:screenshots'
               }
             }
           }
           archiveArtifacts artifacts: '**/playwright/target/screenshots/**', allowEmptyArchive: true
-          withChecks('IT WebTest') {
+          withChecks('Screenshots') {
             junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: 'playwright/**/report.xml'
           }
         }
@@ -30,7 +30,7 @@ pipeline {
     }
     stage('Deploy') {
       when {
-        expression { isReleaseOrMasterBranch() && currentBuild.currentResult == 'SUCCESS' }
+        expression { isReleasingBranch() && currentBuild.currentResult == 'SUCCESS' }
       }
       steps {
         script {
@@ -47,8 +47,4 @@ pipeline {
       discoverGitReferenceBuild()
     }
   }
-}
-
-def isReleaseOrMasterBranch() {
-  return env.BRANCH_NAME == 'master' || env.BRANCH_NAME.startsWith('release/') 
 }
