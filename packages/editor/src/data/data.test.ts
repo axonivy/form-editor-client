@@ -115,10 +115,33 @@ describe('modifyData', () => {
   });
 
   test('add', () => {
-    const data = modifyData(emptyData(), { type: 'add', data: { create: { componentName: 'Input', label: 'Age', value: 'age' } } }).newData;
+    const data = modifyData(emptyData(), {
+      type: 'add',
+      data: { componentName: 'Input', create: { label: 'Age', value: 'age' } }
+    }).newData;
     expect(data).not.toEqual(emptyData());
     expect(data.components).toHaveLength(1);
     expect(data.components[0].type).to.equals('Input');
+  });
+
+  describe('duplicate', () => {
+    test('duplicate', () => {
+      const data = modifyData(filledData(), { type: 'duplicate', data: { id: '1' } }).newData;
+      expect(data).not.toEqual(filledData());
+      expect(data.components).toHaveLength(4);
+      expect(data.components[0].id).toMatch(/Input-/);
+    });
+
+    test('duplicate deep', () => {
+      const data = modifyData(filledData(), { type: 'duplicate', data: { id: '32' } }).newData;
+      expect(data.components).toHaveLength(3);
+      const component = data.components.find(c => c.id === '31');
+      if (component && isLayout(component)) {
+        expect(component.config.components).toHaveLength(4);
+        expect(component.config.components[1].id).toMatch(/Text-/);
+        expect(component.config.components[1].config.content).toEqual('Hello');
+      }
+    });
   });
 
   describe('move', () => {
@@ -185,7 +208,7 @@ const filledData = () => {
         type: 'Layout',
         config: {
           components: [
-            { id: '31', type: 'Text', config: {} },
+            { id: '31', type: 'Text', config: { content: 'Hello' } },
             { id: '32', type: 'Button', config: {} },
             { id: '33', type: 'Input', config: {} }
           ]

@@ -1,4 +1,4 @@
-import type { ComponentConfig, CreateData } from '../types/config';
+import type { ComponentConfig, CreateComponentData, CreateData } from '../types/config';
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
 import { v4 as uuid } from 'uuid';
@@ -89,11 +89,8 @@ type ModifyAction =
         create?: CreateData;
       };
     }
-  | { type: 'add'; data: { create: CreateData; targetId?: string } }
-  | {
-      type: 'remove' | 'moveUp' | 'moveDown';
-      data: { id: string };
-    };
+  | { type: 'add'; data: { componentName: string; create?: CreateData; targetId?: string } }
+  | { type: 'duplicate' | 'remove' | 'moveUp' | 'moveDown'; data: { id: string } };
 
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
   const component = componentByName(action.activeId);
@@ -109,10 +106,21 @@ const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { t
 };
 
 const createComponentData = (config: ComponentConfig, data?: CreateData): ComponentData => ({
-  id: `${config.name}-${uuid()}`,
+  id: createId(config.name),
   type: config.name,
   config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
 });
+
+const createId = (name: string) => `${name}-${uuid()}`;
+
+const duplicateComponent = (data: FormData, id: string) => {
+  const newComponent = structuredClone(findComponentElement(data, id));
+  if (newComponent) {
+    newComponent.element.id = createId(newComponent.element.type);
+    return addComponent(data.components, newComponent.element, id);
+  }
+  return undefined;
+};
 
 export const modifyData = (data: FormData, action: ModifyAction) => {
   const newData = structuredClone(data);
@@ -124,9 +132,12 @@ export const modifyData = (data: FormData, action: ModifyAction) => {
     case 'add':
       newComponentId = addComponent(
         newData.components,
-        createComponentData(componentByName(action.data.create.componentName), action.data.create),
+        createComponentData(componentByName(action.data.componentName), action.data.create),
         action.data.targetId ?? CANVAS_DROPZONE_ID
       );
+      break;
+    case 'duplicate':
+      duplicateComponent(newData, action.data.id);
       break;
     case 'remove':
       removeComponent(newData.components, action.data.id);
@@ -149,27 +160,29 @@ export const findComponentElement = (data: FormData, id: string) => {
   return;
 };
 
-export const createInitForm = (data: FormData, creates: Array<CreateData>, workflowButtons: boolean) => {
+export const createInitForm = (data: FormData, creates: Array<CreateComponentData>, workflowButtons: boolean) => {
   creates.forEach(create => {
-    data = modifyData(data, { type: 'add', data: { create } }).newData;
+    data = modifyData(data, { type: 'add', data: { componentName: create.componentName, create } }).newData;
   });
   if (workflowButtons) {
     const { newData, newComponentId } = modifyData(data, {
       type: 'add',
-      data: { create: { componentName: 'Layout', label: '', value: '', defaultProps: { type: 'FLEX', justifyContent: 'END' } } }
+      data: { componentName: 'Layout', create: { label: '', value: '', defaultProps: { type: 'FLEX', justifyContent: 'END' } } }
     });
     const layoutId = `${LAYOUT_DROPZONE_ID_PREFIX}${newComponentId}`;
     data = modifyData(newData, {
       type: 'add',
       data: {
-        create: { componentName: 'Button', label: 'Cancel', value: '#{ivyWorkflowView.cancel()}', defaultProps: { variant: 'SECONDARY' } },
+        componentName: 'Button',
+        create: { label: 'Cancel', value: '#{ivyWorkflowView.cancel()}', defaultProps: { variant: 'SECONDARY' } },
         targetId: layoutId
       }
     }).newData;
     data = modifyData(data, {
       type: 'add',
       data: {
-        create: { componentName: 'Button', label: 'Proceed', value: '#{logic.close}', defaultProps: { variant: 'PRIMARY' } },
+        componentName: 'Button',
+        create: { label: 'Proceed', value: '#{logic.close}', defaultProps: { variant: 'PRIMARY' } },
         targetId: layoutId
       }
     }).newData;

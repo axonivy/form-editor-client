@@ -1,14 +1,12 @@
 import './Canvas.css';
 import type { Config } from '../../types/config';
-import { Draggable } from './Draggable';
 import { useAppContext } from '../../context/AppContext';
-import { DropZone, type DropZoneProps } from './DropZone';
-import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 import { CANVAS_DROPZONE_ID, DELETE_DROPZONE_ID } from '../../data/data';
-import { cn, Flex, IvyIcon, PanelMessage } from '@axonivy/ui-components';
+import { cn, IvyIcon } from '@axonivy/ui-components';
 import { useDndContext, useDroppable } from '@dnd-kit/core';
-import { DataClassDialog } from './data-class/DataClassDialog';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { ComponentBlock } from './ComponentBlock';
+import { EmtpyBlock } from './EmptyBlock';
 
 type CanvasProps = {
   config: Config;
@@ -30,42 +28,6 @@ export const Canvas = ({ config }: CanvasProps) => {
     </div>
   );
 };
-
-type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
-  component: ComponentData | Component;
-  config: Config;
-  preId?: string;
-};
-
-export const ComponentBlock = ({ component, config, preId, ...props }: ComponentBlockProps) => (
-  <DropZone id={component.id} preId={preId} {...props}>
-    <Draggable config={config.components[component.type]} data={component} />
-  </DropZone>
-);
-
-type EmptyBlockProps = {
-  id: string;
-  preId: string;
-  forLayout?: boolean;
-  dragHint?: { display: boolean; mode: 'row' | 'column'; message: string };
-};
-
-export const EmtpyBlock = ({ id, preId, forLayout, dragHint }: EmptyBlockProps) => (
-  <DropZone id={id} preId={preId}>
-    {dragHint?.display ? (
-      <>
-        <PanelMessage message={dragHint.message} mode={dragHint.mode} className={cn('drag-hint', dragHint.mode)} />
-        {!forLayout && (
-          <Flex justifyContent='center'>
-            <DataClassDialog />
-          </Flex>
-        )}
-      </>
-    ) : (
-      <div className={cn('empty-block', forLayout && 'for-layout')} />
-    )}
-  </DropZone>
-);
 
 const DeleteDropZone = () => {
   const dnd = useDndContext();

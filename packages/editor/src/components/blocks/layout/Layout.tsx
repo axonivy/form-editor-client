@@ -2,11 +2,12 @@ import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../ty
 import './Layout.css';
 import type { Layout, LayoutGridVariant, LayoutJustifyContent, LayoutType, Prettify } from '@axonivy/form-editor-protocol';
 import { config } from '../../components';
-import { ComponentBlock, EmtpyBlock } from '../../../editor/canvas/Canvas';
 import { LAYOUT_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { useAppContext } from '../../../context/AppContext';
 import { defaultBaseComponent, baseComponentFields } from '../base';
 import IconSvg from './Layout.svg?react';
+import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
+import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
 
 type LayoutProps = Prettify<Layout>;
 

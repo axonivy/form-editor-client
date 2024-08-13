@@ -9,8 +9,8 @@
   border-radius: var(--border-r2);
   --draw-padding: var(--size-2) var(--size-4);
   --draw-margin: var(--size-2);
-  --select-border: 2px dashed var(--N100);
-  --layout-border-size: 2px;
+  --select-border: 1.5px solid var(--N100);
+  --layout-border-size: 1.5px;
 }
 .canvas[data-responsive-mode='tablet'] {
   width: 800px;

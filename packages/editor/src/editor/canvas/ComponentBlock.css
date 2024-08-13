@@ -8,12 +8,12 @@
 .draggable:hover:not(:has(.draggable:hover)),
 .draggable:hover:not(:has(.draggable:hover)) > .block-layout > div {
   background-color: var(--P50);
-  border: 2px dashed var(--P75);
+  border: 1.5px dashed var(--P75);
 }
 
 .draggable.selected,
 .draggable.dragging {
-  border: 2px dashed var(--P75);
+  border: 1.5px dashed var(--P75);
   background-color: var(--P50);
 }
 .draggable.dragging {
