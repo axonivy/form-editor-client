@@ -1,10 +1,10 @@
-import type { CreateData } from '../types/config';
+import type { CreateComponentData } from '../types/config';
 import { componentByName } from '../components/components';
-import { DraggableOverlay } from './canvas/Draggable';
+import { ComponentBlockOverlay } from './canvas/ComponentBlock';
 import { PaletteItemOverlay } from './palette/PaletteItem';
 import { useData } from '../data/data';
 
-export const ItemDragOverlay = ({ activeId, createData }: { activeId?: string; createData?: CreateData }) => {
+export const ItemDragOverlay = ({ activeId, createData }: { activeId?: string; createData?: CreateComponentData }) => {
   const { element } = useData();
   if (!activeId) {
     return null;
@@ -15,7 +15,7 @@ export const ItemDragOverlay = ({ activeId, createData }: { activeId?: string; c
   }
   if (element) {
     const component = componentByName(element.type);
-    return <DraggableOverlay config={component} data={element} />;
+    return <ComponentBlockOverlay config={component} data={element} />;
   }
   return null;
 };

@@ -4,7 +4,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import type { Row } from '@tanstack/react-table';
 import { componentForType } from '../components/components';
 import { labelText } from '../utils/string';
-import type { CreateData } from '../types/config';
+import type { CreateComponentData } from '../types/config';
 
 export const variableTreeData = () => {
   const of = (paramInfo: VariableInfo): Array<BrowserNode<Variable>> => {
@@ -54,7 +54,7 @@ export const fullVariablePath = (row: Row<BrowserNode>): string => {
     .join('.')}.${row.original.value}`;
 };
 
-export const rowToCreateData = (row: Row<BrowserNode>): CreateData | undefined => {
+export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | undefined => {
   const node = row.original;
   const component = componentForType(node.info);
   if (component === undefined) {

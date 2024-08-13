@@ -32,7 +32,6 @@ export const MasterPart = () => {
       minSize={30}
       className='panel'
       onClick={e => {
-        console.log(e.target, e.currentTarget);
         if (e.target !== e.currentTarget && !toolbarDiv.current?.contains(e.target as Node)) {
           setSelectedElement(undefined);
         }

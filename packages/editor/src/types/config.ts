@@ -14,9 +14,11 @@ export type FieldOption<TValue = PrimitiveValue> = {
   value: TValue;
 };
 
-export type CreateData = { componentName: string; label: string; value: string; defaultProps?: Record<string, unknown> };
+export type CreateData = { label: string; value: string; defaultProps?: Record<string, unknown> };
+export type CreateComponentData = { componentName: string } & CreateData;
 
-export const isCreateData = (data: unknown): data is CreateData => typeof data === 'object' && data !== null && 'componentName' in data;
+export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
+  typeof data === 'object' && data !== null && 'componentName' in data;
 
 type Subsection = 'General' | 'Styling' | 'Behaviour';
 
