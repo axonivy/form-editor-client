@@ -3,11 +3,10 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useAppContext } from '../context/AppContext';
 import { useData } from '../data/data';
 import { Canvas } from './canvas/Canvas';
-import ErrorFallback from './canvas/ErrorFallback';
+import { ErrorFallback } from './canvas/ErrorFallback';
 import { DataStructure } from './data-structure/DataStructure';
 import { FormToolbar } from './FormToolbar';
 import { useRef, type ComponentProps } from 'react';
-import { config } from '../components/components';
 
 export const MasterPart = () => {
   const { ui, history, setSelectedElement } = useAppContext();
@@ -40,7 +39,7 @@ export const MasterPart = () => {
       <Flex direction='column' className='canvas-panel' tabIndex={1} onKeyDown={keyHandler}>
         <FormToolbar ref={toolbarDiv} />
         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[ui.dataStructure]}>
-          {ui.dataStructure ? <DataStructure /> : <Canvas config={config} />}
+          {ui.dataStructure ? <DataStructure /> : <Canvas />}
         </ErrorBoundary>
       </Flex>
     </ResizablePanel>

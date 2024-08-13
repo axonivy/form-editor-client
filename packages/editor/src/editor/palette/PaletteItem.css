@@ -1,14 +1,13 @@
 .palette-item {
   cursor: grab;
-}
-
-.palette-item-icon {
-  background: var(--N50);
-  border-radius: var(--border-r2);
-  height: 32px;
-  width: 60px;
-}
-
-.palette-item-icon svg path {
-  stroke: var(--N600);
+  font-size: 10px;
+  .palette-item-icon {
+    background: var(--N50);
+    border-radius: var(--border-r2);
+    height: 32px;
+    width: 60px;
+    svg path {
+      stroke: var(--N600);
+    }
+  }
 }

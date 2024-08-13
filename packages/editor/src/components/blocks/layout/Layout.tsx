@@ -1,7 +1,6 @@
 import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
 import './Layout.css';
 import type { Layout, LayoutGridVariant, LayoutJustifyContent, LayoutType, Prettify } from '@axonivy/form-editor-protocol';
-import { config } from '../../components';
 import { LAYOUT_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { useAppContext } from '../../../context/AppContext';
 import { defaultBaseComponent, baseComponentFields } from '../base';
@@ -81,15 +80,7 @@ const UiBlock = ({ id, components, type, justifyContent, gridVariant }: UiCompon
           if (gridVariant === 'FREE') {
             componentCols = `col-span-${component.config.lgSpan ?? '6'} col-md-span-${component.config.mdSpan ?? '12'}`;
           }
-          return (
-            <ComponentBlock
-              key={component.id}
-              component={component}
-              config={config}
-              preId={components[index - 1]?.id}
-              className={componentCols}
-            />
-          );
+          return <ComponentBlock key={component.id} component={component} preId={components[index - 1]?.id} className={componentCols} />;
         })}
       </div>
       <EmtpyBlock

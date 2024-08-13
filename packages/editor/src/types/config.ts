@@ -66,21 +66,17 @@ export type Field<ComponentProps extends DefaultComponentProps = DefaultComponen
   | TableField<ComponentProps>
   | HiddenField;
 
-export const isNotHiddenField = (field: Field): field is Exclude<Field, HiddenField> => {
-  return field.type !== 'hidden';
-};
-
 export type Fields<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field<ComponentProps>;
 };
 
-export type itemCategory = 'Elements' | 'Structure' | 'Action';
-export type itemSubcategory = 'General' | 'Input' | 'Interactions' | 'Text';
+export type ItemCategory = 'Elements' | 'Structure' | 'Action';
+export type ItemSubcategory = 'General' | 'Input' | 'Interactions' | 'Text';
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: ComponentType;
-  category: itemCategory;
-  subcategory: itemSubcategory;
+  category: ItemCategory;
+  subcategory: ItemSubcategory;
   icon: ReactNode;
   description: string;
   render: UiComponent<ComponentProps>;

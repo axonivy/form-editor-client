@@ -1,6 +1,7 @@
 import { PanelMessage, cn, Flex } from '@axonivy/ui-components';
 import { DataClassDialog } from './data-class/DataClassDialog';
 import { DropZone } from './DropZone';
+import './EmptyBlock.css';
 
 type EmptyBlockProps = {
   id: string;

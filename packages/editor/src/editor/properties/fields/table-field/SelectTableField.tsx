@@ -19,8 +19,6 @@ const selectTableColumns: ColumnDef<SelectItem, string>[] = [
   }
 ];
 
-export const SelectTableField = ({ label, data, onChange }: SelectTableFieldProps) => {
-  return (
-    <TableField label={label} data={data} columns={selectTableColumns} onChange={onChange} emptyDataObject={{ label: '', value: '' }} />
-  );
-};
+export const SelectTableField = ({ label, data, onChange }: SelectTableFieldProps) => (
+  <TableField label={label} data={data} columns={selectTableColumns} onChange={onChange} emptyDataObject={{ label: '', value: '' }} />
+);

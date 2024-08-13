@@ -3,19 +3,14 @@
   border: var(--select-border);
   border-radius: var(--border-r2);
   margin: var(--draw-margin);
-}
-
-.draggable:hover:not(:has(.draggable:hover)),
-.draggable:hover:not(:has(.draggable:hover)) > .block-layout > div {
-  background-color: var(--P50);
-  border: 1.5px dashed var(--P75);
-}
-
-.draggable.selected,
-.draggable.dragging {
-  border: 1.5px dashed var(--P75);
-  background-color: var(--P50);
-}
-.draggable.dragging {
-  opacity: 0.5;
+  &.dragging {
+    opacity: 0.5;
+  }
+  &.dragging,
+  &.selected,
+  &:hover:not(:has(.draggable:hover)),
+  &:hover:not(:has(.draggable:hover)) > .block-layout > div {
+    border: 1.5px dashed var(--P75);
+    background-color: var(--P50);
+  }
 }

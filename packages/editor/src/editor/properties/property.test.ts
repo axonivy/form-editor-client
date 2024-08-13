@@ -1,0 +1,62 @@
+import type { Fields } from '../../types/config';
+import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
+
+describe('visibleFields', () => {
+  const fields: Fields = {
+    a: { type: 'text', subsection: 'General' },
+    b: { type: 'number', subsection: 'Behaviour', hide: config => config.a === 'hide' },
+    c: { type: 'hidden', subsection: 'General' }
+  } as const;
+
+  test('no hidden fields', () => {
+    expect(visibleFields(fields, {})).toEqual([
+      { key: 'a', field: fields['a'] },
+      { key: 'b', field: fields['b'] }
+    ]);
+  });
+
+  test('no hide config fields', () => {
+    expect(visibleFields(fields, { a: 'hide' })).toEqual([{ key: 'a', field: fields['a'], value: 'hide' }]);
+  });
+});
+
+describe('visibleSections', () => {
+  const visibleFields: VisibleFields = [
+    { key: 'a', field: { subsection: 'General', type: 'text' }, value: '' },
+    { key: 'b', field: { subsection: 'Behaviour', type: 'number' }, value: '' },
+    { key: 'c', field: { section: 'Layout', subsection: 'General', type: 'text' }, value: '' }
+  ];
+
+  test('no parent', () => {
+    expect(visibleSections(visibleFields)).toEqual(new Map([['Properties', [visibleFields[0], visibleFields[1]]]]));
+  });
+
+  test('parent is grid layout', () => {
+    expect(visibleSections(visibleFields, { id: 'grid-layout', type: 'Layout', config: { gridVariant: 'GRID', components: [] } })).toEqual(
+      new Map([['Properties', [visibleFields[0], visibleFields[1]]]])
+    );
+  });
+
+  test('parent is free layout', () => {
+    expect(visibleSections(visibleFields, { id: 'free-layout', type: 'Layout', config: { gridVariant: 'FREE', components: [] } })).toEqual(
+      new Map([
+        ['Properties', [visibleFields[0], visibleFields[1]]],
+        ['Layout', [visibleFields[2]]]
+      ])
+    );
+  });
+});
+
+describe('groupFieldsBySubsection', () => {
+  const fields: VisibleFields = [
+    { key: 'a', field: { subsection: 'General', type: 'text' }, value: '' },
+    { key: 'b', field: { subsection: 'Behaviour', type: 'number' }, value: '' }
+  ];
+
+  test('subsections', () => {
+    expect(groupFieldsBySubsection(fields)).toEqual([
+      { title: 'General', fields: [{ key: 'a', field: fields[0].field, value: '' }] },
+      { title: 'Behaviour', fields: [{ key: 'b', field: fields[1].field, value: '' }] }
+    ]);
+  });
+});

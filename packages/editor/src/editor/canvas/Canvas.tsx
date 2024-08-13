@@ -1,5 +1,4 @@
 import './Canvas.css';
-import type { Config } from '../../types/config';
 import { useAppContext } from '../../context/AppContext';
 import { CANVAS_DROPZONE_ID, DELETE_DROPZONE_ID } from '../../data/data';
 import { cn, IvyIcon } from '@axonivy/ui-components';
@@ -8,16 +7,12 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { ComponentBlock } from './ComponentBlock';
 import { EmtpyBlock } from './EmptyBlock';
 
-type CanvasProps = {
-  config: Config;
-};
-
-export const Canvas = ({ config }: CanvasProps) => {
+export const Canvas = () => {
   const { ui, data } = useAppContext();
   return (
     <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.deviceMode}>
       {data.components.map((component, index) => (
-        <ComponentBlock key={component.id} component={component} config={config} preId={data.components.at(index - 1)?.id} />
+        <ComponentBlock key={component.id} component={component} preId={data.components.at(index - 1)?.id} />
       ))}
       <EmtpyBlock
         id={CANVAS_DROPZONE_ID}

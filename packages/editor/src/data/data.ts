@@ -4,7 +4,7 @@ import { add, remove } from '../utils/array';
 import { v4 as uuid } from 'uuid';
 import { isLayout, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
-import type { UpdateConsumer } from '../types/lambda';
+import type { UpdateConsumer } from '../types/types';
 
 export const CANVAS_DROPZONE_ID = 'canvas';
 export const DELETE_DROPZONE_ID = 'delete';
