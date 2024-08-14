@@ -11,8 +11,10 @@ type SelectProps = Prettify<Select>;
 export const defaultInputProps: Select = {
   label: 'Label',
   value: '',
-  items: [],
-  itemsValue: '',
+  staticItems: [],
+  dynamicItemsList: '',
+  dynamicItemsLabel: '',
+  dynamicItemsValue: '',
   ...defaultBaseComponent
 } as const;
 
@@ -28,12 +30,24 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
-    items: { subsection: 'Static Options', label: '', type: 'selectTable' },
-    itemsValue: {
+    staticItems: { subsection: 'Static Options', label: '', type: 'selectTable' },
+    dynamicItemsList: {
       subsection: 'Dynamic Options',
       label: 'List of Objects',
       type: 'textBrowser',
       options: { displayOnlyListTypes: true, placeholder: 'e.g. #{data.dynamicList}' }
+    },
+    dynamicItemsLabel: {
+      subsection: 'Dynamic Options',
+      label: 'Dynamic Label',
+      type: 'text',
+      options: { placeholder: 'Enter fitting attribute' }
+    },
+    dynamicItemsValue: {
+      subsection: 'Dynamic Options',
+      label: 'Dynamic Value',
+      type: 'text',
+      options: { placeholder: 'Enter fitting attribute or object' }
     },
     ...baseComponentFields
   }
