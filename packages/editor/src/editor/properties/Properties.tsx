@@ -19,7 +19,7 @@ import { componentByName } from '../../components/components';
 export const Properties = () => {
   const { element, parent } = useData();
   if (element === undefined) {
-    return <PanelMessage message='Nothing there yet. Select an Element to edit its properties.' />;
+    return <PanelMessage message='Select an Element to edit its properties.' />;
   }
   const propertyConfig = componentByName(element.type);
   const elementConfig = { ...propertyConfig.defaultProps, ...element.config };
