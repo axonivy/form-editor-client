@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { FormEditor } from '../page-objects/form-editor';
 
 test('change device mode', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'test');
+  const editor = await FormEditor.openForm(page);
   const toolbar = editor.toolbar;
   await toolbar.changeMode('mobile');
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'mobile');
@@ -13,7 +13,7 @@ test('change device mode', async ({ page }) => {
 });
 
 test('undo/redo', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'test');
+  const editor = await FormEditor.openForm(page);
   const toolbar = editor.toolbar;
   await expect(toolbar.undoButton).toBeDisabled();
   await expect(toolbar.redoButton).toBeDisabled();
@@ -34,12 +34,12 @@ test('undo/redo', async ({ page }) => {
 });
 
 test('has sections', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'test');
+  const editor = await FormEditor.openForm(page);
   await editor.toolbar.expectCategoryCount(5);
 });
 
 test('help paddings', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'test');
+  const editor = await FormEditor.openForm(page);
   const toolbar = editor.toolbar;
   await editor.canvas.expectHelpPaddings(true);
   await toolbar.helpPaddings.click();
@@ -47,7 +47,7 @@ test('help paddings', async ({ page }) => {
 });
 
 test('theme', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'test');
+  const editor = await FormEditor.openForm(page);
   const toolbar = editor.toolbar;
   const html = page.locator('html');
   await expect(html).toHaveClass('light');
@@ -56,7 +56,7 @@ test('theme', async ({ page }) => {
 });
 
 test('data source', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'test');
+  const editor = await FormEditor.openForm(page);
   const toolbar = editor.toolbar;
   expect(editor.canvas.locator).toBeVisible();
   await toolbar.toggleDataSource();
@@ -65,7 +65,7 @@ test('data source', async ({ page }) => {
 });
 
 test('properties', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'test');
+  const editor = await FormEditor.openForm(page);
   const toolbar = editor.toolbar;
   await expect(editor.inscription.locator).toBeHidden();
   await toolbar.toggleProperties();
