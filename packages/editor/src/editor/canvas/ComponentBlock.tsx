@@ -1,6 +1,6 @@
 import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
-import type { ComponentConfig, Config } from '../../types/config';
+import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
 import { useDraggable } from '@dnd-kit/core';
 import { modifyData, useData } from '../../data/data';
@@ -9,18 +9,17 @@ import { Button, cn, Flex, Popover, PopoverAnchor, PopoverContent, Separator, us
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useState } from 'react';
 import { Palette } from '../palette/Palette';
-import { allComponentsByCategory } from '../../components/components';
+import { allComponentsByCategory, componentByName } from '../../components/components';
 import { DropZone, type DropZoneProps } from './DropZone';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
-  config: Config;
   preId?: string;
 };
 
-export const ComponentBlock = ({ component, config, preId, ...props }: ComponentBlockProps) => (
+export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => (
   <DropZone id={component.id} preId={preId} {...props}>
-    <Draggable config={config.components[component.type]} data={component} />
+    <Draggable config={componentByName(component.type)} data={component} />
   </DropZone>
 );
 
@@ -58,6 +57,9 @@ const Draggable = ({ config, data }: DraggableProps) => {
           }}
           onKeyUp={e => {
             e.stopPropagation();
+            if (e.key === 'Enter') {
+              setSelectedElement(data.id);
+            }
             if (e.key === 'Delete') {
               deleteElement();
             }

@@ -2,21 +2,21 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-}
-.drop-zone .drop-zone-block {
-  height: 0;
-  transition: height 0.1s ease-out;
-}
-.drop-zone.is-drop-target:has(.drag-hint) .drop-zone-block {
-  height: 0;
-}
-
-.drop-zone.is-drop-target > .drop-zone-block {
-  background: var(--P300);
-  height: 4px;
-}
-
-.drop-zone.is-drop-target > .drag-hint {
-  background: var(--P300);
-  color: var(--background);
+  &.is-drop-target {
+    &:has(.drag-hint) .drop-zone-block {
+      height: 0;
+    }
+    > .drop-zone-block {
+      background: var(--P300);
+      height: 4px;
+    }
+    > .drag-hint {
+      background: var(--P300);
+      color: var(--background);
+    }
+  }
+  .drop-zone-block {
+    height: 0;
+    transition: height 0.1s ease-out;
+  }
 }

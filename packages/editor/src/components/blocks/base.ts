@@ -5,7 +5,7 @@ type BaseComponentProps = { lgSpan: string; mdSpan: string };
 export const defaultBaseComponent: BaseComponentProps = {
   lgSpan: '6',
   mdSpan: '12'
-};
+} as const;
 
 const spanOptions: FieldOption<string>[] = [
   { label: '1', value: '2' },

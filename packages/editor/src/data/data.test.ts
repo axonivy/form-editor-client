@@ -1,6 +1,6 @@
 import { EMPTY_FORM, type ComponentData, type FormData, isLayout, type LayoutConfig } from '@axonivy/form-editor-protocol';
 import { createInitForm, DELETE_DROPZONE_ID, findComponentElement, modifyData } from './data';
-import type { DeepPartial } from '../test-utils/type-utils';
+import type { DeepPartial } from '../types/types';
 
 describe('findComponentElement', () => {
   test('find', () => {

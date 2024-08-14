@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { UpdateConsumer } from '../types/lambda';
+import type { UpdateConsumer } from '../types/types';
 import type { FormData } from '@axonivy/form-editor-protocol';
 
 export const useHistoryData = () => {

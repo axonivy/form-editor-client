@@ -8,10 +8,8 @@ export type InputFieldProps = {
   onBlur?: () => void;
 };
 
-export const InputField = ({ label, value, onChange, onBlur, options }: InputFieldProps & { options?: TextFieldOptions }) => {
-  return (
-    <Fieldset label={label}>
-      <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
-    </Fieldset>
-  );
-};
+export const InputField = ({ label, value, onChange, onBlur, options }: InputFieldProps & { options?: TextFieldOptions }) => (
+  <Fieldset label={label}>
+    <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
+  </Fieldset>
+);

@@ -2,11 +2,10 @@ import { Properties } from './properties/Properties';
 import './Editor.css';
 import { useEffect, useMemo, useState } from 'react';
 import { AppProvider, useUiState } from '../context/AppContext';
-import { config } from '../components/components';
 import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGroup, Spinner } from '@axonivy/ui-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../context/ClientContext';
-import type { Unary } from '../types/lambda';
+import type { Unary } from '../types/types';
 import type { FormData, FormEditorData, FormEditorProps } from '@axonivy/form-editor-protocol';
 import { DndContext } from '../context/DndContext';
 import { genQueryKey } from '../query/query-client';
@@ -88,7 +87,7 @@ export const Editor = (props: FormEditorProps) => {
             <>
               <ResizableHandle />
               <ResizablePanel id='properties' order={3} defaultSize={25} minSize={10} className='panel'>
-                <Properties config={config} />
+                <Properties />
               </ResizablePanel>
             </>
           )}

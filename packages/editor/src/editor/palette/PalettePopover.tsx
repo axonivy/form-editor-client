@@ -1,5 +1,5 @@
 import { IvyIcons } from '@axonivy/ui-icons';
-import type { itemCategory } from '../../types/config';
+import type { ItemCategory } from '../../types/config';
 import { Button, Flex, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
 import { Palette } from './Palette';
 import { componentsByCategory } from '../../components/components';
@@ -41,7 +41,7 @@ export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) =
   );
 };
 
-export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children'> & { label: itemCategory }) => (
+export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children'> & { label: ItemCategory }) => (
   <PalettePopover {...props}>
     <Palette sections={componentsByCategory(props.label)} />
   </PalettePopover>

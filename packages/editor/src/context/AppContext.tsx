@@ -1,6 +1,6 @@
 import { EMPTY_FORM, type FormContext, type FormData } from '@axonivy/form-editor-protocol';
 import { createContext, useContext, type SetStateAction, type Dispatch, useState, useEffect } from 'react';
-import type { UpdateConsumer } from '../types/lambda';
+import type { UpdateConsumer } from '../types/types';
 import { useReadonly } from '@axonivy/ui-components';
 import type { useHistoryData } from '../data/useHistoryData';
 

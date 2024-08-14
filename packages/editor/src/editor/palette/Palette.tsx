@@ -11,7 +11,7 @@ export type PaletteProps = {
 export const Palette = ({ sections, directCreate }: PaletteProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   return (
-    <Flex direction='column' className='palette'>
+    <Flex direction='column' className='palette' gap={3}>
       <SearchInput placeholder='Search...' value={searchTerm} onChange={setSearchTerm} />
       {Object.entries(sections).map(([section, sectionItems]) => {
         const filteredItems = sectionItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -30,16 +30,14 @@ type PaletteSectionProps = {
   directCreate?: (name: string) => void;
 };
 
-const PaletteSection = ({ items, title, directCreate }: PaletteSectionProps) => {
-  return (
-    <>
-      <h3>{title}</h3>
-      <Flex gap={4} style={{ flexWrap: 'wrap' }}>
-        {items.map(item => (
-          <PaletteItem key={item.name} {...item} directCreate={directCreate} />
-        ))}
-      </Flex>
-      <Separator />
-    </>
-  );
-};
+const PaletteSection = ({ items, title, directCreate }: PaletteSectionProps) => (
+  <>
+    <h3 className='palette-section-title'>{title}</h3>
+    <Flex gap={4} style={{ flexWrap: 'wrap' }}>
+      {items.map(item => (
+        <PaletteItem key={item.name} {...item} directCreate={directCreate} />
+      ))}
+    </Flex>
+    <Separator style={{ marginBlock: 'var(--size-2)' }} />
+  </>
+);
