@@ -41,16 +41,16 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   }, [selectedElement, setUi]);
   const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
   return (
-    <Toolbar ref={ref}>
+    <Toolbar ref={ref} className='toolbar'>
       <Flex>
         <ToggleGroup type='single' onValueChange={changeDeviceMode} defaultValue='desktop' gap={1} aria-label='Device mode'>
-          <ToggleGroupItem value='mobile' asChild>
+          <ToggleGroupItem value='mobile' aria-label='mobile' asChild>
             <Button icon={IvyIcons.DeviceMobile} size='large' />
           </ToggleGroupItem>
-          <ToggleGroupItem value='tablet' asChild>
+          <ToggleGroupItem value='tablet' aria-label='tablet' asChild>
             <Button icon={IvyIcons.DeviceTablet} size='large' />
           </ToggleGroupItem>
-          <ToggleGroupItem value='desktop' asChild>
+          <ToggleGroupItem value='desktop' aria-label='desktop' asChild>
             <Button icon={IvyIcons.EventStart} size='large' />
           </ToggleGroupItem>
         </ToggleGroup>
@@ -60,28 +60,42 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
             <Flex>
               <Separator orientation='vertical' style={{ height: '26px' }} />
               <Flex gap={1}>
-                <Button icon={IvyIcons.Undo} size='large' onClick={() => history.undo(setUnhistoricisedData)} disabled={!history.canUndo} />
-                <Button icon={IvyIcons.Redo} size='large' onClick={() => history.redo(setUnhistoricisedData)} disabled={!history.canRedo} />
+                <Button
+                  aria-label='Undo'
+                  icon={IvyIcons.Undo}
+                  size='large'
+                  onClick={() => history.undo(setUnhistoricisedData)}
+                  disabled={!history.canUndo}
+                />
+                <Button
+                  aria-label='Redo'
+                  icon={IvyIcons.Redo}
+                  size='large'
+                  onClick={() => history.redo(setUnhistoricisedData)}
+                  disabled={!history.canRedo}
+                />
               </Flex>
             </Flex>
           </ToolbarContainer>
         )}
       </Flex>
-      <Flex gap={3} className='palette-section'>
-        <PalettePopover label='All Components' icon={IvyIcons.Task}>
-          <Palette sections={allComponentsByCategory()} />
-        </PalettePopover>
-        <ToolbarContainer maxWidth={650}>
-          <Flex gap={3}>
-            <PaletteCategoryPopover label='Structure' icon={IvyIcons.LaneSwimlanes} />
-            <PaletteCategoryPopover label='Elements' icon={IvyIcons.ChangeType} />
-            <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
-          </Flex>
-        </ToolbarContainer>
-        <PalettePopover label='Data' icon={IvyIcons.DatabaseLink}>
-          <DataClassPalette />
-        </PalettePopover>
-      </Flex>
+      {editable && (
+        <Flex gap={3} className='palette-section'>
+          <PalettePopover label='All Components' icon={IvyIcons.Task}>
+            <Palette sections={allComponentsByCategory()} />
+          </PalettePopover>
+          <ToolbarContainer maxWidth={650}>
+            <Flex gap={3}>
+              <PaletteCategoryPopover label='Structure' icon={IvyIcons.LaneSwimlanes} />
+              <PaletteCategoryPopover label='Elements' icon={IvyIcons.ChangeType} />
+              <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
+            </Flex>
+          </ToolbarContainer>
+          <PalettePopover label='Data' icon={IvyIcons.DatabaseLink}>
+            <DataClassPalette />
+          </PalettePopover>
+        </Flex>
+      )}
 
       <Flex gap={1} alignItems='center'>
         {editable && (
@@ -90,13 +104,14 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
             defaultChecked={ui.helpPaddings}
             onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
             size='large'
+            aria-label='Help Paddings'
           />
         )}
         <Popover>
           <PopoverTrigger asChild>
-            <Button icon={IvyIcons.Settings} size='large' />
+            <Button aria-label='Options' icon={IvyIcons.Settings} size='large' />
           </PopoverTrigger>
-          <PopoverContent sideOffset={12}>
+          <PopoverContent sideOffset={12} collisionPadding={5}>
             <ReadonlyProvider readonly={false}>
               <Flex direction='column' gap={2}>
                 {theme !== 'system' && (
@@ -130,6 +145,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
         </Popover>
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
+          aria-label='Toggle Property View'
           size='large'
           onClick={() => setUi(old => ({ ...old, properties: !old.properties }))}
         />
