@@ -65,11 +65,13 @@ export interface Link {
   name: string;
 }
 export interface Select {
-  items: SelectItem[];
-  itemsValue: string;
+  dynamicItemsLabel: string;
+  dynamicItemsList: string;
+  dynamicItemsValue: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
+  staticItems: SelectItem[];
   value: string;
 }
 export interface SelectItem {
