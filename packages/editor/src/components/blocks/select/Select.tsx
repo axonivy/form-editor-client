@@ -28,8 +28,13 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
-    items: { subsection: 'General', label: 'Static Options', type: 'selectTable' },
-    itemsValue: { subsection: 'General', label: 'Dynamic Options', type: 'textBrowser' },
+    items: { subsection: 'Static Options', label: '', type: 'selectTable' },
+    itemsValue: {
+      subsection: 'Dynamic Options',
+      label: 'List of Objects',
+      type: 'textBrowser',
+      options: { displayOnlyListTypes: true, placeholder: 'e.g. #{data.dynamicList}' }
+    },
     ...baseComponentFields
   }
 };
