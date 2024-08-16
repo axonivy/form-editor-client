@@ -1,5 +1,5 @@
 import type { VariableInfo } from '@axonivy/form-editor-protocol';
-import { findListVariables, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
+import { findListVariables, findAttributesOfType, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
 import type { BrowserNode } from '@axonivy/ui-components';
 import type { Row } from '@tanstack/react-table';
 
@@ -128,11 +128,22 @@ describe('variableTreeData', () => {
   });
 });
 
-test('of endless', () => {
+test('findListVariable of endless', () => {
   const list = findListVariables(endlessParamInfo);
   expect(list.length).toEqual(1);
   expect(list[0].value).toEqual('param.Endless.endlessList');
   expect(list[0].info).toEqual('List<demo.Endless>');
+});
+
+test('findAttributesOfType of List<demo.Endless>', () => {
+  const list = findAttributesOfType(endlessParamInfo, 'param.Endless.endlessList');
+  expect(list.length).toEqual(1);
+  expect(list[0].value).toEqual('Use entire Object');
+  expect(list[0].info).toEqual('demo.Endless');
+  expect(list[0].children[0].value).toEqual('endless');
+  expect(list[0].children[0].info).toEqual('demo.Endless');
+  expect(list[0].children[2].value).toEqual('something');
+  expect(list[0].children[2].info).toEqual('String');
 });
 
 const row = {
@@ -142,6 +153,10 @@ const row = {
 
 test('fullVariablePath', () => {
   expect(fullVariablePath(row)).toEqual('data.address.location.country');
+});
+
+test('fullVariablePath dontShowRootNode', () => {
+  expect(fullVariablePath(row, true)).toEqual('address.location.country');
 });
 
 test('rowToCreateData', () => {

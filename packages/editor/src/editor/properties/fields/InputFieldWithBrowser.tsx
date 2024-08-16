@@ -13,7 +13,8 @@ export const InputFieldWithBrowser = ({
   options
 }: InputFieldProps & { options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
-  const attrBrowser = useAttributeBrowser(!!options?.displayOnlyListTypes);
+  const attrBrowser = useAttributeBrowser(!!options?.onlyListTypes, !!options?.onlyAttributes);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Fieldset label={label}>
@@ -29,7 +30,7 @@ export const InputFieldWithBrowser = ({
           browsers={[attrBrowser]}
           apply={(browserName, result) => {
             if (result) {
-              onChange(`#{${result.value}}`);
+              onChange(options?.onlyAttributes ? `${result.value}` : `#{${result.value}}`);
             }
             setOpen(false);
           }}
