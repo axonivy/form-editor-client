@@ -9,6 +9,10 @@ export class Canvas {
     this.locator = page.locator('.canvas');
   }
 
+  async expectEmpty() {
+    await expect(this.locator.locator('.drag-hint')).toHaveCount(1);
+  }
+
   async expectHelpPaddings(paddings: boolean) {
     const draggable = this.locator.locator('.draggable').first();
     const emptyBlock = this.locator.locator('.empty-block').first();

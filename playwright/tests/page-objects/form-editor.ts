@@ -2,6 +2,13 @@ import type { Page } from '@playwright/test';
 import { Toolbar } from './toolbar';
 import { Canvas } from './canvas';
 import { Inscription } from './inscription';
+import { v4 as uuid } from 'uuid';
+
+export const testForm = 'form/test/project/test/test';
+const server = process.env.BASE_URL ?? 'http://localhost:8081';
+const ws = process.env.TEST_WS ?? '';
+const app = process.env.TEST_APP ?? 'designer';
+const pmv = 'form-test-project';
 
 export class FormEditor {
   protected readonly page: Page;
@@ -17,18 +24,34 @@ export class FormEditor {
     return new FormEditor(page);
   }
 
-  static async openForm(page: Page, file: string, options?: { readonly?: boolean; theme?: string }) {
-    const server = process.env.BASE_URL ?? 'localhost:8081';
-    const app = process.env.TEST_APP ?? 'designer';
+  static async openForm(page: Page, file = testForm, options?: { readonly?: boolean; theme?: string }) {
     const serverUrl = server.replace(/^https?:\/\//, '');
-    const pmv = 'form-test-project';
-    let url = `?server=${serverUrl}&app=${app}&pmv=${pmv}&file=form/test/project/${file}/${file}.f.json`;
+    let url = `?server=${serverUrl}${ws}&app=${app}&pmv=${pmv}&file=${file}.f.json`;
     if (options) {
       url += Object.entries(options)
         .map(([key, value]) => `&${key}=${value}`)
         .join('');
     }
     return await this.open(page, url);
+  }
+
+  static async openNewForm(page: Page) {
+    const name = uuid();
+    const namespace = 'temp';
+    const user = 'Developer';
+    const result = await fetch(`${server}${ws}/api/web-ide/hd`, {
+      method: 'POST',
+      headers: {
+        'X-Requested-By': 'form-editor-tests',
+        'Content-Type': 'application/json',
+        Authorization: 'Basic ' + Buffer.from(user + ':' + user).toString('base64')
+      },
+      body: JSON.stringify({ namespace, name, type: 'Form', project: { app, pmv } })
+    });
+    if (!result.ok) {
+      console.log(`Failed to create form: ${result.status}`);
+    }
+    return this.openForm(page, `${namespace}/${name}/${name}`);
   }
 
   static async openMock(page: Page) {
