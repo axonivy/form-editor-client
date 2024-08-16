@@ -44,14 +44,20 @@ export const variableTreeData = () => {
       isLoaded: paramInfo.types[type.type] === undefined
     })) ?? [];
 
-  return { of, loadChildrenFor };
+  return { of, loadChildrenFor, typesOfParam };
 };
 
-export const fullVariablePath = (row: Row<BrowserNode>): string => {
-  return `${row
-    .getParentRows()
-    .map(parent => parent.original.value)
-    .join('.')}.${row.original.value}`;
+export const fullVariablePath = (row: Row<BrowserNode>, dontShowRootNode: boolean = false): string => {
+  const parentRows = row.getParentRows();
+  const isFlatStructure = parentRows.length === 0;
+  const relevantParents = dontShowRootNode && !isFlatStructure ? parentRows.slice(1) : parentRows;
+
+  const parentPath = relevantParents.map(parent => parent.original.value).join('.');
+
+  if (row.original.value === 'Use entire Object' && dontShowRootNode) {
+    return '';
+  }
+  return parentPath ? `${parentPath}.${row.original.value}` : row.original.value;
 };
 
 export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | undefined => {
@@ -105,3 +111,64 @@ export const findListVariables = (variableInfo: VariableInfo, maxDepth: number =
 
   return result;
 };
+
+export function findAttributesOfType(data: VariableInfo, variableName: string, maxDepth: number = 10): Array<BrowserNode<Variable>> {
+  const nameToSearch = extractVariableName(variableName);
+
+  for (const attributes of Object.values(data.types)) {
+    const foundType = attributes.find(attr => attr.attribute === nameToSearch);
+    if (foundType) {
+      const extractedType = extractTypeFromList(foundType.type);
+      const children = processType(data, extractedType, maxDepth);
+
+      return [
+        {
+          value: 'Use entire Object',
+          info: extractedType,
+          icon: IvyIcons.Attribute,
+          data: undefined,
+          children,
+          isLoaded: true
+        }
+      ];
+    }
+  }
+
+  return [];
+}
+
+function processType(data: VariableInfo, type: string, currentDepth: number): Array<BrowserNode<Variable>> {
+  if (currentDepth <= 0) {
+    return [];
+  }
+
+  const foundAttributes = data.types[type];
+  if (!foundAttributes) {
+    return [];
+  }
+
+  return foundAttributes.map(param => ({
+    value: param.attribute,
+    info: param.type,
+    icon: IvyIcons.Attribute,
+    data: param,
+    children: processType(data, param.type, currentDepth - 1),
+    isLoaded: true
+  }));
+}
+
+function extractVariableName(variableName: string): string {
+  const cleanedName = variableName.replace(/^#\{|\}$/g, '').trim();
+
+  const lastDotIndex = cleanedName.lastIndexOf('.');
+  if (lastDotIndex !== -1) {
+    return cleanedName.substring(lastDotIndex + 1);
+  }
+
+  return cleanedName;
+}
+
+function extractTypeFromList(type: string): string {
+  const match = type.match(/^List<(.+)>$/);
+  return match ? match[1] : '';
+}

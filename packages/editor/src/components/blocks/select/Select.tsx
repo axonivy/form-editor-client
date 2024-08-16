@@ -35,19 +35,21 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
       subsection: 'Dynamic Options',
       label: 'List of Objects',
       type: 'textBrowser',
-      options: { displayOnlyListTypes: true, placeholder: 'e.g. #{data.dynamicList}' }
+      options: { onlyListTypes: true, placeholder: 'e.g. #{data.dynamicList}' }
     },
     dynamicItemsLabel: {
       subsection: 'Dynamic Options',
-      label: 'Dynamic Label',
-      type: 'text',
-      options: { placeholder: 'Enter fitting attribute' }
+      label: 'Object Label',
+      type: 'textBrowser',
+      options: { onlyAttributes: true, placeholder: 'Enter attribute (or leave blank to select entire object)' },
+      hide: data => data.dynamicItemsList.length == 0
     },
     dynamicItemsValue: {
       subsection: 'Dynamic Options',
-      label: 'Dynamic Value',
-      type: 'text',
-      options: { placeholder: 'Enter fitting attribute or object' }
+      label: 'Object Value',
+      type: 'textBrowser',
+      options: { onlyAttributes: true, placeholder: 'Enter attribute (or leave blank to select entire object)' },
+      hide: data => data.dynamicItemsList.length == 0
     },
     ...baseComponentFields
   }

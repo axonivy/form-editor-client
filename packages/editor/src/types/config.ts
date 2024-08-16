@@ -34,7 +34,8 @@ export type TextFieldOptions = {
 };
 
 export type TextBrowserFieldOptions = TextFieldOptions & {
-  displayOnlyListTypes?: boolean;
+  onlyListTypes?: boolean;
+  onlyAttributes?: boolean;
 };
 
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
