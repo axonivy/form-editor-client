@@ -41,14 +41,20 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
       subsection: 'Dynamic Options',
       label: 'Object Label',
       type: 'textBrowser',
-      options: { onlyAttributes: true, placeholder: 'Enter attribute (or leave blank to select entire object)' },
+      options: {
+        onlyAttributes: true,
+        placeholder: 'Enter attribute (or leave blank to select entire object)'
+      },
       hide: data => data.dynamicItemsList.length == 0
     },
     dynamicItemsValue: {
       subsection: 'Dynamic Options',
       label: 'Object Value',
       type: 'textBrowser',
-      options: { onlyAttributes: true, placeholder: 'Enter attribute (or leave blank to select entire object)' },
+      options: {
+        onlyAttributes: true,
+        placeholder: 'Enter attribute (or leave blank to select entire object)'
+      },
       hide: data => data.dynamicItemsList.length == 0
     },
     ...baseComponentFields

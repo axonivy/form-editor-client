@@ -44,10 +44,13 @@ export interface Checkbox {
 }
 export interface Combobox {
   completeMethod: string;
+  itemLabel: string;
+  itemValue: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
   value: string;
+  withDropdown: boolean;
 }
 export interface Input {
   label: string;
