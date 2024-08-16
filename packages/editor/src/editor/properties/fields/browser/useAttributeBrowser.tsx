@@ -15,6 +15,7 @@ export const useAttributeBrowser = (onlyListTypes: boolean, onlyAttributes: bool
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   const { element } = useData();
   const dynamicList = element?.config.dynamicItemsList as string;
+
   useEffect(() => {
     if (onlyListTypes && !onlyAttributes) {
       setTree(findListVariables(variableInfo));

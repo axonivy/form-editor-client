@@ -12,6 +12,9 @@ export const defaultInputProps: Combobox = {
   label: 'Label',
   value: '',
   completeMethod: '',
+  itemLabel: '',
+  itemValue: '',
+  withDropdown: false,
   ...defaultBaseComponent
 } as const;
 
@@ -26,8 +29,21 @@ export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', options: { onlyListTypes: true } },
-    completeMethod: { subsection: 'General', label: 'Complete Method', type: 'text' },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
+    completeMethod: { subsection: 'Options', label: 'Complete Method', type: 'text' },
+    itemLabel: {
+      subsection: 'Options',
+      label: 'Item Label',
+      type: 'text',
+      hide: data => data.completeMethod.length === 0
+    },
+    itemValue: {
+      subsection: 'Options',
+      label: 'Item Value',
+      type: 'text',
+      hide: data => data.completeMethod.length === 0
+    },
+    withDropdown: { subsection: 'Options', label: 'Add Dropdown-Button to Combobox', type: 'checkbox' },
     ...baseComponentFields
   }
 };
