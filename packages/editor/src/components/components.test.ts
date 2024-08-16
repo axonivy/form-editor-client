@@ -11,14 +11,14 @@ test('componentByCategory', () => {
   const result = componentsByCategory('Elements');
   expect(result.General).toEqual(undefined);
   expect(result.Input).toHaveLength(1);
-  expect(result.Interactions).toHaveLength(2);
+  expect(result.Interactions).toHaveLength(3);
   expect(result.Text).toHaveLength(1);
 });
 
 test('allComponentsByCategory', () => {
   const result = allComponentsByCategory();
   expect(result.Action).toHaveLength(2);
-  expect(result.Elements).toHaveLength(4);
+  expect(result.Elements).toHaveLength(5);
   expect(result.Structure).toHaveLength(1);
 });
 

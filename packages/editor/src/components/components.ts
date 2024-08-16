@@ -9,6 +9,7 @@ import { CheckboxComponent } from './blocks/checkbox/Checkbox';
 import { SelectComponent } from './blocks/select/Select';
 import type { ComponentType } from '@axonivy/form-editor-protocol';
 import type { AutoCompleteWithString } from '../types/types';
+import { ComboboxComponent } from './blocks/combobox/Combobox';
 
 const config: Config = {
   components: {
@@ -18,7 +19,8 @@ const config: Config = {
     Layout: LayoutComponent,
     Button: ButtonComponent,
     Checkbox: CheckboxComponent,
-    Select: SelectComponent
+    Select: SelectComponent,
+    Combobox: ComboboxComponent
   }
 } as const;
 
