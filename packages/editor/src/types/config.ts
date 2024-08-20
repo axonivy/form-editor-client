@@ -82,6 +82,7 @@ export type ComponentConfig<ComponentProps extends DefaultComponentProps = Defau
   description: string;
   render: UiComponent<ComponentProps>;
   create: (data: CreateData) => DefaultProps;
+  outlineInfo: (data: ComponentProps) => string | undefined;
   defaultProps: DefaultProps;
   fields: Fields<ComponentProps>;
 };

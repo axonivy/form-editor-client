@@ -21,6 +21,7 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   defaultProps: defaultLinkProps,
   render: props => <UiBlock {...props} />,
   create: () => defaultLinkProps,
+  outlineInfo: component => component.name,
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
     href: { subsection: 'General', label: 'Href', type: 'text' },

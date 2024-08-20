@@ -8,10 +8,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
   Flex,
-  PanelMessage,
-  SidebarHeader
+  PanelMessage
 } from '@axonivy/ui-components';
-import { IvyIcons } from '@axonivy/ui-icons';
 import { useData } from '../../data/data';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 import { componentByName } from '../../components/components';
@@ -26,14 +24,11 @@ export const Properties = () => {
   const fields = visibleFields(propertyConfig.fields, elementConfig);
   const sections = visibleSections(fields, parent);
   return (
-    <Flex direction='column' className='properties'>
-      <SidebarHeader icon={IvyIcons.PenEdit} title={element.type} />
-      <Accordion type='single' collapsible defaultValue='Properties'>
-        {[...sections].map(([section, fields]) => (
-          <PropertySection key={section} section={section} fields={fields} />
-        ))}
-      </Accordion>
-    </Flex>
+    <Accordion type='single' collapsible defaultValue='Properties'>
+      {[...sections].map(([section, fields]) => (
+        <PropertySection key={section} section={section} fields={fields} />
+      ))}
+    </Accordion>
   );
 };
 

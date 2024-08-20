@@ -30,6 +30,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   defaultProps: defaultInputProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
+  outlineInfo: component => component.label,
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     required: { subsection: 'General', label: 'Required', type: 'checkbox' },

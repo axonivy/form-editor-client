@@ -27,6 +27,7 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   defaultProps: defaultInputProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
+  outlineInfo: component => component.label,
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
