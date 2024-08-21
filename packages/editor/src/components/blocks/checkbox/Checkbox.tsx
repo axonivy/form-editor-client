@@ -22,6 +22,7 @@ export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
   defaultProps: defaultCheckboxProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultCheckboxProps, label, selected: value, ...defaultProps }),
+  outlineInfo: component => component.label,
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     selected: { subsection: 'General', label: 'Selected', type: 'textBrowser' },

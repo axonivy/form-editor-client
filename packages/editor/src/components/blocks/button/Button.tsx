@@ -35,6 +35,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   defaultProps: defaultButtonProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, defaultProps }) => ({ ...defaultButtonProps, name: label, action: value, ...defaultProps }),
+  outlineInfo: component => component.name,
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
     action: { subsection: 'General', label: 'Action', type: 'text' },

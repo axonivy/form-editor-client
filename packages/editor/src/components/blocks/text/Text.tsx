@@ -26,6 +26,7 @@ export const TextComponent: ComponentConfig<TextProps> = {
   defaultProps: defaultTextProps,
   render: props => <UiBlock {...props} />,
   create: ({ value }) => ({ ...defaultTextProps, content: value }),
+  outlineInfo: component => component.content,
   fields: {
     content: { subsection: 'General', label: 'Content', type: 'textarea' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },

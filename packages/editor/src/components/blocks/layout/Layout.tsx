@@ -43,6 +43,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   defaultProps: defaultLayoutProps,
   render: props => <UiBlock {...props} />,
   create: ({ defaultProps }) => ({ ...defaultLayoutProps, ...defaultProps }),
+  outlineInfo: component => component.type,
   fields: {
     components: { subsection: 'General', type: 'hidden' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },

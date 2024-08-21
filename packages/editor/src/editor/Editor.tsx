@@ -1,4 +1,3 @@
-import { Properties } from './properties/Properties';
 import './Editor.css';
 import { useEffect, useMemo, useState } from 'react';
 import { AppProvider, useUiState } from '../context/AppContext';
@@ -12,6 +11,7 @@ import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useHistoryData } from '../data/useHistoryData';
 import { MasterPart } from './MasterPart';
+import { Sidebar } from './sidebar/Sidebar';
 
 export const Editor = (props: FormEditorProps) => {
   const [context, setContext] = useState(props.context);
@@ -87,7 +87,7 @@ export const Editor = (props: FormEditorProps) => {
             <>
               <ResizableHandle />
               <ResizablePanel id='properties' order={3} defaultSize={25} minSize={10} className='panel'>
-                <Properties />
+                <Sidebar />
               </ResizablePanel>
             </>
           )}
