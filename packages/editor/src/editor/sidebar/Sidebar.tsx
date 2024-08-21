@@ -9,7 +9,7 @@ export const Sidebar = () => {
   const { element } = useData();
   const [outline, setOutline] = useState(false);
   return (
-    <Flex direction='column' gap={4} className='properties' style={{ height: '100%' }}>
+    <Flex direction='column' className='properties' style={{ height: '100%' }}>
       <SidebarHeader icon={IvyIcons.PenEdit} title={element?.type ?? 'Properties'}>
         <Switch size='large' icon={{ icon: IvyIcons.List }} checked={outline} onCheckedChange={setOutline} />
       </SidebarHeader>
