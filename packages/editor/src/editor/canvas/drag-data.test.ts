@@ -18,14 +18,14 @@ describe('dragData', () => {
 describe('isDragZoneDisabled', () => {
   test('false', () => {
     const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled('', active as Active)).to.be.false;
-    expect(isDropZoneDisabled('2', active as Active)).to.be.false;
+    expect(isDropZoneDisabled('', active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('2', active as Active)).toBeFalsy();
   });
 
   test('true', () => {
     const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled('1', active as Active)).to.be.true;
-    expect(isDropZoneDisabled('2', active as Active, '1')).to.be.true;
+    expect(isDropZoneDisabled('1', active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('2', active as Active, '1')).toBeTruthy();
   });
 });
 
