@@ -32,7 +32,7 @@ describe('modifyData', () => {
       expect(data.components).to.have.length(1);
       expect(data.components[0].id).to.match(/^Input-/);
       expect(data.components[0].type).to.equals('Input');
-      expect(data.components[0].config).to.not.undefined;
+      expect(data.components[0].config).not.toBeUndefined();
     });
 
     test('add two', () => {

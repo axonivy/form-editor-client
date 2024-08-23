@@ -97,7 +97,7 @@ type QuickbarProps = {
 const Quickbar = ({ deleteAction, duplicateAction, createAction }: QuickbarProps) => {
   const [menu, setMenu] = useState(false);
   return (
-    <PopoverContent className='quickbar' sideOffset={8} onOpenAutoFocus={e => e.preventDefault()}>
+    <PopoverContent className='quickbar' sideOffset={8} onOpenAutoFocus={e => e.preventDefault()} hideWhenDetached={true}>
       <Popover open={menu} onOpenChange={change => setMenu(change)}>
         <PopoverAnchor asChild>
           <Flex gap={1}>
