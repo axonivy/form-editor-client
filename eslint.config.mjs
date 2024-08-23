@@ -8,6 +8,7 @@ import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHook from 'eslint-plugin-react-hooks';
 import testingLibrary from 'eslint-plugin-testing-library';
+import _import from 'eslint-plugin-import';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,7 @@ const compat = new FlatCompat({
 });
 
 export default [
+  //general
   { name: 'eslint/js/recommended', ...pluginJs.configs.recommended },
   {
     name: 'formEditor/global/ignores',
@@ -29,13 +31,59 @@ export default [
       '**/vite.*.ts',
       '**/vitest.config.ts',
       '**/schemaCodegen.cjs',
-      '**/playwright.*.ts',
-      '**/{node_modules,lib}'
+      '**/playwright.*.ts'
     ]
   },
 
-  { name: 'global language', languageOptions: { globals: globals.browser } },
+  //rules regarding typescript
+  ...tseslint.configs.recommended,
+  {
+    plugins: {
+      '@typescript-eslint': fixupPluginRules(tseslint.plugin),
+      import: fixupPluginRules(_import)
+    },
 
+    languageOptions: {
+      globals: {
+        ...globals.browser
+      },
+
+      parser: tseslint.parser,
+      ecmaVersion: 5,
+      sourceType: 'module',
+
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
+    },
+
+    settings: {
+      'import/parsers': {
+        '@typescript-eslint/parser': ['.ts', '.tsx']
+      },
+
+      'import/resolver': {
+        typescript: {}
+      },
+
+      react: {
+        version: 'detect'
+      }
+    },
+
+    rules: {
+      '@typescript-eslint/ban-types': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-namespace': 'off',
+      'react/display-name': 'off'
+    }
+  },
+  ...fixupConfigRules(compat.extends('plugin:import/errors', 'plugin:import/warnings', 'plugin:import/typescript')),
+
+  //rules regarding react
   { name: 'react/recommended', ...pluginReact.configs.flat.recommended },
   {
     name: 'react-hooks/recommended',
@@ -44,8 +92,8 @@ export default [
     },
     rules: pluginReactHook.configs.recommended.rules
   },
-  ...tseslint.configs.recommended,
-  ...fixupConfigRules(compat.extends('plugin:import/errors', 'plugin:import/warnings', 'plugin:import/typescript')),
+
+  //individual rules for sections
   {
     name: 'formEditor/packages/core',
     files: ['packages/core/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
@@ -72,7 +120,6 @@ export default [
         project: 'tsconfig.json'
       }
     },
-
     rules: {
       '@typescript-eslint/no-explicit-any': 'off'
     }
