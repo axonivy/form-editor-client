@@ -33,6 +33,11 @@ test('undo/redo', async ({ page }) => {
   await toolbar.undoButton.click();
 });
 
+test('palette', async ({ page }) => {
+  const { toolbar } = await FormEditor.openMock(page);
+  await expect(toolbar.palette.locator('.category-popover')).toHaveCount(5);
+});
+
 test('help paddings', async ({ page }) => {
   const editor = await FormEditor.openForm(page);
   const toolbar = editor.toolbar;
@@ -66,4 +71,24 @@ test('properties', async ({ page }) => {
   await toolbar.toggleProperties();
   await expect(editor.inscription.locator).toBeVisible();
   await editor.inscription.expectEmptyPage();
+});
+
+test('responsive', async ({ page }) => {
+  const {
+    toolbar: { palette, redoButton, undoButton }
+  } = await FormEditor.openMock(page);
+  const paletteBtn = palette.locator('.category-label:has-text("Structure")');
+  await expect(paletteBtn).toBeVisible();
+  await expect(undoButton).toBeVisible();
+  await expect(redoButton).toBeVisible();
+
+  await page.setViewportSize({ width: 600, height: 500 });
+  await expect(paletteBtn).toBeHidden();
+  await expect(undoButton).toBeVisible();
+  await expect(redoButton).toBeVisible();
+
+  await page.setViewportSize({ width: 400, height: 500 });
+  await expect(paletteBtn).toBeHidden();
+  await expect(undoButton).toBeHidden();
+  await expect(redoButton).toBeHidden();
 });
