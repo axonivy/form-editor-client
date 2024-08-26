@@ -1,6 +1,15 @@
+import type { SelectItem } from '@axonivy/form-editor-protocol';
 import type { FieldOption, Fields } from '../../types/config';
 
 type BaseComponentProps = { lgSpan: string; mdSpan: string };
+type SelectItemsProps = {
+  label: string;
+  value: string;
+  staticItems: SelectItem[];
+  dynamicItemsLabel: string;
+  dynamicItemsList: string;
+  dynamicItemsValue: string;
+};
 
 export const defaultBaseComponent: BaseComponentProps = {
   lgSpan: '6',
@@ -19,4 +28,36 @@ const spanOptions: FieldOption<string>[] = [
 export const baseComponentFields: Fields<BaseComponentProps> = {
   lgSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Large Span', options: spanOptions },
   mdSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Medium Span', options: spanOptions }
+};
+
+export const selectItemsComponentFields: Fields<SelectItemsProps> = {
+  label: { subsection: 'General', label: 'Label', type: 'text' },
+  value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
+  staticItems: { subsection: 'Static Options', label: '', type: 'selectTable' },
+  dynamicItemsList: {
+    subsection: 'Dynamic Options',
+    label: 'List of Objects',
+    type: 'textBrowser',
+    options: { onlyListTypes: true, placeholder: 'e.g. #{data.dynamicList}' }
+  },
+  dynamicItemsLabel: {
+    subsection: 'Dynamic Options',
+    label: 'Object Label',
+    type: 'textBrowser',
+    options: {
+      onlyAttributes: true,
+      placeholder: 'Enter attribute (or leave blank to select entire object)'
+    },
+    hide: data => data.dynamicItemsList.length == 0
+  },
+  dynamicItemsValue: {
+    subsection: 'Dynamic Options',
+    label: 'Object Value',
+    type: 'textBrowser',
+    options: {
+      onlyAttributes: true,
+      placeholder: 'Enter attribute (or leave blank to select entire object)'
+    },
+    hide: data => data.dynamicItemsList.length == 0
+  }
 };
