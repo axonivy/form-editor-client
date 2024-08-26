@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { Block } from './block';
 
 export class Canvas {
   protected readonly page: Page;
@@ -7,6 +8,20 @@ export class Canvas {
   constructor(page: Page) {
     this.page = page;
     this.locator = page.locator('.canvas');
+  }
+
+  blockByText(text: string) {
+    return new Block(this.page, this.locator, { text });
+  }
+
+  blockByNth(nth: number) {
+    return new Block(this.page, this.locator, { nth });
+  }
+
+  async openInitCreateDialog() {
+    await this.expectEmpty();
+    await this.locator.getByRole('button', { name: 'Create from data' }).click();
+    return this.page.getByRole('dialog');
   }
 
   async expectEmpty() {
@@ -24,6 +39,12 @@ export class Canvas {
       await expect(draggable).toHaveCSS('padding', '0px');
       await expect(draggable).toHaveCSS('margin', '0px');
       await expect(emptyBlock).toBeHidden();
+    }
+  }
+
+  async expectFormOrder(expected: Array<string>) {
+    for (let i = 0; i < expected.length; i++) {
+      await expect(this.blockByNth(i).block).toContainText(expected[i]);
     }
   }
 }
