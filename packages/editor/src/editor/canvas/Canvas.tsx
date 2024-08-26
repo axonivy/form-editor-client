@@ -6,6 +6,7 @@ import { useDndContext, useDroppable } from '@dnd-kit/core';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { ComponentBlock } from './ComponentBlock';
 import { EmtpyBlock } from './EmptyBlock';
+import { isDragData } from './drag-data';
 
 export const Canvas = () => {
   const { ui, data } = useAppContext();
@@ -25,10 +26,13 @@ export const Canvas = () => {
 };
 
 const DeleteDropZone = () => {
-  const dnd = useDndContext();
+  const { active } = useDndContext();
   const { isOver, setNodeRef } = useDroppable({ id: DELETE_DROPZONE_ID });
+  if (!isDragData(active?.data.current)) {
+    return null;
+  }
   return (
-    <div ref={setNodeRef} className={cn('delete-drop-zone', dnd.active && 'dnd-active', isOver && 'is-drop-target')}>
+    <div ref={setNodeRef} className={cn('delete-drop-zone', active && 'dnd-active', isOver && 'is-drop-target')}>
       <IvyIcon icon={IvyIcons.Trash} className='delete-icon' />
     </div>
   );

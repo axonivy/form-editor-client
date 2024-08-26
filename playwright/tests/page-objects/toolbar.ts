@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { Palette } from './palette';
 
 export class Toolbar {
   protected readonly page: Page;
@@ -30,6 +31,16 @@ export class Toolbar {
     await deviceMode.getByRole('radio', { name: mode }).click();
   }
 
+  async openPalette(name: string) {
+    await expect(async () => {
+      const paletteBtn = this.palette.getByRole('button', { name });
+      await expect(paletteBtn).toHaveAttribute('data-state', 'closed');
+      await paletteBtn.click();
+      await expect(paletteBtn).toHaveAttribute('data-state', 'open');
+    }).toPass({ intervals: [100, 100, 100] });
+    return new Palette(this.page);
+  }
+
   async toggleTheme() {
     const dialog = await this.openOptionsMenu();
     await dialog.getByRole('switch', { name: 'Theme' }).click();
@@ -50,9 +61,5 @@ export class Toolbar {
     await this.toolbar.getByRole('button', { name: 'Options' }).click();
     await expect(dialog).toBeVisible();
     return dialog;
-  }
-
-  async expectCategoryCount(count: number) {
-    await expect(this.palette.locator('.category-popover')).toHaveCount(count);
   }
 }

@@ -14,8 +14,8 @@ export class Canvas {
     return new Block(this.page, this.locator, { text });
   }
 
-  blockByNth(nth: number) {
-    return new Block(this.page, this.locator, { nth });
+  blockByNth(nth: number, layout: boolean = false) {
+    return new Block(this.page, this.locator, { nth, layout });
   }
 
   async openInitCreateDialog() {
