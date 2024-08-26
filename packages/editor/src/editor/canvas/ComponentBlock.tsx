@@ -101,12 +101,13 @@ const Quickbar = ({ deleteAction, duplicateAction, createAction }: QuickbarProps
       <Popover open={menu} onOpenChange={change => setMenu(change)}>
         <PopoverAnchor asChild>
           <Flex gap={1}>
-            <Button icon={IvyIcons.Trash} title='Delete' onClick={deleteAction} />
-            <Button icon={IvyIcons.SubActivitiesDashed} title='Duplicate' onClick={duplicateAction} />
+            <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />
+            <Button icon={IvyIcons.SubActivitiesDashed} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />
             {/* <Button icon={IvyIcons.ChangeType} title='Change Type' /> */}
             <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
             <Button
               icon={IvyIcons.Task}
+              aria-label='All Components'
               title='All Components'
               onClick={e => {
                 e.stopPropagation();
