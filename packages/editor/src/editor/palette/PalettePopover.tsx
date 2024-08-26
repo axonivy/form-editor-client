@@ -18,18 +18,18 @@ export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) =
   const { active } = useDndContext();
 
   useEffect(() => {
-    if (active !== undefined) {
+    if (active !== undefined && active !== null && popoverOpen) {
       setPopoverOpen(false);
     }
-  }, [active]);
+  }, [active, popoverOpen]);
 
   return (
-    <Flex direction='column' alignItems={'center'} gap={1} className='category-popover'>
+    <Flex direction='column' alignItems='center' gap={1} className='category-popover'>
       <span className='category-label'>{label}</span>
       <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
         <PopoverTrigger asChild>
-          <Button icon={icon} size='large'>
-            <IvyIcon icon={IvyIcons.Chevron} className='category-icon' rotate={popoverOpen ? 270 : 90} />
+          <Button aria-label={label} icon={icon} size='large'>
+            <IvyIcon icon={IvyIcons.Chevron} className='category-icon' rotate={90} />
           </Button>
         </PopoverTrigger>
         <PopoverContent sideOffset={5} hideWhenDetached={true}>

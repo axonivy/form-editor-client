@@ -14,7 +14,7 @@ const variantOptions: FieldOption<ButtonVariant>[] = [
 ] as const;
 
 export const defaultButtonProps: Button = {
-  name: 'Proceed',
+  name: 'Action',
   action: '',
   variant: 'PRIMARY',
   icon: '',

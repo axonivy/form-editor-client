@@ -20,7 +20,7 @@ export const dragData = (data: Component | ComponentData): DragData => {
   return { disabledIds: disabledIds(data) };
 };
 
-const isDragData = (data: unknown): data is DragData => {
+export const isDragData = (data: unknown): data is DragData => {
   return typeof data === 'object' && data !== null && 'disabledIds' in data;
 };
 
