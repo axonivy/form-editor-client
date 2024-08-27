@@ -12,7 +12,7 @@ import {
   useTableSelect
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useEffect } from 'react';
+import { useCallback, useState } from 'react';
 
 export type TableFieldProps<TData extends object> = {
   label: string;
@@ -23,27 +23,36 @@ export type TableFieldProps<TData extends object> = {
 };
 
 export const TableField = <TData extends object>({ label, data, onChange, columns, emptyDataObject }: TableFieldProps<TData>) => {
+  const [tableData, setTableData] = useState(data);
+  const changeData = useCallback(
+    (change: TData[]) => {
+      setTableData(change);
+      onChange(change.filter(obj => !deepEqual(obj, emptyDataObject)));
+    },
+    [emptyDataObject, onChange]
+  );
+
   const addRow = () => {
-    const newData = [...data];
+    const newData = [...tableData];
     newData.push(emptyDataObject);
-    onChange(newData);
+    changeData(newData);
     tableSelection.options.onRowSelectionChange({ [`${newData.length - 1}`]: true });
   };
 
   const removeRow = () => {
     const index = table.getRowModel().rowsById[Object.keys(tableSelection.tableState.rowSelection!)[0]].index;
-    const newData = [...data];
+    const newData = [...tableData];
     newData.splice(index, 1);
     if (newData.length === 0) {
       tableSelection.options.onRowSelectionChange({});
-    } else if (index === data.length - 1) {
+    } else if (index === tableData.length - 1) {
       tableSelection.options.onRowSelectionChange({ [`${newData.length - 1}`]: true });
     }
-    onChange(newData);
+    changeData(newData);
   };
 
   const showAddButton = () => {
-    if (data.filter(obj => deepEqual(obj, emptyDataObject)).length === 0) {
+    if (tableData.filter(obj => deepEqual(obj, emptyDataObject)).length === 0) {
       return <TableAddRow addRow={addRow} />;
     }
     return null;
@@ -52,7 +61,7 @@ export const TableField = <TData extends object>({ label, data, onChange, column
   const tableSelection = useTableSelect<TData>();
   const table = useReactTable({
     ...tableSelection.options,
-    data,
+    data: tableData,
     columns,
     columnResizeMode: 'onChange',
     getCoreRowModel: getCoreRowModel(),
@@ -62,7 +71,7 @@ export const TableField = <TData extends object>({ label, data, onChange, column
     meta: {
       updateData: (rowId: string, columnId: string, value: string) => {
         const rowIndex = parseInt(rowId);
-        const updatedData = data.map((row, index) => {
+        const updatedData = tableData.map((row, index) => {
           if (index === rowIndex) {
             return {
               ...row,
@@ -71,22 +80,10 @@ export const TableField = <TData extends object>({ label, data, onChange, column
           }
           return row;
         });
-        onChange(updatedData);
+        changeData(updatedData);
       }
     }
   });
-
-  useEffect(() => {
-    if (Object.keys(table.getSelectedRowModel().rows).length !== 1) {
-      const filteredData = data.filter(obj => !deepEqual(obj, emptyDataObject));
-
-      if (filteredData.length !== data.length) {
-        table.setRowSelection({});
-        onChange(filteredData);
-      }
-      return;
-    }
-  }, [data, emptyDataObject, onChange, table, tableSelection.tableState.rowSelection]);
 
   return (
     <Fieldset

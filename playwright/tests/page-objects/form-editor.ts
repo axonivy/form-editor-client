@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { Toolbar } from './toolbar';
 import { Canvas } from './canvas';
 import { Inscription } from './inscription';
@@ -11,7 +11,7 @@ const app = process.env.TEST_APP ?? 'designer';
 const pmv = 'form-test-project';
 
 export class FormEditor {
-  protected readonly page: Page;
+  readonly page: Page;
 
   constructor(page: Page) {
     this.page = page;
@@ -35,7 +35,7 @@ export class FormEditor {
     return await this.open(page, url);
   }
 
-  static async openNewForm(page: Page) {
+  static async openNewForm(page: Page, options?: { block?: string }) {
     const name = uuid();
     const namespace = 'temp';
     const user = 'Developer';
@@ -51,7 +51,11 @@ export class FormEditor {
     if (!result.ok) {
       console.log(`Failed to create form: ${result.status}`);
     }
-    return this.openForm(page, `${namespace}/${name}/${name}`);
+    const editor = await this.openForm(page, `${namespace}/${name}/${name}`);
+    if (options?.block) {
+      await editor.createBlock(options.block);
+    }
+    return editor;
   }
 
   static async openMock(page: Page) {
@@ -68,5 +72,10 @@ export class FormEditor {
 
   get inscription() {
     return new Inscription(this.page);
+  }
+
+  async createBlock(block: string, target?: Locator) {
+    const palette = await this.toolbar.openPalette('All Components');
+    await palette.dndTo(block, target ?? this.canvas.dropZone);
   }
 }

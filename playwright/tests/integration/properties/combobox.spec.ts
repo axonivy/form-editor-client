@@ -1,0 +1,39 @@
+import { expect, test } from '@playwright/test';
+import { FormEditor } from '../../page-objects/form-editor';
+
+test('default', async ({ page }) => {
+  const editor = await FormEditor.openNewForm(page, { block: 'Combobox' });
+  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.inscription.expectHeader('Combobox');
+  const properties = editor.inscription.section('Properties');
+  const general = properties.collapsible('General');
+  const label = general.input({ label: 'Label' });
+  const value = general.input({ label: 'Value' });
+  const options = properties.collapsible('Options');
+  const complete = options.input({ label: 'Complete Method' });
+  const itemLabel = options.input({ label: 'Item Label' });
+  const itemValue = options.input({ label: 'Item Value' });
+  const button = options.checkbox({ label: 'Add Dropdown-Button to Combobox' });
+
+  await label.expectValue('Label');
+  await value.expectValue('');
+  await complete.expectValue('');
+  await expect(itemLabel.locator).toBeHidden();
+  await expect(itemValue.locator).toBeHidden();
+  await button.expectValue(false);
+  await label.fill('Hi');
+  await value.fill('#{data.zag}');
+  await complete.fill('#{data.complete}');
+  await itemLabel.fill('label');
+  await itemValue.fill('value');
+  await button.check();
+
+  await page.reload();
+  await editor.canvas.blockByNth(0).block.dblclick();
+  await label.expectValue('Hi');
+  await value.expectValue('#{data.zag}');
+  await complete.expectValue('#{data.complete}');
+  await itemLabel.expectValue('label');
+  await itemValue.expectValue('value');
+  await button.expectValue(true);
+});
