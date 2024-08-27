@@ -67,9 +67,9 @@ test('data source', async ({ page }) => {
 test('properties', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const toolbar = editor.toolbar;
-  await expect(editor.inscription.locator).toBeHidden();
+  await expect(editor.inscription.view).toBeHidden();
   await toolbar.toggleProperties();
-  await expect(editor.inscription.locator).toBeVisible();
+  await expect(editor.inscription.view).toBeVisible();
   await editor.inscription.expectEmptyPage();
 });
 

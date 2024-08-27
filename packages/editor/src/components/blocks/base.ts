@@ -33,7 +33,7 @@ export const baseComponentFields: Fields<BaseComponentProps> = {
 export const selectItemsComponentFields: Fields<SelectItemsProps> = {
   label: { subsection: 'General', label: 'Label', type: 'text' },
   value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
-  staticItems: { subsection: 'Static Options', label: '', type: 'selectTable' },
+  staticItems: { subsection: 'Static Options', label: 'Options', type: 'selectTable' },
   dynamicItemsList: {
     subsection: 'Dynamic Options',
     label: 'List of Objects',

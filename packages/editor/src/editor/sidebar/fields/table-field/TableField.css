@@ -1,18 +1,22 @@
-.table-field .ui-table .ui-table-row .ui-table-cell {
-  padding: 0px;
-}
-
-.table-field .ui-table .ui-table-cell .ui-fieldset {
-  gap: 0;
-}
-
-.table-field .ui-table-cell .ui-inputgroup,
-.table-field .ui-table-cell .ui-input,
-.table-field .ui-table-cell .ui-inputgroup:focus-within {
-  border: none;
-  background-color: unset;
-}
-
-.table-field .ui-table .ui-table-row[data-state='selected'] .ui-input {
-  color: white;
+.table-field {
+  > .ui-fieldset-label .ui-label {
+    line-height: 20px;
+  }
+  .ui-table .ui-table-row {
+    .ui-table-cell {
+      padding: 0px;
+      .ui-inputgroup,
+      .ui-input,
+      .ui-inputgroup:focus-within {
+        border: none;
+        background-color: unset;
+      }
+    }
+    .ui-fieldset {
+      gap: 0;
+    }
+    .ui-input {
+      color: inherit;
+    }
+  }
 }

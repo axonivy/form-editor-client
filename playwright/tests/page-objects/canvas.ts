@@ -18,6 +18,10 @@ export class Canvas {
     return new Block(this.page, this.locator, { nth, layout });
   }
 
+  get dropZone() {
+    return this.locator.locator('.drop-zone');
+  }
+
   async openInitCreateDialog() {
     await this.expectEmpty();
     await this.locator.getByRole('button', { name: 'Create from data' }).click();

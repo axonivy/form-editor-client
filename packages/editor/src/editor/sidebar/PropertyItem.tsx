@@ -18,7 +18,7 @@ type PropertyItemProps = {
 const toString = (primitive?: PrimitiveValue) => `${primitive ?? ''}`;
 const toNumber = (primitive?: PrimitiveValue) => Number(primitive ?? 0);
 const toBoolean = (primitive?: PrimitiveValue) => Boolean(primitive ?? false);
-const toArray = (primitive?: PrimitiveValue): unknown[] => (Array.isArray(primitive) ? primitive : []);
+const toSelectItems = (primitive?: PrimitiveValue): Array<SelectItem> => (Array.isArray(primitive) ? primitive : []);
 
 export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItemProps) => {
   const [value, setValue] = useState<PrimitiveValue>(initValue);
@@ -34,7 +34,7 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
       case 'textBrowser':
         return <InputFieldWithBrowser label={label} value={toString(value)} onChange={updateValue} options={field.options} />;
       case 'selectTable':
-        return <SelectTableField label={label} data={toArray(value) as SelectItem[]} onChange={updateValue} />;
+        return <SelectTableField label={label} data={toSelectItems(value)} onChange={updateValue} />;
       case 'number':
         return <NumberField label={label} value={toNumber(value)} onChange={updateValue} />;
       case 'checkbox':
@@ -42,7 +42,7 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
       case 'textarea':
         return <TextareaField label={label} value={toString(value)} onChange={updateValue} />;
       case 'select':
-        return <SelectField options={field.options} label={label} value={toString(value)} onChange={updateValue} />;
+        return <SelectField label={label} value={toString(value)} onChange={updateValue} options={field.options} />;
       default:
         return <p>unknown field type</p>;
     }

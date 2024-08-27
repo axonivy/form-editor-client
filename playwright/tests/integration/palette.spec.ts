@@ -19,7 +19,7 @@ test('filter', async ({ page }) => {
 test('add elements', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page);
   const palette = await editor.toolbar.openPalette('Structure');
-  await palette.dndTo('Layout', editor.canvas.locator.locator('.drop-zone'));
+  await palette.dndTo('Layout', editor.canvas.dropZone);
   const layout = editor.canvas.blockByNth(0, true);
   await expect(layout.block).toContainText('Drag first element inside the layout');
 
