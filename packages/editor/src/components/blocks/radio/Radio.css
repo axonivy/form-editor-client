@@ -1,0 +1,11 @@
+.block-radio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2);
+}
+
+.block-radio .ui-field:hover button[data-state='unchecked'] {
+  background-color: var(--N25);
+  border: var(--basic-border);
+  cursor: default;
+}

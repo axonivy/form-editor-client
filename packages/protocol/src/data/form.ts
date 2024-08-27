@@ -11,6 +11,7 @@ export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
 export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
 export type LayoutJustifyContent = "NORMAL" | "END";
 export type LayoutType = "GRID" | "FLEX";
+export type OrientationType = "horizontal" | "vertical";
 export type TextType = "RAW" | "MARKDOWN";
 
 export interface Form {
@@ -25,8 +26,8 @@ export interface FormConfig {
 }
 export interface Component {
   id: string;
-  type: "Button" | "Checkbox" | "Combobox" | "Input" | "Layout" | "Link" | "Select" | "Text";
-  config: Button | Checkbox | Combobox | Input | Layout | Link | Select | Text;
+  type: "Button" | "Checkbox" | "Combobox" | "Input" | "Layout" | "Link" | "Radio" | "Select" | "Text";
+  config: Button | Checkbox | Combobox | Input | Layout | Link | Radio | Select | Text;
 }
 export interface Button {
   action: string;
@@ -74,6 +75,21 @@ export interface Link {
   mdSpan: string;
   name: string;
 }
+export interface Radio {
+  dynamicItemsLabel: string;
+  dynamicItemsList: string;
+  dynamicItemsValue: string;
+  label: string;
+  lgSpan: string;
+  mdSpan: string;
+  orientation: OrientationType;
+  staticItems: SelectItem[];
+  value: string;
+}
+export interface SelectItem {
+  label: string;
+  value: string;
+}
 export interface Select {
   dynamicItemsLabel: string;
   dynamicItemsList: string;
@@ -82,10 +98,6 @@ export interface Select {
   lgSpan: string;
   mdSpan: string;
   staticItems: SelectItem[];
-  value: string;
-}
-export interface SelectItem {
-  label: string;
   value: string;
 }
 export interface Text {

@@ -10,6 +10,7 @@ import { SelectComponent } from './blocks/select/Select';
 import type { ComponentType } from '@axonivy/form-editor-protocol';
 import type { AutoCompleteWithString } from '../types/types';
 import { ComboboxComponent } from './blocks/combobox/Combobox';
+import { RadioComponent } from './blocks/radio/Radio';
 
 const config: Config = {
   components: {
@@ -20,7 +21,8 @@ const config: Config = {
     Button: ButtonComponent,
     Checkbox: CheckboxComponent,
     Select: SelectComponent,
-    Combobox: ComboboxComponent
+    Combobox: ComboboxComponent,
+    Radio: RadioComponent
   }
 } as const;
 
