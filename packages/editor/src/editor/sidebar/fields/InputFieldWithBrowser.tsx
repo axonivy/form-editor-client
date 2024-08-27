@@ -13,7 +13,7 @@ export const InputFieldWithBrowser = ({
   options
 }: InputFieldProps & { options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
-  const attrBrowser = useAttributeBrowser(!!options?.onlyListTypes, !!options?.onlyAttributes);
+  const attrBrowser = useAttributeBrowser(!!options?.onlyAttributes, options?.onlyTypesOf);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

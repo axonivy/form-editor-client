@@ -34,7 +34,7 @@ export type TextFieldOptions = {
 };
 
 export type TextBrowserFieldOptions = TextFieldOptions & {
-  onlyListTypes?: boolean;
+  onlyTypesOf?: string;
   onlyAttributes?: boolean;
 };
 

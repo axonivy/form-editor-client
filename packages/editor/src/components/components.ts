@@ -11,6 +11,7 @@ import type { ComponentType } from '@axonivy/form-editor-protocol';
 import type { AutoCompleteWithString } from '../types/types';
 import { ComboboxComponent } from './blocks/combobox/Combobox';
 import { RadioComponent } from './blocks/radio/Radio';
+import { DatePickerComponent } from './blocks/datepicker/DatePicker';
 
 const config: Config = {
   components: {
@@ -22,7 +23,8 @@ const config: Config = {
     Checkbox: CheckboxComponent,
     Select: SelectComponent,
     Combobox: ComboboxComponent,
-    Radio: RadioComponent
+    Radio: RadioComponent,
+    DatePicker: DatePickerComponent
   }
 } as const;
 
