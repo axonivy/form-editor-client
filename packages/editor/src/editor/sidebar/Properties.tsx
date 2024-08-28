@@ -24,11 +24,13 @@ export const Properties = () => {
   const fields = visibleFields(propertyConfig.fields, elementConfig);
   const sections = visibleSections(fields, parent);
   return (
-    <Accordion type='single' collapsible defaultValue='Properties'>
-      {[...sections].map(([section, fields]) => (
-        <PropertySection key={section} section={section} fields={fields} />
-      ))}
-    </Accordion>
+    <div style={{ overflowY: 'auto' }}>
+      <Accordion type='single' collapsible defaultValue='Properties'>
+        {[...sections].map(([section, fields]) => (
+          <PropertySection key={section} section={section} fields={fields} />
+        ))}
+      </Accordion>
+    </div>
   );
 };
 
