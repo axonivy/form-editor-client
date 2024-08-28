@@ -1,0 +1,20 @@
+.block-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.block-input__input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 auto;
+  padding: var(--size-2);
+  color: var(--N900);
+  border: var(--basic-border);
+  background-color: var(--N25);
+  outline: 0 none;
+  font-size: 12px;
+  border-radius: var(--border-r2);
+}

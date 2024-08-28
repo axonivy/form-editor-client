@@ -74,7 +74,7 @@ export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | un
   };
 };
 
-export const findListVariables = (variableInfo: VariableInfo, maxDepth: number = 10): Array<BrowserNode<Variable>> => {
+export const findVariablesOfType = (variableInfo: VariableInfo, type: string, maxDepth: number = 10): Array<BrowserNode<Variable>> => {
   const result: Array<BrowserNode<Variable>> = [];
   const visitedTypes = new Set<string>();
 
@@ -88,7 +88,7 @@ export const findListVariables = (variableInfo: VariableInfo, maxDepth: number =
 
     for (const variable of variables) {
       const newPath = [...path, variable.attribute];
-      if (variable.type.includes('List<')) {
+      if (variable.type.includes(type)) {
         result.push({
           value: newPath.join('.'),
           info: variable.type,

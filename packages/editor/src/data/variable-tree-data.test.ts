@@ -1,5 +1,5 @@
 import type { VariableInfo } from '@axonivy/form-editor-protocol';
-import { findListVariables, findAttributesOfType, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
+import { findVariablesOfType, findAttributesOfType, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
 import type { BrowserNode } from '@axonivy/ui-components';
 import type { Row } from '@tanstack/react-table';
 
@@ -129,7 +129,7 @@ describe('variableTreeData', () => {
 });
 
 test('findListVariable of endless', () => {
-  const list = findListVariables(endlessParamInfo);
+  const list = findVariablesOfType(endlessParamInfo, 'List<');
   expect(list.length).toEqual(1);
   expect(list[0].value).toEqual('param.Endless.endlessList');
   expect(list[0].info).toEqual('List<demo.Endless>');

@@ -26,8 +26,8 @@ export interface FormConfig {
 }
 export interface Component {
   id: string;
-  type: "Button" | "Checkbox" | "Combobox" | "Input" | "Layout" | "Link" | "Radio" | "Select" | "Text";
-  config: Button | Checkbox | Combobox | Input | Layout | Link | Radio | Select | Text;
+  type: "Button" | "Checkbox" | "Combobox" | "DatePicker" | "Input" | "Layout" | "Link" | "Radio" | "Select" | "Text";
+  config: Button | Checkbox | Combobox | DatePicker | Input | Layout | Link | Radio | Select | Text;
 }
 export interface Button {
   action: string;
@@ -52,6 +52,15 @@ export interface Combobox {
   mdSpan: string;
   value: string;
   withDropdown: boolean;
+}
+export interface DatePicker {
+  datePattern: string;
+  label: string;
+  lgSpan: string;
+  mdSpan: string;
+  showTime: boolean;
+  timePattern: string;
+  value: string;
 }
 export interface Input {
   label: string;
