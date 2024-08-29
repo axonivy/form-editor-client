@@ -72,7 +72,7 @@ class Collapsible {
     return new Select(this.page, this.content, options);
   }
 
-  input(options?: { label?: string; nth?: number }) {
+  input(options?: { label?: string; nth?: number; type?: string }) {
     return new Input(this.page, this.content, options);
   }
 
@@ -113,11 +113,12 @@ class Select {
 class Input {
   readonly locator: Locator;
 
-  constructor(readonly page: Page, readonly parentLocator: Locator, options?: { label?: string; nth?: number }) {
+  constructor(readonly page: Page, readonly parentLocator: Locator, options?: { label?: string; nth?: number; type?: string }) {
+    const role = options?.type === 'number' ? 'spinbutton' : 'textbox';
     if (options?.label) {
-      this.locator = parentLocator.getByRole('textbox', { name: options.label }).first();
+      this.locator = parentLocator.getByRole(role, { name: options.label }).first();
     } else {
-      this.locator = parentLocator.getByRole('textbox').nth(options?.nth ?? 0);
+      this.locator = parentLocator.getByRole(role).nth(options?.nth ?? 0);
     }
   }
 

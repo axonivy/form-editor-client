@@ -26,8 +26,19 @@ export interface FormConfig {
 }
 export interface Component {
   id: string;
-  type: "Button" | "Checkbox" | "Combobox" | "DatePicker" | "Input" | "Layout" | "Link" | "Radio" | "Select" | "Text";
-  config: Button | Checkbox | Combobox | DatePicker | Input | Layout | Link | Radio | Select | Text;
+  type:
+    | "Button"
+    | "Checkbox"
+    | "Combobox"
+    | "DatePicker"
+    | "Input"
+    | "Layout"
+    | "Link"
+    | "Radio"
+    | "Select"
+    | "Text"
+    | "Textarea";
+  config: Button | Checkbox | Combobox | DatePicker | Input | Layout | Link | Radio | Select | Text | Textarea;
 }
 export interface Button {
   action: string;
@@ -114,4 +125,12 @@ export interface Text {
   lgSpan: string;
   mdSpan: string;
   type: TextType;
+}
+export interface Textarea {
+  autoResize: boolean;
+  label: string;
+  lgSpan: string;
+  mdSpan: string;
+  rows: string;
+  value: string;
 }

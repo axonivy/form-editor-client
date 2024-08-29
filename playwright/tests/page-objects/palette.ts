@@ -9,7 +9,9 @@ export class Palette {
     this.palette = page.locator('.palette');
   }
 
-  paletteItem = (name: string) => this.palette.locator(`.palette-item:has-text("${name}")`);
+  paletteItem(name: string) {
+    return this.palette.locator(`.palette-item >> text="${name}"`);
+  }
 
   async dndTo(name: string, target: Locator) {
     const item = this.paletteItem(name);
