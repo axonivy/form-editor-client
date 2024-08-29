@@ -12,6 +12,7 @@ import type { AutoCompleteWithString } from '../types/types';
 import { ComboboxComponent } from './blocks/combobox/Combobox';
 import { RadioComponent } from './blocks/radio/Radio';
 import { DatePickerComponent } from './blocks/datepicker/DatePicker';
+import { TextareaComponent } from './blocks/textarea/Textarea';
 
 const config: Config = {
   components: {
@@ -24,7 +25,8 @@ const config: Config = {
     Select: SelectComponent,
     Combobox: ComboboxComponent,
     Radio: RadioComponent,
-    DatePicker: DatePickerComponent
+    DatePicker: DatePickerComponent,
+    Textarea: TextareaComponent
   }
 } as const;
 

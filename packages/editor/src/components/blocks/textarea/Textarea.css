@@ -1,0 +1,48 @@
+.block-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+}
+
+.block-textarea__label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.block-textarea__label .visible-rows-hint {
+  color: var(--N600);
+}
+
+.block-textarea__input-wrapper {
+  position: relative;
+  display: block;
+}
+
+.block-textarea__input {
+  display: block;
+  text-align: left;
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space: pre-wrap;
+  padding: var(--size-2);
+  color: var(--N900);
+  border: var(--basic-border);
+  background-color: var(--N25);
+  outline: 0 none;
+  font-size: 12px;
+  border-radius: var(--border-r2);
+  box-sizing: border-box;
+  height: 60px;
+}
+
+.resize-icon {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 18px;
+  height: 18px;
+  background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M11%209.63635L9.63636%2011%22%20stroke%3D%22black%22%20stroke-width%3D%220.7%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M11%207.81818L7.81818%2011%22%20stroke%3D%22black%22%20stroke-width%3D%220.7%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M11%206L6%2011%22%20stroke%3D%22black%22%20stroke-width%3D%220.7%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
