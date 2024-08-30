@@ -23,7 +23,7 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   category: 'Elements',
   subcategory: 'Interactions',
   icon: <IconSvg />,
-  description: 'A simple input with a label',
+  description: 'A dropdown menu with label for selecting a single option',
   defaultProps: defaultInputProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),

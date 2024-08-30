@@ -1,4 +1,5 @@
 import { CheckboxComponent } from './blocks/checkbox/Checkbox';
+import { DatePickerComponent } from './blocks/datepicker/DatePicker';
 import { InputComponent } from './blocks/input/Input';
 import { allComponentsByCategory, componentByName, componentForType, componentsByCategory } from './components';
 
@@ -26,8 +27,9 @@ test('componentForType', () => {
   expect(componentForType('String')).toEqual({ component: InputComponent });
   expect(componentForType('Number')).toEqual({ component: InputComponent, defaultProps: { type: 'NUMBER' } });
   expect(componentForType('Boolean')).toEqual({ component: CheckboxComponent });
-  expect(componentForType('Date')).toEqual(undefined);
-  expect(componentForType('DateTime')).toEqual(undefined);
+  expect(componentForType('Date')).toEqual({ component: DatePickerComponent });
+  expect(componentForType('DateTime')).toEqual({ component: DatePickerComponent });
+  expect(componentForType('java.util.Date')).toEqual({ component: DatePickerComponent });
   expect(componentForType('Time')).toEqual(undefined);
   expect(componentForType('File')).toEqual(undefined);
 });

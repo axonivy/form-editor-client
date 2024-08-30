@@ -19,7 +19,7 @@ export const TextareaComponent: ComponentConfig<TextareaProps> = {
   category: 'Elements',
   subcategory: 'Input',
   icon: <IconSvg />,
-  description: 'A simple and customizable Textarea component',
+  description: 'A customizable Textarea component',
   defaultProps: defaultInputProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
