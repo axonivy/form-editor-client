@@ -16,7 +16,7 @@ export const defaultCheckboxProps: Checkbox = {
 export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
   name: 'Checkbox',
   category: 'Elements',
-  subcategory: 'Interactions',
+  subcategory: 'Selection',
   icon: <IconSvg />,
   description: 'A selectable boolean checkbox',
   defaultProps: defaultCheckboxProps,
