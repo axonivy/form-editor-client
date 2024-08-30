@@ -26,7 +26,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   category: 'Elements',
   subcategory: 'Input',
   icon: <IconSvg />,
-  description: 'A simple input with a label',
+  description: 'A input with a label',
   defaultProps: defaultInputProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),

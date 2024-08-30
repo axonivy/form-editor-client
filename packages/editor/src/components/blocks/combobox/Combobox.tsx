@@ -23,7 +23,7 @@ export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
   category: 'Elements',
   subcategory: 'Interactions',
   icon: <IconSvg />,
-  description: 'A simple autocomplete Combobox',
+  description: 'A autocomplete combobox with label',
   defaultProps: defaultInputProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),

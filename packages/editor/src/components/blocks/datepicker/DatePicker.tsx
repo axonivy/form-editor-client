@@ -20,7 +20,7 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
   category: 'Elements',
   subcategory: 'Interactions',
   icon: <IconSvg />,
-  description: 'A simple datepicker for Date or DateTime',
+  description: 'A datepicker with label for date or datetime',
   defaultProps: defaultInputProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
