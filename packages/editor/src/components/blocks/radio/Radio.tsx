@@ -29,7 +29,7 @@ export const defaultInputProps: Radio = {
 export const RadioComponent: ComponentConfig<RadioProps> = {
   name: 'Radio',
   category: 'Elements',
-  subcategory: 'Interactions',
+  subcategory: 'Selection',
   icon: <IconSvg />,
   description: 'A radio button group with label for selecting a single option',
   defaultProps: defaultInputProps,

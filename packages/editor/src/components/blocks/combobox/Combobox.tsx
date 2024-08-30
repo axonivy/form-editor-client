@@ -21,7 +21,7 @@ export const defaultInputProps: Combobox = {
 export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
   name: 'Combobox',
   category: 'Elements',
-  subcategory: 'Interactions',
+  subcategory: 'Input',
   icon: <IconSvg />,
   description: 'A autocomplete combobox with label',
   defaultProps: defaultInputProps,

@@ -18,7 +18,7 @@ export const defaultInputProps: DatePicker = {
 export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
   name: 'DatePicker',
   category: 'Elements',
-  subcategory: 'Interactions',
+  subcategory: 'Input',
   icon: <IconSvg />,
   description: 'A datepicker with label for date or datetime',
   defaultProps: defaultInputProps,

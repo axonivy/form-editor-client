@@ -21,7 +21,7 @@ export const defaultInputProps: Select = {
 export const SelectComponent: ComponentConfig<SelectProps> = {
   name: 'Select',
   category: 'Elements',
-  subcategory: 'Interactions',
+  subcategory: 'Selection',
   icon: <IconSvg />,
   description: 'A dropdown menu with label for selecting a single option',
   defaultProps: defaultInputProps,

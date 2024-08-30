@@ -11,9 +11,9 @@ test('componentByName', () => {
 test('componentByCategory', () => {
   const result = componentsByCategory('Elements');
   expect(result.General).toEqual(undefined);
-  expect(result.Input).toHaveLength(2);
-  expect(result.Interactions).toHaveLength(5);
-  expect(result.Text).toHaveLength(1);
+  expect(result.Input).toHaveLength(4);
+  expect(result.Selection).toHaveLength(3);
+  expect(result.Typography).toHaveLength(1);
 });
 
 test('allComponentsByCategory', () => {
