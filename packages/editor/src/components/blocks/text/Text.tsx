@@ -20,7 +20,7 @@ export const defaultTextProps: TextProps = {
 export const TextComponent: ComponentConfig<TextProps> = {
   name: 'Text',
   category: 'Elements',
-  subcategory: 'Typography',
+  subcategory: 'Text',
   icon: <IconSvg />,
   description: 'Text output',
   defaultProps: defaultTextProps,

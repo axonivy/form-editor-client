@@ -17,22 +17,23 @@ import { TextareaComponent } from './blocks/textarea/Textarea';
 const config: Config = {
   components: {
     Input: InputComponent,
-    Text: TextComponent,
-    Link: LinkComponent,
-    Layout: LayoutComponent,
-    Button: ButtonComponent,
-    Checkbox: CheckboxComponent,
-    Select: SelectComponent,
-    Combobox: ComboboxComponent,
-    Radio: RadioComponent,
+    Textarea: TextareaComponent,
     DatePicker: DatePickerComponent,
-    Textarea: TextareaComponent
+    Combobox: ComboboxComponent,
+    Checkbox: CheckboxComponent,
+    Radio: RadioComponent,
+    Select: SelectComponent,
+    Text: TextComponent,
+    Button: ButtonComponent,
+    Link: LinkComponent,
+    Layout: LayoutComponent
   }
 } as const;
 
 export const componentByName = (name: AutoCompleteWithString<ComponentType>) => {
   return config.components[name];
 };
+//
 
 export const componentsByCategory = (category: ItemCategory) => {
   const filteredComponents = Object.values(config.components).filter(component => component.category === category);

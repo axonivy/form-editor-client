@@ -13,7 +13,7 @@ test('componentByCategory', () => {
   expect(result.General).toEqual(undefined);
   expect(result.Input).toHaveLength(4);
   expect(result.Selection).toHaveLength(3);
-  expect(result.Typography).toHaveLength(1);
+  expect(result.Text).toHaveLength(1);
 });
 
 test('allComponentsByCategory', () => {
