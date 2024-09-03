@@ -72,7 +72,7 @@ export type Fields<ComponentProps extends DefaultComponentProps = DefaultCompone
 };
 
 export type ItemCategory = 'Elements' | 'Structure' | 'Action';
-export type ItemSubcategory = 'General' | 'Input' | 'Selection' | 'Typography';
+export type ItemSubcategory = 'General' | 'Input' | 'Selection' | 'Text';
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: ComponentType;
