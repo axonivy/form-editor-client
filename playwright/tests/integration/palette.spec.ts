@@ -37,8 +37,11 @@ test('add elements', async ({ page }) => {
 test('data', async ({ page }) => {
   const editor = await FormEditor.openForm(page, 'form/test/project/empty/empty');
   const palette = await editor.toolbar.openPalette('Data');
-  await palette.expectSections(['data', 'data.address']);
+  await palette.expectSections(['data', 'data.address', 'data.address.location']);
   await expect(palette.paletteItem('age')).toBeVisible();
   await expect(palette.paletteItem('aproved')).toBeVisible();
   await expect(palette.paletteItem('zip')).toBeVisible();
+  await expect(palette.paletteItem('street')).toBeVisible();
+  await expect(palette.paletteItem('geo')).toBeVisible();
+  await expect(palette.paletteItem('country')).toBeVisible();
 });
