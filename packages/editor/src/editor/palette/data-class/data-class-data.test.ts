@@ -38,8 +38,9 @@ const endlessParamInfo: VariableInfo = {
 };
 
 test('of', () => {
-  const items = paletteItems(variableInfo);
-  expect(Object.keys(items)).toEqual(['data', 'data.address']);
+  const items = paletteItems(variableInfo, 2);
+  console.log(Object.keys(items));
+  expect(Object.keys(items)).toEqual(['data', 'data.address', 'data.age', 'data.firstName']);
   expect(items.data[0].name).toEqual('age');
   expect(items.data[0].data).toEqual({ componentName: 'Input', label: 'Age', value: '#{data.age}', type: 'NUMBER' });
   expect(items.data[1].name).toEqual('firstName');
@@ -52,6 +53,6 @@ test('of', () => {
 });
 
 test('of endless', () => {
-  const items = paletteItems(endlessParamInfo);
+  const items = paletteItems(endlessParamInfo, 2);
   expect(Object.keys(items)).toEqual(['data', 'data.endless']);
 });
