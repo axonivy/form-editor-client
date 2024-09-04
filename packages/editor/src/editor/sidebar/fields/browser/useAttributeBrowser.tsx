@@ -5,26 +5,30 @@ import { findAttributesOfType, fullVariablePath, variableTreeData, findVariables
 import { useCallback, useEffect, useState } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../../context/AppContext';
-import { useData } from '../../../../data/data';
+import { findParentTableComponent, useData } from '../../../../data/data';
+import type { onlyAttributeSelection } from '../../../../types/config';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute' as const;
 
-export const useAttributeBrowser = (onlyAttributes: boolean, onlyTypesOf?: string): Browser => {
+export const useAttributeBrowser = (onlyAttributesFor?: onlyAttributeSelection, onlyTypesOf?: string): Browser => {
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const { context } = useAppContext();
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
-  const { element } = useData();
+  const { element, data } = useData();
   const dynamicList = element?.config.dynamicItemsList as string;
 
   useEffect(() => {
-    if (onlyTypesOf && !onlyAttributes) {
+    if (onlyTypesOf && !onlyAttributesFor) {
       setTree(findVariablesOfType(variableInfo, onlyTypesOf));
-    } else if (!onlyTypesOf && onlyAttributes) {
+    } else if (!onlyTypesOf && onlyAttributesFor === 'DYNAMICLIST') {
       setTree(findAttributesOfType(variableInfo, dynamicList));
+    } else if (!onlyTypesOf && onlyAttributesFor === 'COLUMN') {
+      const parentTableComponent = findParentTableComponent(data.components, element);
+      setTree(findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''));
     } else {
       setTree(variableTreeData().of(variableInfo));
     }
-  }, [onlyTypesOf, onlyAttributes, variableInfo, dynamicList]);
+  }, [data.components, dynamicList, element, onlyAttributesFor, onlyTypesOf, variableInfo]);
 
   const loadChildren = useCallback<(row: BrowserNode) => void>(
     row => setTree(tree => variableTreeData().loadChildrenFor(variableInfo, row.info, tree)),
@@ -36,6 +40,6 @@ export const useAttributeBrowser = (onlyAttributes: boolean, onlyTypesOf?: strin
     icon: IvyIcons.Attribute,
     browser: attributes,
     infoProvider: row => row?.original.info,
-    applyModifier: row => ({ value: onlyTypesOf ? row.original.value : fullVariablePath(row, onlyAttributes) })
+    applyModifier: row => ({ value: onlyTypesOf ? row.original.value : fullVariablePath(row, onlyAttributesFor && true) })
   };
 };

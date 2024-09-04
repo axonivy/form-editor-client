@@ -3,7 +3,7 @@ import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
 import { useDraggable } from '@dnd-kit/core';
-import { modifyData, useData } from '../../data/data';
+import { modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../data/data';
 import { dragData } from './drag-data';
 import { Button, cn, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -41,6 +41,16 @@ const Draggable = ({ config, data }: DraggableProps) => {
     setSelectedElement(undefined);
   };
   const duplicateElement = () => setData(oldData => modifyData(oldData, { type: 'duplicate', data: { id: data.id } }).newData);
+  const createColumn = () => {
+    setData(
+      oldData =>
+        modifyData(oldData, {
+          type: 'add',
+          data: { componentName: 'DataTableColumn', targetId: TABLE_DROPZONE_ID_PREFIX + data.id },
+          insideTable: true
+        }).newData
+    );
+  };
   const createElement = (name: string) =>
     setData(oldData => modifyData(oldData, { type: 'add', data: { componentName: name, targetId: data.id } }).newData);
   return (
@@ -78,7 +88,16 @@ const Draggable = ({ config, data }: DraggableProps) => {
           {config.render({ ...elementConfig, id: data.id })}
         </div>
       </PopoverAnchor>
-      <Quickbar deleteAction={deleteElement} duplicateAction={duplicateElement} createAction={createElement} />
+      {data.type === 'DataTableColumn' ? (
+        <Quickbar deleteAction={deleteElement} />
+      ) : (
+        <Quickbar
+          deleteAction={deleteElement}
+          duplicateAction={duplicateElement}
+          createAction={createElement}
+          createColumnAction={data.type === 'DataTable' ? createColumn : undefined}
+        />
+      )}
     </Popover>
   );
 };
@@ -89,31 +108,47 @@ export const ComponentBlockOverlay = ({ config, data }: DraggableProps) => {
 };
 
 type QuickbarProps = {
-  deleteAction: () => void;
-  duplicateAction: () => void;
-  createAction: (name: string) => void;
+  deleteAction?: () => void;
+  duplicateAction?: () => void;
+  createAction?: (name: string) => void;
+  createColumnAction?: () => void;
 };
 
-const Quickbar = ({ deleteAction, duplicateAction, createAction }: QuickbarProps) => {
+const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAction }: QuickbarProps) => {
   const [menu, setMenu] = useState(false);
   return (
     <PopoverContent className='quickbar' sideOffset={8} onOpenAutoFocus={e => e.preventDefault()} hideWhenDetached={true}>
       <Popover open={menu} onOpenChange={change => setMenu(change)}>
         <PopoverAnchor asChild>
           <Flex gap={1}>
-            <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />
-            <Button icon={IvyIcons.SubActivitiesDashed} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />
+            {deleteAction && <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />}
+            {duplicateAction && (
+              <Button icon={IvyIcons.SubActivitiesDashed} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />
+            )}
+            {createColumnAction && (
+              <Button
+                icon={IvyIcons.PoolSwimlanes}
+                rotate={90}
+                aria-label='Create Column'
+                title='Create Column'
+                onClick={createColumnAction}
+              />
+            )}
             {/* <Button icon={IvyIcons.ChangeType} title='Change Type' /> */}
-            <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
-            <Button
-              icon={IvyIcons.Task}
-              aria-label='All Components'
-              title='All Components'
-              onClick={e => {
-                e.stopPropagation();
-                setMenu(old => !old);
-              }}
-            />
+            {createAction && (
+              <>
+                <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
+                <Button
+                  icon={IvyIcons.Task}
+                  aria-label='All Components'
+                  title='All Components'
+                  onClick={e => {
+                    e.stopPropagation();
+                    setMenu(old => !old);
+                  }}
+                />
+              </>
+            )}
           </Flex>
         </PopoverAnchor>
         <PopoverContent className='quickbar-menu' sideOffset={8} onClick={e => e.stopPropagation()}>

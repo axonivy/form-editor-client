@@ -23,6 +23,10 @@ export const isLayout = (component?: Component | ComponentData): component is La
   return component !== undefined && component.type === 'Layout' && 'components' in component.config;
 };
 
+export const isTable = (component?: Component | ComponentData): component is LayoutConfig => {
+  return component !== undefined && component.type === 'DataTable' && 'components' in component.config;
+};
+
 export const isFreeLayout = (component?: Component | ComponentData): component is LayoutConfig => {
   return isLayout(component) && component.config.gridVariant === 'FREE';
 };
