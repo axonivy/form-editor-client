@@ -7,12 +7,12 @@
  */
 
 export type ButtonVariant = ("PRIMARY" | "SECONDARY" | "DANGER")
-export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
-export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
-export type LayoutJustifyContent = "NORMAL" | "END";
-export type LayoutType = "GRID" | "FLEX";
-export type OrientationType = "horizontal" | "vertical";
-export type TextType = "RAW" | "MARKDOWN";
+export type InputType = 'TEXT' | 'EMAIL' | 'PASSWORD' | 'NUMBER';
+export type LayoutGridVariant = 'GRID2' | 'GRID4' | 'FREE';
+export type LayoutJustifyContent = 'NORMAL' | 'END';
+export type LayoutType = 'GRID' | 'FLEX';
+export type OrientationType = 'horizontal' | 'vertical';
+export type TextType = 'RAW' | 'MARKDOWN';
 
 export interface Form {
   $schema: string;
@@ -27,19 +27,20 @@ export interface FormConfig {
 export interface Component {
   id: string;
   type:
-    | "Button"
-    | "Checkbox"
-    | "Combobox"
-    | "DataTable"
-    | "DataTableColumn"
-    | "DatePicker"
-    | "Input"
-    | "Layout"
-    | "Link"
-    | "Radio"
-    | "Select"
-    | "Text"
-    | "Textarea";
+    | 'Button'
+    | 'Checkbox'
+    | 'Combobox'
+    | 'DataTable'
+    | 'DataTableColumn'
+    | 'DatePicker'
+    | 'Input'
+    | 'Layout'
+    | 'Link'
+    | 'Radio'
+    | 'Select'
+    | 'Text'
+    | 'Textarea'
+    | 'Fieldset';
   config:
     | Button
     | Checkbox
@@ -53,7 +54,8 @@ export interface Component {
     | Radio
     | Select
     | Text
-    | Textarea;
+    | Textarea
+    | Fieldset;
 }
 export interface Button {
   action: string;
@@ -161,4 +163,13 @@ export interface Textarea {
   mdSpan: string;
   rows: string;
   value: string;
+}
+export interface Fieldset {
+  components: Component[];
+  legend: string;
+  disabled: boolean;
+  collapsible: boolean;
+  collapsed: boolean;
+  lgSpan: string;
+  mdSpan: string;
 }

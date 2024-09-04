@@ -2,13 +2,13 @@ import type { ComponentConfig, CreateComponentData, CreateData } from '../types/
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
 import { v4 as uuid } from 'uuid';
-import { isLayout, isTable, type ComponentData, type DataTable, type FormData } from '@axonivy/form-editor-protocol';
+import { isStructure, isTable, type ComponentData, type DataTable, type FormData } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
 import type { UpdateConsumer } from '../types/types';
 
 export const CANVAS_DROPZONE_ID = 'canvas';
 export const DELETE_DROPZONE_ID = 'delete';
-export const LAYOUT_DROPZONE_ID_PREFIX = 'layout-';
+export const STRUCTURE_DROPZONE_ID_PREFIX = 'layout-';
 export const TABLE_DROPZONE_ID_PREFIX = 'table-';
 
 const findComponent = (
@@ -19,8 +19,8 @@ const findComponent = (
   if (id === CANVAS_DROPZONE_ID) {
     return { data, index: data.length };
   }
-  if (id.startsWith(LAYOUT_DROPZONE_ID_PREFIX)) {
-    return findLayoutComponent(data, id.replace(LAYOUT_DROPZONE_ID_PREFIX, ''));
+  if (id.startsWith(STRUCTURE_DROPZONE_ID_PREFIX)) {
+    return findStructureComponent(data, id.replace(STRUCTURE_DROPZONE_ID_PREFIX, ''));
   }
   if (id.startsWith(TABLE_DROPZONE_ID_PREFIX)) {
     return findTableComponent(data, id.replace(TABLE_DROPZONE_ID_PREFIX, ''));
@@ -32,7 +32,7 @@ const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: Comp
   const index = data.findIndex(obj => obj.id === id);
   if (index < 0) {
     for (const element of data) {
-      if (isLayout(element) || isTable(element)) {
+      if (isTable(element) || isStructure(element)) {
         const find = findComponent(element.config.components, id, element);
         if (find) {
           return find;
@@ -44,13 +44,13 @@ const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: Comp
   return { data, index, parent };
 };
 
-const findLayoutComponent = (data: Array<ComponentData>, id: string) => {
+const findStructureComponent = (data: Array<ComponentData>, id: string) => {
   const find = findComponentDeep(data, id);
   if (find) {
-    const layout = find.data[find.index];
-    if (isLayout(layout)) {
-      const layoutData = layout.config.components;
-      return { data: layoutData, index: layoutData.length };
+    const structure = find.data[find.index];
+    if (isStructure(structure)) {
+      const structureData = structure.config.components;
+      return { data: structureData, index: structureData.length };
     }
   }
   return;
@@ -209,7 +209,7 @@ export const createInitForm = (data: FormData, creates: Array<CreateComponentDat
       type: 'add',
       data: { componentName: 'Layout', create: { label: '', value: '', defaultProps: { type: 'FLEX', justifyContent: 'END' } } }
     });
-    const layoutId = `${LAYOUT_DROPZONE_ID_PREFIX}${newComponentId}`;
+    const layoutId = `${STRUCTURE_DROPZONE_ID_PREFIX}${newComponentId}`;
     data = modifyData(newData, {
       type: 'add',
       data: {

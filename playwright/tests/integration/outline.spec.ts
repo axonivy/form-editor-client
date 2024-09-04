@@ -15,6 +15,8 @@ test('outline', async ({ page }) => {
   await expect(rows[7]).toHaveText('LayoutFLEX');
   await expect(rows[8]).toHaveText('ButtonCancel');
   await expect(rows[9]).toHaveText('ButtonProceed');
+  await expect(rows[10]).toHaveText('FieldsetLegend');
+  await expect(rows[11]).toHaveText('InputTitle');
 });
 
 test('select element', async ({ page }) => {
@@ -28,7 +30,7 @@ test('select element', async ({ page }) => {
 
 test('select node', async ({ page }) => {
   const { editor, outline } = await openOutline(page);
-  await outline.select('Address');
+  await outline.select('Input Address');
   await editor.canvas.blockByText('Address').expectSelected();
 
   await outline.select('Cancel');

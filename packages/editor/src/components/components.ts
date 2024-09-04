@@ -15,6 +15,7 @@ import { DatePickerComponent } from './blocks/datepicker/DatePicker';
 import { TextareaComponent } from './blocks/textarea/Textarea';
 import { DataTableComponent } from './blocks/datatable/DataTable';
 import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
+import { FieldsetComponent } from './blocks/fieldset/Fieldset';
 
 const config: Config = {
   components: {
@@ -30,7 +31,8 @@ const config: Config = {
     Link: LinkComponent,
     Layout: LayoutComponent,
     DataTable: DataTableComponent,
-    DataTableColumn: DataTableColumnComponent
+    DataTableColumn: DataTableColumnComponent,
+    Fieldset: FieldsetComponent
   }
 } as const;
 

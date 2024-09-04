@@ -120,6 +120,30 @@ const data: FormData = {
         type: 'FLEX',
         justifyContent: 'END'
       }
+    },
+    {
+      id: 'Fieldset-dd040544-90c6-47e3-867a-ee310c74391c',
+      type: 'Fieldset',
+      config: {
+        legend: 'Legend',
+        collapsible: true,
+        disabled: false,
+        collapsed: false,
+        components: [
+          {
+            id: 'Input-c1fabd9a-a83c-4a03-af03-2371aae32b4a',
+            type: 'Input',
+            config: {
+              label: 'Title',
+              value: 'data.value',
+              required: true,
+              type: 'TEXT',
+              mdSpan: '6',
+              lgSpan: '8'
+            }
+          }
+        ]
+      }
     }
   ]
 };

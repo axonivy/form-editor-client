@@ -1,11 +1,11 @@
-import { isLayout, isTable, type Component, type ComponentData } from '@axonivy/form-editor-protocol';
+import { isStructure, isTable, type Component, type ComponentData } from '@axonivy/form-editor-protocol';
 import type { Active } from '@dnd-kit/core';
-import { LAYOUT_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
+import { STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
 
 export type DragData = { disabledIds: Array<string> };
 
 const disabledIds = (data: Component | ComponentData): Array<string> => {
-  if (isLayout(data) || isTable(data)) {
+  if (isStructure(data) || isTable(data)) {
     const ids: Array<string> = [];
     for (const component of data.config.components) {
       ids.push(...disabledIds(component));
@@ -32,7 +32,7 @@ export const isDropZoneDisabled = (id: string, active: Active | null, preId?: st
   }
   if (
     dropZoneId === id ||
-    `${LAYOUT_DROPZONE_ID_PREFIX}${dropZoneId}` === id ||
+    `${STRUCTURE_DROPZONE_ID_PREFIX}${dropZoneId}` === id ||
     `${TABLE_DROPZONE_ID_PREFIX}${dropZoneId}` === id ||
     dropZoneId === preId
   ) {

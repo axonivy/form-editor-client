@@ -1,0 +1,22 @@
+fieldset {
+  border: var(--basic-border);
+  color: var(--N900);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+fieldset.collapsible {
+  cursor: pointer;
+}
+
+fieldset.collapsible > legend:before {
+  content: '-';
+  padding: 0 5px 0 0;
+}
+
+legend {
+  border: var(--basic-border);
+  padding: 1rem;
+  font-weight: 700;
+  border-radius: 4px;
+}
