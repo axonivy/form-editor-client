@@ -1,5 +1,5 @@
 import type { Input, InputType, Prettify } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Input.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './Input.svg?react';
@@ -37,7 +37,8 @@ export const InputComponent: ComponentConfig<InputProps> = {
     value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ label, required, value }: UiComponentProps<InputProps>) => (

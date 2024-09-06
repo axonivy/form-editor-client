@@ -25,7 +25,8 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
     header: { subsection: 'General', label: 'Header', type: 'text' },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', options: { onlyAttributes: 'COLUMN' } },
     ...baseComponentFields
-  }
+  },
+  quickActions: ['DELETE', 'DUPLICATE']
 };
 
 const UiBlock = ({ header, value }: UiComponentProps<DataTableColumnProps>) => (

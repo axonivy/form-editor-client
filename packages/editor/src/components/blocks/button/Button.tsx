@@ -1,5 +1,5 @@
 import type { Button, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
 import { IvyIcons } from '@axonivy/ui-icons/lib';
 import { baseComponentFields, defaultBaseComponent } from '../base';
@@ -42,7 +42,8 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
     icon: { subsection: 'General', label: 'Icon', type: 'select', options: iconOptions },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ name, icon, variant }: UiComponentProps<ButtonProps>) => (

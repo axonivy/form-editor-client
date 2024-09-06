@@ -1,5 +1,5 @@
 import type { Prettify, Text, TextType } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Text.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './Text.svg?react';
@@ -31,7 +31,8 @@ export const TextComponent: ComponentConfig<TextProps> = {
     content: { subsection: 'General', label: 'Content', type: 'textarea' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ content }: UiComponentProps<TextProps>) => <p className='block-text'>{content}</p>;

@@ -1,5 +1,5 @@
 import type { Checkbox, Prettify } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Checkbox.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './Checkbox.svg?react';
@@ -27,7 +27,8 @@ export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     selected: { subsection: 'General', label: 'Selected', type: 'textBrowser' },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ label, selected }: UiComponentProps<CheckboxProps>) => (

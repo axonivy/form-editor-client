@@ -1,5 +1,5 @@
 import type { Combobox, Prettify } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Combobox.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './Combobox.svg?react';
@@ -46,7 +46,8 @@ export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
     },
     withDropdown: { subsection: 'Options', label: 'Add Dropdown-Button to Combobox', type: 'checkbox' },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ label, value }: UiComponentProps<ComboboxProps>) => (

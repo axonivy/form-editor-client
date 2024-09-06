@@ -1,5 +1,5 @@
 import type { Textarea, Prettify } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Textarea.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './Textarea.svg?react';
@@ -30,7 +30,8 @@ export const TextareaComponent: ComponentConfig<TextareaProps> = {
     rows: { subsection: 'General', label: 'Visible Rows', type: 'number' },
     autoResize: { subsection: 'General', label: 'Auto Resize', type: 'checkbox' },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ label, value, rows, autoResize }: UiComponentProps<TextareaProps>) => {

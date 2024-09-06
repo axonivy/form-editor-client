@@ -1,5 +1,5 @@
 import type { DatePicker, Prettify } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './DatePicker.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './DatePicker.svg?react';
@@ -38,7 +38,8 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
       hide: data => !data.showTime
     },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ label, value, datePattern, timePattern, showTime }: UiComponentProps<DatePickerProps>) => (
