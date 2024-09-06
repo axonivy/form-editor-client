@@ -88,16 +88,12 @@ const Draggable = ({ config, data }: DraggableProps) => {
           {config.render({ ...elementConfig, id: data.id })}
         </div>
       </PopoverAnchor>
-      {data.type === 'DataTableColumn' ? (
-        <Quickbar deleteAction={deleteElement} />
-      ) : (
-        <Quickbar
-          deleteAction={deleteElement}
-          duplicateAction={duplicateElement}
-          createAction={createElement}
-          createColumnAction={data.type === 'DataTable' ? createColumn : undefined}
-        />
-      )}
+      <Quickbar
+        deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
+        duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
+        createAction={config.quickActions.includes('CREATE') ? createElement : undefined}
+        createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
+      />
     </Popover>
   );
 };

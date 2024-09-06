@@ -87,6 +87,7 @@ export type ComponentConfig<ComponentProps extends DefaultComponentProps = Defau
   outlineInfo: (data: ComponentProps) => string | undefined;
   defaultProps: DefaultProps;
   fields: Fields<ComponentProps>;
+  quickActions: QuickAction[];
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,3 +96,7 @@ export type Config<Props extends { [key: string]: any } = { [key: string]: any }
     [ComponentName in keyof Props]: Omit<ComponentConfig<Props[ComponentName], Props[ComponentName]>, 'type'>;
   };
 };
+
+export type QuickAction = 'DELETE' | 'DUPLICATE' | 'CREATE' | 'CREATECOLUMN';
+
+export const DEFAULT_QUICK_ACTIONS: Array<QuickAction> = ['DELETE', 'DUPLICATE', 'CREATE'] as const;

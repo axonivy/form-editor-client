@@ -1,4 +1,4 @@
-import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Layout.css';
 import type { Layout, LayoutGridVariant, LayoutJustifyContent, LayoutType, Prettify } from '@axonivy/form-editor-protocol';
 import { LAYOUT_DROPZONE_ID_PREFIX } from '../../../data/data';
@@ -62,7 +62,8 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
       hide: data => data.type !== 'GRID'
     },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ id, components, type, justifyContent, gridVariant }: UiComponentProps<LayoutProps>) => {

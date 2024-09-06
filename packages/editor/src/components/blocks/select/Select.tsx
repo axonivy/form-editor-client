@@ -1,5 +1,5 @@
 import type { Prettify, Select } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Select.css';
 import { baseComponentFields, defaultBaseComponent, selectItemsComponentFields } from '../base';
 import IconSvg from './Select.svg?react';
@@ -31,7 +31,8 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   fields: {
     ...selectItemsComponentFields,
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ label, value }: UiComponentProps<SelectProps>) => (

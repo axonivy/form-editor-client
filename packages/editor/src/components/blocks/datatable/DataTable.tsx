@@ -36,7 +36,8 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
     label: { subsection: 'General', label: 'Label', type: 'text' },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', options: { onlyTypesOf: 'List<' } },
     ...baseComponentFields
-  }
+  },
+  quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN']
 };
 
 const UiBlock = ({ id, label, components, value }: UiComponentProps<DataTableProps>) => (

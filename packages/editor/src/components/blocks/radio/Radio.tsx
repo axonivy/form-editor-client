@@ -1,5 +1,5 @@
 import type { Prettify, Radio, OrientationType } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
+import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Radio.css';
 import { baseComponentFields, defaultBaseComponent, selectItemsComponentFields } from '../base';
 import IconSvg from './Radio.svg?react';
@@ -40,7 +40,8 @@ export const RadioComponent: ComponentConfig<RadioProps> = {
     ...selectItemsComponentFields,
     orientation: { subsection: 'General', label: 'Orientation', type: 'select', options: orientationOptions },
     ...baseComponentFields
-  }
+  },
+  quickActions: DEFAULT_QUICK_ACTIONS
 };
 
 const UiBlock = ({ label, staticItems, dynamicItemsList, orientation }: UiComponentProps<RadioProps>) => (
