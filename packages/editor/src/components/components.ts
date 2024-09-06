@@ -13,6 +13,8 @@ import { ComboboxComponent } from './blocks/combobox/Combobox';
 import { RadioComponent } from './blocks/radio/Radio';
 import { DatePickerComponent } from './blocks/datepicker/DatePicker';
 import { TextareaComponent } from './blocks/textarea/Textarea';
+import { DataTableComponent } from './blocks/datatable/DataTable';
+import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
 
 const config: Config = {
   components: {
@@ -26,14 +28,15 @@ const config: Config = {
     Text: TextComponent,
     Button: ButtonComponent,
     Link: LinkComponent,
-    Layout: LayoutComponent
+    Layout: LayoutComponent,
+    DataTable: DataTableComponent,
+    DataTableColumn: DataTableColumnComponent
   }
 } as const;
 
 export const componentByName = (name: AutoCompleteWithString<ComponentType>) => {
   return config.components[name];
 };
-//
 
 export const componentsByCategory = (category: ItemCategory) => {
   const filteredComponents = Object.values(config.components).filter(component => component.category === category);
@@ -41,7 +44,10 @@ export const componentsByCategory = (category: ItemCategory) => {
 };
 
 export const allComponentsByCategory = () => {
-  return groupBy(Object.values(config.components), item => item.category);
+  return groupBy(
+    Object.values(config.components).filter(component => component.category !== 'Hidden'),
+    item => item.category
+  );
 };
 
 export const componentForType = (type: AutoCompleteWithString<ComponentType>) => {

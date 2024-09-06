@@ -2,13 +2,14 @@ import type { ComponentConfig, CreateComponentData, CreateData } from '../types/
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
 import { v4 as uuid } from 'uuid';
-import { isLayout, type ComponentData, type FormData } from '@axonivy/form-editor-protocol';
+import { isLayout, isTable, type ComponentData, type DataTable, type FormData } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
 import type { UpdateConsumer } from '../types/types';
 
 export const CANVAS_DROPZONE_ID = 'canvas';
 export const DELETE_DROPZONE_ID = 'delete';
 export const LAYOUT_DROPZONE_ID_PREFIX = 'layout-';
+export const TABLE_DROPZONE_ID_PREFIX = 'table-';
 
 const findComponent = (
   data: Array<ComponentData>,
@@ -21,6 +22,9 @@ const findComponent = (
   if (id.startsWith(LAYOUT_DROPZONE_ID_PREFIX)) {
     return findLayoutComponent(data, id.replace(LAYOUT_DROPZONE_ID_PREFIX, ''));
   }
+  if (id.startsWith(TABLE_DROPZONE_ID_PREFIX)) {
+    return findTableComponent(data, id.replace(TABLE_DROPZONE_ID_PREFIX, ''));
+  }
   return findComponentDeep(data, id, parent);
 };
 
@@ -28,7 +32,7 @@ const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: Comp
   const index = data.findIndex(obj => obj.id === id);
   if (index < 0) {
     for (const element of data) {
-      if (isLayout(element)) {
+      if (isLayout(element) || isTable(element)) {
         const find = findComponent(element.config.components, id, element);
         if (find) {
           return find;
@@ -50,6 +54,32 @@ const findLayoutComponent = (data: Array<ComponentData>, id: string) => {
     }
   }
   return;
+};
+
+const findTableComponent = (data: Array<ComponentData>, id: string) => {
+  const find = findComponentDeep(data, id);
+  if (find) {
+    const table = find.data[find.index];
+    if (isTable(table)) {
+      const tableData = table.config.components;
+      return { data: tableData, index: tableData.length };
+    }
+  }
+  return;
+};
+
+export const findParentTableComponent = (data: Array<ComponentData>, element: ComponentData | undefined): DataTable | undefined => {
+  for (const component of data) {
+    if (component.type === 'DataTable') {
+      const hasMatchingColumn = (component.config as unknown as DataTable).components.some(
+        childComponent => childComponent.id === element?.id
+      );
+      if (hasMatchingColumn) {
+        return component.config as unknown as DataTable;
+      }
+    }
+  }
+  return undefined;
 };
 
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {
@@ -89,7 +119,7 @@ type ModifyAction =
         create?: CreateData;
       };
     }
-  | { type: 'add'; data: { componentName: string; create?: CreateData; targetId?: string } }
+  | { type: 'add'; data: { componentName: string; create?: CreateData; targetId?: string }; insideTable?: boolean }
   | { type: 'duplicate' | 'remove' | 'moveUp' | 'moveDown'; data: { id: string } };
 
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
@@ -158,6 +188,16 @@ export const findComponentElement = (data: FormData, id: string) => {
     return { element: find.data[find.index], parent: find.parent };
   }
   return;
+};
+
+export const createInitiTableColumns = (id: string, data: FormData, creates: Array<CreateComponentData>) => {
+  creates.forEach(create => {
+    data = modifyData(data, {
+      type: 'add',
+      data: { componentName: 'DataTableColumn', targetId: TABLE_DROPZONE_ID_PREFIX + id, create }
+    }).newData;
+  });
+  return data;
 };
 
 export const createInitForm = (data: FormData, creates: Array<CreateComponentData>, workflowButtons: boolean) => {

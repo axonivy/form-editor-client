@@ -1,0 +1,32 @@
+.block-table {
+  gap: var(--size-4);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.block-table__label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.block-table__columns {
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-1);
+}
+
+.block-table > div:not(.block-table__label) {
+  border: var(--layout-border-size, 1.5px) solid var(--N100);
+  border-radius: var(--border-r2);
+}
+
+.block-table > div > div {
+  border: none;
+}
+
+.selected > .block-table > div:not(.block-table__label) {
+  border: var(--layout-border-size, 1.5px) dashed var(--P75);
+}

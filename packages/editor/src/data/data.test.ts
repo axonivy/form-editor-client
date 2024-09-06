@@ -1,5 +1,5 @@
-import { EMPTY_FORM, type ComponentData, type FormData, isLayout, type LayoutConfig } from '@axonivy/form-editor-protocol';
-import { createInitForm, DELETE_DROPZONE_ID, findComponentElement, modifyData } from './data';
+import { EMPTY_FORM, type ComponentData, type FormData, isLayout, type LayoutConfig, type DataTable } from '@axonivy/form-editor-protocol';
+import { createInitForm, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
 import type { DeepPartial } from '../types/types';
 
 describe('findComponentElement', () => {
@@ -191,6 +191,46 @@ describe('createInitForm', () => {
     expect(layout.config.components).toHaveLength(2);
     expect(layout.config.components[0].config.action).toEqual('#{ivyWorkflowView.cancel()}');
     expect(layout.config.components[1].config.action).toEqual('#{logic.close}');
+  });
+});
+
+describe('findParentTableComponent', () => {
+  const dataTable: DeepPartial<DataTable> = {
+    components: [
+      { id: 'column-1', type: 'DataTableColumn', config: {} },
+      { id: 'column-2', type: 'DataTableColumn', config: {} }
+    ]
+  };
+
+  const data: ComponentData[] = [
+    {
+      id: '3',
+      type: 'DataTable',
+      config: { components: dataTable.components as ComponentData[] }
+    }
+  ];
+
+  test('return DataTable containing the element', () => {
+    const element: ComponentData = { id: 'column-1', type: 'DataTableColumn', config: {} };
+    expect(findParentTableComponent(data, element)).toEqual(dataTable);
+  });
+
+  test('return undefined if element is no Column', () => {
+    const element: ComponentData = { id: 'button', type: 'Button', config: {} };
+    expect(findParentTableComponent(data, element)).toBeUndefined();
+  });
+
+  test('return undefined if the element is undefined', () => {
+    expect(findParentTableComponent(data, undefined)).toBeUndefined();
+  });
+
+  test('return undefined if there are no DataTable components', () => {
+    const noTableData: ComponentData[] = [
+      { id: '1', type: 'Input', config: {} },
+      { id: '2', type: 'Button', config: {} }
+    ];
+    const element: ComponentData = { id: 'column-1', type: 'DataTableColumn', config: {} };
+    expect(findParentTableComponent(noTableData, element)).toBeUndefined();
   });
 });
 

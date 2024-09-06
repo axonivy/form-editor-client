@@ -33,9 +33,11 @@ export type TextFieldOptions = {
   placeholder?: string;
 };
 
+export type onlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
+
 export type TextBrowserFieldOptions = TextFieldOptions & {
   onlyTypesOf?: string;
-  onlyAttributes?: boolean;
+  onlyAttributes?: onlyAttributeSelection;
 };
 
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
@@ -71,7 +73,7 @@ export type Fields<ComponentProps extends DefaultComponentProps = DefaultCompone
   [PropName in keyof Omit<Required<ComponentProps>, 'children'>]: Field<ComponentProps>;
 };
 
-export type ItemCategory = 'Elements' | 'Structure' | 'Action';
+export type ItemCategory = 'Elements' | 'Structure' | 'Action' | 'Hidden';
 export type ItemSubcategory = 'General' | 'Input' | 'Selection' | 'Text';
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {

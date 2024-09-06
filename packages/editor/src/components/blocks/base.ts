@@ -45,7 +45,7 @@ export const selectItemsComponentFields: Fields<SelectItemsProps> = {
     label: 'Object Label',
     type: 'textBrowser',
     options: {
-      onlyAttributes: true,
+      onlyAttributes: 'DYNAMICLIST',
       placeholder: 'Enter attribute (or leave blank to select entire object)'
     },
     hide: data => data.dynamicItemsList.length == 0
@@ -55,7 +55,7 @@ export const selectItemsComponentFields: Fields<SelectItemsProps> = {
     label: 'Object Value',
     type: 'textBrowser',
     options: {
-      onlyAttributes: true,
+      onlyAttributes: 'DYNAMICLIST',
       placeholder: 'Enter attribute (or leave blank to select entire object)'
     },
     hide: data => data.dynamicItemsList.length == 0
