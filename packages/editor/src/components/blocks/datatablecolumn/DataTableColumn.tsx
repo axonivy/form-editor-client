@@ -1,14 +1,12 @@
-import type { DataTableColumn, Prettify } from '@axonivy/form-editor-protocol';
+import type { DataTableColumnConfig, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
-import { baseComponentFields, defaultBaseComponent } from '../base';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@axonivy/ui-components';
 
-type DataTableColumnProps = Prettify<DataTableColumn>;
+type DataTableColumnProps = Prettify<DataTableColumnConfig>;
 
-export const defaultDataTableColumnProps: DataTableColumn = {
+export const defaultDataTableColumnProps: DataTableColumnConfig = {
   header: 'header',
-  value: 'value',
-  ...defaultBaseComponent
+  value: 'value'
 } as const;
 
 export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
@@ -23,8 +21,7 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
   outlineInfo: component => component.header,
   fields: {
     header: { subsection: 'General', label: 'Header', type: 'text' },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', options: { onlyAttributes: 'COLUMN' } },
-    ...baseComponentFields
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', options: { onlyAttributes: 'COLUMN' } }
   },
   quickActions: ['DELETE', 'DUPLICATE']
 };

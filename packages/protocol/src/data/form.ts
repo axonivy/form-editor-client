@@ -7,12 +7,12 @@
  */
 
 export type ButtonVariant = ("PRIMARY" | "SECONDARY" | "DANGER")
-export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
-export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
-export type LayoutJustifyContent = "NORMAL" | "END";
-export type LayoutType = "GRID" | "FLEX";
-export type OrientationType = "horizontal" | "vertical";
-export type TextType = "RAW" | "MARKDOWN";
+export type InputType = 'TEXT' | 'EMAIL' | 'PASSWORD' | 'NUMBER';
+export type LayoutGridVariant = 'GRID2' | 'GRID4' | 'FREE';
+export type LayoutJustifyContent = 'NORMAL' | 'END';
+export type LayoutType = 'GRID' | 'FLEX';
+export type OrientationType = 'horizontal' | 'vertical';
+export type TextType = 'RAW' | 'MARKDOWN';
 
 export interface Form {
   $schema: string;
@@ -27,33 +27,19 @@ export interface FormConfig {
 export interface Component {
   id: string;
   type:
-    | "Button"
-    | "Checkbox"
-    | "Combobox"
-    | "DataTable"
-    | "DataTableColumn"
-    | "DatePicker"
-    | "Input"
-    | "Layout"
-    | "Link"
-    | "Radio"
-    | "Select"
-    | "Text"
-    | "Textarea";
-  config:
-    | Button
-    | Checkbox
-    | Combobox
-    | DataTable
-    | DataTableColumn
-    | DatePicker
-    | Input
-    | Layout
-    | Link
-    | Radio
-    | Select
-    | Text
-    | Textarea;
+    | 'Button'
+    | 'Checkbox'
+    | 'Combobox'
+    | 'DataTable'
+    | 'DatePicker'
+    | 'Input'
+    | 'Layout'
+    | 'Link'
+    | 'Radio'
+    | 'Select'
+    | 'Text'
+    | 'Textarea';
+  config: Button | Checkbox | Combobox | DataTable | DatePicker | Input | Layout | Link | Radio | Select | Text | Textarea;
 }
 export interface Button {
   action: string;
@@ -80,16 +66,19 @@ export interface Combobox {
   withDropdown: boolean;
 }
 export interface DataTable {
-  components: Component[];
+  components: DataTableColumn[];
   label: string;
   lgSpan: string;
   mdSpan: string;
   value: string;
 }
 export interface DataTableColumn {
+  id: string;
+  type: 'DataTableColumn';
+  config: DataTableColumnConfig;
+}
+export interface DataTableColumnConfig {
   header: string;
-  lgSpan: string;
-  mdSpan: string;
   value: string;
 }
 export interface DatePicker {
