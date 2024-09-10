@@ -10,13 +10,12 @@ import type {
 import {
   BaseRpcClient,
   urlBuilder,
-  createWebSocketConnection,
   createMessageConnection,
   Emitter,
   type Connection,
-  type Disposable
+  type Disposable,
+  type MessageConnection
 } from '@axonivy/jsonrpc';
-import type { MessageConnection } from 'vscode-jsonrpc';
 
 export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
   protected onDataChangedEmitter = new Emitter<void>();
@@ -48,12 +47,6 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
 
   onNotification<K extends keyof FormNotificationTypes>(kind: K, listener: (args: FormNotificationTypes[K]) => any): Disposable {
     return this.connection.onNotification(kind, listener);
-  }
-
-  public static async startWebSocketClient(url: string): Promise<FormClientJsonRpc> {
-    const webSocketUrl = urlBuilder(url, 'ivy-form-lsp');
-    const connection = await createWebSocketConnection(webSocketUrl);
-    return FormClientJsonRpc.startClient(connection);
   }
 
   public static webSocketUrl(url: string) {
