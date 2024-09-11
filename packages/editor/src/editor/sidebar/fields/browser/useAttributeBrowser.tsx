@@ -6,11 +6,11 @@ import { useCallback, useEffect, useState } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../../context/AppContext';
 import { findParentTableComponent, useData } from '../../../../data/data';
-import type { onlyAttributeSelection } from '../../../../types/config';
+import type { OnlyAttributeSelection } from '../../../../types/config';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute' as const;
 
-export const useAttributeBrowser = (onlyAttributesFor?: onlyAttributeSelection, onlyTypesOf?: string): Browser => {
+export const useAttributeBrowser = (onlyAttributesFor?: OnlyAttributeSelection, onlyTypesOf?: string): Browser => {
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const { context } = useAppContext();
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;

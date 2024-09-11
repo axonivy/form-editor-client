@@ -30,8 +30,8 @@ export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
   outlineInfo: component => component.label,
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
-    completeMethod: { subsection: 'Options', label: 'Complete Method', type: 'text' },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+    completeMethod: { subsection: 'Options', label: 'Complete Method', type: 'textBrowser', browsers: ['LOGIC'] },
     itemLabel: {
       subsection: 'Options',
       label: 'Item Label',

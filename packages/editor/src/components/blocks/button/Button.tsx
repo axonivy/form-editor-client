@@ -38,7 +38,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   outlineInfo: component => component.name,
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
-    action: { subsection: 'General', label: 'Action', type: 'text' },
+    action: { subsection: 'General', label: 'Action', type: 'textBrowser', browsers: ['LOGIC'] },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
     icon: { subsection: 'General', label: 'Icon', type: 'select', options: iconOptions },
     ...baseComponentFields

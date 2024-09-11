@@ -33,11 +33,12 @@ export type TextFieldOptions = {
   placeholder?: string;
 };
 
-export type onlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
+export type OnlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
+export type Browser = 'ATTRIBUTE' | 'LOGIC' | 'CMS';
 
 export type TextBrowserFieldOptions = TextFieldOptions & {
   onlyTypesOf?: string;
-  onlyAttributes?: onlyAttributeSelection;
+  onlyAttributes?: OnlyAttributeSelection;
 };
 
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
@@ -47,6 +48,7 @@ export type TextField<ComponentProps extends DefaultComponentProps = DefaultComp
 
 export type TextBrowserField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'textBrowser';
+  browsers: Browser[];
   options?: TextBrowserFieldOptions;
 };
 

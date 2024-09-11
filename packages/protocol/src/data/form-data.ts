@@ -59,3 +59,25 @@ export interface Variable {
   simpleType: string;
   type: string;
 }
+
+export interface LogicInfo {
+  startMethods: LogicMethodInfo[];
+  eventStarts: LogicEventInfo[];
+}
+
+export interface LogicMethodInfo {
+  name: string;
+  description: string;
+  parameters: Parameter[];
+  returnParameter: Parameter;
+}
+
+export interface LogicEventInfo {
+  name: string;
+  description: string;
+}
+
+export interface Parameter {
+  name: string;
+  type: string;
+}
