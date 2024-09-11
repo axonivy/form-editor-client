@@ -3,17 +3,22 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useState } from 'react';
 import { useAttributeBrowser } from './browser/useAttributeBrowser';
 import type { InputFieldProps } from './InputField';
-import type { TextBrowserFieldOptions } from '../../../types/config';
+import type { Browser, TextBrowserFieldOptions } from '../../../types/config';
+import { useLogicBrowser } from './browser/useLogicBrowser';
 
 export const InputFieldWithBrowser = ({
   label,
   value,
   onChange,
+  browsers,
   onBlur,
   options
-}: InputFieldProps & { options?: TextBrowserFieldOptions }) => {
+}: InputFieldProps & { browsers: Browser[]; options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
   const attrBrowser = useAttributeBrowser(options?.onlyAttributes, options?.onlyTypesOf);
+  const logicBrowser = useLogicBrowser();
+
+  const activeBrowsers = [...(browsers.includes('ATTRIBUTE') ? [attrBrowser] : []), ...(browsers.includes('LOGIC') ? [logicBrowser] : [])];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -27,7 +32,7 @@ export const InputFieldWithBrowser = ({
       </Fieldset>
       <DialogContent style={{ height: '80vh' }}>
         <BrowsersView
-          browsers={[attrBrowser]}
+          browsers={activeBrowsers}
           apply={(browserName, result) => {
             if (result) {
               onChange(options?.onlyAttributes ? `${result.value}` : `#{${result.value}}`);

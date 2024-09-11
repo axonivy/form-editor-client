@@ -34,7 +34,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
   fields: {
     components: { subsection: 'General', type: 'hidden' },
     label: { subsection: 'General', label: 'Label', type: 'text' },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', options: { onlyTypesOf: 'List<' } },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'], options: { onlyTypesOf: 'List<' } },
     ...baseComponentFields
   },
   quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN']

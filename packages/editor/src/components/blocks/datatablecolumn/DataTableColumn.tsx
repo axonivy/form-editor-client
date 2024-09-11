@@ -23,7 +23,7 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
   outlineInfo: component => component.header,
   fields: {
     header: { subsection: 'General', label: 'Header', type: 'text' },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', options: { onlyAttributes: 'COLUMN' } },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'], options: { onlyAttributes: 'COLUMN' } },
     ...baseComponentFields
   },
   quickActions: ['DELETE', 'DUPLICATE']

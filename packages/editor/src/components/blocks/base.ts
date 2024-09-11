@@ -32,18 +32,20 @@ export const baseComponentFields: Fields<BaseComponentProps> = {
 
 export const selectItemsComponentFields: Fields<SelectItemsProps> = {
   label: { subsection: 'General', label: 'Label', type: 'text' },
-  value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
+  value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
   staticItems: { subsection: 'Static Options', label: 'Options', type: 'selectTable' },
   dynamicItemsList: {
     subsection: 'Dynamic Options',
     label: 'List of Objects',
     type: 'textBrowser',
+    browsers: ['ATTRIBUTE'],
     options: { onlyTypesOf: 'List<', placeholder: 'e.g. #{data.dynamicList}' }
   },
   dynamicItemsLabel: {
     subsection: 'Dynamic Options',
     label: 'Object Label',
     type: 'textBrowser',
+    browsers: ['ATTRIBUTE'],
     options: {
       onlyAttributes: 'DYNAMICLIST',
       placeholder: 'Enter attribute (or leave blank to select entire object)'
@@ -54,6 +56,7 @@ export const selectItemsComponentFields: Fields<SelectItemsProps> = {
     subsection: 'Dynamic Options',
     label: 'Object Value',
     type: 'textBrowser',
+    browsers: ['ATTRIBUTE'],
     options: {
       onlyAttributes: 'DYNAMICLIST',
       placeholder: 'Enter attribute (or leave blank to select entire object)'

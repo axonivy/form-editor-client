@@ -26,7 +26,7 @@ export const TextareaComponent: ComponentConfig<TextareaProps> = {
   outlineInfo: component => component.label,
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'text' },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser' },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     rows: { subsection: 'General', label: 'Visible Rows', type: 'number' },
     autoResize: { subsection: 'General', label: 'Auto Resize', type: 'checkbox' },
     ...baseComponentFields
