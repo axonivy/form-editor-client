@@ -1,10 +1,11 @@
 import { BrowsersView, Button, Dialog, DialogContent, DialogTrigger, Fieldset, Input, InputGroup } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useAttributeBrowser } from './browser/useAttributeBrowser';
 import type { InputFieldProps } from './InputField';
 import type { Browser, TextBrowserFieldOptions } from '../../../types/config';
 import { useLogicBrowser } from './browser/useLogicBrowser';
+import { focusBracketContent } from '../../../utils/focus';
 
 export const InputFieldWithBrowser = ({
   label,
@@ -15,6 +16,7 @@ export const InputFieldWithBrowser = ({
   options
 }: InputFieldProps & { browsers: Browser[]; options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const attrBrowser = useAttributeBrowser(options?.onlyAttributes, options?.onlyTypesOf);
   const logicBrowser = useLogicBrowser();
 
@@ -24,13 +26,13 @@ export const InputFieldWithBrowser = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <Fieldset label={label}>
         <InputGroup>
-          <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
+          <Input ref={inputRef} value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
           <DialogTrigger asChild>
             <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
           </DialogTrigger>
         </InputGroup>
       </Fieldset>
-      <DialogContent style={{ height: '80vh' }}>
+      <DialogContent style={{ height: '80vh' }} onCloseAutoFocus={e => focusBracketContent(e, value, inputRef.current)}>
         <BrowsersView
           browsers={activeBrowsers}
           apply={(browserName, result) => {
