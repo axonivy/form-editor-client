@@ -1,14 +1,13 @@
-import type { DataTableColumn, Prettify } from '@axonivy/form-editor-protocol';
+import type { DataTableColumnConfig, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
-import { baseComponentFields, defaultBaseComponent } from '../base';
+import { baseComponentFields } from '../base';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@axonivy/ui-components';
 
-type DataTableColumnProps = Prettify<DataTableColumn>;
+type DataTableColumnProps = Prettify<DataTableColumnConfig>;
 
-export const defaultDataTableColumnProps: DataTableColumn = {
+export const defaultDataTableColumnProps: DataTableColumnConfig = {
   header: 'header',
-  value: 'value',
-  ...defaultBaseComponent
+  value: 'value'
 } as const;
 
 export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
@@ -38,7 +37,7 @@ const UiBlock = ({ header, value }: UiComponentProps<DataTableColumnProps>) => (
     </TableHeader>
     <TableBody>
       <TableRow>
-        <TableCell>{value}</TableCell>
+        <TableCell>{value.length === 0 ? 'Use entire Object' : value}</TableCell>
       </TableRow>
     </TableBody>
   </Table>

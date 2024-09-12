@@ -7,7 +7,7 @@ import { LinkComponent } from './blocks/link/Link';
 import { TextComponent } from './blocks/text/Text';
 import { CheckboxComponent } from './blocks/checkbox/Checkbox';
 import { SelectComponent } from './blocks/select/Select';
-import type { ComponentType } from '@axonivy/form-editor-protocol';
+import type { ComponentData, ComponentType } from '@axonivy/form-editor-protocol';
 import type { AutoCompleteWithString } from '../types/types';
 import { ComboboxComponent } from './blocks/combobox/Combobox';
 import { RadioComponent } from './blocks/radio/Radio';
@@ -16,6 +16,7 @@ import { TextareaComponent } from './blocks/textarea/Textarea';
 import { DataTableComponent } from './blocks/datatable/DataTable';
 import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
 import { FieldsetComponent } from './blocks/fieldset/Fieldset';
+import { findParentTableComponent } from '../data/data';
 
 const config: Config = {
   components: {
@@ -35,6 +36,14 @@ const config: Config = {
     Fieldset: FieldsetComponent
   }
 } as const;
+
+export const componentByElement = (element: ComponentData, data: Array<ComponentData>) => {
+  const component = componentByName(element.type);
+  if (component === undefined && findParentTableComponent(data, element)) {
+    return componentByName('DataTableColumn');
+  }
+  return component;
+};
 
 export const componentByName = (name: AutoCompleteWithString<ComponentType>) => {
   return config.components[name];

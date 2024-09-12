@@ -1,4 +1,4 @@
-import type { DataTable, Prettify } from '@axonivy/form-editor-protocol';
+import type { DataTable, DataTableColumnComponent, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './DataTable.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
@@ -48,9 +48,10 @@ const UiBlock = ({ id, label, components, value }: UiComponentProps<DataTablePro
     </div>
     {components.length > 0 && (
       <div className='block-table__columns'>
-        {components.map((column, index) => (
-          <ComponentBlock key={column.id} component={column} preId={components[index - 1]?.id} />
-        ))}
+        {components.map((column, index) => {
+          const columnComponent: DataTableColumnComponent = { ...column, type: 'DataTableColumn' };
+          return <ComponentBlock key={column.id} component={columnComponent} preId={components[index - 1]?.id} />;
+        })}
       </div>
     )}
     {components.length === 0 && <EmptyDataTableColumn id={id} initValue={value} />}
@@ -67,8 +68,10 @@ const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string
 
   const createColumns = () => {
     const tree = findAttributesOfType(dataClass, initValue);
+    const isLeafNode = tree[0].children.length === 0;
+    const mappableBrowserNode = isLeafNode ? tree : tree[0].children;
     setData(data => {
-      const creates = tree[0].children
+      const creates = mappableBrowserNode
         .map(attribute => {
           const component = componentByName('DataTableColumn');
           if (component === undefined) {
@@ -76,8 +79,8 @@ const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string
           }
           return {
             componentName: component.name,
-            label: attribute.value,
-            value: attribute.value
+            label: isLeafNode && attribute.data ? attribute.data.attribute : attribute.value,
+            value: isLeafNode ? '' : attribute.value
           };
         })
         .filter(create => create !== undefined);

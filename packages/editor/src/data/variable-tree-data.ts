@@ -126,7 +126,7 @@ export function findAttributesOfType(data: VariableInfo, variableName: string, m
           value: 'Use entire Object',
           info: extractedType,
           icon: IvyIcons.Attribute,
-          data: undefined,
+          data: { attribute: nameToSearch, description: '', simpleType: extractedType, type: extractedType },
           children,
           isLoaded: true
         }
