@@ -1,4 +1,4 @@
-import { type ComponentData, isLayout } from '@axonivy/form-editor-protocol';
+import { type ComponentData, isStructure } from '@axonivy/form-editor-protocol';
 import { type OutlineNode, Outline } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { componentByName } from '../../components/components';
@@ -20,7 +20,7 @@ const toOutlineNodes = (components: Array<ComponentData>): Array<OutlineNode> =>
   components.map<OutlineNode>(component => {
     const config = componentByName(component.type);
     let children: Array<OutlineNode> = [];
-    if (isLayout(component)) {
+    if (isStructure(component)) {
       children = toOutlineNodes(component.config.components);
     }
     return {

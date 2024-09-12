@@ -1,4 +1,11 @@
-import { EMPTY_FORM, type ComponentData, type FormData, isLayout, type LayoutConfig, type DataTable } from '@axonivy/form-editor-protocol';
+import {
+  EMPTY_FORM,
+  type ComponentData,
+  type FormData,
+  type LayoutConfig,
+  type DataTable,
+  isStructure
+} from '@axonivy/form-editor-protocol';
 import { createInitForm, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
 import type { DeepPartial } from '../types/types';
 
@@ -6,6 +13,7 @@ describe('findComponentElement', () => {
   test('find', () => {
     const data = filledData();
     expect(findComponentElement(data, '3')).to.deep.equals({ element: data.components[2], parent: undefined });
+    expect(findComponentElement(data, '4')).to.deep.equals({ element: data.components[3], parent: undefined });
     expect(findComponentElement(data, '5')).to.deep.equals(undefined);
   });
 
@@ -15,6 +23,12 @@ describe('findComponentElement', () => {
       // @ts-ignore
       element: data.components[2].config.components[0],
       parent: data.components[2]
+    });
+
+    expect(findComponentElement(data, '41')).to.deep.equals({
+      // @ts-ignore
+      element: data.components[3].config.components[0],
+      parent: data.components[3]
     });
     expect(findComponentElement(data, '35')).to.deep.equals(undefined);
   });
@@ -57,59 +71,60 @@ describe('modifyData', () => {
 
     test('move down', () => {
       const data = filledData();
-      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: '2' } }).newData, ['1', '2', '3']);
-      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: '3' } }).newData, ['2', '1', '3']);
-      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: '4' } }).newData, ['2', '3', '1']);
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: '2' } }).newData, ['1', '2', '3', '4']);
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: '3' } }).newData, ['2', '1', '3', '4']);
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: '4' } }).newData, ['2', '3', '1', '4']);
     });
 
     test('move down deep', () => {
       const data = modifyData(filledData(), { type: 'dnd', data: { activeId: '31', targetId: '33' } }).newData;
-      expectOrder(data, ['1', '2', '3']);
+      expectOrder(data, ['1', '2', '3', '4']);
       expectOrderDeep(data, '3', ['32', '31', '33']);
     });
 
     test('move up', () => {
       const data = filledData();
-      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '3', targetId: '3' } }).newData, ['1', '2', '3']);
-      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '3', targetId: '2' } }).newData, ['1', '3', '2']);
-      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '3', targetId: '1' } }).newData, ['3', '1', '2']);
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '3', targetId: '3' } }).newData, ['1', '2', '4', '3']);
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '3', targetId: '2' } }).newData, ['1', '3', '2', '4']);
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '3', targetId: '1' } }).newData, ['3', '1', '2', '4']);
     });
 
     test('move up deep', () => {
       const data = modifyData(filledData(), { type: 'dnd', data: { activeId: '33', targetId: '32' } }).newData;
-      expectOrder(data, ['1', '2', '3']);
+      expectOrder(data, ['1', '2', '3', '4']);
       expectOrderDeep(data, '3', ['31', '33', '32']);
     });
 
     test('move down to deep', () => {
       const data = modifyData(filledData(), { type: 'dnd', data: { activeId: '1', targetId: '32' } }).newData;
-      expectOrder(data, ['2', '3']);
+      expectOrder(data, ['2', '3', '4']);
       expectOrderDeep(data, '3', ['31', '1', '32', '33']);
     });
 
     test('move up from deep', () => {
       const data = modifyData(filledData(), { type: 'dnd', data: { activeId: '32', targetId: '2' } }).newData;
-      expectOrder(data, ['1', '32', '2', '3']);
+      expectOrder(data, ['1', '32', '2', '3', '4']);
       expectOrderDeep(data, '3', ['31', '33']);
     });
 
     test('move to delete', () => {
       const data = filledData();
-      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: DELETE_DROPZONE_ID } }).newData, ['2', '3']);
+      expectOrder(modifyData(data, { type: 'dnd', data: { activeId: '1', targetId: DELETE_DROPZONE_ID } }).newData, ['2', '3', '4']);
     });
   });
 
   describe('remove', () => {
     test('remove', () => {
       const data = filledData();
-      expectOrder(modifyData(data, { type: 'remove', data: { id: '1' } }).newData, ['2', '3']);
-      expectOrder(modifyData(data, { type: 'remove', data: { id: '2' } }).newData, ['1', '3']);
-      expectOrder(modifyData(data, { type: 'remove', data: { id: '3' } }).newData, ['1', '2']);
+      expectOrder(modifyData(data, { type: 'remove', data: { id: '1' } }).newData, ['2', '3', '4']);
+      expectOrder(modifyData(data, { type: 'remove', data: { id: '2' } }).newData, ['1', '3', '4']);
+      expectOrder(modifyData(data, { type: 'remove', data: { id: '3' } }).newData, ['1', '2', '4']);
+      expectOrder(modifyData(data, { type: 'remove', data: { id: '4' } }).newData, ['1', '2', '3']);
     });
 
     test('remove deep', () => {
       const removeDeep = modifyData(filledData(), { type: 'remove', data: { id: '32' } }).newData;
-      expectOrder(removeDeep, ['1', '2', '3']);
+      expectOrder(removeDeep, ['1', '2', '3', '4']);
       expectOrderDeep(removeDeep, '3', ['31', '33']);
     });
   });
@@ -128,15 +143,15 @@ describe('modifyData', () => {
     test('duplicate', () => {
       const data = modifyData(filledData(), { type: 'duplicate', data: { id: '1' } }).newData;
       expect(data).not.toEqual(filledData());
-      expect(data.components).toHaveLength(4);
+      expect(data.components).toHaveLength(5);
       expect(data.components[0].id).toMatch(/Input-/);
     });
 
     test('duplicate deep', () => {
       const data = modifyData(filledData(), { type: 'duplicate', data: { id: '32' } }).newData;
-      expect(data.components).toHaveLength(3);
+      expect(data.components).toHaveLength(4);
       const component = data.components.find(c => c.id === '31');
-      if (component && isLayout(component)) {
+      if (component && isStructure(component)) {
         expect(component.config.components).toHaveLength(4);
         expect(component.config.components[1].id).toMatch(/Text-/);
         expect(component.config.components[1].config.content).toEqual('Hello');
@@ -147,7 +162,7 @@ describe('modifyData', () => {
   describe('move', () => {
     test('down', () => {
       const data = filledData();
-      expectOrder(modifyData(data, { type: 'moveDown', data: { id: '2' } }).newData, ['1', '3', '2']);
+      expectOrder(modifyData(data, { type: 'moveDown', data: { id: '2' } }).newData, ['1', '3', '2', '4']);
     });
 
     test('down deep', () => {
@@ -157,7 +172,7 @@ describe('modifyData', () => {
 
     test('up', () => {
       const data = filledData();
-      expectOrder(modifyData(data, { type: 'moveUp', data: { id: '2' } }).newData, ['2', '1', '3']);
+      expectOrder(modifyData(data, { type: 'moveUp', data: { id: '2' } }).newData, ['2', '1', '3', '4']);
     });
 
     test('up deep', () => {
@@ -167,8 +182,8 @@ describe('modifyData', () => {
 
     test('first and last', () => {
       const data = filledData();
-      expectOrder(modifyData(data, { type: 'moveUp', data: { id: '1' } }).newData, ['1', '2', '3']);
-      expectOrder(modifyData(data, { type: 'moveDown', data: { id: '3' } }).newData, ['1', '2', '3']);
+      expectOrder(modifyData(data, { type: 'moveUp', data: { id: '1' } }).newData, ['1', '2', '3', '4']);
+      expectOrder(modifyData(data, { type: 'moveDown', data: { id: '3' } }).newData, ['1', '2', '4', '3']);
     });
   });
 });
@@ -253,12 +268,28 @@ const filledData = () => {
             { id: '33', type: 'Input', config: {} }
           ]
         }
+      },
+      {
+        id: '4',
+        type: 'Fieldset',
+        config: {
+          legend: 'Legend',
+          collapsible: true,
+          disabled: false,
+          collapsed: false,
+          components: [
+            { id: '41', type: 'Text', config: { content: 'Hello' } },
+            { id: '42', type: 'Button', config: {} },
+            { id: '43', type: 'Input', config: {} }
+          ]
+        }
       }
     ]
   };
   const filledData = prefilledData as FormData;
-  expectOrder(filledData, ['1', '2', '3']);
+  expectOrder(filledData, ['1', '2', '3', '4']);
   expectOrderDeep(filledData, '3', ['31', '32', '33']);
+  expectOrderDeep(filledData, '4', ['41', '42', '43']);
   return filledData;
 };
 
@@ -268,7 +299,7 @@ const expectOrder = (data: FormData, order: string[]) => {
 
 const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
   const component = data.components.find(c => c.id === deepId);
-  if (component && isLayout(component)) {
+  if (component && isStructure(component)) {
     expect(component.config.components.map(c => c.id)).to.eql(order);
   }
 };

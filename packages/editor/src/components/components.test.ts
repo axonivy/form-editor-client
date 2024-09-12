@@ -22,7 +22,7 @@ test('allComponentsByCategory', () => {
   const result = allComponentsByCategory();
   expect(result.Action).toHaveLength(2);
   expect(result.Elements).toHaveLength(9);
-  expect(result.Structure).toHaveLength(1);
+  expect(result.Structure).toHaveLength(2);
 });
 
 test('componentForType', () => {
