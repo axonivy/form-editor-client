@@ -1,9 +1,9 @@
-import type { ComponentType, PrimitiveValue } from '@axonivy/form-editor-protocol';
+import type { ComponentType, ConfigData, PrimitiveValue } from '@axonivy/form-editor-protocol';
 import type { ReactNode } from 'react';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
 
-export type DefaultComponentProps = { [key: string]: PrimitiveValue | unknown[] };
+export type DefaultComponentProps = ConfigData;
 
 type UiComponent<Props extends DefaultComponentProps = DefaultComponentProps> = (props: UiComponentProps<Props>) => JSX.Element;
 

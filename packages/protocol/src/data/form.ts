@@ -7,12 +7,12 @@
  */
 
 export type ButtonVariant = ("PRIMARY" | "SECONDARY" | "DANGER")
-export type InputType = 'TEXT' | 'EMAIL' | 'PASSWORD' | 'NUMBER';
-export type LayoutGridVariant = 'GRID2' | 'GRID4' | 'FREE';
-export type LayoutJustifyContent = 'NORMAL' | 'END';
-export type LayoutType = 'GRID' | 'FLEX';
-export type OrientationType = 'horizontal' | 'vertical';
-export type TextType = 'RAW' | 'MARKDOWN';
+export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
+export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
+export type LayoutJustifyContent = "NORMAL" | "END";
+export type LayoutType = "GRID" | "FLEX";
+export type OrientationType = "horizontal" | "vertical";
+export type TextType = "RAW" | "MARKDOWN";
 
 export interface Form {
   $schema: string;
@@ -27,21 +27,35 @@ export interface FormConfig {
 export interface Component {
   id: string;
   type:
-    | 'Button'
-    | 'Checkbox'
-    | 'Combobox'
-    | 'DataTable'
-    | 'DataTableColumn'
-    | 'DatePicker'
-    | 'Input'
-    | 'Layout'
-    | 'Link'
-    | 'Radio'
-    | 'Select'
-    | 'Text'
-    | 'Textarea'
-    | 'Fieldset';
-  config: Button | Checkbox | Combobox | DataTable | DatePicker | Input | Layout | Link | Radio | Select | Text | Textarea | Fieldset;
+    | "Button"
+    | "Checkbox"
+    | "Combobox"
+    | "Composite"
+    | "DataTable"
+    | "DatePicker"
+    | "Fieldset"
+    | "Input"
+    | "Layout"
+    | "Link"
+    | "Radio"
+    | "Select"
+    | "Text"
+    | "Textarea";
+  config:
+    | Button
+    | Checkbox
+    | Combobox
+    | Composite
+    | DataTable
+    | DatePicker
+    | Fieldset
+    | Input
+    | Layout
+    | Link
+    | Radio
+    | Select
+    | Text
+    | Textarea;
 }
 export interface Button {
   action: string;
@@ -67,6 +81,16 @@ export interface Combobox {
   value: string;
   withDropdown: boolean;
 }
+export interface Composite {
+  lgSpan: string;
+  mdSpan: string;
+  name: string;
+  parameters: MapStringString;
+  startMethod: string;
+}
+export interface MapStringString {
+  [k: string]: string;
+}
 export interface DataTable {
   components: DataTableColumn[];
   label: string;
@@ -90,6 +114,15 @@ export interface DatePicker {
   showTime: boolean;
   timePattern: string;
   value: string;
+}
+export interface Fieldset {
+  collapsed: boolean;
+  collapsible: boolean;
+  components: Component[];
+  disabled: boolean;
+  legend: string;
+  lgSpan: string;
+  mdSpan: string;
 }
 export interface Input {
   label: string;
@@ -151,13 +184,4 @@ export interface Textarea {
   mdSpan: string;
   rows: string;
   value: string;
-}
-export interface Fieldset {
-  components: Component[];
-  legend: string;
-  disabled: boolean;
-  collapsible: boolean;
-  collapsed: boolean;
-  lgSpan: string;
-  mdSpan: string;
 }

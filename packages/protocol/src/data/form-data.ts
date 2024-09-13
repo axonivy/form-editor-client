@@ -5,7 +5,7 @@ export type ComponentType = Component['type'] | 'DataTableColumn';
 
 export type ComponentConfigKeys = KeysOfUnion<Component['config']>;
 
-export type PrimitiveValue = string | boolean | number | any[];
+export type PrimitiveValue = string | boolean | number | any[] | Record<string, string>;
 
 export type ConfigData = Record<string, PrimitiveValue | Array<ComponentData>>;
 
