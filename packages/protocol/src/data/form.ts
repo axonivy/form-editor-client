@@ -41,21 +41,7 @@ export interface Component {
     | 'Text'
     | 'Textarea'
     | 'Fieldset';
-  config:
-    | Button
-    | Checkbox
-    | Combobox
-    | DataTable
-    | DataTableColumn
-    | DatePicker
-    | Input
-    | Layout
-    | Link
-    | Radio
-    | Select
-    | Text
-    | Textarea
-    | Fieldset;
+  config: Button | Checkbox | Combobox | DataTable | DatePicker | Input | Layout | Link | Radio | Select | Text | Textarea | Fieldset;
 }
 export interface Button {
   action: string;
@@ -82,16 +68,18 @@ export interface Combobox {
   withDropdown: boolean;
 }
 export interface DataTable {
-  components: Component[];
+  components: DataTableColumn[];
   label: string;
   lgSpan: string;
   mdSpan: string;
   value: string;
 }
 export interface DataTableColumn {
+  config: DataTableColumnConfig;
+  id: string;
+}
+export interface DataTableColumnConfig {
   header: string;
-  lgSpan: string;
-  mdSpan: string;
   value: string;
 }
 export interface DatePicker {

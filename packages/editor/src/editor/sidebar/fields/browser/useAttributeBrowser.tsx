@@ -3,7 +3,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../../context/useMeta';
 import { findAttributesOfType, fullVariablePath, variableTreeData, findVariablesOfType } from '../../../../data/variable-tree-data';
 import { useCallback, useEffect, useState } from 'react';
-import type { Variable } from '@axonivy/form-editor-protocol';
+import type { ConfigData, Variable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../../context/AppContext';
 import { findParentTableComponent, useData } from '../../../../data/data';
 import type { OnlyAttributeSelection } from '../../../../types/config';
@@ -15,7 +15,7 @@ export const useAttributeBrowser = (onlyAttributesFor?: OnlyAttributeSelection, 
   const { context } = useAppContext();
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   const { element, data } = useData();
-  const dynamicList = element?.config.dynamicItemsList as string;
+  const dynamicList = (element?.config as ConfigData).dynamicItemsList as string;
 
   useEffect(() => {
     if (onlyTypesOf && !onlyAttributesFor) {

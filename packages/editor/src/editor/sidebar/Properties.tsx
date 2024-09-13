@@ -12,14 +12,15 @@ import {
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
-import { componentByName } from '../../components/components';
+import { componentByElement } from '../../components/components';
+import type { ConfigData } from '@axonivy/form-editor-protocol';
 
 export const Properties = () => {
-  const { element, parent } = useData();
+  const { element, data, parent } = useData();
   if (element === undefined) {
     return <PanelMessage message='Select an Element to edit its properties.' />;
   }
-  const propertyConfig = componentByName(element.type);
+  const propertyConfig = componentByElement(element, data.components);
   const elementConfig = { ...propertyConfig.defaultProps, ...element.config };
   const fields = visibleFields(propertyConfig.fields, elementConfig);
   const sections = visibleSections(fields, parent);
@@ -62,7 +63,7 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
               key={`${element.id}-${key}`}
               value={value}
               onChange={change => {
-                element.config[key] = change;
+                (element.config as ConfigData)[key] = change;
                 setElement(element);
               }}
               field={{ ...field, label: field.label ?? key }}

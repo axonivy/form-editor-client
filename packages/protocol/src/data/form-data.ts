@@ -1,7 +1,7 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type { Component, Fieldset, Form, Layout } from './form';
+import type { Component, DataTableColumn, Fieldset, Form, Layout } from './form';
 
-export type ComponentType = Component['type'];
+export type ComponentType = Component['type'] | 'DataTableColumn';
 
 export type ComponentConfigKeys = KeysOfUnion<Component['config']>;
 
@@ -9,9 +9,15 @@ export type PrimitiveValue = string | boolean | number | any[];
 
 export type ConfigData = Record<string, PrimitiveValue | Array<ComponentData>>;
 
-export type ComponentData = Omit<Component, 'config'> & {
-  config: ConfigData;
-};
+export interface DataTableColumnComponent extends DataTableColumn {
+  type: 'DataTableColumn';
+}
+
+export type ComponentData =
+  | (Omit<Component, 'config'> & {
+      config: ConfigData;
+    })
+  | DataTableColumnComponent;
 
 export type LayoutConfig = ComponentData & { config: Omit<Layout, 'components'> & { components: Array<ComponentData> } };
 
@@ -30,7 +36,7 @@ export const isTable = (component?: Component | ComponentData): component is Lay
 };
 
 export const isFreeLayout = (component?: Component | ComponentData): component is LayoutConfig => {
-  return isStructure(component) && component.config.gridVariant === 'FREE';
+  return isStructure(component) && (component as LayoutConfig).config.gridVariant === 'FREE';
 };
 
 export type FormContext = { app: string; pmv: string; file: string };
