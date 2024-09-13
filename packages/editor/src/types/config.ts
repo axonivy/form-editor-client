@@ -20,7 +20,7 @@ export type CreateComponentData = { componentName: string } & CreateData;
 export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
   typeof data === 'object' && data !== null && 'componentName' in data;
 
-type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options';
+type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options' | 'Columns';
 
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   subsection: Subsection;
@@ -53,7 +53,7 @@ export type TextBrowserField<ComponentProps extends DefaultComponentProps = Defa
 };
 
 export type TableField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
-  type: 'selectTable';
+  type: 'selectTable' | 'selectColums';
 };
 
 export type SelectField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
