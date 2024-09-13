@@ -1,4 +1,5 @@
 import type { ComponentType, ConfigData, PrimitiveValue } from '@axonivy/form-editor-protocol';
+import type React from 'react';
 import type { ReactNode } from 'react';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
@@ -20,13 +21,13 @@ export type CreateComponentData = { componentName: string } & CreateData;
 export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
   typeof data === 'object' && data !== null && 'componentName' in data;
 
-type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options' | 'Columns';
+type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options' | 'Columns' | (string & {});
 
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   subsection: Subsection;
   label?: string;
   hide?: (component: ComponentProps) => boolean;
-  section?: 'Layout';
+  section?: 'Layout' | (string & {});
 };
 
 export type TextFieldOptions = {
@@ -60,6 +61,14 @@ export type SelectField<ComponentProps extends DefaultComponentProps = DefaultCo
   type: 'select' | 'radio';
   options: readonly FieldOption[];
 };
+
+export type GenericFieldProps = { label: string; value: PrimitiveValue; onChange: (value: PrimitiveValue) => void };
+
+export type GenericField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
+  type: 'generic';
+  render: (props: GenericFieldProps) => React.ReactNode;
+};
+
 export type HiddenField = BaseField & {
   type: 'hidden';
 };
@@ -69,6 +78,7 @@ export type Field<ComponentProps extends DefaultComponentProps = DefaultComponen
   | TextBrowserField<ComponentProps>
   | SelectField<ComponentProps>
   | TableField<ComponentProps>
+  | GenericField<ComponentProps>
   | HiddenField;
 
 export type Fields<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {

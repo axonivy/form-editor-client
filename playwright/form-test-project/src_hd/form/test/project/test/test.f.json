@@ -6,24 +6,24 @@
     "theme" : "freya-ivy"
   },
   "components" : [ {
-    "id" : "Input-2f95d0ea-8108-4892-97ea-a0ee69bd5b60",
-    "type" : "Input",
-    "config" : {
-      "lgSpan" : "6",
-      "mdSpan" : "12",
-      "label" : "Label",
-      "required" : false,
-      "value" : "",
-      "type" : "TEXT"
-    }
-  }, {
     "id" : "Text-642f44ef-19ac-43be-bcb0-8613594e75d6",
     "type" : "Text",
     "config" : {
       "lgSpan" : "6",
       "mdSpan" : "12",
       "type" : "RAW",
-      "content" : "This is a text"
+      "content" : "This form uses a grid layout for address data and some Ivy Components."
+    }
+  }, {
+    "id" : "Input-360dd44c-050a-4a2e-b66d-84f7ce49e759",
+    "type" : "Input",
+    "config" : {
+      "lgSpan" : "6",
+      "mdSpan" : "12",
+      "label" : "Address",
+      "required" : false,
+      "value" : "#{data.address.street}",
+      "type" : "TEXT"
     }
   }, {
     "id" : "Layout-0679249e-43df-4a08-b20b-6f3262c1fc76",
@@ -39,7 +39,7 @@
           "mdSpan" : "12",
           "label" : "City",
           "required" : false,
-          "value" : "data.value",
+          "value" : "#{data.address.city}",
           "type" : "TEXT"
         }
       }, {
@@ -49,17 +49,6 @@
           "lgSpan" : "6",
           "mdSpan" : "12",
           "components" : [ {
-            "id" : "Input-c01b43e9-72f3-40a4-8a94-70552890dc48",
-            "type" : "Input",
-            "config" : {
-              "lgSpan" : "6",
-              "mdSpan" : "12",
-              "label" : "State",
-              "required" : false,
-              "value" : "data.value",
-              "type" : "TEXT"
-            }
-          }, {
             "id" : "Input-fd6e7cf6-0d5d-4245-95ec-7fd53c0fbec3",
             "type" : "Input",
             "config" : {
@@ -67,7 +56,18 @@
               "mdSpan" : "12",
               "label" : "Zip",
               "required" : false,
-              "value" : "data.value",
+              "value" : "#{data.address.zip}",
+              "type" : "TEXT"
+            }
+          }, {
+            "id" : "Input-c01b43e9-72f3-40a4-8a94-70552890dc48",
+            "type" : "Input",
+            "config" : {
+              "lgSpan" : "6",
+              "mdSpan" : "12",
+              "label" : "Country",
+              "required" : false,
+              "value" : "#{data.address.country}",
               "type" : "TEXT"
             }
           } ],
@@ -81,15 +81,28 @@
       "justifyContent" : "NORMAL"
     }
   }, {
-    "id" : "Input-360dd44c-050a-4a2e-b66d-84f7ce49e759",
-    "type" : "Input",
+    "id" : "Composite-5a44f187-43de-4e19-b483-3195f3bf9db4",
+    "type" : "Composite",
     "config" : {
       "lgSpan" : "6",
       "mdSpan" : "12",
-      "label" : "Address",
-      "required" : false,
-      "value" : "Baarerstrasse 12",
-      "type" : "TEXT"
+      "name" : "form.test.project.PersonComponent",
+      "startMethod" : "start",
+      "parameters" : {
+        "person" : "#{data.person}"
+      }
+    }
+  }, {
+    "id" : "Composite-fdcd3bf7-ac27-4f9b-b47d-fd9908177741",
+    "type" : "Composite",
+    "config" : {
+      "lgSpan" : "6",
+      "mdSpan" : "12",
+      "name" : "form.test.project.AddressComponent",
+      "startMethod" : "start",
+      "parameters" : {
+        "address" : "#{data.address}"
+      }
     }
   }, {
     "id" : "Layout-98a996ec-0acd-4e60-9001-80b0a7c3d294",

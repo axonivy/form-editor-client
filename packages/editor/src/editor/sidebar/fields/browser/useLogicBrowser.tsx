@@ -14,7 +14,7 @@ export const useLogicBrowser = (): Browser => {
   const logicInfo = useMeta('meta/data/logic', context, { startMethods: [], eventStarts: [] }).data;
 
   useEffect(() => {
-    setTree(logicTreeData().of(logicInfo));
+    setTree(logicTreeData(logicInfo));
   }, [logicInfo, logicInfo.startMethods]);
 
   const logic = useBrowser(tree, undefined, '', true);

@@ -1,0 +1,11 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/11.4.0/data-class.json",
+  "simpleName" : "PersonComponentData",
+  "namespace" : "form.test.project.PersonComponent",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "person",
+    "type" : "form.test.project.Person",
+    "modifiers" : [ "PERSISTENT" ]
+  } ]
+}

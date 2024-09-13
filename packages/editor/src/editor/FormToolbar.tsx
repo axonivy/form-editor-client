@@ -26,6 +26,7 @@ import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
 import { DataClassPalette } from './palette/data-class/DataClassPalette';
 import { useData } from '../data/data';
+import { CompositePalette } from './palette/composite/CompositePalette';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
@@ -91,6 +92,9 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
               <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
             </Flex>
           </ToolbarContainer>
+          <PalettePopover label='Composite' icon={IvyIcons.File}>
+            <CompositePalette />
+          </PalettePopover>
           <PalettePopover label='Data' icon={IvyIcons.DatabaseLink}>
             <DataClassPalette />
           </PalettePopover>

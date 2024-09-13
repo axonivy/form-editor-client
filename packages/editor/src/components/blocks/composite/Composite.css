@@ -1,0 +1,8 @@
+.block-composite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--N100);
+  border-radius: var(--border-r2);
+  padding: var(--size-3);
+}

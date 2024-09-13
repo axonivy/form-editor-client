@@ -35,8 +35,12 @@ export const isTable = (component?: Component | ComponentData): component is Lay
   return component !== undefined && component.type === 'DataTable' && 'components' in component.config;
 };
 
+const isLayout = (component?: Component | ComponentData): component is LayoutConfig => {
+  return isStructure(component) && component.type === 'Layout';
+};
+
 export const isFreeLayout = (component?: Component | ComponentData): component is LayoutConfig => {
-  return isStructure(component) && (component as LayoutConfig).config.gridVariant === 'FREE';
+  return isLayout(component) && component.config.gridVariant === 'FREE';
 };
 
 export type FormContext = { app: string; pmv: string; file: string };
@@ -88,4 +92,21 @@ export interface LogicEventInfo {
 export interface Parameter {
   name: string;
   type: string;
+}
+
+export interface CompositeInfo {
+  id: string;
+  startMethods: Array<MethodInfo>;
+}
+
+export interface MethodInfo {
+  name: string;
+  parameters: Array<ParameterInfo>;
+  deprecated: boolean;
+}
+
+export interface ParameterInfo {
+  name: string;
+  type: string;
+  description: string;
 }
