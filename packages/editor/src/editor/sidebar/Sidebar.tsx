@@ -8,9 +8,11 @@ import { Properties } from './Properties';
 export const Sidebar = () => {
   const { element } = useData();
   const [outline, setOutline] = useState(false);
+  const elementType = element ? (element.type ? element.type : 'DataTableColumn') : 'Properties';
+
   return (
     <Flex direction='column' className='properties' style={{ height: '100%' }}>
-      <SidebarHeader icon={IvyIcons.PenEdit} title={element?.type ?? 'Properties'} className='sidebar-header'>
+      <SidebarHeader icon={IvyIcons.PenEdit} title={elementType} className='sidebar-header'>
         <Switch size='large' icon={{ icon: IvyIcons.List }} checked={outline} onCheckedChange={setOutline} />
       </SidebarHeader>
       {outline ? <FormOutline hideOutline={() => setOutline(false)} /> : <Properties />}

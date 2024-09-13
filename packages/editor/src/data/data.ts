@@ -141,7 +141,7 @@ const createComponentData = (config: ComponentConfig, data?: CreateData): Compon
   config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
 });
 
-const createId = (name: string) => `${name}-${uuid()}`;
+export const createId = (name: string) => `${name}-${uuid()}`;
 
 const duplicateComponent = (data: FormData, id: string) => {
   const newComponent = structuredClone(findComponentElement(data, id));

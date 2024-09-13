@@ -32,9 +32,15 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultDataTableProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
-    components: { subsection: 'General', type: 'hidden' },
     label: { subsection: 'General', label: 'Label', type: 'text' },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'], options: { onlyTypesOf: 'List<' } },
+    value: {
+      subsection: 'General',
+      label: 'List of Objects',
+      type: 'textBrowser',
+      browsers: ['ATTRIBUTE'],
+      options: { onlyTypesOf: 'List<' }
+    },
+    components: { subsection: 'Columns', label: 'Bind Columns to Object', type: 'selectColums', hide: data => data.value === '' },
     ...baseComponentFields
   },
   quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN']
