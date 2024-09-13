@@ -7,12 +7,13 @@
  */
 
 export type ButtonVariant = ("PRIMARY" | "SECONDARY" | "DANGER")
-export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
-export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
-export type LayoutJustifyContent = "NORMAL" | "END";
-export type LayoutType = "GRID" | "FLEX";
-export type OrientationType = "horizontal" | "vertical";
-export type TextType = "RAW" | "MARKDOWN";
+export type InputType = 'TEXT' | 'EMAIL' | 'PASSWORD' | 'NUMBER';
+export type LayoutGridVariant = 'GRID2' | 'GRID4' | 'FREE';
+export type LayoutJustifyContent = 'NORMAL' | 'END';
+export type LayoutType = 'GRID' | 'FLEX';
+export type OrientationType = 'horizontal' | 'vertical';
+export type TextType = 'RAW' | 'MARKDOWN';
+export type TextIconStyle = 'INLINE' | 'BLOCK';
 
 export interface Form {
   $schema: string;
@@ -27,20 +28,20 @@ export interface FormConfig {
 export interface Component {
   id: string;
   type:
-    | "Button"
-    | "Checkbox"
-    | "Combobox"
-    | "Composite"
-    | "DataTable"
-    | "DatePicker"
-    | "Fieldset"
-    | "Input"
-    | "Layout"
-    | "Link"
-    | "Radio"
-    | "Select"
-    | "Text"
-    | "Textarea";
+    | 'Button'
+    | 'Checkbox'
+    | 'Combobox'
+    | 'Composite'
+    | 'DataTable'
+    | 'DatePicker'
+    | 'Fieldset'
+    | 'Input'
+    | 'Layout'
+    | 'Link'
+    | 'Radio'
+    | 'Select'
+    | 'Text'
+    | 'Textarea';
   config:
     | Button
     | Checkbox
@@ -179,6 +180,8 @@ export interface Text {
   lgSpan: string;
   mdSpan: string;
   type: TextType;
+  icon: string;
+  iconStyle: string;
 }
 export interface Textarea {
   autoResize: boolean;
