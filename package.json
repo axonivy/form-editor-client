@@ -8,7 +8,7 @@
     "node": "20.10.0"
   },
   "scripts": {
-    "ci": "npm install && npm run package && npm run lint:ci && npm run test:ci",
+    "ci": "npm install && npm run package && npm run type && npm run lint:ci && npm run test:ci",
     "clean": "lerna run clean",
     "build": "tsc --build && tscp --build",
     "package": "lerna run package",

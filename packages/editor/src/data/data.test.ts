@@ -4,7 +4,9 @@ import {
   type FormData,
   type LayoutConfig,
   type DataTable,
-  isStructure
+  isStructure,
+  type ConfigData,
+  type DataTableColumnComponent
 } from '@axonivy/form-editor-protocol';
 import { createInitForm, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
 import type { DeepPartial } from '../types/types';
@@ -63,7 +65,7 @@ describe('modifyData', () => {
       data = modifyData(data, { type: 'dnd', data: { activeId: 'Text', targetId: `layout-${data.components[0].id}` } }).newData;
       expect(data).to.not.deep.equals(emptyData());
       expect(data.components).to.have.length(1);
-      const layoutData = data.components[0].config.components as ComponentData[];
+      const layoutData = (data.components[0] as LayoutConfig).config.components;
       expect(layoutData).to.have.length(2);
       expect(layoutData[0].type).to.equals('Button');
       expect(layoutData[1].type).to.equals('Text');
@@ -154,7 +156,7 @@ describe('modifyData', () => {
       if (component && isStructure(component)) {
         expect(component.config.components).toHaveLength(4);
         expect(component.config.components[1].id).toMatch(/Text-/);
-        expect(component.config.components[1].config.content).toEqual('Hello');
+        expect((component.config.components[1].config as ConfigData).content).toEqual('Hello');
       }
     });
   });
@@ -204,16 +206,16 @@ describe('createInitForm', () => {
     const layout = data.components[1] as LayoutConfig;
     expect(layout.type).toEqual('Layout');
     expect(layout.config.components).toHaveLength(2);
-    expect(layout.config.components[0].config.action).toEqual('#{ivyWorkflowView.cancel()}');
-    expect(layout.config.components[1].config.action).toEqual('#{logic.close}');
+    expect((layout.config.components[0].config as ConfigData).action).toEqual('#{ivyWorkflowView.cancel()}');
+    expect((layout.config.components[1].config as ConfigData).action).toEqual('#{logic.close}');
   });
 });
 
 describe('findParentTableComponent', () => {
   const dataTable: DeepPartial<DataTable> = {
     components: [
-      { id: 'column-1', type: 'DataTableColumn', config: {} },
-      { id: 'column-2', type: 'DataTableColumn', config: {} }
+      { id: 'column-1', config: {} },
+      { id: 'column-2', config: {} }
     ]
   };
 
@@ -226,7 +228,7 @@ describe('findParentTableComponent', () => {
   ];
 
   test('return DataTable containing the element', () => {
-    const element: ComponentData = { id: 'column-1', type: 'DataTableColumn', config: {} };
+    const element: DataTableColumnComponent = { id: 'column-1', type: 'DataTableColumn', config: { header: '', value: '' } };
     expect(findParentTableComponent(data, element)).toEqual(dataTable);
   });
 
@@ -244,7 +246,7 @@ describe('findParentTableComponent', () => {
       { id: '1', type: 'Input', config: {} },
       { id: '2', type: 'Button', config: {} }
     ];
-    const element: ComponentData = { id: 'column-1', type: 'DataTableColumn', config: {} };
+    const element: DataTableColumnComponent = { id: 'column-1', type: 'DataTableColumn', config: { header: '', value: '' } };
     expect(findParentTableComponent(noTableData, element)).toBeUndefined();
   });
 });
