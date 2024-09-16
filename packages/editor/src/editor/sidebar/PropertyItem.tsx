@@ -4,11 +4,11 @@ import { CheckboxField } from './fields/CheckboxField';
 import { TextareaField } from './fields/TextareaField';
 import { SelectField } from './fields/SelectField';
 import { NumberField } from './fields/NumberField';
-import type { DataTableColumn, PrimitiveValue, SelectItem } from '@axonivy/form-editor-protocol';
+import type { PrimitiveValue, SelectItem } from '@axonivy/form-editor-protocol';
 import { InputField } from './fields/InputField';
 import { InputFieldWithBrowser } from './fields/InputFieldWithBrowser';
 import { SelectTableField } from './fields/table-field/SelectTableField';
-import { ColumnsCheckboxField } from './fields/ColumnsCheckboxField';
+import { ColumnsCheckboxField } from './fields/datatable-columns/ColumnsCheckboxField';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
@@ -20,7 +20,6 @@ const toString = (primitive?: PrimitiveValue) => `${primitive ?? ''}`;
 const toNumber = (primitive?: PrimitiveValue) => Number(primitive ?? 0);
 const toBoolean = (primitive?: PrimitiveValue) => Boolean(primitive ?? false);
 const toSelectItems = (primitive?: PrimitiveValue): Array<SelectItem> => (Array.isArray(primitive) ? primitive : []);
-const toDataTableColumn = (primitive?: PrimitiveValue): Array<DataTableColumn> => (Array.isArray(primitive) ? primitive : []);
 
 export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItemProps) => {
   const [value, setValue] = useState<PrimitiveValue>(initValue);
@@ -46,7 +45,7 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
       case 'selectTable':
         return <SelectTableField label={label} data={toSelectItems(value)} onChange={updateValue} />;
       case 'selectColums':
-        return <ColumnsCheckboxField label={label} columns={toDataTableColumn(value)} onChange={updateValue} />;
+        return <ColumnsCheckboxField onChange={updateValue} />;
       case 'number':
         return <NumberField label={label} value={toNumber(value)} onChange={updateValue} />;
       case 'checkbox':

@@ -14,7 +14,7 @@ import { useData } from '../../data/data';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 import { componentByElement } from '../../components/components';
 import type { ConfigData } from '@axonivy/form-editor-protocol';
-
+import { PropertySubSectionControl } from './PropertySubSectionControl';
 export const Properties = () => {
   const { element, data, parent } = useData();
   if (element === undefined) {
@@ -53,9 +53,10 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
   if (element === undefined) {
     return null;
   }
+
   return (
     <Collapsible defaultOpen={true}>
-      <CollapsibleTrigger>{title}</CollapsibleTrigger>
+      <CollapsibleTrigger control={props => <PropertySubSectionControl title={title} {...props} />}>{title}</CollapsibleTrigger>
       <CollapsibleContent>
         <Flex direction='column' gap={2}>
           {fields.map(({ key, field, value }) => (

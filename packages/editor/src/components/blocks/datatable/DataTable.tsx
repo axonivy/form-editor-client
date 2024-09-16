@@ -40,7 +40,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
       browsers: ['ATTRIBUTE'],
       options: { onlyTypesOf: 'List<' }
     },
-    components: { subsection: 'Columns', label: 'Bind Columns to Object', type: 'selectColums', hide: data => data.value === '' },
+    components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'selectColums' },
     ...baseComponentFields
   },
   quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN']
