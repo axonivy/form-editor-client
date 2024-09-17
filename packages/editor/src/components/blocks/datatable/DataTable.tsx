@@ -16,7 +16,6 @@ type DataTableProps = Prettify<DataTable>;
 
 export const defaultDataTableProps: DataTable = {
   components: [],
-  label: 'Label',
   value: '',
   ...defaultBaseComponent
 } as const;
@@ -30,9 +29,8 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
   defaultProps: defaultDataTableProps,
   render: props => <UiBlock {...props} />,
   create: ({ label, value, ...defaultProps }) => ({ ...defaultDataTableProps, label, value, ...defaultProps }),
-  outlineInfo: component => component.label,
+  outlineInfo: component => component.value,
   fields: {
-    label: { subsection: 'General', label: 'Label', type: 'text' },
     value: {
       subsection: 'General',
       label: 'List of Objects',
@@ -46,10 +44,9 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
   quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN']
 };
 
-const UiBlock = ({ id, label, components, value }: UiComponentProps<DataTableProps>) => (
+const UiBlock = ({ id, components, value }: UiComponentProps<DataTableProps>) => (
   <div className='block-table'>
     <div className='block-table__label'>
-      <span>{label}</span>
       <span style={{ color: 'var(--N600)' }}>{value.length > 0 ? value : 'value is empty'}</span>
     </div>
     {components.length > 0 && (
