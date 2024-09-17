@@ -59,12 +59,14 @@ class Collapsible {
   protected readonly page: Page;
   protected readonly collapsible: Locator;
   protected readonly trigger: Locator;
+  protected readonly control: Locator;
   protected readonly content: Locator;
 
   constructor(page: Page, parent: Locator, title: string) {
     this.page = page;
     this.collapsible = parent.locator(`.ui-collapsible:has(.ui-collapsible-trigger:has-text("${title}"))`);
     this.trigger = this.collapsible.locator('.ui-collapsible-trigger');
+    this.control = this.collapsible.locator('.ui-button');
     this.content = this.collapsible.locator('.ui-collapsible-content');
   }
 
@@ -82,6 +84,9 @@ class Collapsible {
 
   table(columns: ColumnType[]) {
     return new Table(this.page, this.content, columns);
+  }
+  async toggleControl() {
+    await this.control.click();
   }
 }
 
