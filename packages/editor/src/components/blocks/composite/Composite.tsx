@@ -13,7 +13,7 @@ export const isComposite = (component?: Component | ComponentData): component is
 };
 
 export const defaultCompositeProps: Composite = {
-  name: 'Action',
+  name: '',
   startMethod: '',
   parameters: {},
   ...defaultBaseComponent
@@ -27,7 +27,7 @@ export const CompositeComponent: ComponentConfig<CompositeProps> = {
   description: 'A button for fire actions',
   defaultProps: defaultCompositeProps,
   render: props => <UiBlock {...props} />,
-  create: ({ defaultProps }) => ({ ...defaultCompositeProps, ...defaultProps }),
+  create: ({ label, defaultProps }) => ({ ...defaultCompositeProps, name: label, ...defaultProps }),
   outlineInfo: component => component.name,
   fields: {
     name: { subsection: 'General', label: 'Name', type: 'text' },
