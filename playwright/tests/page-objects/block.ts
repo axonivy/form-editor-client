@@ -4,12 +4,18 @@ export class Block {
   protected readonly page: Page;
   public readonly block: Locator;
 
-  constructor(page: Page, parent: Locator, by: { text: string } | { nth: number } | { layout: boolean; nth: number }) {
+  constructor(
+    page: Page,
+    parent: Locator,
+    by: { text: string } | { nth: number } | { layout: boolean; nth: number } | { datatable: boolean; nth: number }
+  ) {
     this.page = page;
     if ('text' in by) {
       this.block = parent.locator(`.draggable:not(:has(>.block-layout)):has-text("${by.text}")`);
     } else if ('layout' in by && by.layout) {
       this.block = parent.locator('.draggable:has(>.block-layout)').nth(by.nth);
+    } else if ('datatable' in by && by.datatable) {
+      this.block = parent.locator('.draggable:has(>.block-table)').nth(by.nth);
     } else if (by.nth !== undefined) {
       this.block = parent.locator('.draggable:not(:has(>.block-layout))').nth(by.nth);
     }

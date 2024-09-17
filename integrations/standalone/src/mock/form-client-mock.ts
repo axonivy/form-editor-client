@@ -6,6 +6,7 @@ import {
   type FormMetaRequestTypes,
   type FormSaveDataArgs
 } from '@axonivy/form-editor-protocol';
+import { MetaMock } from './meta-mock';
 
 const data: FormData = {
   id: 'a5c1d16e-1d08-4e1f-a9f0-436c553a3881',
@@ -144,6 +145,39 @@ const data: FormData = {
           }
         ]
       }
+    },
+    {
+      id: 'DataTable-a1ff78f7-0cb5-4a5f-902d-7b95b4e65a69',
+      type: 'DataTable',
+      config: {
+        lgSpan: '6',
+        mdSpan: '12',
+        components: [
+          {
+            id: 'DataTableColumn-2392d412-47a3-4d25-af6f-1f9e08b83861',
+            config: {
+              header: 'birthday',
+              value: 'birthday'
+            }
+          },
+          {
+            id: 'DataTableColumn-d5105b17-3059-4e8e-bb42-610b9f4257fa',
+            config: {
+              header: 'age',
+              value: 'age'
+            }
+          },
+          {
+            id: 'DataTableColumn-ad2ee959-6d68-4f14-8680-93e4cb85f236',
+            config: {
+              header: 'first name',
+              value: 'first name'
+            }
+          }
+        ],
+        label: 'Label',
+        value: '#{data.data.persons}'
+      }
     }
   ]
 };
@@ -168,6 +202,8 @@ export class FormClientMock implements FormClient {
   meta<TMeta extends keyof FormMetaRequestTypes>(path: TMeta): Promise<FormMetaRequestTypes[TMeta][1]> {
     switch (path) {
       case 'meta/data/attributes':
+        return Promise.resolve(MetaMock.ATTRIBUTES);
+      case 'meta/data/logic':
       default:
         throw Error('mock meta path not programmed');
     }
