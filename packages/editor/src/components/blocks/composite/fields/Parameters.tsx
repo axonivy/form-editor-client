@@ -1,4 +1,4 @@
-import { Message } from '@axonivy/ui-components';
+import { capitalize, Message } from '@axonivy/ui-components';
 import type { GenericFieldProps } from '../../../../types/config';
 import { useMeta } from '../../../../context/useMeta';
 import { useAppContext } from '../../../../context/AppContext';
@@ -35,7 +35,7 @@ const Parameters = ({ value, onChange }: GenericFieldProps) => {
       {method.parameters.map(param => (
         <InputFieldWithBrowser
           key={param.name}
-          label={param.name}
+          label={capitalize(param.name)}
           value={value[param.name]}
           onChange={change => updateValue(param.name, change)}
           browsers={['ATTRIBUTE']}

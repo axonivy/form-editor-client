@@ -3,7 +3,7 @@ import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Button' });
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Button');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
@@ -22,7 +22,7 @@ test('default', async ({ page }) => {
   await icon.choose('Home');
 
   await page.reload();
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await name.expectValue('Cancel');
   await action.expectValue('#{locig.close}');
   await variant.expectValue('Secondary');

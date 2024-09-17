@@ -26,6 +26,11 @@ export class Block {
     await this.expectSelected();
   }
 
+  async inscribe() {
+    await this.block.dblclick();
+    await this.expectSelected();
+  }
+
   async quickAction(name: string) {
     await this.select();
     this.page.getByRole('button', { name });

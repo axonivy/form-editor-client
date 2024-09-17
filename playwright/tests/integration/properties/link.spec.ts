@@ -3,7 +3,7 @@ import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Link' });
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Link');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
@@ -16,7 +16,7 @@ test('default', async ({ page }) => {
   await href.fill('www.axonivy.com');
 
   await page.reload();
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await name.expectValue('axon home');
   await href.expectValue('www.axonivy.com');
 });

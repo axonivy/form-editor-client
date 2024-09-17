@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { Outline } from './outline';
+import { Browser } from './browser';
 
 export class Inscription {
   protected readonly page: Page;
@@ -110,6 +111,15 @@ class Select {
     await this.page.getByRole('option', { name: value, exact: true }).first().click();
   }
 
+  async expectOptions(options: Array<string | RegExp>) {
+    await this.locator.click();
+    await expect(this.page.getByRole('option')).toHaveCount(options.length);
+    for (const option of options) {
+      await expect(this.page.getByRole('option', { name: option, exact: true }).first()).toBeVisible();
+    }
+    await this.page.keyboard.press('Escape');
+  }
+
   async expectValue(value: string | RegExp) {
     await expect(this.locator).toHaveText(value);
   }
@@ -134,6 +144,13 @@ class Input {
   async fill(value: string) {
     await this.clear();
     await this.locator.fill(value);
+  }
+
+  async openBrowser() {
+    await this.locator.locator('+ .ui-button').click();
+    const browser = new Browser(this.page);
+    await expect(browser.view).toBeVisible();
+    return browser;
   }
 
   async expectValue(value: string | RegExp) {

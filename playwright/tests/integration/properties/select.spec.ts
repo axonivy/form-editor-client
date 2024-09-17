@@ -3,7 +3,7 @@ import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Select' });
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Select');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
@@ -31,7 +31,7 @@ test('default', async ({ page }) => {
   await itemValue.fill('value');
 
   await page.reload();
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await label.expectValue('select');
   await value.expectValue('bla');
   await table.row(0).expectValues(['one', 'two']);

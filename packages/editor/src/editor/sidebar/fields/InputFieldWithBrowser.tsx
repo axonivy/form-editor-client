@@ -1,4 +1,4 @@
-import { BrowsersView, Button, Dialog, DialogContent, DialogTrigger, Fieldset, Input, InputGroup } from '@axonivy/ui-components';
+import { BasicField, BrowsersView, Button, Dialog, DialogContent, DialogTrigger, Input, InputGroup } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useRef, useState } from 'react';
 import { useAttributeBrowser } from './browser/useAttributeBrowser';
@@ -24,14 +24,14 @@ export const InputFieldWithBrowser = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Fieldset label={label}>
+      <BasicField label={label}>
         <InputGroup>
           <Input ref={inputRef} value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
           <DialogTrigger asChild>
             <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
           </DialogTrigger>
         </InputGroup>
-      </Fieldset>
+      </BasicField>
       <DialogContent style={{ height: '80vh' }} onCloseAutoFocus={e => focusBracketContent(e, value, inputRef.current)}>
         <BrowsersView
           browsers={activeBrowsers}

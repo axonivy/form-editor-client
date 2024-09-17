@@ -3,7 +3,7 @@ import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Input' });
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Input');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
@@ -22,7 +22,7 @@ test('default', async ({ page }) => {
   await type.choose('Number');
 
   await page.reload();
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await label.expectValue('New Label');
   await required.expectValue(true);
   await value.expectValue('New Value');
