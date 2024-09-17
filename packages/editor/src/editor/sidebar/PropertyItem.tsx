@@ -54,6 +54,8 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
         return <TextareaField label={label} value={toString(value)} onChange={updateValue} />;
       case 'select':
         return <SelectField label={label} value={toString(value)} onChange={updateValue} options={field.options} />;
+      case 'generic':
+        return field.render({ label, value: value, onChange: updateValue });
       default:
         return <p>unknown field type</p>;
     }

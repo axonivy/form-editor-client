@@ -1,5 +1,5 @@
-import type { LogicEventInfo, LogicInfo, LogicMethodInfo, Parameter } from '@axonivy/form-editor-protocol';
-import { logicTreeData, formatLogicMethodInfo } from './logic-tree-data';
+import type { LogicEventInfo, LogicInfo, LogicMethodInfo } from '@axonivy/form-editor-protocol';
+import { logicTreeData, formatLogicMethodInfo, convertEventsToMethods } from './logic-tree-data';
 
 const logicInfo: LogicInfo = {
   startMethods: [
@@ -31,7 +31,7 @@ const logicInfo: LogicInfo = {
 
 describe('logicTreeData', () => {
   test('of', () => {
-    const tree = logicTreeData().of(logicInfo);
+    const tree = logicTreeData(logicInfo);
     expect(tree).toHaveLength(2);
 
     // Check "Events" node
@@ -47,25 +47,12 @@ describe('logicTreeData', () => {
     expect(tree[1].children[1].value).toEqual('processPayment(Number, String)');
   });
 
-  test('getLastPartOfType', () => {
-    expect(logicTreeData().getLastPartOfType('com.example.Type')).toEqual('Type');
-    expect(logicTreeData().getLastPartOfType('Another.Type.Name')).toEqual('Name');
-  });
-
-  test('getParameterTypesString', () => {
-    const params: Parameter[] = [
-      { name: 'principal', type: 'Number' },
-      { name: 'rate', type: 'Number' }
-    ];
-    expect(logicTreeData().getParameterTypesString(params)).toEqual('Number, Number');
-  });
-
   test('convertEventsToMethods', () => {
     const events: LogicEventInfo[] = [
       { name: 'event1', description: 'Event 1 description' },
       { name: 'event2', description: 'Event 2 description' }
     ];
-    const methods = logicTreeData().convertEventsToMethods(events);
+    const methods = convertEventsToMethods(events);
     expect(methods).toHaveLength(2);
     expect(methods[0].value).toEqual('event1');
     expect(methods[1].value).toEqual('event2');

@@ -17,6 +17,7 @@ import { DataTableComponent } from './blocks/datatable/DataTable';
 import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
 import { FieldsetComponent } from './blocks/fieldset/Fieldset';
 import { findParentTableComponent } from '../data/data';
+import { CompositeComponent } from './blocks/composite/Composite';
 
 const config: Config = {
   components: {
@@ -33,7 +34,8 @@ const config: Config = {
     Layout: LayoutComponent,
     DataTable: DataTableComponent,
     DataTableColumn: DataTableColumnComponent,
-    Fieldset: FieldsetComponent
+    Fieldset: FieldsetComponent,
+    Composite: CompositeComponent
   }
 } as const;
 

@@ -1,8 +1,9 @@
-import type { FormContext, FormEditorData, FormSaveDataArgs, LogicInfo, VariableInfo } from './data';
+import type { CompositeInfo, FormContext, FormEditorData, FormSaveDataArgs, LogicInfo, VariableInfo } from './data';
 
 export interface FormMetaRequestTypes {
   'meta/data/attributes': [FormContext, VariableInfo];
   'meta/data/logic': [FormContext, LogicInfo];
+  'meta/composite/all': [FormContext, Array<CompositeInfo>];
 }
 
 export interface FormRequestTypes extends FormMetaRequestTypes {

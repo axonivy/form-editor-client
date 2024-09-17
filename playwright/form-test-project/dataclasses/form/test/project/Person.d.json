@@ -1,0 +1,31 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/11.4.0/data-class.json",
+  "simpleName" : "Person",
+  "namespace" : "form.test.project",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "name",
+    "type" : "String",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "firstname",
+    "type" : "String",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "billingAddress",
+    "type" : "form.test.project.Address",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "deliveryAddress",
+    "type" : "form.test.project.Address",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "birthYear",
+    "type" : "Number",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "id",
+    "type" : "Number",
+    "modifiers" : [ "PERSISTENT" ]
+  } ]
+}

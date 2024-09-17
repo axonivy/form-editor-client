@@ -12,3 +12,12 @@ export const labelText = (s: string) => {
   }
   return capitalize(splitByCamelCase(s));
 };
+
+export const simpleType = (type: string): string => {
+  const typeParts = type.split('.');
+  return typeParts[typeParts.length - 1];
+};
+
+export const typesString = (parameters: Array<{ type: string }>): string => {
+  return parameters.map(param => simpleType(param.type)).join(', ');
+};

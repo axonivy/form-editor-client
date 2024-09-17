@@ -6,14 +6,14 @@ import { useData } from '../../data/data';
 
 const iconByCategory = (category: string) => {
   switch (category) {
-    case 'Elements':
-      return IvyIcons.ChangeType;
     case 'Structure':
       return IvyIcons.LaneSwimlanes;
     case 'Action':
       return IvyIcons.MultiSelection;
+    case 'Elements':
+    default:
+      return IvyIcons.ChangeType;
   }
-  return undefined;
 };
 
 const toOutlineNodes = (components: Array<ComponentData>): Array<OutlineNode> =>

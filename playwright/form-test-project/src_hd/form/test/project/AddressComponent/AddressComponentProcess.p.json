@@ -1,0 +1,76 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/process/11.3.0/process.json",
+  "id" : "191EB62746F6BFA0",
+  "kind" : "HTML_DIALOG",
+  "config" : {
+    "data" : "form.test.project.AddressComponent.AddressComponentData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "HtmlDialogStart",
+      "name" : "empty",
+      "config" : {
+        "signature" : "empty",
+        "result" : {
+          "params" : [
+            { "name" : "address", "type" : "form.test.project.Address", "desc" : "" }
+          ],
+          "map" : {
+            "result.address" : "in.address"
+          }
+        },
+        "guid" : "13B69F6D63DF676C"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 64 },
+        "labelOffset" : { "x" : 14, "y" : 32 }
+      },
+      "connect" : [
+        { "id" : "f2", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f1",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 224, "y" : 64 }
+      }
+    }, {
+      "id" : "f3",
+      "type" : "HtmlDialogStart",
+      "name" : "start(Address)",
+      "config" : {
+        "signature" : "start",
+        "input" : {
+          "params" : [
+            { "name" : "address", "type" : "form.test.project.Address", "desc" : "" }
+          ],
+          "map" : {
+            "out.address" : "param.address.clone()"
+          }
+        },
+        "result" : {
+          "params" : [
+            { "name" : "address", "type" : "form.test.project.Address", "desc" : "" }
+          ],
+          "map" : {
+            "result.address" : "in.address"
+          }
+        },
+        "guid" : "191FA27201D930F0"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 152 },
+        "labelOffset" : { "x" : 14, "y" : 32 }
+      },
+      "connect" : [
+        { "id" : "f5", "to" : "f4" }
+      ]
+    }, {
+      "id" : "f4",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 224, "y" : 152 },
+        "labelOffset" : { "x" : 10, "y" : 30 }
+      }
+    } ]
+}

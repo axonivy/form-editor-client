@@ -19,6 +19,7 @@ export const PaletteItem = ({ name, description, data, directCreate }: PaletteCo
       className='palette-item'
       direction='column'
       gap={1}
+      alignItems='center'
       title={description}
       ref={setNodeRef}
       {...listeners}

@@ -10,7 +10,7 @@ export class Palette {
   }
 
   paletteItem(name: string) {
-    return this.palette.locator(`.palette-item >> text="${name}"`);
+    return this.palette.locator(`.palette-item >> text="${name}"`).first();
   }
 
   async dndTo(name: string, target: Locator) {
