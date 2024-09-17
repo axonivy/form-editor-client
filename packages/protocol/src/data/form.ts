@@ -93,7 +93,6 @@ export interface MapStringString {
 }
 export interface DataTable {
   components: DataTableColumn[];
-  label: string;
   lgSpan: string;
   mdSpan: string;
   value: string;

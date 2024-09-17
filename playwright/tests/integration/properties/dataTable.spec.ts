@@ -10,24 +10,20 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('DataTable');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const label = section.input({ label: 'Label' });
   const listOfObjects = section.input({ label: 'List of Objects' });
 
   const columnsSection = properties.collapsible('Columns');
   const columnHeader = columnsSection.checkbox({ label: 'header (unbound)' });
 
-  await label.expectValue('Label');
   await listOfObjects.expectValue('');
   await listOfObjects.fill('#{data.locations}');
   await columnHeader.expectValue(true);
 
-  await label.fill('New Label');
   await columnHeader.uncheck();
   await columnHeader.expectValue(false);
 
   await page.reload();
   await editor.canvas.blockByNth(0).block.dblclick();
-  await label.expectValue('New Label');
   await listOfObjects.expectValue('#{data.locations}');
 });
 
@@ -90,7 +86,6 @@ test('columns from attribute', async ({ page }) => {
 
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const label = section.input({ label: 'Label' });
   const listOfObjects = section.input({ label: 'List of Objects' });
 
   const columnsSection = properties.collapsible('Columns');
@@ -100,7 +95,6 @@ test('columns from attribute', async ({ page }) => {
   const columnFirstName = columnsSection.checkbox({ label: 'first name' });
   const columnAge = columnsSection.checkbox({ label: 'age (unbound)' });
 
-  await label.expectValue('Label');
   await listOfObjects.expectValue('#{data.data.persons}');
   await columnAdress.expectValue(false);
   await columnBirthday.expectValue(true);
