@@ -1,4 +1,4 @@
-import { Input, Fieldset } from '@axonivy/ui-components';
+import { Input, BasicField } from '@axonivy/ui-components';
 
 type InputFieldProps = {
   label: string;
@@ -7,7 +7,7 @@ type InputFieldProps = {
 };
 
 export const NumberField = ({ label, value, onChange }: InputFieldProps) => (
-  <Fieldset label={label}>
+  <BasicField label={label}>
     <Input type='number' value={value} onChange={e => onChange(Number(e.target.value))} />
-  </Fieldset>
+  </BasicField>
 );

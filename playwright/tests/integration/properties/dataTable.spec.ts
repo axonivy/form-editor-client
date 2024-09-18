@@ -23,14 +23,14 @@ test('default', async ({ page }) => {
   await columnHeader.expectValue(false);
 
   await page.reload();
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await listOfObjects.expectValue('#{data.locations}');
 });
 
 test('dataTableColumn', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page, { block: 'DataTable' });
   await editor.canvas.blockByNth(0).quickAction('Create Column');
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(1).inscribe();
   await editor.inscription.expectHeader('DataTableColumn');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
@@ -43,7 +43,7 @@ test('dataTableColumn', async ({ page }) => {
   await value.fill('title');
 
   await page.reload();
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(1).inscribe();
   await header.expectValue('new header');
   await value.expectValue('title');
 });
@@ -51,7 +51,7 @@ test('dataTableColumn', async ({ page }) => {
 test('edit column and update table', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page, { block: 'DataTable' });
   await editor.canvas.blockByNth(0).quickAction('Create Column');
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(1).inscribe();
   await editor.inscription.expectHeader('DataTableColumn');
   const columnProperties = editor.inscription.section('Properties');
   const columnSection = columnProperties.collapsible('General');

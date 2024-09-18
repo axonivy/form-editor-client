@@ -1,4 +1,4 @@
-import { Fieldset, Textarea } from '@axonivy/ui-components';
+import { BasicField, Textarea } from '@axonivy/ui-components';
 
 type TextareaFieldProps = {
   label: string;
@@ -7,7 +7,7 @@ type TextareaFieldProps = {
 };
 
 export const TextareaField = ({ label, value, onChange }: TextareaFieldProps) => (
-  <Fieldset label={label}>
+  <BasicField label={label}>
     <Textarea value={value} onChange={e => onChange(e.target.value)} autoResize={true} />
-  </Fieldset>
+  </BasicField>
 );

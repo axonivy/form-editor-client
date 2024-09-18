@@ -3,7 +3,7 @@ import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Combobox' });
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Combobox');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
@@ -29,7 +29,7 @@ test('default', async ({ page }) => {
   await button.check();
 
   await page.reload();
-  await editor.canvas.blockByNth(0).block.dblclick();
+  await editor.canvas.blockByNth(0).inscribe();
   await label.expectValue('Hi');
   await value.expectValue('#{data.zag}');
   await complete.expectValue('#{data.complete}');

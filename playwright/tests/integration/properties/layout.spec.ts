@@ -61,7 +61,7 @@ test('children in free layout', async ({ page }) => {
 const layout = async (page: Page) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Layout' });
   const layoutBlock = editor.canvas.blockByNth(0, { layout: true });
-  await layoutBlock.block.dblclick();
+  await layoutBlock.inscribe();
   await editor.inscription.expectHeader('Layout');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
@@ -73,5 +73,5 @@ const layout = async (page: Page) => {
 
 const reload = async (editor: FormEditor) => {
   await editor.page.reload();
-  await editor.canvas.blockByNth(0, { layout: true }).block.dblclick();
+  await editor.canvas.blockByNth(0, { layout: true }).inscribe();
 };

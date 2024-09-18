@@ -1,8 +1,8 @@
 import { flexRender, type ColumnDef, useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import {
+  BasicField,
   Button,
   deepEqual,
-  Fieldset,
   SelectRow,
   Table,
   TableAddRow,
@@ -86,7 +86,7 @@ export const TableField = <TData extends object>({ label, data, onChange, column
   });
 
   return (
-    <Fieldset
+    <BasicField
       label={label}
       control={table.getSelectedRowModel().rows.length > 0 && <Button icon={IvyIcons.Trash} aria-label='Remove row' onClick={removeRow} />}
       className='table-field'
@@ -104,6 +104,6 @@ export const TableField = <TData extends object>({ label, data, onChange, column
         </TableBody>
       </Table>
       {showAddButton()}
-    </Fieldset>
+    </BasicField>
   );
 };
