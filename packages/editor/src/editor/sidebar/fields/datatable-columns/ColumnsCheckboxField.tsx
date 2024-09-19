@@ -60,14 +60,17 @@ export const ColumnsCheckboxField = ({ onChange }: ColumnsCheckboxFieldProps) =>
           />
         ))
       )}
-      {unboundSelectColumns.map(column => (
-        <BasicCheckbox
-          key={column.id}
-          label={column.config.header + ' (unbound)'}
-          checked={column.selected}
-          onCheckedChange={e => handleCheckboxChange(e, column)}
-        />
-      ))}
+      {unboundSelectColumns.map(column => {
+        const isStartingWithBound = boundSelectColumns.some(boundCol => column.config.value.startsWith(`${boundCol.config.value}.`));
+        return (
+          <BasicCheckbox
+            key={column.id}
+            label={column.config.header + (isStartingWithBound ? '' : ' (unbound)')}
+            checked={column.selected}
+            onCheckedChange={e => handleCheckboxChange(e, column)}
+          />
+        );
+      })}
     </Flex>
   );
 };
