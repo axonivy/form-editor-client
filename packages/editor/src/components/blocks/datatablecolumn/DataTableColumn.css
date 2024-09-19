@@ -1,0 +1,11 @@
+.block-search__input {
+  flex: 1 0 auto;
+  padding: var(--size-2);
+  color: var(--N700);
+  border: var(--basic-border);
+  background-color: var(--N25);
+  outline: 0 none;
+  font-size: 0.7rem;
+  font-weight: normal;
+  border-radius: var(--border-r2);
+}

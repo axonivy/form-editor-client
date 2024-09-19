@@ -2,6 +2,7 @@ import type { DataTableColumn } from '@axonivy/form-editor-protocol';
 import { BasicCheckbox, Flex, Message } from '@axonivy/ui-components';
 import { isSameColumn, useDataTableColumns } from './useDataTableColumns';
 import { createId } from '../../../../data/data';
+import { DataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
 
 type ColumnsCheckboxFieldProps = {
   onChange: (value: DataTableColumn[]) => void;
@@ -15,10 +16,10 @@ export const ColumnsCheckboxField = ({ onChange }: ColumnsCheckboxFieldProps) =>
   const handleCheckboxChange = (e: boolean | 'indeterminate', column: CheckboxColumn) => {
     if (e === true) {
       const newColumn: DataTableColumn = {
-        config: {
-          header: column.config.header,
+        config: DataTableColumnComponent.create({
+          label: column.config.header,
           value: column.config.value
-        },
+        }),
         id: createId('DataTableColumn')
       };
       const newColumns = [...activeColumns, newColumn];

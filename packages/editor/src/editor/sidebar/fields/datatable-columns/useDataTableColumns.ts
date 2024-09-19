@@ -7,6 +7,7 @@ import { useMeta } from '../../../../context/useMeta';
 import { findAttributesOfType } from '../../../../data/variable-tree-data';
 import type { CheckboxColumn } from './ColumnsCheckboxField';
 import { useEffect, useState } from 'react';
+import { DataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
 
 export const useDataTableColumns = () => {
   const { context } = useAppContext();
@@ -70,19 +71,13 @@ const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): Data
     if (!node.children || node.children.length === 0) {
       columns.push({
         id: createId('DataTableColumn'),
-        config: {
-          header: node.data?.attribute ?? '',
-          value: ''
-        }
+        config: DataTableColumnComponent.create({ label: node.data?.attribute ?? '', value: '' })
       });
     } else {
       node.children.forEach(childNode => {
         columns.push({
           id: createId('DataTableColumn'),
-          config: {
-            header: childNode.value,
-            value: childNode.value
-          }
+          config: DataTableColumnComponent.create({ label: childNode.value, value: childNode.value })
         });
       });
     }

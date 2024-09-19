@@ -30,3 +30,43 @@
 .selected > .block-table > div:not(.block-table__label) {
   border: var(--layout-border-size, 1.5px) dashed var(--P75);
 }
+
+.block-paginator {
+  padding-top: var(--size-2);
+}
+
+.block-paginator > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+}
+
+.block-paginator .arrow {
+  font-size: 16px;
+  align-items: normal;
+}
+
+.block-paginator .page-item-active {
+  background-color: #007b9e;
+  color: #fff;
+  border-radius: var(--border-r2);
+}
+
+.canvas[data-help-paddings='false'] .block-table .block-table__label {
+  display: none;
+}
+
+.canvas[data-help-paddings='false'] .block-table .block-table__columns {
+  gap: 0;
+}
+
+.canvas[data-help-paddings='false'] .block-table .block-table__columns .ui-table-root {
+  border-radius: 0;
+  border: none;
+}
+
+.canvas[data-help-paddings='false'] .block-table .block-table__columns .draggable {
+  border-radius: 0;
+}
