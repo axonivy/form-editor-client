@@ -39,6 +39,7 @@ const Parameters = ({ value, onChange }: GenericFieldProps) => {
           value={value[param.name]}
           onChange={change => updateValue(param.name, change)}
           browsers={['ATTRIBUTE']}
+          message={{ variant: 'description', message: param.description }}
           options={{ onlyTypesOf: param.type }}
         />
       ))}

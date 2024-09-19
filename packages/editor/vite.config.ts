@@ -1,4 +1,3 @@
-import { vanillaExtractPlugin as veVitePlugin } from '@vanilla-extract/vite-plugin';
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -7,7 +6,7 @@ import dts from 'vite-plugin-dts';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [veVitePlugin(), visualizer(), react(), dts({ tsconfigPath: './tsconfig.production.json' }), svgr()],
+  plugins: [visualizer(), react(), dts({ tsconfigPath: './tsconfig.production.json' }), svgr()],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src')
