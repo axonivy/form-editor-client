@@ -11,7 +11,7 @@ type FieldsetProps = Prettify<Fieldset>;
 
 export const defaultFieldsetProps: FieldsetProps = {
   components: [],
-  legend: 'fieldset title',
+  legend: 'Title',
   disabled: false,
   collapsible: false,
   collapsed: false,
@@ -31,9 +31,9 @@ export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
   outlineInfo: component => component.legend,
   fields: {
     components: { subsection: 'General', type: 'hidden' },
-    legend: { subsection: 'General', label: 'legend', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
-    collapsible: { subsection: 'Behaviour', label: 'collapsible', type: 'checkbox' },
-    collapsed: { subsection: 'Behaviour', label: 'default collapsed', type: 'checkbox' },
+    legend: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+    collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
+    collapsed: { subsection: 'Behaviour', label: 'Default collapsed', type: 'checkbox' },
     disabled: { subsection: 'Behaviour', label: 'read-only', type: 'hidden' },
     ...baseComponentFields
   }
