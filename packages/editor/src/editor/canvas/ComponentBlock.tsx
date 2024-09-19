@@ -53,6 +53,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
   };
   const createElement = (name: string) =>
     setData(oldData => modifyData(oldData, { type: 'add', data: { componentName: name, targetId: data.id } }).newData);
+
   return (
     <Popover open={isSelected && !isDragging}>
       <PopoverAnchor asChild>
