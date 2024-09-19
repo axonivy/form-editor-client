@@ -228,7 +228,11 @@ describe('findParentTableComponent', () => {
   ];
 
   test('return DataTable containing the element', () => {
-    const element: DataTableColumnComponent = { id: 'column-1', type: 'DataTableColumn', config: { header: '', value: '' } };
+    const element: DataTableColumnComponent = {
+      id: 'column-1',
+      type: 'DataTableColumn',
+      config: { header: '', value: '', filterable: false, sortable: false }
+    };
     expect(findParentTableComponent(data, element)).toEqual(dataTable);
   });
 
@@ -246,7 +250,11 @@ describe('findParentTableComponent', () => {
       { id: '1', type: 'Input', config: {} },
       { id: '2', type: 'Button', config: {} }
     ];
-    const element: DataTableColumnComponent = { id: 'column-1', type: 'DataTableColumn', config: { header: '', value: '' } };
+    const element: DataTableColumnComponent = {
+      id: 'column-1',
+      type: 'DataTableColumn',
+      config: { header: '', value: '', filterable: false, sortable: false }
+    };
     expect(findParentTableComponent(noTableData, element)).toBeUndefined();
   });
 });

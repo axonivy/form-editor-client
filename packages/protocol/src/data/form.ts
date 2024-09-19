@@ -94,7 +94,9 @@ export interface MapStringString {
 export interface DataTable {
   components: DataTableColumn[];
   lgSpan: string;
+  maxRows: string;
   mdSpan: string;
+  paginator: boolean;
   value: string;
 }
 export interface DataTableColumn {
@@ -102,7 +104,9 @@ export interface DataTableColumn {
   id: string;
 }
 export interface DataTableColumnConfig {
+  filterable: boolean;
   header: string;
+  sortable: boolean;
   value: string;
 }
 export interface DatePicker {
