@@ -4,6 +4,7 @@ import './Button.css';
 import { IvyIcons } from '@axonivy/ui-icons/lib';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './Button.svg?react';
+import { IvyIcon } from '@axonivy/ui-components';
 
 type ButtonProps = Prettify<Button>;
 
@@ -49,7 +50,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
 
 const UiBlock = ({ name, icon, variant }: UiComponentProps<ButtonProps>) => (
   <button className='block-button' data-variant={variant.toLocaleLowerCase()}>
-    {icon && <i className={icon} />}
+    {icon && <IvyIcon icon={IvyIcons.InfoCircle} />}
     <span>{name}</span>
   </button>
 );
