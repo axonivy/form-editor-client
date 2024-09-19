@@ -8,12 +8,12 @@
   "elements" : [ {
       "id" : "f0",
       "type" : "HtmlDialogStart",
-      "name" : "start(Person,String)",
+      "name" : "start(Person)",
       "config" : {
         "signature" : "start",
         "input" : {
           "params" : [
-            { "name" : "person", "type" : "form.test.project.Person", "desc" : "" }
+            { "name" : "person", "type" : "form.test.project.Person", "desc" : "Person for the Component" }
           ],
           "map" : {
             "out.person" : "param.person"

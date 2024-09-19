@@ -13,6 +13,7 @@ export const InputFieldWithBrowser = ({
   onChange,
   browsers,
   onBlur,
+  message,
   options
 }: InputFieldProps & { browsers: Browser[]; options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ export const InputFieldWithBrowser = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <BasicField label={label}>
+      <BasicField label={label} message={message}>
         <InputGroup>
           <Input ref={inputRef} value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
           <DialogTrigger asChild>

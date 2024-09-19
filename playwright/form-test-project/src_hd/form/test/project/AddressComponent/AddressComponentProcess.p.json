@@ -42,7 +42,7 @@
         "signature" : "start",
         "input" : {
           "params" : [
-            { "name" : "address", "type" : "form.test.project.Address", "desc" : "" }
+            { "name" : "address", "type" : "form.test.project.Address", "desc" : "Address for the component" }
           ],
           "map" : {
             "out.address" : "param.address.clone()"
