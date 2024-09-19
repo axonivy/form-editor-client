@@ -1,3 +1,13 @@
 .block-text {
   margin: 0;
 }
+
+.block-text > i.ivy {
+  padding: 0 5px 0 0;
+}
+
+.text-icon-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
