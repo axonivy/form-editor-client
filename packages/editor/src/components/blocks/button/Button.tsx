@@ -20,11 +20,12 @@ export const defaultButtonProps: Button = {
   icon: '',
   ...defaultBaseComponent
 } as const;
-
+/*
 const iconOptions: FieldOption<`ivy ivy-${IvyIcons}`>[] = (Object.keys(IvyIcons) as (keyof typeof IvyIcons)[]).map(key => ({
   label: key,
   value: `ivy ivy-${IvyIcons[key]}`
 }));
+*/
 
 export const ButtonComponent: ComponentConfig<ButtonProps> = {
   name: 'Button',
@@ -40,7 +41,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
     name: { subsection: 'General', label: 'Name', type: 'text' },
     action: { subsection: 'General', label: 'Action', type: 'textBrowser', browsers: ['LOGIC'] },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
-    icon: { subsection: 'General', label: 'Icon', type: 'select', options: iconOptions },
+    icon: { subsection: 'General', label: 'Icon', type: 'text' },
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
