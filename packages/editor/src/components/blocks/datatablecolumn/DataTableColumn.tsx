@@ -44,7 +44,11 @@ const UiBlock = ({ header, value, sortable, filterable }: UiComponentProps<DataT
               {header}
               {sortable && <IvyIcon icon={IvyIcons.Selector} />}
             </Flex>
-            {filterable && <span className='block-search__input'>Filter By {header}</span>}
+            {filterable ? (
+              <span className='block-search__input'>Filter By {header}</span>
+            ) : (
+              <span className='block-search__placeholder'>placeholder</span>
+            )}
           </Flex>
         </TableHead>
       </TableRow>

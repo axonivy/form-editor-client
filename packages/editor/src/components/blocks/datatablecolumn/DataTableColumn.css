@@ -8,4 +8,7 @@
   font-size: 0.7rem;
   font-weight: normal;
   border-radius: var(--border-r2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

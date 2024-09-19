@@ -70,3 +70,16 @@
 .canvas[data-help-paddings='false'] .block-table .block-table__columns .draggable {
   border-radius: 0;
 }
+
+.block-table__columns:has(.block-search__input) .block-search__placeholder {
+  border: 1px solid var(--N25);
+  color: var(--N25);
+  padding: var(--size-2);
+  font-size: 0.7rem;
+  font-weight: normal;
+  user-select: none;
+}
+
+.block-table__columns:not(:has(.block-search__input)) .block-search__placeholder {
+  display: none;
+}
