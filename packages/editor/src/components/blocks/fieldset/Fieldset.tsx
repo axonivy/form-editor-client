@@ -31,7 +31,7 @@ export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
   outlineInfo: component => component.legend,
   fields: {
     components: { subsection: 'General', type: 'hidden' },
-    legend: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+    legend: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE', 'CMS'] },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
     collapsed: { subsection: 'Behaviour', label: 'Default collapsed', type: 'checkbox' },
     disabled: { subsection: 'Behaviour', label: 'read-only', type: 'hidden' },

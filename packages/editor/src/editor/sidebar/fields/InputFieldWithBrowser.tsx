@@ -6,6 +6,7 @@ import type { InputFieldProps } from './InputField';
 import type { Browser, TextBrowserFieldOptions } from '../../../types/config';
 import { useLogicBrowser } from './browser/useLogicBrowser';
 import { focusBracketContent } from '../../../utils/focus';
+import { CMS_BROWSER_ID, useCmsBrowser } from './browser/useCmsBrowser';
 
 export const InputFieldWithBrowser = ({
   label,
@@ -20,8 +21,13 @@ export const InputFieldWithBrowser = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const attrBrowser = useAttributeBrowser(options?.onlyAttributes, options?.onlyTypesOf);
   const logicBrowser = useLogicBrowser();
+  const cmsBrowser = useCmsBrowser();
 
-  const activeBrowsers = [...(browsers.includes('ATTRIBUTE') ? [attrBrowser] : []), ...(browsers.includes('LOGIC') ? [logicBrowser] : [])];
+  const activeBrowsers = [
+    ...(browsers.includes('ATTRIBUTE') ? [attrBrowser] : []),
+    ...(browsers.includes('LOGIC') ? [logicBrowser] : []),
+    ...(browsers.includes('CMS') ? [cmsBrowser] : [])
+  ];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -37,7 +43,9 @@ export const InputFieldWithBrowser = ({
         <BrowsersView
           browsers={activeBrowsers}
           apply={(browserName, result) => {
-            if (result) {
+            if (result && browserName === CMS_BROWSER_ID) {
+              onChange(`${value}#{${result.value}}`);
+            } else if (result) {
               onChange(options?.onlyAttributes ? `${result.value}` : `#{${result.value}}`);
             }
             setOpen(false);
