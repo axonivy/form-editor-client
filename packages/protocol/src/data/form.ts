@@ -14,6 +14,7 @@ export type LayoutType = 'GRID' | 'FLEX';
 export type OrientationType = 'horizontal' | 'vertical';
 export type TextType = 'RAW' | 'MARKDOWN';
 export type TextIconStyle = 'INLINE' | 'BLOCK';
+export type GroupStyle = 'FIELDSET' | 'CARD';
 
 export interface Form {
   $schema: string;
@@ -120,6 +121,7 @@ export interface DatePicker {
   value: string;
 }
 export interface Fieldset {
+  style: GroupStyle;
   collapsed: boolean;
   collapsible: boolean;
   components: Component[];

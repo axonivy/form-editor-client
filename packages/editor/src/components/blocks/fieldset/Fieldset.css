@@ -1,11 +1,6 @@
 fieldset {
-  border: var(--basic-border);
   color: var(--N900);
   padding: 1rem;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-4);
 }
 
 fieldset.collapsible {
@@ -18,8 +13,42 @@ fieldset.collapsible > legend:before {
 }
 
 legend {
-  border: var(--basic-border);
   padding: 1rem;
   font-weight: 700;
+}
+
+.border {
+  border: var(--basic-border);
   border-radius: 4px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4);
+}
+
+.card {
+  padding: 10px;
+}
+
+.card-header {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-title {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--P300);
+}
+
+.card-open {
+  height: max-content;
+}
+
+.card-close {
+  height: 0px;
+  overflow: hidden;
 }
