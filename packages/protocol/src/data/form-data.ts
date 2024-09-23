@@ -1,5 +1,5 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type { Component, DataTableColumn, Fieldset, Form, Layout } from './form';
+import type { Component, DataTableColumn, Fieldset, Form, Layout, MapStringString } from './form';
 
 export type ComponentType = Component['type'] | 'DataTableColumn';
 
@@ -44,6 +44,11 @@ export const isFreeLayout = (component?: Component | ComponentData): component i
 };
 
 export type FormContext = { app: string; pmv: string; file: string };
+
+export interface CmsMetaRequest {
+  context: FormContext;
+  requiredProjects: boolean;
+}
 
 export type FormEditorProps = { context: FormContext; directSave?: boolean };
 
@@ -109,4 +114,14 @@ export interface ParameterInfo {
   name: string;
   type: string;
   description: string;
+}
+
+export type ContentObjectType = 'STRING' | 'FILE' | 'FOLDER';
+
+export interface ContentObject {
+  children: ContentObject[];
+  fullPath: string;
+  name: string;
+  type: ContentObjectType;
+  values: MapStringString;
 }
