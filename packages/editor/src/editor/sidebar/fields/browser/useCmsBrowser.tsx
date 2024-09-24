@@ -33,7 +33,7 @@ export const useCmsBrowser = (): Browser => {
     ),
 
     infoProvider: row => <CmsInfoProvider row={row} />,
-    applyModifier: row => ({ value: 'ivy.cms.co("' + (row.original.data as ContentObject).fullPath + '")' })
+    applyModifier: row => ({ value: `ivy.cms.co('${(row.original.data as ContentObject).fullPath}')` })
   };
 };
 

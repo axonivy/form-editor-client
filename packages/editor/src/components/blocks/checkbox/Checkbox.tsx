@@ -24,7 +24,7 @@ export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultCheckboxProps, label, selected: value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
-    label: { subsection: 'General', label: 'Label', type: 'text' },
+    label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
     selected: { subsection: 'General', label: 'Selected', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     ...baseComponentFields
   },
