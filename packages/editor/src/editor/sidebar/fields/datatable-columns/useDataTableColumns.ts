@@ -20,8 +20,16 @@ export const useDataTableColumns = () => {
   );
   const activeColumns = element && element.id.startsWith('DataTable') ? (element.config as unknown as DataTable).components : [];
   const boundColumns = convertBrowserNodesToColumns(attributesOfTableType);
+
+  const [activeColumnsHistory, setActiveColumnsHistory] = useState<DataTableColumn[]>(activeColumns);
+
   const boundSelectColumns = boundColumns.map<CheckboxColumn>(column => ({
     ...column,
+    config: {
+      ...column.config,
+      filterable: activeColumnsHistory.find(col => isSameColumn(col, column))?.config.filterable ?? false,
+      sortable: activeColumnsHistory.find(col => isSameColumn(col, column))?.config.sortable ?? false
+    },
     selected: activeColumns ? activeColumns.some(col => isSameColumn(col, column)) : false
   }));
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +68,8 @@ export const useDataTableColumns = () => {
     activeColumns,
     boundSelectColumns,
     unboundSelectColumns,
-    setUnboundSelectColumns
+    setUnboundSelectColumns,
+    setActiveColumnsHistory
   };
 };
 

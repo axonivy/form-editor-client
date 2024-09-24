@@ -22,7 +22,7 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
   description: 'A Column for the DataTable',
   defaultProps: defaultDataTableColumnProps,
   render: props => <UiBlock {...props} />,
-  create: ({ label, value }) => ({ ...defaultDataTableColumnProps, header: label, value }),
+  create: ({ label, value, defaultProps }) => ({ ...defaultDataTableColumnProps, header: label, value, ...defaultProps }),
   outlineInfo: component => component.header,
   fields: {
     header: { subsection: 'General', label: 'Header', type: 'text' },

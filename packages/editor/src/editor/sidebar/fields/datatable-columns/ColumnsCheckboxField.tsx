@@ -11,14 +11,16 @@ type ColumnsCheckboxFieldProps = {
 export type CheckboxColumn = DataTableColumn & { selected: boolean };
 
 export const ColumnsCheckboxField = ({ onChange }: ColumnsCheckboxFieldProps) => {
-  const { boundColumns, activeColumns, boundSelectColumns, unboundSelectColumns, setUnboundSelectColumns } = useDataTableColumns();
+  const { boundColumns, activeColumns, boundSelectColumns, unboundSelectColumns, setUnboundSelectColumns, setActiveColumnsHistory } =
+    useDataTableColumns();
 
   const handleCheckboxChange = (e: boolean | 'indeterminate', column: CheckboxColumn) => {
     if (e === true) {
       const newColumn: DataTableColumn = {
         config: DataTableColumnComponent.create({
           label: column.config.header,
-          value: column.config.value
+          value: column.config.value,
+          defaultProps: { filterable: column.config.filterable, sortable: column.config.sortable }
         }),
         id: createId('DataTableColumn')
       };
@@ -29,7 +31,7 @@ export const ColumnsCheckboxField = ({ onChange }: ColumnsCheckboxFieldProps) =>
         }
         return col;
       });
-
+      setActiveColumnsHistory(prevArray => [...prevArray, newColumn]);
       setUnboundSelectColumns(updatedLocalUnbindedColumns);
       onChange(newColumns);
     } else if (e === false) {
