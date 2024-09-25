@@ -17,35 +17,30 @@ import {
   useTableSelect,
   type BrowserNode
 } from '@axonivy/ui-components';
-import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../context/useMeta';
 import { useAppContext } from '../../../context/AppContext';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { rowToCreateData, variableTreeData } from '../../../data/variable-tree-data';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
 import { createInitForm } from '../../../data/data';
 
-export const DataClassDialog = () => (
+export const DataClassDialog = ({ children, worfkflowButtonsInit = true }: { children: ReactNode; worfkflowButtonsInit?: boolean }) => (
   <Dialog>
-    <DialogTrigger asChild>
-      <Button icon={IvyIcons.DatabaseLink} variant='outline'>
-        Create from data
-      </Button>
-    </DialogTrigger>
+    <DialogTrigger asChild>{children}</DialogTrigger>
     <DialogContent>
       <DialogHeader>
         <DialogTitle>Create from data</DialogTitle>
       </DialogHeader>
-      <DataClassSelect />
+      <DataClassSelect worfkflowButtonsInit={worfkflowButtonsInit} />
     </DialogContent>
   </Dialog>
 );
 
-const DataClassSelect = () => {
+const DataClassSelect = ({ worfkflowButtonsInit }: { worfkflowButtonsInit: boolean }) => {
   const { context, setData } = useAppContext();
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
-  const [workflowButtons, setWorkflowButtons] = useState(true);
+  const [workflowButtons, setWorkflowButtons] = useState(worfkflowButtonsInit);
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   useEffect(() => setTree(variableTreeData().of(dataClass)), [dataClass]);
   const loadChildren = useCallback<(row: Row<BrowserNode>) => void>(

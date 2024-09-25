@@ -35,7 +35,7 @@ test('undo/redo', async ({ page }) => {
 
 test('palette', async ({ page }) => {
   const { toolbar } = await FormEditor.openMock(page);
-  await expect(toolbar.palette.locator('.category-popover')).toHaveCount(6);
+  await expect(toolbar.palette.locator('.palette-button')).toHaveCount(6);
 });
 
 test('help paddings', async ({ page }) => {
