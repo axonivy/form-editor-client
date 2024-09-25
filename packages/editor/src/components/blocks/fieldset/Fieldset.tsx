@@ -45,7 +45,7 @@ const UiBlock = ({ id, components, legend, collapsible, disabled }: UiComponentP
   <div className='fieldset'>
     <div className='fieldset-header'>
       {legend}
-      <IvyIcon icon={IvyIcons.Chevron} className={`${collapsible ? '' : 'fieldset-non-collapsible'}`} />
+      <IvyIcon icon={IvyIcons.Plus} className={`${collapsible ? '' : 'fieldset-non-collapsible'}`} />
     </div>
     {components.map((component, index) => (
       <ComponentBlock key={component.id} component={component} preId={components[index - 1]?.id} />
