@@ -16,6 +16,7 @@ import { TextareaComponent } from './blocks/textarea/Textarea';
 import { DataTableComponent } from './blocks/datatable/DataTable';
 import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
 import { FieldsetComponent } from './blocks/fieldset/Fieldset';
+import { PanelComponent } from './blocks/panel/Panel';
 import { findParentTableComponent } from '../data/data';
 import { CompositeComponent } from './blocks/composite/Composite';
 
@@ -35,6 +36,7 @@ const config: Config = {
     DataTable: DataTableComponent,
     DataTableColumn: DataTableColumnComponent,
     Fieldset: FieldsetComponent,
+    Panel: PanelComponent,
     Composite: CompositeComponent
   }
 } as const;

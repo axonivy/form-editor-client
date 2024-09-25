@@ -38,6 +38,7 @@ export interface Component {
     | 'Input'
     | 'Layout'
     | 'Link'
+    | 'Panel'
     | 'Radio'
     | 'Select'
     | 'Text'
@@ -53,6 +54,7 @@ export interface Component {
     | Input
     | Layout
     | Link
+    | Panel
     | Radio
     | Select
     | Text
@@ -125,6 +127,15 @@ export interface Fieldset {
   components: Component[];
   disabled: boolean;
   legend: string;
+  lgSpan: string;
+  mdSpan: string;
+}
+
+export interface Panel {
+  collapsed: boolean;
+  collapsible: boolean;
+  components: Component[];
+  title: string;
   lgSpan: string;
   mdSpan: string;
 }

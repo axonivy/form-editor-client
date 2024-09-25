@@ -18,6 +18,11 @@ describe('dragData', () => {
     const data = filledData();
     expectDragData(dragData(data.components[3]), ['41', '42', '43']);
   });
+
+  test('panel', () => {
+    const data = filledData();
+    expectDragData(dragData(data.components[4]), ['51', '52', '53']);
+  });
 });
 
 describe('isDragZoneDisabled', () => {
@@ -66,6 +71,20 @@ const filledData = () => {
             { id: '41', type: 'Text', config: { content: 'Hello' } },
             { id: '42', type: 'Button', config: {} },
             { id: '43', type: 'Input', config: {} }
+          ]
+        }
+      },
+      {
+        id: '5',
+        type: 'Panel',
+        config: {
+          title: 'Title',
+          collapsible: true,
+          collapsed: false,
+          components: [
+            { id: '51', type: 'Text', config: { content: 'Hello' } },
+            { id: '52', type: 'Button', config: {} },
+            { id: '53', type: 'Input', config: {} }
           ]
         }
       }

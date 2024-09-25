@@ -28,7 +28,11 @@ export type FormData = Omit<Form, 'components' | '$schema'> & {
 };
 
 export const isStructure = (component?: Component | ComponentData): component is LayoutConfig | FieldsetConfig => {
-  return component !== undefined && (component.type === 'Layout' || component.type === 'Fieldset') && 'components' in component.config;
+  return (
+    component !== undefined &&
+    (component.type === 'Layout' || component.type === 'Fieldset' || component.type == 'Panel') &&
+    'components' in component.config
+  );
 };
 
 export const isTable = (component?: Component | ComponentData): component is LayoutConfig => {
