@@ -1,7 +1,6 @@
 import type { Button, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
-import { IvyIcons } from '@axonivy/ui-icons/lib';
 import { baseComponentFields, defaultBaseComponent } from '../base';
 import IconSvg from './Button.svg?react';
 
@@ -21,11 +20,6 @@ export const defaultButtonProps: Button = {
   ...defaultBaseComponent
 } as const;
 
-const iconOptions: FieldOption<`ivy ivy-${IvyIcons}`>[] = (Object.keys(IvyIcons) as (keyof typeof IvyIcons)[]).map(key => ({
-  label: key,
-  value: `ivy ivy-${IvyIcons[key]}`
-}));
-
 export const ButtonComponent: ComponentConfig<ButtonProps> = {
   name: 'Button',
   category: 'Action',
@@ -40,7 +34,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
     name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: ['CMS'] },
     action: { subsection: 'General', label: 'Action', type: 'textBrowser', browsers: ['LOGIC'] },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
-    icon: { subsection: 'General', label: 'Icon', type: 'select', options: iconOptions },
+    icon: { subsection: 'General', label: 'Icon', type: 'hidden' },
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS

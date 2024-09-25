@@ -10,21 +10,17 @@ test('default', async ({ page }) => {
   const name = section.input({ label: 'Name' });
   const action = section.input({ label: 'Action' });
   const variant = section.select({ label: 'Variant' });
-  const icon = section.select({ label: 'Icon' });
 
   await name.expectValue('Action');
   await action.expectValue('');
   await variant.expectValue('Primary');
-  await icon.expectValue('Select an option');
   await name.fill('Cancel');
   await action.fill('#{locig.close}');
   await variant.choose('Secondary');
-  await icon.choose('Home');
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await name.expectValue('Cancel');
   await action.expectValue('#{locig.close}');
   await variant.expectValue('Secondary');
-  await icon.expectValue('Home');
 });

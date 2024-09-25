@@ -1,4 +1,4 @@
-import type { Prettify, Text, TextIconStyle, TextType } from '@axonivy/form-editor-protocol';
+import type { Prettify, Text, TextType } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Text.css';
 import { baseComponentFields, defaultBaseComponent } from '../base';
@@ -12,11 +12,6 @@ const typeOptions: FieldOption<TextType>[] = [
   { label: 'Text', value: 'RAW' },
   { label: 'Markdown', value: 'MARKDOWN' }
 ] as const;
-
-const iconOptions: FieldOption<TextIconStyle>[] = [
-  { label: 'Inline', value: 'INLINE' },
-  { label: 'Block', value: 'BLOCK' }
-];
 
 export const defaultTextProps: TextProps = {
   icon: '',
@@ -39,8 +34,8 @@ export const TextComponent: ComponentConfig<TextProps> = {
   fields: {
     content: { subsection: 'General', label: 'Content', type: 'textarea' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
-    icon: { subsection: 'Icon', label: 'Icon', type: 'text' },
-    iconStyle: { subsection: 'Icon', label: 'Icon style', type: 'select', options: iconOptions },
+    icon: { subsection: 'Icon', label: 'Icon', type: 'hidden' },
+    iconStyle: { subsection: 'Icon', label: 'Icon style', type: 'hidden' },
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
