@@ -39,7 +39,10 @@ export const InputFieldWithBrowser = ({
           </DialogTrigger>
         </InputGroup>
       </BasicField>
-      <DialogContent style={{ height: '80vh' }} onCloseAutoFocus={e => focusBracketContent(e, value, inputRef.current)}>
+      <DialogContent
+        style={{ height: '80vh' }}
+        onCloseAutoFocus={activeBrowsers.includes(logicBrowser) ? e => focusBracketContent(e, value, inputRef.current) : undefined}
+      >
         <BrowsersView
           browsers={activeBrowsers}
           apply={(browserName, result) => {

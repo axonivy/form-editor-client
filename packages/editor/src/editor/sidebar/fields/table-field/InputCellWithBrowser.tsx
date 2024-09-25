@@ -10,5 +10,5 @@ type InputCellProps<TData> = InputProps & {
 export const InputCellWithBrowser = <TData,>({ cell }: InputCellProps<TData>) => {
   const { value, setValue, onBlur } = useEditCell(cell);
 
-  return <InputFieldWithBrowser label='' onChange={setValue} value={value} onBlur={onBlur} browsers={['ATTRIBUTE']} />;
+  return <InputFieldWithBrowser label='' onChange={setValue} value={value} onBlur={onBlur} browsers={['ATTRIBUTE', 'CMS']} />;
 };
