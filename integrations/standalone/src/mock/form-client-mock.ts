@@ -123,8 +123,8 @@ const data: FormData = {
       }
     },
     {
-      id: 'Fieldset-dd040544-90c6-47e3-867a-ee310c74391c',
-      type: 'Fieldset',
+      id: 'Group-dd040544-90c6-47e3-867a-ee310c74391c',
+      type: 'Group',
       config: {
         legend: 'Legend',
         collapsible: true,

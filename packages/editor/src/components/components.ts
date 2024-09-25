@@ -15,7 +15,7 @@ import { DatePickerComponent } from './blocks/datepicker/DatePicker';
 import { TextareaComponent } from './blocks/textarea/Textarea';
 import { DataTableComponent } from './blocks/datatable/DataTable';
 import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
-import { FieldsetComponent } from './blocks/fieldset/Fieldset';
+import { GroupComponent } from './blocks/group/Group';
 import { findParentTableComponent } from '../data/data';
 import { CompositeComponent } from './blocks/composite/Composite';
 
@@ -34,7 +34,7 @@ const config: Config = {
     Layout: LayoutComponent,
     DataTable: DataTableComponent,
     DataTableColumn: DataTableColumnComponent,
-    Fieldset: FieldsetComponent,
+    Group: GroupComponent,
     Composite: CompositeComponent
   }
 } as const;

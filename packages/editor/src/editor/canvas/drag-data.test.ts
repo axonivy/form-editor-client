@@ -14,7 +14,7 @@ describe('dragData', () => {
     expectDragData(dragData(data.components[2]), ['31', '32', '33']);
   });
 
-  test('fieldset', () => {
+  test('group', () => {
     const data = filledData();
     expectDragData(dragData(data.components[3]), ['41', '42', '43']);
   });
@@ -56,7 +56,7 @@ const filledData = () => {
       },
       {
         id: '4',
-        type: 'Fieldset',
+        type: 'Group',
         config: {
           legend: 'Legend',
           collapsible: true,

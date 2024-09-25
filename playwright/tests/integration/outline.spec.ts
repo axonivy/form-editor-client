@@ -15,7 +15,7 @@ test('outline', async ({ page }) => {
   await expect(rows[7]).toHaveText('LayoutFLEX');
   await expect(rows[8]).toHaveText('ButtonCancel');
   await expect(rows[9]).toHaveText('ButtonProceed');
-  await expect(rows[10]).toHaveText('FieldsetLegend');
+  await expect(rows[10]).toHaveText('GroupLegend');
   await expect(rows[11]).toHaveText('InputTitle');
 });
 

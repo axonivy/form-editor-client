@@ -281,7 +281,7 @@ const filledData = () => {
       },
       {
         id: '4',
-        type: 'Fieldset',
+        type: 'Group',
         config: {
           legend: 'Legend',
           collapsible: true,

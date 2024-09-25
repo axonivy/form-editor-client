@@ -35,7 +35,7 @@ export interface Component {
     | 'Composite'
     | 'DataTable'
     | 'DatePicker'
-    | 'Fieldset'
+    | 'Group'
     | 'Input'
     | 'Layout'
     | 'Link'
@@ -50,7 +50,7 @@ export interface Component {
     | Composite
     | DataTable
     | DatePicker
-    | Fieldset
+    | Group
     | Input
     | Layout
     | Link
@@ -120,7 +120,7 @@ export interface DatePicker {
   timePattern: string;
   value: string;
 }
-export interface Fieldset {
+export interface Group {
   style: GroupStyle;
   collapsed: boolean;
   collapsible: boolean;

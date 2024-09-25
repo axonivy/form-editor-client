@@ -1,24 +1,23 @@
-import type { Fieldset, GroupStyle, Prettify } from '@axonivy/form-editor-protocol';
+import type { Group, GroupStyle, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
-import IconSvg from './Fieldset.svg?react';
+import IconSvg from './Group.svg?react';
 import { defaultBaseComponent, baseComponentFields } from '../base';
 import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
 import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
-import './Fieldset.css';
-import { useState } from 'react';
+import './Group.css';
 import { IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 
-type FieldsetProps = Prettify<Fieldset>;
+type GroupProps = Prettify<Group>;
 
-export const defaultFieldsetProps: FieldsetProps = {
+export const defaultGroupProps: GroupProps = {
   components: [],
   legend: 'Title',
   disabled: false,
   collapsible: false,
   collapsed: false,
-  style: 'CARD',
+  style: 'FIELDSET',
   ...defaultBaseComponent
 };
 
@@ -27,21 +26,21 @@ const styleOptions: FieldOption<GroupStyle>[] = [
   { label: 'Card', value: 'CARD' }
 ];
 
-export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
-  name: 'Fieldset',
+export const GroupComponent: ComponentConfig<GroupProps> = {
+  name: 'Group',
   category: 'Structure',
   subcategory: 'General',
   icon: <IconSvg />,
   description: 'A group of inputs',
-  defaultProps: defaultFieldsetProps,
+  defaultProps: defaultGroupProps,
   quickActions: DEFAULT_QUICK_ACTIONS,
   render: props => <UiBlock {...props} />,
-  create: ({ defaultProps }) => ({ ...defaultFieldsetProps, ...defaultProps }),
+  create: ({ defaultProps }) => ({ ...defaultGroupProps, ...defaultProps }),
   outlineInfo: component => component.legend,
   fields: {
     components: { subsection: 'General', type: 'hidden' },
-    style: { subsection: 'General', label: 'Style', type: 'select', options: styleOptions },
     legend: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+    style: { subsection: 'General', label: 'Style', type: 'select', options: styleOptions },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
     collapsed: { subsection: 'Behaviour', label: 'Default collapsed', type: 'checkbox' },
     disabled: { subsection: 'Behaviour', label: 'read-only', type: 'hidden' },
@@ -49,20 +48,7 @@ export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
   }
 };
 
-const UiBlock = ({ id, components, legend, collapsible, disabled, style }: UiComponentProps<FieldsetProps>) => {
-  enum State {
-    open,
-    close
-  }
-  const [cardState, setCardState] = useState(State[0]);
-  const invertState = () => {
-    if (cardState === 'open') {
-      setCardState(State[1]);
-    } else {
-      setCardState(State[0]);
-    }
-  };
-
+const UiBlock = ({ id, components, legend, collapsible, disabled, style }: UiComponentProps<GroupProps>) => {
   const content = (
     <>
       {components.map((component, index) => (
@@ -76,23 +62,21 @@ const UiBlock = ({ id, components, legend, collapsible, disabled, style }: UiCom
       />
     </>
   );
+
   if (style === 'CARD') {
     return (
-      <div className='card flex border'>
-        <div className='card-header flex'>
-          <h3 className='card-title' onClick={invertState}>
-            {legend}
-          </h3>
-          <IvyIcon icon={IvyIcons.Chevron} />
+      <div className='group group-flex group-border'>
+        <div className='card-header group-flex'>
+          <h3 className='card-title'>{legend}</h3>
+          <IvyIcon icon={IvyIcons.Chevron} className={`${collapsible ? '' : 'card-non-collapsible'}`} />
         </div>
-
-        <div className={`card-content card-${cardState}`}>{content}</div>
+        {content}
       </div>
     );
   }
   return (
-    <fieldset className={`${collapsible ? 'collapsible' : ''} border flex`} disabled={disabled}>
-      <legend className='border'>{legend}</legend>
+    <fieldset className={`group ${collapsible ? 'collapsible' : ''} group-border group-flex`} disabled={disabled}>
+      <legend className='group-border'>{legend}</legend>
       {content}
     </fieldset>
   );
