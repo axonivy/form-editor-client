@@ -1,4 +1,4 @@
-fieldset {
+.fieldset {
   border: var(--basic-border);
   color: var(--N900);
   padding: 1rem;
@@ -8,18 +8,15 @@ fieldset {
   gap: var(--size-4);
 }
 
-fieldset.collapsible {
+.fieldset-header {
   cursor: pointer;
-}
-
-fieldset.collapsible > legend:before {
-  content: '-';
-  padding: 0 5px 0 0;
-}
-
-legend {
-  border: var(--basic-border);
-  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   font-weight: 700;
   border-radius: 4px;
+}
+
+.fieldset-non-collapsible {
+  visibility: collapse;
 }

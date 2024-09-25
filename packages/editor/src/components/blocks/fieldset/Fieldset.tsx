@@ -6,6 +6,8 @@ import { defaultBaseComponent, baseComponentFields } from '../base';
 import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
 import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
 import './Fieldset.css';
+import { IvyIcon } from '@axonivy/ui-components';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 type FieldsetProps = Prettify<Fieldset>;
 
@@ -40,8 +42,11 @@ export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
 };
 
 const UiBlock = ({ id, components, legend, collapsible, disabled }: UiComponentProps<FieldsetProps>) => (
-  <fieldset className={`${collapsible ? 'collapsible' : ''}`} disabled={disabled}>
-    <legend>{legend}</legend>
+  <div className='fieldset'>
+    <div className='fieldset-header'>
+      {legend}
+      <IvyIcon icon={IvyIcons.Chevron} className={`${collapsible ? '' : 'fieldset-non-collapsible'}`} />
+    </div>
     {components.map((component, index) => (
       <ComponentBlock key={component.id} component={component} preId={components[index - 1]?.id} />
     ))}
@@ -51,5 +56,5 @@ const UiBlock = ({ id, components, legend, collapsible, disabled }: UiComponentP
       forLayout={true}
       dragHint={{ display: components.length === 0, message: 'Drag first element inside the fieldset', mode: 'row' }}
     />
-  </fieldset>
+  </div>
 );
