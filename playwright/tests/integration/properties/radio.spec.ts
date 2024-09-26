@@ -16,8 +16,9 @@ test('default', async ({ page }) => {
   const list = dynamicOptions.input({ label: 'List of objects' });
   const itemLabel = dynamicOptions.input({ label: 'Object Label' });
   const itemValue = dynamicOptions.input({ label: 'Object Value' });
+  const behaviour = properties.behaviour();
 
-  await label.expectValue('Label');
+  await label.expectValue('Radio');
   await value.expectValue('');
   await oriantation.expectValue('Horizontal');
   await table.row(0).expectValues(['Option 1', 'Option 1']);
@@ -32,6 +33,7 @@ test('default', async ({ page }) => {
   await list.fill('#{data.list}');
   await itemLabel.fill('label');
   await itemValue.fill('value');
+  await behaviour.fillRequired();
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
@@ -41,4 +43,5 @@ test('default', async ({ page }) => {
   await list.expectValue('#{data.list}');
   await itemLabel.expectValue('label');
   await itemValue.expectValue('value');
+  await behaviour.expectRequired();
 });

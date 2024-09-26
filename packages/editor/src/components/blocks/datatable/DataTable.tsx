@@ -1,7 +1,7 @@
 import type { DataTable, DataTableColumnComponent, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './DataTable.css';
-import { baseComponentFields, defaultBaseComponent } from '../base';
+import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } from '../base';
 import IconSvg from './DataTable.svg?react';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { useAppContext } from '../../../context/AppContext';
@@ -11,6 +11,7 @@ import { findAttributesOfType } from '../../../data/variable-tree-data';
 import { componentByName } from '../../components';
 import { createInitiTableColumns } from '../../../data/data';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type DataTableProps = Prettify<DataTable>;
 
@@ -19,6 +20,7 @@ export const defaultDataTableProps: DataTable = {
   value: '',
   paginator: false,
   maxRows: '10',
+  ...defaultVisibleComponent,
   ...defaultBaseComponent
 } as const;
 
@@ -43,18 +45,17 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
     components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'selectColums' },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
+    ...visibleComponentField,
     ...baseComponentFields
   },
   quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN']
 };
 
-const UiBlock = ({ id, components, value, paginator, maxRows }: UiComponentProps<DataTableProps>) => (
+const UiBlock = ({ id, components, value, paginator, maxRows, visible }: UiComponentProps<DataTableProps>) => (
   <>
     <div className='block-table'>
-      <div className='block-table__label'>
-        <span style={{ color: 'var(--N600)' }}>{value.length > 0 ? value : 'value is empty'}</span>
-        {paginator && maxRows !== '' && <span style={{ color: 'var(--N600)' }}>Rows per Page: {maxRows}</span>}
-      </div>
+      <UiBlockHeader visible={visible} additionalInfo={paginator ? `Rows per Page: ${maxRows}` : ''} />
+
       {components.length > 0 && (
         <div className='block-table__columns'>
           {components.map((column, index) => {

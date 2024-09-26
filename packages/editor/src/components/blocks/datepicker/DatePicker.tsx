@@ -1,17 +1,19 @@
 import type { DatePicker, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './DatePicker.css';
-import { baseComponentFields, defaultBaseComponent } from '../base';
+import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
 import IconSvg from './DatePicker.svg?react';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type DatePickerProps = Prettify<DatePicker>;
 
-export const defaultInputProps: DatePicker = {
-  label: 'Label',
+export const defaultDatePickerProps: DatePicker = {
+  label: 'Date Picker',
   value: '',
   datePattern: 'dd.MM.yyyy',
   timePattern: 'HH:mm',
   showTime: false,
+  ...defaultBehaviourComponent,
   ...defaultBaseComponent
 } as const;
 
@@ -21,9 +23,9 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
   subcategory: 'Input',
   icon: <IconSvg />,
   description: 'A datepicker with label for date or datetime',
-  defaultProps: defaultInputProps,
+  defaultProps: defaultDatePickerProps,
   render: props => <UiBlock {...props} />,
-  create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
+  create: ({ label, value, ...defaultProps }) => ({ ...defaultDatePickerProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
@@ -37,14 +39,15 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
       options: { placeholder: 'e.g. HH:mm' },
       hide: data => !data.showTime
     },
+    ...behaviourComponentFields,
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, value, datePattern, timePattern, showTime }: UiComponentProps<DatePickerProps>) => (
+const UiBlock = ({ label, value, datePattern, timePattern, showTime, visible, required, disabled }: UiComponentProps<DatePickerProps>) => (
   <div className='block-input'>
-    <span className='block-input__label'>{label}</span>
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
     <span className='block-input__input'>
       {value === '' ? (showTime ? datePattern + ' ' + timePattern : datePattern) : value}
       <svg width='17' height='17' viewBox='0 0 17 17' fill='none' xmlns='http://www.w3.org/2000/svg'>

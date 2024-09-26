@@ -85,6 +85,6 @@ test.describe('quickbar', () => {
     await canvas.expectFormOrder(['Firstname', 'Lastname', 'Address']);
     await canvas.blockByText('Firstname').quickAction('All Components');
     await page.getByRole('button', { name: 'Input' }).click();
-    await canvas.expectFormOrder(['Label', 'Firstname', 'Lastname', 'Address']);
+    await canvas.expectFormOrder(['Input', 'Firstname', 'Lastname', 'Address']);
   });
 });

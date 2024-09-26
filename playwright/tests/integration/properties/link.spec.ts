@@ -9,14 +9,17 @@ test('default', async ({ page }) => {
   const general = properties.collapsible('General');
   const name = general.input({ label: 'Name' });
   const href = general.input({ label: 'Href' });
+  const behaviour = properties.behaviour();
 
   await name.expectValue('link');
   await href.expectValue('');
   await name.fill('axon home');
   await href.fill('www.axonivy.com');
+  await behaviour.fillVisible();
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await name.expectValue('axon home');
   await href.expectValue('www.axonivy.com');
+  await behaviour.expectVisible();
 });

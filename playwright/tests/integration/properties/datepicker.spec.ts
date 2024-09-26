@@ -12,8 +12,9 @@ test('default', async ({ page }) => {
   const datePattern = general.input({ label: 'Date Pattern' });
   const showTime = general.checkbox({ label: 'Show Time' });
   const timePattern = general.input({ label: 'Time Pattern' });
+  const behaviour = properties.behaviour();
 
-  await label.expectValue('Label');
+  await label.expectValue('Date Picker');
   await value.expectValue('');
   await datePattern.expectValue('dd.MM.yyyy');
   await showTime.expectValue(false);
@@ -25,6 +26,7 @@ test('default', async ({ page }) => {
   await expect(timePattern.locator).not.toBeHidden();
   await timePattern.expectValue('HH:mm');
   await timePattern.fill('HH:mm:ss');
+  await behaviour.fillRequired();
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
@@ -33,4 +35,5 @@ test('default', async ({ page }) => {
   await datePattern.expectValue('dd/MM/yy');
   await showTime.expectValue(true);
   await timePattern.expectValue('HH:mm:ss');
+  await behaviour.expectRequired();
 });

@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
-  const { editor, type, columns, justify } = await layout(page);
+  const { editor, type, columns, justify, behaviour } = await layout(page);
   await type.expectValue('Grid');
   await columns.expectValue('2 Columns');
   await expect(justify.locator).toBeHidden();
@@ -10,6 +10,7 @@ test('default', async ({ page }) => {
   await expect(columns.locator).toBeHidden();
   await expect(justify.locator).toBeVisible();
   await justify.choose('End');
+  await behaviour.fillVisible();
 
   await reload(editor);
   await type.expectValue('Flex');
@@ -22,6 +23,7 @@ test('default', async ({ page }) => {
   await type.expectValue('Grid');
   await columns.expectValue('Free');
   await expect(justify.locator).toBeHidden();
+  await behaviour.expectVisible();
 });
 
 test('children in free layout', async ({ page }) => {
@@ -68,7 +70,8 @@ const layout = async (page: Page) => {
   const type = section.select({ label: 'Type' });
   const columns = section.select({ label: 'Columns' });
   const justify = section.select({ label: 'Justify content' });
-  return { editor, layoutBlock, properties, type, columns, justify };
+  const behaviour = properties.behaviour();
+  return { editor, layoutBlock, properties, type, columns, justify, behaviour };
 };
 
 const reload = async (editor: FormEditor) => {

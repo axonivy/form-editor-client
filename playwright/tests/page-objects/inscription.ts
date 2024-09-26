@@ -1,6 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { Outline } from './outline';
 import { Browser } from './browser';
+import { DisableInput, RequiredInput, VisibleInput } from './behaviourSection';
 
 export class Inscription {
   protected readonly page: Page;
@@ -54,9 +55,24 @@ class Accordion {
   collapsible(title: string) {
     return new Collapsible(this.page, this.content, title);
   }
+
+  behaviour() {
+    const behaviourSection = this.collapsible('Behaviour');
+    return new RequiredInput(behaviourSection);
+  }
+
+  disabledBehaviour() {
+    const behaviourSection = this.collapsible('Behaviour');
+    return new DisableInput(behaviourSection);
+  }
+
+  visibleBehaviour() {
+    const behaviourSection = this.collapsible('Behaviour');
+    return new VisibleInput(behaviourSection);
+  }
 }
 
-class Collapsible {
+export class Collapsible {
   protected readonly page: Page;
   protected readonly collapsible: Locator;
   protected readonly trigger: Locator;
@@ -125,7 +141,7 @@ class Select {
   }
 }
 
-class Input {
+export class Input {
   readonly locator: Locator;
 
   constructor(readonly page: Page, readonly parentLocator: Locator, options?: { label?: string; nth?: number; type?: string }) {

@@ -10,6 +10,7 @@ test('default', async ({ page }) => {
   const name = section.input({ label: 'Name' });
   const action = section.input({ label: 'Action' });
   const variant = section.select({ label: 'Variant' });
+  const behaviour = properties.behaviour();
 
   await name.expectValue('Action');
   await action.expectValue('');
@@ -17,10 +18,12 @@ test('default', async ({ page }) => {
   await name.fill('Cancel');
   await action.fill('#{locig.close}');
   await variant.choose('Secondary');
+  await behaviour.fillDisable();
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await name.expectValue('Cancel');
   await action.expectValue('#{locig.close}');
   await variant.expectValue('Secondary');
+  await behaviour.excpectDisabled();
 });

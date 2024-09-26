@@ -1,8 +1,9 @@
 import type { Button, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
-import { baseComponentFields, defaultBaseComponent } from '../base';
+import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
 import IconSvg from './Button.svg?react';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type ButtonProps = Prettify<Button>;
 
@@ -17,6 +18,7 @@ export const defaultButtonProps: Button = {
   action: '',
   variant: 'PRIMARY',
   icon: '',
+  ...defaultDisabledComponent,
   ...defaultBaseComponent
 } as const;
 
@@ -35,14 +37,18 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
     action: { subsection: 'General', label: 'Action', type: 'textBrowser', browsers: ['LOGIC'] },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
     icon: { subsection: 'General', label: 'Icon', type: 'hidden' },
+    ...disabledComponentFields,
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ name, icon, variant }: UiComponentProps<ButtonProps>) => (
-  <button className='block-button' data-variant={variant.toLocaleLowerCase()}>
-    {icon && <i className={icon} />}
-    <span>{name}</span>
-  </button>
+const UiBlock = ({ name, icon, variant, visible, disabled }: UiComponentProps<ButtonProps>) => (
+  <>
+    <UiBlockHeader visible={visible} disabled={disabled} />
+    <button className='block-button' data-variant={variant.toLocaleLowerCase()}>
+      {icon && <i className={icon} />}
+      <span>{name}</span>
+    </button>
+  </>
 );

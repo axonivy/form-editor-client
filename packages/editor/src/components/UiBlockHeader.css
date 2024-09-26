@@ -1,0 +1,8 @@
+.header-block__label {
+  width: 100%;
+}
+
+.canvas[data-help-paddings='false'] .header-block__indicators,
+.canvas[data-help-paddings='false'] .header-block__visible {
+  display: none;
+}
