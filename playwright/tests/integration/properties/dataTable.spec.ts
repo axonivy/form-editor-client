@@ -6,11 +6,12 @@ test('default', async ({ page }) => {
   await editor.canvas.blockByNth(0).quickAction('Create Column');
   const table = editor.canvas.blockByNth(0, { datatable: true });
 
-  await table.block.locator('.block-table__label').dblclick();
+  await table.block.locator('.header-block__label').dblclick();
   await editor.inscription.expectHeader('DataTable');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
   const listOfObjects = section.input({ label: 'List of Objects' });
+  const behaviour = properties.behaviour();
 
   const columnsSection = properties.collapsible('Columns');
   const columnHeader = columnsSection.checkbox({ label: 'header (unbound)' });
@@ -22,9 +23,12 @@ test('default', async ({ page }) => {
   await columnHeader.uncheck();
   await columnHeader.expectValue(false);
 
+  await behaviour.fillVisible();
+
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await listOfObjects.expectValue('#{data.locations}');
+  await behaviour.expectVisible();
 });
 
 test('dataTableColumn', async ({ page }) => {
@@ -36,16 +40,20 @@ test('dataTableColumn', async ({ page }) => {
   const section = properties.collapsible('General');
   const header = section.input({ label: 'Header' });
   const value = section.input({ label: 'Value' });
+  const behaviour = properties.behaviour();
 
   await header.expectValue('header');
   await value.expectValue('value');
   await header.fill('new header');
   await value.fill('title');
 
+  await behaviour.fillVisible();
+
   await page.reload();
   await editor.canvas.blockByNth(1).inscribe();
   await header.expectValue('new header');
   await value.expectValue('title');
+  await behaviour.expectVisible();
 });
 
 test('edit column and update table', async ({ page }) => {
@@ -65,7 +73,7 @@ test('edit column and update table', async ({ page }) => {
 
   const table = editor.canvas.blockByNth(0, { datatable: true });
 
-  await table.block.locator('.block-table__label').dblclick();
+  await table.block.locator('.header-block__label').dblclick();
   await editor.inscription.expectHeader('DataTable');
   const properties = editor.inscription.section('Properties');
 
@@ -81,7 +89,7 @@ test('columns from attribute', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const table = editor.canvas.blockByNth(0, { datatable: true });
 
-  await table.block.locator('.block-table__label').dblclick();
+  await table.block.locator('.header-block__label').dblclick();
   await editor.inscription.expectHeader('DataTable');
 
   const properties = editor.inscription.section('Properties');

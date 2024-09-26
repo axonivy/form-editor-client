@@ -24,12 +24,7 @@ export const useDataTableColumns = () => {
   const [activeColumnsHistory, setActiveColumnsHistory] = useState<DataTableColumn[]>(activeColumns);
 
   const boundSelectColumns = boundColumns.map<CheckboxColumn>(column => ({
-    ...column,
-    config: {
-      ...column.config,
-      filterable: activeColumnsHistory.find(col => isSameColumn(col, column))?.config.filterable ?? false,
-      sortable: activeColumnsHistory.find(col => isSameColumn(col, column))?.config.sortable ?? false
-    },
+    ...(activeColumnsHistory.find(col => isSameColumn(col, column)) ?? column),
     selected: activeColumns ? activeColumns.some(col => isSameColumn(col, column)) : false
   }));
   // eslint-disable-next-line react-hooks/exhaustive-deps

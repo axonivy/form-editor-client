@@ -1,20 +1,28 @@
 import type { Prettify, Select } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Select.css';
-import { baseComponentFields, defaultBaseComponent, selectItemsComponentFields } from '../base';
+import {
+  baseComponentFields,
+  behaviourComponentFields,
+  defaultBaseComponent,
+  defaultBehaviourComponent,
+  selectItemsComponentFields
+} from '../base';
 import IconSvg from './Select.svg?react';
 import { IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type SelectProps = Prettify<Select>;
 
 export const defaultInputProps: Select = {
-  label: 'Label',
+  label: 'Select',
   value: '',
   staticItems: [],
   dynamicItemsList: '',
   dynamicItemsLabel: '',
   dynamicItemsValue: '',
+  ...defaultBehaviourComponent,
   ...defaultBaseComponent
 } as const;
 
@@ -30,14 +38,15 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   outlineInfo: component => component.label,
   fields: {
     ...selectItemsComponentFields,
+    ...behaviourComponentFields,
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, value }: UiComponentProps<SelectProps>) => (
+const UiBlock = ({ label, value, visible, required, disabled }: UiComponentProps<SelectProps>) => (
   <div className='block-input'>
-    <span className='block-input__label'>{label}</span>
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
     <div className='block-input__input'>
       <span>{value}</span>
       <IvyIcon icon={IvyIcons.Chevron} rotate={90} />

@@ -1,13 +1,14 @@
 import type { Panel, Prettify } from '@axonivy/form-editor-protocol';
-import { baseComponentFields, defaultBaseComponent } from '../base';
+import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } from '../base';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import IconSvg from './Panel.svg?react';
-import { IvyIcon } from '@axonivy/ui-components';
+import { Flex, IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
 import './Panel.css';
+import { UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
 
 type PanelProps = Prettify<Panel>;
 
@@ -16,6 +17,7 @@ export const defaultPanelProps: PanelProps = {
   title: 'Title',
   collapsible: false,
   collapsed: false,
+  ...defaultVisibleComponent,
   ...defaultBaseComponent
 };
 
@@ -35,15 +37,19 @@ export const PanelComponent: ComponentConfig<PanelProps> = {
     title: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE', 'CMS'] },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
     collapsed: { subsection: 'Behaviour', label: 'Default collapsed', type: 'checkbox' },
+    ...visibleComponentField,
     ...baseComponentFields
   }
 };
 
-const UiBlock = ({ id, components, title, collapsible }: UiComponentProps<PanelProps>) => (
+const UiBlock = ({ id, components, title, collapsible, visible }: UiComponentProps<PanelProps>) => (
   <div className='i-panel'>
     <div className='i-panel-header'>
       {title}
-      <IvyIcon icon={IvyIcons.Plus} className={`${collapsible ? '' : 'i-panel-non-collapsible'}`} />
+      <Flex gap={1} alignItems='center'>
+        <UiBlockHeaderVisiblePart visible={visible} />
+        <IvyIcon icon={IvyIcons.Plus} className={`${collapsible ? '' : 'i-panel-non-collapsible'}`} />
+      </Flex>
     </div>
     {components.map((component, index) => (
       <ComponentBlock key={component.id} component={component} preId={components[index - 1]?.id} />

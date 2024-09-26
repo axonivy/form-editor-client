@@ -1,9 +1,16 @@
 import type { Prettify, Radio, OrientationType } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Radio.css';
-import { baseComponentFields, defaultBaseComponent, selectItemsComponentFields } from '../base';
+import {
+  baseComponentFields,
+  behaviourComponentFields,
+  defaultBaseComponent,
+  defaultBehaviourComponent,
+  selectItemsComponentFields
+} from '../base';
 import IconSvg from './Radio.svg?react';
 import { Field, Label, Message, RadioGroup, RadioGroupItem } from '@axonivy/ui-components';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type RadioProps = Prettify<Radio>;
 
@@ -13,7 +20,7 @@ const orientationOptions: FieldOption<OrientationType>[] = [
 ] as const;
 
 export const defaultInputProps: Radio = {
-  label: 'Label',
+  label: 'Radio',
   orientation: 'horizontal',
   value: '',
   staticItems: [
@@ -23,6 +30,7 @@ export const defaultInputProps: Radio = {
   dynamicItemsList: '',
   dynamicItemsLabel: '',
   dynamicItemsValue: '',
+  ...defaultBehaviourComponent,
   ...defaultBaseComponent
 } as const;
 
@@ -39,14 +47,15 @@ export const RadioComponent: ComponentConfig<RadioProps> = {
   fields: {
     ...selectItemsComponentFields,
     orientation: { subsection: 'General', label: 'Orientation', type: 'select', options: orientationOptions },
+    ...behaviourComponentFields,
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, staticItems, dynamicItemsList, orientation }: UiComponentProps<RadioProps>) => (
+const UiBlock = ({ label, staticItems, dynamicItemsList, orientation, visible, required, disabled }: UiComponentProps<RadioProps>) => (
   <div className='block-radio'>
-    <span className='block-radio-label'>{label}</span>
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
     <RadioGroup
       defaultValue={staticItems.length > 0 ? staticItems[0].value : dynamicItemsList !== '' ? dynamicItemsList : 'No Options defined'}
       orientation={orientation}

@@ -1,10 +1,11 @@
 import type { Prettify, Text, TextType } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Text.css';
-import { baseComponentFields, defaultBaseComponent } from '../base';
+import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } from '../base';
 import IconSvg from './Text.svg?react';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { IvyIcon } from '@axonivy/ui-components';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type TextProps = Prettify<Text>;
 
@@ -18,6 +19,7 @@ export const defaultTextProps: TextProps = {
   content: 'This is a text',
   type: 'RAW',
   iconStyle: 'INLINE',
+  ...defaultVisibleComponent,
   ...defaultBaseComponent
 } as const;
 
@@ -36,12 +38,13 @@ export const TextComponent: ComponentConfig<TextProps> = {
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     icon: { subsection: 'Icon', label: 'Icon', type: 'hidden' },
     iconStyle: { subsection: 'Icon', label: 'Icon style', type: 'hidden' },
+    ...visibleComponentField,
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ content, icon, iconStyle }: UiComponentProps<TextProps>) => {
+const UiBlock = ({ content, icon, iconStyle, visible }: UiComponentProps<TextProps>) => {
   if (icon && iconStyle == 'BLOCK') {
     return (
       <div className='text-icon-wrapper'>
@@ -51,9 +54,12 @@ const UiBlock = ({ content, icon, iconStyle }: UiComponentProps<TextProps>) => {
     );
   }
   return (
-    <p className='block-text'>
-      {icon && <IvyIcon icon={IvyIcons.InfoCircle} />}
-      {content}
-    </p>
+    <>
+      <UiBlockHeader visible={visible} />
+      <p className='block-text'>
+        {icon && <IvyIcon icon={IvyIcons.InfoCircle} />}
+        {content}
+      </p>
+    </>
   );
 };

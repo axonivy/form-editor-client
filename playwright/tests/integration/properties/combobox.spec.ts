@@ -14,8 +14,9 @@ test('default', async ({ page }) => {
   const itemLabel = options.input({ label: 'Item Label' });
   const itemValue = options.input({ label: 'Item Value' });
   const button = options.checkbox({ label: 'Add Dropdown-Button to Combobox' });
+  const behaviour = properties.behaviour();
 
-  await label.expectValue('Label');
+  await label.expectValue('Combobox');
   await value.expectValue('');
   await complete.expectValue('');
   await expect(itemLabel.locator).toBeHidden();
@@ -27,6 +28,7 @@ test('default', async ({ page }) => {
   await itemLabel.fill('label');
   await itemValue.fill('value');
   await button.check();
+  await behaviour.fillRequired();
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
@@ -36,4 +38,5 @@ test('default', async ({ page }) => {
   await itemLabel.expectValue('label');
   await itemValue.expectValue('value');
   await button.expectValue(true);
+  await behaviour.expectRequired();
 });

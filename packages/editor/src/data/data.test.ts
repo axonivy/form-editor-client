@@ -232,7 +232,7 @@ describe('findParentTableComponent', () => {
     const element: DataTableColumnComponent = {
       id: 'column-1',
       type: 'DataTableColumn',
-      config: { header: '', value: '', filterable: false, sortable: false }
+      config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }
     };
     expect(findParentTableComponent(data, element)).toEqual(dataTable);
   });
@@ -254,7 +254,7 @@ describe('findParentTableComponent', () => {
     const element: DataTableColumnComponent = {
       id: 'column-1',
       type: 'DataTableColumn',
-      config: { header: '', value: '', filterable: false, sortable: false }
+      config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }
     };
     expect(findParentTableComponent(noTableData, element)).toBeUndefined();
   });

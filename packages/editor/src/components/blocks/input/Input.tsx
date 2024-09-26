@@ -1,8 +1,9 @@
 import type { Input, InputType, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Input.css';
-import { baseComponentFields, defaultBaseComponent } from '../base';
+import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
 import IconSvg from './Input.svg?react';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type InputProps = Prettify<Input>;
 
@@ -14,10 +15,10 @@ const typeOptions: FieldOption<InputType>[] = [
 ] as const;
 
 export const defaultInputProps: Input = {
-  label: 'Label',
+  label: 'Input',
   value: '',
-  required: false,
   type: 'TEXT',
+  ...defaultBehaviourComponent,
   ...defaultBaseComponent
 } as const;
 
@@ -33,20 +34,17 @@ export const InputComponent: ComponentConfig<InputProps> = {
   outlineInfo: component => component.label,
   fields: {
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
-    required: { subsection: 'General', label: 'Required', type: 'checkbox' },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
+    ...behaviourComponentFields,
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, required, value }: UiComponentProps<InputProps>) => (
+const UiBlock = ({ label, required, visible, value, disabled }: UiComponentProps<InputProps>) => (
   <div className='block-input'>
-    <span className='block-input__label'>
-      {label}
-      {required && ' *'}
-    </span>
-    <span className='block-input__input'>{value}</span>
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
+    <span className={`block-input__input ${disabled === 'true' ? 'disabled' : ''}`}>{value}</span>
   </div>
 );

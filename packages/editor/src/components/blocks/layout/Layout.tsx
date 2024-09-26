@@ -3,10 +3,11 @@ import './Layout.css';
 import type { Layout, LayoutGridVariant, LayoutJustifyContent, LayoutType, Prettify } from '@axonivy/form-editor-protocol';
 import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { useAppContext } from '../../../context/AppContext';
-import { defaultBaseComponent, baseComponentFields } from '../base';
+import { defaultBaseComponent, baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
 import IconSvg from './Layout.svg?react';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
+import { UiBlockHeader } from '../../UiBlockHeader';
 
 type LayoutProps = Prettify<Layout>;
 
@@ -31,6 +32,7 @@ export const defaultLayoutProps: LayoutProps = {
   type: 'GRID',
   justifyContent: 'NORMAL',
   gridVariant: 'GRID2',
+  ...defaultVisibleComponent,
   ...defaultBaseComponent
 };
 
@@ -61,16 +63,18 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
       options: gridVariantOptions,
       hide: data => data.type !== 'GRID'
     },
+    ...visibleComponentField,
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ id, components, type, justifyContent, gridVariant }: UiComponentProps<LayoutProps>) => {
+const UiBlock = ({ id, components, type, justifyContent, gridVariant, visible }: UiComponentProps<LayoutProps>) => {
   const { ui } = useAppContext();
 
   return (
     <>
+      <UiBlockHeader visible={visible} />
       <div
         className={`block-layout${type === 'GRID' ? ' grid' : ' flex'}${
           justifyContent === 'END' ? ' justify-end' : ''
