@@ -5,7 +5,9 @@ import type {
   FormContext,
   FormClient,
   FormEditorData,
-  FormSaveDataArgs
+  FormSaveDataArgs,
+  FormActionArgs,
+  FormOnNotificationTypes
 } from '@axonivy/form-editor-protocol';
 import {
   BaseRpcClient,
@@ -41,11 +43,19 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
     return this.sendRequest(path, args);
   }
 
+  action(action: FormActionArgs): void {
+    this.sendNotification('action', action);
+  }
+
   sendRequest<K extends keyof FormRequestTypes>(command: K, args: FormRequestTypes[K][0]): Promise<FormRequestTypes[K][1]> {
     return args === undefined ? this.connection.sendRequest(command) : this.connection.sendRequest(command, args);
   }
 
-  onNotification<K extends keyof FormNotificationTypes>(kind: K, listener: (args: FormNotificationTypes[K]) => any): Disposable {
+  sendNotification<K extends keyof FormNotificationTypes>(command: K, args: FormNotificationTypes[K]): Promise<void> {
+    return this.connection.sendNotification(command, args);
+  }
+
+  onNotification<K extends keyof FormOnNotificationTypes>(kind: K, listener: (args: FormOnNotificationTypes[K]) => any): Disposable {
     return this.connection.onNotification(kind, listener);
   }
 

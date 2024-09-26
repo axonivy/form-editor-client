@@ -129,3 +129,9 @@ export interface ContentObject {
   type: ContentObjectType;
   values: MapStringString;
 }
+
+export interface FormActionArgs {
+  actionId: 'openDataClass' | 'openProcess';
+  payload: string;
+  context: FormContext;
+}

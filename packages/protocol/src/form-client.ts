@@ -1,5 +1,5 @@
 import type { FormMetaRequestTypes } from './form-protocol';
-import type { FormContext, FormEditorData, FormSaveDataArgs } from './data';
+import type { FormActionArgs, FormContext, FormEditorData, FormSaveDataArgs } from './data';
 
 export interface Event<T> {
   (listener: (e: T) => any, thisArgs?: any, disposables?: Disposable[]): Disposable;
@@ -17,6 +17,8 @@ export interface FormClient {
     path: TMeta,
     args: FormMetaRequestTypes[TMeta][0]
   ): Promise<FormMetaRequestTypes[TMeta][1]>;
+
+  action(action: FormActionArgs): void;
 
   onDataChanged: Event<void>;
 }
