@@ -26,6 +26,10 @@ export class Toolbar {
     return this.toolbar.locator('.palette-section');
   }
 
+  get dataButton() {
+    return this.toolbar.getByRole('button', { name: 'Create from data' });
+  }
+
   async changeMode(mode: 'mobile' | 'tablet' | 'desktop') {
     const deviceMode = this.toolbar.getByRole('group', { name: 'Device mode' });
     await deviceMode.getByRole('radio', { name: mode }).click();

@@ -35,13 +35,9 @@ test('add elements', async ({ page }) => {
 });
 
 test('data', async ({ page }) => {
-  const editor = await FormEditor.openForm(page, 'form/test/project/empty/empty');
-  const palette = await editor.toolbar.openPalette('Data');
-  await palette.expectSections(['data', 'data.address', 'data.address.location']);
-  await expect(palette.paletteItem('age')).toBeVisible();
-  await expect(palette.paletteItem('aproved')).toBeVisible();
-  await expect(palette.paletteItem('zip')).toBeVisible();
-  await expect(palette.paletteItem('street')).toBeVisible();
-  await expect(palette.paletteItem('geo')).toBeVisible();
-  await expect(palette.paletteItem('country')).toBeVisible();
+  const editor = await FormEditor.openNewForm(page);
+  const dataButton = editor.toolbar.dataButton;
+  await expect(dataButton).toBeVisible();
+  await dataButton.click();
+  await expect(page.getByRole('dialog', { name: 'Create from data' })).toBeVisible();
 });

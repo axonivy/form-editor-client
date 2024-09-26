@@ -24,10 +24,11 @@ import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover
 import { forwardRef, useEffect } from 'react';
 import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
-import { DataClassPalette } from './palette/data-class/DataClassPalette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
 import { useAction } from '../context/useAction';
+import { DataClassDialog } from './canvas/data-class/DataClassDialog';
+import { PaletteButton } from './palette/PaletteButton';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
@@ -98,9 +99,11 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           <PalettePopover label='Composite' icon={IvyIcons.File}>
             <CompositePalette />
           </PalettePopover>
-          <PalettePopover label='Data' icon={IvyIcons.DatabaseLink}>
-            <DataClassPalette />
-          </PalettePopover>
+          <PaletteButton text='Data'>
+            <DataClassDialog worfkflowButtonsInit={false}>
+              <Button icon={IvyIcons.DatabaseLink} size='large' aria-label='Create from data' />
+            </DataClassDialog>
+          </PaletteButton>
         </Flex>
       )}
 

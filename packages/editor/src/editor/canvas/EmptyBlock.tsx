@@ -1,7 +1,8 @@
-import { PanelMessage, cn, Flex } from '@axonivy/ui-components';
+import { PanelMessage, cn, Flex, Button } from '@axonivy/ui-components';
 import { DataClassDialog } from './data-class/DataClassDialog';
 import { DropZone } from './DropZone';
 import './EmptyBlock.css';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 type EmptyBlockProps = {
   id: string;
@@ -17,7 +18,11 @@ export const EmtpyBlock = ({ id, preId, forLayout, dragHint }: EmptyBlockProps) 
         <PanelMessage message={dragHint.message} mode={dragHint.mode} className={cn('drag-hint', dragHint.mode)} />
         {!forLayout && (
           <Flex justifyContent='center'>
-            <DataClassDialog />
+            <DataClassDialog>
+              <Button icon={IvyIcons.DatabaseLink} size='large' variant='outline'>
+                Create from data
+              </Button>
+            </DataClassDialog>
           </Flex>
         )}
       </>
