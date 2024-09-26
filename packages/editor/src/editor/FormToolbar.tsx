@@ -27,6 +27,7 @@ import { Palette } from './palette/Palette';
 import { DataClassPalette } from './palette/data-class/DataClassPalette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
+import { useAction } from '../context/useAction';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
@@ -41,6 +42,8 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
     }
   }, [selectedElement, setUi]);
   const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
+  const openDataClass = useAction('openDataClass');
+  const openProcess = useAction('openProcess');
   return (
     <Toolbar ref={ref} className='toolbar'>
       <Flex>
@@ -111,6 +114,8 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
             aria-label='Help Paddings'
           />
         )}
+        <Button aria-label='Open Data Class' icon={IvyIcons.DatabaseLink} size='large' onClick={() => openDataClass()} />
+        <Button aria-label='Open Process' icon={IvyIcons.Process} size='large' onClick={() => openProcess()} />
         <Popover>
           <PopoverTrigger asChild>
             <Button aria-label='Options' icon={IvyIcons.Settings} size='large' />

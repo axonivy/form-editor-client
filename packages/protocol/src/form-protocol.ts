@@ -2,6 +2,7 @@ import type {
   CmsMetaRequest,
   CompositeInfo,
   ContentObject,
+  FormActionArgs,
   FormContext,
   FormEditorData,
   FormSaveDataArgs,
@@ -22,5 +23,9 @@ export interface FormRequestTypes extends FormMetaRequestTypes {
 }
 
 export interface FormNotificationTypes {
+  action: FormActionArgs;
+}
+
+export interface FormOnNotificationTypes {
   dataChanged: void;
 }

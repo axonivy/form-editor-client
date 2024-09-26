@@ -1,5 +1,6 @@
 import {
   type Event,
+  type FormActionArgs,
   type FormClient,
   type FormData,
   type FormEditorData,
@@ -207,6 +208,10 @@ export class FormClientMock implements FormClient {
       default:
         throw Error('mock meta path not programmed');
     }
+  }
+
+  action(action: FormActionArgs): void {
+    console.log('action', action);
   }
 
   onDataChanged: Event<void>;
