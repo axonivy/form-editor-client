@@ -18,6 +18,7 @@ export const defaultButtonProps: Button = {
   action: '',
   variant: 'PRIMARY',
   icon: '',
+  processOnlySelf: false,
   ...defaultDisabledComponent,
   ...defaultBaseComponent
 } as const;
@@ -37,6 +38,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
     action: { subsection: 'General', label: 'Action', type: 'textBrowser', browsers: ['LOGIC'] },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
     icon: { subsection: 'General', label: 'Icon', type: 'hidden' },
+    processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
     ...disabledComponentFields,
     ...baseComponentFields
   },

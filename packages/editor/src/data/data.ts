@@ -214,7 +214,7 @@ export const createInitForm = (data: FormData, creates: Array<CreateComponentDat
       type: 'add',
       data: {
         componentName: 'Button',
-        create: { label: 'Cancel', value: '#{ivyWorkflowView.cancel()}', defaultProps: { variant: 'SECONDARY' } },
+        create: { label: 'Cancel', value: '#{ivyWorkflowView.cancel()}', defaultProps: { variant: 'SECONDARY', processOnlySelf: true } },
         targetId: layoutId
       }
     }).newData;
