@@ -67,6 +67,7 @@ export interface Button {
   lgSpan: string;
   mdSpan: string;
   name: string;
+  processOnlySelf: boolean;
   variant: ButtonVariant;
   visible: string;
 }
