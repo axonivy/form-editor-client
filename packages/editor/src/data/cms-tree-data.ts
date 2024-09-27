@@ -10,7 +10,7 @@ export const cmsTreeData = (contentObjects: ContentObject[]): Array<BrowserNode<
       icon: getIconForContentType(contentObject.type),
       children: contentObject.children.map(convertToBrowserNode),
       data: contentObject,
-      notSelectable: contentObject.type === 'FOLDER',
+      notSelectable: contentObject.type !== 'STRING',
       isLoaded: true
     };
   };
