@@ -12,6 +12,7 @@ export const defaultCheckboxProps: Checkbox = {
   label: 'Label',
   selected: 'true',
   ...defaultDisabledComponent,
+  updateOnChange: false,
   ...defaultBaseComponent
 } as const;
 
@@ -29,14 +30,15 @@ export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
     selected: { subsection: 'General', label: 'Selected', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     ...disabledComponentFields,
+    updateOnChange: { subsection: 'Behaviour', label: 'Update Form on Change', type: 'checkbox' },
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, selected, visible, disabled }: UiComponentProps<CheckboxProps>) => (
+const UiBlock = ({ label, selected, visible, disabled, updateOnChange }: UiComponentProps<CheckboxProps>) => (
   <>
-    <UiBlockHeader visible={visible} disabled={disabled} />
+    <UiBlockHeader visible={visible} disabled={disabled} updateOnChange={updateOnChange} />
     <div className='block-checkbox'>
       <BasicCheckbox label={label} checked={selected.toLowerCase() == 'false' ? false : true} />
     </div>

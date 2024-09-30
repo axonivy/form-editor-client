@@ -42,9 +42,9 @@ export const InputComponent: ComponentConfig<InputProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, required, visible, value, disabled }: UiComponentProps<InputProps>) => (
+const UiBlock = ({ label, required, visible, value, disabled, updateOnChange }: UiComponentProps<InputProps>) => (
   <div className='block-input'>
-    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <span className={`block-input__input ${disabled === 'true' ? 'disabled' : ''}`}>{value}</span>
   </div>
 );

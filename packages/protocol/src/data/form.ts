@@ -77,6 +77,7 @@ export interface Checkbox {
   lgSpan: string;
   mdSpan: string;
   selected: string;
+  updateOnChange: boolean;
   visible: string;
 }
 export interface Combobox {
@@ -89,6 +90,7 @@ export interface Combobox {
   mdSpan: string;
   required: string;
   requiredMessage: string;
+  updateOnChange: boolean;
   value: string;
   visible: string;
   withDropdown: boolean;
@@ -133,6 +135,7 @@ export interface DatePicker {
   requiredMessage: string;
   showTime: boolean;
   timePattern: string;
+  updateOnChange: boolean;
   value: string;
   visible: string;
 }
@@ -153,6 +156,7 @@ export interface Input {
   required: string;
   requiredMessage: string;
   type: InputType;
+  updateOnChange: boolean;
   value: string;
   visible: string;
 }
@@ -193,6 +197,7 @@ export interface Radio {
   required: string;
   requiredMessage: string;
   staticItems: SelectItem[];
+  updateOnChange: boolean;
   value: string;
   visible: string;
 }
@@ -211,6 +216,7 @@ export interface Select {
   required: string;
   requiredMessage: string;
   staticItems: SelectItem[];
+  updateOnChange: boolean;
   value: string;
   visible: string;
 }
@@ -232,6 +238,7 @@ export interface Textarea {
   required: string;
   requiredMessage: string;
   rows: string;
+  updateOnChange: boolean;
   value: string;
   visible: string;
 }

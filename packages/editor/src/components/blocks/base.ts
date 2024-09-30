@@ -12,7 +12,7 @@ type SelectItemsProps = {
 };
 type VisibleItemProps = { visible: string };
 type DisabledItemProps = VisibleItemProps & { disabled: string };
-type BehaviourItemProps = DisabledItemProps & { required: string; requiredMessage: string };
+type BehaviourItemProps = DisabledItemProps & { required: string; requiredMessage: string; updateOnChange: boolean };
 
 export const defaultVisibleComponent: VisibleItemProps = {
   visible: ''
@@ -26,7 +26,8 @@ export const defaultDisabledComponent: DisabledItemProps = {
 export const defaultBehaviourComponent: BehaviourItemProps = {
   ...defaultDisabledComponent,
   required: '',
-  requiredMessage: ''
+  requiredMessage: '',
+  updateOnChange: false
 } as const;
 
 export const defaultBaseComponent: BaseComponentProps = {
@@ -66,7 +67,8 @@ export const behaviourComponentFields: Fields<BehaviourItemProps> = {
     type: 'textBrowser',
     browsers: ['CMS'],
     hide: data => data.required.length === 0
-  }
+  },
+  updateOnChange: { subsection: 'Behaviour', label: 'Update Form on Change', type: 'checkbox' }
 };
 
 export const selectItemsComponentFields: Fields<SelectItemsProps> = {
