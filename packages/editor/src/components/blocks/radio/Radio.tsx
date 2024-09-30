@@ -53,9 +53,18 @@ export const RadioComponent: ComponentConfig<RadioProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, staticItems, dynamicItemsList, orientation, visible, required, disabled }: UiComponentProps<RadioProps>) => (
+const UiBlock = ({
+  label,
+  staticItems,
+  dynamicItemsList,
+  orientation,
+  visible,
+  required,
+  disabled,
+  updateOnChange
+}: UiComponentProps<RadioProps>) => (
   <div className='block-radio'>
-    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <RadioGroup
       defaultValue={staticItems.length > 0 ? staticItems[0].value : dynamicItemsList !== '' ? dynamicItemsList : 'No Options defined'}
       orientation={orientation}

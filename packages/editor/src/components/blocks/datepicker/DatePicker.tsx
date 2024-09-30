@@ -45,9 +45,19 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, value, datePattern, timePattern, showTime, visible, required, disabled }: UiComponentProps<DatePickerProps>) => (
+const UiBlock = ({
+  label,
+  value,
+  datePattern,
+  timePattern,
+  showTime,
+  visible,
+  required,
+  disabled,
+  updateOnChange
+}: UiComponentProps<DatePickerProps>) => (
   <div className='block-input'>
-    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <span className='block-input__input'>
       {value === '' ? (showTime ? datePattern + ' ' + timePattern : datePattern) : value}
       <svg width='17' height='17' viewBox='0 0 17 17' fill='none' xmlns='http://www.w3.org/2000/svg'>

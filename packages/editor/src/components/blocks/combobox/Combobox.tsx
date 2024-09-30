@@ -53,9 +53,9 @@ export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, value, visible, required, disabled }: UiComponentProps<ComboboxProps>) => (
+const UiBlock = ({ label, value, visible, required, disabled, updateOnChange }: UiComponentProps<ComboboxProps>) => (
   <div className='block-input'>
-    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <div className='block-input__input'>
       <span>{value}</span>
       <IvyIcon icon={IvyIcons.Chevron} rotate={90} />

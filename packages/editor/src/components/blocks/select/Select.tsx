@@ -44,9 +44,9 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, value, visible, required, disabled }: UiComponentProps<SelectProps>) => (
+const UiBlock = ({ label, value, visible, required, disabled, updateOnChange }: UiComponentProps<SelectProps>) => (
   <div className='block-input'>
-    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} />
+    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <div className='block-input__input'>
       <span>{value}</span>
       <IvyIcon icon={IvyIcons.Chevron} rotate={90} />

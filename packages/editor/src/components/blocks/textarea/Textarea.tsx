@@ -37,10 +37,17 @@ export const TextareaComponent: ComponentConfig<TextareaProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, value, rows, autoResize, visible, required, disabled }: UiComponentProps<TextareaProps>) => {
+const UiBlock = ({ label, value, rows, autoResize, visible, required, disabled, updateOnChange }: UiComponentProps<TextareaProps>) => {
   return (
     <div className='block-textarea'>
-      <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} additionalInfo={rows + ' rows'} />
+      <UiBlockHeader
+        visible={visible}
+        label={label}
+        required={required}
+        disabled={disabled}
+        additionalInfo={rows + ' rows'}
+        updateOnChange={updateOnChange}
+      />
       <div className='block-textarea__input-wrapper'>
         <span className='block-textarea__input'>{value}</span>
         {!autoResize && <div className='resize-icon' />}
