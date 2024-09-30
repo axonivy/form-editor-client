@@ -2,7 +2,7 @@ import { BasicField, Input, type MessageData } from '@axonivy/ui-components';
 import type { TextFieldOptions } from '../../../types/config';
 
 export type InputFieldProps = {
-  label: string;
+  label?: string;
   value: string;
   onChange: (value: string) => void;
   onBlur?: () => void;

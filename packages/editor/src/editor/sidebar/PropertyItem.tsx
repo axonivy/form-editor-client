@@ -9,6 +9,7 @@ import { InputField } from './fields/InputField';
 import { InputFieldWithBrowser } from './fields/InputFieldWithBrowser';
 import { SelectTableField } from './fields/table-field/SelectTableField';
 import { ColumnsCheckboxField } from './fields/datatable-columns/ColumnsCheckboxField';
+import { InputFieldWithConditionBuilder } from './fields/condition-builder/InputFieldWithConditionBuilder';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
@@ -42,6 +43,8 @@ export const PropertyItem = ({ value: initValue, onChange, field }: PropertyItem
             options={field.options}
           />
         );
+      case 'textConditionBuilder':
+        return <InputFieldWithConditionBuilder label={label} value={toString(value)} onChange={updateValue} />;
       case 'selectTable':
         return <SelectTableField label={label} data={toSelectItems(value)} onChange={updateValue} />;
       case 'selectColums':

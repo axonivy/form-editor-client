@@ -40,10 +40,11 @@ export type Browser = 'ATTRIBUTE' | 'LOGIC' | 'CMS';
 export type TextBrowserFieldOptions = TextFieldOptions & {
   onlyTypesOf?: string;
   onlyAttributes?: OnlyAttributeSelection;
+  directApply?: boolean;
 };
 
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
-  type: 'text' | 'number' | 'textarea' | 'checkbox';
+  type: 'text' | 'number' | 'textarea' | 'checkbox' | 'textConditionBuilder';
   options?: TextFieldOptions;
 };
 
