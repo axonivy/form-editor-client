@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>form.test.project</groupId>
   <artifactId>form-test-project</artifactId>
@@ -9,7 +11,7 @@
   <properties>
     <engine.test.app>ivy-dev-form-test</engine.test.app>
     <engine.test.ws>form-test</engine.test.ws>
-    <engine.dir>../.ivy-engine</engine.dir>
+    <engine.dir>${project.build.directory}/ivyEngine</engine.dir>
     <project.build.plugin.version>11.4.0-SNAPSHOT</project.build.plugin.version>
     <engine.page.url>https://product.ivyteam.io/</engine.page.url>
     <webtest.cmd>webtest</webtest.cmd>
@@ -39,7 +41,8 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${engine.dir}/neo-designer-workspaces/${engine.test.ws}/form-test-project</outputDirectory>
+              <outputDirectory>
+                ${engine.dir}/neo-designer-workspaces/${engine.test.ws}/form-test-project</outputDirectory>
               <resources>
                 <resource>
                   <directory>.</directory>
