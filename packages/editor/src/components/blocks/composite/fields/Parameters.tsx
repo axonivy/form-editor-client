@@ -1,4 +1,4 @@
-import { capitalize, Message } from '@axonivy/ui-components';
+import { capitalize, Flex, Message } from '@axonivy/ui-components';
 import type { GenericFieldProps } from '../../../../types/config';
 import { useMeta } from '../../../../context/useMeta';
 import { useAppContext } from '../../../../context/AppContext';
@@ -20,10 +20,12 @@ const Parameters = ({ value, onChange }: GenericFieldProps) => {
   const method = useMeta('meta/composite/all', context, [])
     .data.find(composite => isComposite(element) && composite.id === element?.config.name)
     ?.startMethods.find(method => isComposite(element) && method.name === element?.config.startMethod);
+  const params = useMeta('meta/composite/params', { context, compositeId: isComposite(element) ? element.config.name : '' }, []).data;
+
   if (!isStringRecord(value)) {
     return null;
   }
-  if (method === undefined || method?.parameters.length === 0) {
+  if (method === undefined || (method?.parameters.length === 0 && params.length === 0)) {
     return <Message variant='info' message='No parameters' />;
   }
   const updateValue = (key: string, newValue: string) => {
@@ -31,7 +33,7 @@ const Parameters = ({ value, onChange }: GenericFieldProps) => {
     onChange(value);
   };
   return (
-    <>
+    <Flex direction='column' gap={2}>
       {method.parameters.map(param => (
         <InputFieldWithBrowser
           key={param.name}
@@ -43,6 +45,17 @@ const Parameters = ({ value, onChange }: GenericFieldProps) => {
           options={{ onlyTypesOf: param.type }}
         />
       ))}
-    </>
+      {params.map(param => (
+        <InputFieldWithBrowser
+          key={param.name}
+          label={capitalize(param.name)}
+          value={value[param.name]}
+          onChange={change => updateValue(param.name, change)}
+          browsers={['ATTRIBUTE']}
+          message={{ variant: 'description', message: param.description }}
+          options={{ onlyTypesOf: param.type }}
+        />
+      ))}
+    </Flex>
   );
 };

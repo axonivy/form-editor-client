@@ -1,4 +1,4 @@
-import type { FormData } from '../data';
+import type { FormData } from '../data/form-data';
 
 export const EMPTY_FORM: FormData = {
   id: 'empty',

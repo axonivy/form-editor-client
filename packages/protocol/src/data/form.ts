@@ -18,11 +18,13 @@ export type TextType = "RAW" | "MARKDOWN";
 
 export interface Forms {
   cmsMetaRequest: CmsMetaRequest;
+  compositeContext: CompositeContext;
   compositeInfo: CompositeInfo[];
   contentObject: ContentObject[];
   form: Form;
   formContext: FormContext;
   logicInfo: LogicInfo;
+  parameterInfo: ParameterInfo[];
   variableInfo: VariableInfo;
   [k: string]: unknown;
 }
@@ -34,6 +36,10 @@ export interface FormContext {
   app: string;
   file: string;
   pmv: string;
+}
+export interface CompositeContext {
+  compositeId: string;
+  context: FormContext;
 }
 export interface CompositeInfo {
   id: string;

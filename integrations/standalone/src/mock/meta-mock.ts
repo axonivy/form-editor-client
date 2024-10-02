@@ -1,4 +1,4 @@
-import type { VariableInfo } from '@axonivy/form-editor-protocol';
+import type { CompositeInfo, ParameterInfo, VariableInfo } from '@axonivy/form-editor-protocol';
 
 export namespace MetaMock {
   export const ATTRIBUTES: VariableInfo = {
@@ -69,4 +69,30 @@ export namespace MetaMock {
       }
     ]
   };
+
+  export const COMPOSITES: Array<CompositeInfo> = [
+    {
+      id: 'form.test.project.AddressComponent',
+      startMethods: [
+        {
+          name: 'start',
+          parameters: [{ name: 'address', type: 'form.test.project.Address', description: 'Address for the component' }],
+          deprecated: false
+        },
+        { name: 'empty', parameters: [], deprecated: false }
+      ]
+    },
+    {
+      id: 'form.test.project.PersonComponent',
+      startMethods: [
+        {
+          name: 'start',
+          parameters: [{ name: 'person', type: 'form.test.project.Person', description: 'Person for the Component' }],
+          deprecated: false
+        }
+      ]
+    }
+  ];
+
+  export const COMPOSITE_PARAMS: Array<ParameterInfo> = [{ name: 'info', type: 'String', description: 'Information' }];
 }
