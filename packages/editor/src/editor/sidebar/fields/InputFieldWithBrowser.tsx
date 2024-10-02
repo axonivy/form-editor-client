@@ -31,7 +31,7 @@ export const InputFieldWithBrowser = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <BasicField label={label} message={message}>
+      <BasicField label={label} message={message} style={{ flex: '1' }}>
         <InputGroup>
           <Input ref={inputRef} value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
           <DialogTrigger asChild>
@@ -49,7 +49,7 @@ export const InputFieldWithBrowser = ({
             if (result && browserName === CMS_BROWSER_ID) {
               onChange(`${value}#{${result.value}}`);
             } else if (result) {
-              onChange(options?.onlyAttributes ? `${result.value}` : `#{${result.value}}`);
+              onChange(options?.onlyAttributes || options?.directApply ? `${result.value}` : `#{${result.value}}`);
             }
             setOpen(false);
           }}
