@@ -4,11 +4,11 @@ import { FormEditor } from '../page-objects/form-editor';
 test('change device mode', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const toolbar = editor.toolbar;
-  await toolbar.changeMode('mobile');
-  await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'mobile');
-  await toolbar.changeMode('tablet');
+  await toolbar.toggleChangeMode();
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'tablet');
-  await toolbar.changeMode('desktop');
+  await toolbar.toggleChangeMode();
+  await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'mobile');
+  await toolbar.toggleChangeMode();
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'desktop');
 });
 

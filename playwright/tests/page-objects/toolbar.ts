@@ -19,7 +19,7 @@ export class Toolbar {
   }
 
   get helpPaddings() {
-    return this.toolbar.getByRole('switch', { name: 'Help Paddings' });
+    return this.toolbar.getByRole('button', { name: 'Help Paddings' });
   }
 
   get palette() {
@@ -30,9 +30,8 @@ export class Toolbar {
     return this.toolbar.getByRole('button', { name: 'Create from data' });
   }
 
-  async changeMode(mode: 'mobile' | 'tablet' | 'desktop') {
-    const deviceMode = this.toolbar.getByRole('group', { name: 'Device mode' });
-    await deviceMode.getByRole('radio', { name: mode }).click();
+  async toggleChangeMode() {
+    await this.toolbar.getByRole('button', { name: 'Device mode' }).click();
   }
 
   async openPalette(name: string) {

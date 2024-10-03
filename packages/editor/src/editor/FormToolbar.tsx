@@ -12,8 +12,6 @@ import {
   Separator,
   Switch,
   Toolbar,
-  ToggleGroup,
-  ToggleGroupItem,
   ToolbarContainer,
   useReadonly,
   useTheme
@@ -21,7 +19,7 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
@@ -42,46 +40,53 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       setUi(old => ({ ...old, properties: false }));
     }
   }, [selectedElement, setUi]);
-  const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
   const openDataClass = useAction('openDataClass');
   const openProcess = useAction('openProcess');
+
+  const deviceModeProps = useMemo(() => {
+    const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
+    const title = `Device mode ${ui.deviceMode}`;
+    const icon =
+      ui.deviceMode === 'mobile' ? IvyIcons.DeviceMobile : ui.deviceMode === 'tablet' ? IvyIcons.DeviceTablet : IvyIcons.EventStart;
+    const nextDevice = ui.deviceMode === 'mobile' ? 'desktop' : ui.deviceMode === 'desktop' ? 'tablet' : 'mobile';
+    return { icon, title, 'aria-label': title, size: 'large', onClick: () => changeDeviceMode(nextDevice) } as const;
+  }, [setUi, ui.deviceMode]);
+
   return (
     <Toolbar ref={ref} className='toolbar'>
-      <Flex>
-        <ToggleGroup type='single' onValueChange={changeDeviceMode} defaultValue='desktop' gap={1} aria-label='Device mode'>
-          <ToggleGroupItem value='mobile' aria-label='mobile' asChild>
-            <Button icon={IvyIcons.DeviceMobile} size='large' />
-          </ToggleGroupItem>
-          <ToggleGroupItem value='tablet' aria-label='tablet' asChild>
-            <Button icon={IvyIcons.DeviceTablet} size='large' />
-          </ToggleGroupItem>
-          <ToggleGroupItem value='desktop' aria-label='desktop' asChild>
-            <Button icon={IvyIcons.EventStart} size='large' />
-          </ToggleGroupItem>
-        </ToggleGroup>
-
+      <Flex gap={1}>
+        <Button {...deviceModeProps} />
         {editable && (
-          <ToolbarContainer maxWidth={450}>
-            <Flex>
-              <Separator orientation='vertical' style={{ height: '26px' }} />
-              <Flex gap={1}>
-                <Button
-                  aria-label='Undo'
-                  icon={IvyIcons.Undo}
-                  size='large'
-                  onClick={() => history.undo(setUnhistoricisedData)}
-                  disabled={!history.canUndo}
-                />
-                <Button
-                  aria-label='Redo'
-                  icon={IvyIcons.Redo}
-                  size='large'
-                  onClick={() => history.redo(setUnhistoricisedData)}
-                  disabled={!history.canRedo}
-                />
+          <>
+            <Button
+              icon={ui.helpPaddings ? IvyIcons.Edit : IvyIcons.Eye}
+              onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
+              size='large'
+              aria-label='Help Paddings'
+              title='Help Paddings'
+            />
+            <ToolbarContainer maxWidth={450}>
+              <Flex>
+                <Separator orientation='vertical' style={{ height: '26px', marginInline: 'var(--size-2)' }} />
+                <Flex gap={1}>
+                  <Button
+                    aria-label='Undo'
+                    icon={IvyIcons.Undo}
+                    size='large'
+                    onClick={() => history.undo(setUnhistoricisedData)}
+                    disabled={!history.canUndo}
+                  />
+                  <Button
+                    aria-label='Redo'
+                    icon={IvyIcons.Redo}
+                    size='large'
+                    onClick={() => history.redo(setUnhistoricisedData)}
+                    disabled={!history.canRedo}
+                  />
+                </Flex>
               </Flex>
-            </Flex>
-          </ToolbarContainer>
+            </ToolbarContainer>
+          </>
         )}
       </Flex>
       {editable && (
@@ -108,15 +113,6 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       )}
 
       <Flex gap={1} alignItems='center'>
-        {editable && (
-          <Switch
-            icon={{ icon: IvyIcons.Eye }}
-            defaultChecked={ui.helpPaddings}
-            onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
-            size='large'
-            aria-label='Help Paddings'
-          />
-        )}
         <Button aria-label='Open Data Class' icon={IvyIcons.DatabaseLink} size='large' onClick={() => openDataClass()} />
         <Button aria-label='Open Process' icon={IvyIcons.Process} size='large' onClick={() => openProcess()} />
         <Popover>
