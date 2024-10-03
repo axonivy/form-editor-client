@@ -1,5 +1,5 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type { Component, DataTableColumn, Fieldset, Form, Layout, MapStringString } from './form';
+import type { Component, DataTableColumn, Fieldset, Form, FormContext, Layout } from './form';
 
 export type ComponentType = Component['type'] | 'DataTableColumn';
 
@@ -47,12 +47,6 @@ export const isFreeLayout = (component?: Component | ComponentData): component i
   return isLayout(component) && component.config.gridVariant === 'FREE';
 };
 
-export type FormContext = { app: string; pmv: string; file: string };
-
-export interface CmsMetaRequest {
-  context: FormContext;
-  requiredProjects: boolean;
-}
 
 export type FormEditorProps = { context: FormContext; directSave?: boolean };
 
@@ -68,67 +62,6 @@ export type FormSaveDataArgs = {
   data: FormData;
   directSave?: boolean;
 };
-
-export interface VariableInfo {
-  types: Record<string, Variable[]>;
-  variables: Variable[];
-}
-
-export interface Variable {
-  attribute: string;
-  description: string;
-  simpleType: string;
-  type: string;
-}
-
-export interface LogicInfo {
-  startMethods: LogicMethodInfo[];
-  eventStarts: LogicEventInfo[];
-}
-
-export interface LogicMethodInfo {
-  name: string;
-  description: string;
-  parameters: Parameter[];
-  returnParameter: Parameter;
-}
-
-export interface LogicEventInfo {
-  name: string;
-  description: string;
-}
-
-export interface Parameter {
-  name: string;
-  type: string;
-}
-
-export interface CompositeInfo {
-  id: string;
-  startMethods: Array<MethodInfo>;
-}
-
-export interface MethodInfo {
-  name: string;
-  parameters: Array<ParameterInfo>;
-  deprecated: boolean;
-}
-
-export interface ParameterInfo {
-  name: string;
-  type: string;
-  description: string;
-}
-
-export type ContentObjectType = 'STRING' | 'FILE' | 'FOLDER';
-
-export interface ContentObject {
-  children: ContentObject[];
-  fullPath: string;
-  name: string;
-  type: ContentObjectType;
-  values: MapStringString;
-}
 
 export interface FormActionArgs {
   actionId: 'openDataClass' | 'openProcess';

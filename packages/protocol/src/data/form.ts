@@ -6,7 +6,8 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type ButtonVariant = ("PRIMARY" | "SECONDARY" | "DANGER")
+export type ContentObjectType = ("STRING" | "FILE" | "FOLDER")
+export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
 export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
 export type LayoutJustifyContent = "NORMAL" | "END";
@@ -15,6 +16,49 @@ export type OrientationType = "horizontal" | "vertical";
 export type TextIconStyle = "INLINE" | "BLOCK";
 export type TextType = "RAW" | "MARKDOWN";
 
+export interface Forms {
+  cmsMetaRequest: CmsMetaRequest;
+  compositeInfo: CompositeInfo[];
+  contentObject: ContentObject[];
+  form: Form;
+  formContext: FormContext;
+  logicInfo: LogicInfo;
+  variableInfo: VariableInfo;
+  [k: string]: unknown;
+}
+export interface CmsMetaRequest {
+  context: FormContext;
+  requiredProjects: boolean;
+}
+export interface FormContext {
+  app: string;
+  file: string;
+  pmv: string;
+}
+export interface CompositeInfo {
+  id: string;
+  startMethods: MethodInfo[];
+}
+export interface MethodInfo {
+  deprecated: boolean;
+  name: string;
+  parameters: ParameterInfo[];
+}
+export interface ParameterInfo {
+  description: string;
+  name: string;
+  type: string;
+}
+export interface ContentObject {
+  children: ContentObject[];
+  fullPath: string;
+  name: string;
+  type: ContentObjectType;
+  values: MapStringString;
+}
+export interface MapStringString {
+  [k: string]: string;
+}
 export interface Form {
   $schema: string;
   id: string;
@@ -22,7 +66,7 @@ export interface Form {
   components: Component[];
 }
 export interface FormConfig {
-  renderer: string;
+  renderer: "JSF";
   theme: string;
 }
 export interface Component {
@@ -101,9 +145,6 @@ export interface Composite {
   name: string;
   parameters: MapStringString;
   startMethod: string;
-}
-export interface MapStringString {
-  [k: string]: string;
 }
 export interface DataTable {
   components: DataTableColumn[];
@@ -241,4 +282,35 @@ export interface Textarea {
   updateOnChange: boolean;
   value: string;
   visible: string;
+}
+export interface LogicInfo {
+  eventStarts: LogicEventInfo[];
+  startMethods: LogicMethodInfo[];
+}
+export interface LogicEventInfo {
+  description: string;
+  name: string;
+}
+export interface LogicMethodInfo {
+  description: string;
+  name: string;
+  parameters: Parameter[];
+  returnParameter: Parameter;
+}
+export interface Parameter {
+  name: string;
+  type: string;
+}
+export interface VariableInfo {
+  types: MapStringListVariable;
+  variables: Variable[];
+}
+export interface MapStringListVariable {
+  [k: string]: Variable[];
+}
+export interface Variable {
+  attribute: string;
+  description: string;
+  simpleType: string;
+  type: string;
 }
