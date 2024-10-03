@@ -9,7 +9,7 @@ test('outline', async ({ page }) => {
   await expect(rows[1]).toHaveText('InputFirstname');
   await expect(rows[2]).toHaveText('InputLastname');
   await expect(rows[3]).toHaveText('InputAddress');
-  await expect(rows[4]).toHaveText('InputCity');
+  await expect(rows[4]).toHaveText('SelectCity');
   await expect(rows[5]).toHaveText('InputState');
   await expect(rows[6]).toHaveText('InputZip');
   await expect(rows[7]).toHaveText('LayoutFLEX');
