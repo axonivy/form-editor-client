@@ -2,45 +2,23 @@ import { Button, Flex, Label } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { Condition, logicalOperatorOptions, type ConditionProps, type LogicalOperator } from './Condition';
 import { SelectField } from '../SelectField';
+import { useConditionBuilderContext } from './ConditionBuilderContext';
 
 export interface ConditionGroup {
   conditions: Condition[];
   logicalOperator: LogicalOperator;
 }
 
-interface ConditionGroupProps extends Pick<ConditionProps, 'setConditionGroups' | 'groupIndex'> {
+interface ConditionGroupProps extends Pick<ConditionProps, 'groupIndex'> {
   group: ConditionGroup;
   groupCount: number;
-  isConditionGroupEnabled: boolean;
 }
 
-export const ConditionGroup = ({ group, groupIndex, groupCount, isConditionGroupEnabled, setConditionGroups }: ConditionGroupProps) => {
-  const updateLogicalOperator = (index: number, newValue: LogicalOperator) => {
-    setConditionGroups(old => {
-      const newGroups = [...old];
-      newGroups[index].logicalOperator = newValue;
-      return newGroups;
-    });
-  };
-
-  const addCondition = (groupIndex: number) => {
-    setConditionGroups(old => {
-      const newGroups = [...old];
-      newGroups[groupIndex].conditions.push({ argument1: '', operator: '==', argument2: '', logicalOperator: 'and' });
-      return newGroups;
-    });
-  };
-
-  const removeConditionGroup = (groupIndex: number) => {
-    setConditionGroups(old => {
-      const newGroups = [...old];
-      newGroups.splice(groupIndex, 1);
-      return newGroups;
-    });
-  };
+export const ConditionGroup = ({ group, groupIndex, groupCount }: ConditionGroupProps) => {
+  const { updateLogicalOperator, addCondition, removeConditionGroup, isConditionGroupEnabled } = useConditionBuilderContext();
 
   return (
-    <Flex direction='column' gap={2}>
+    <Flex direction='column' gap={2} className='condition-builder__group'>
       <Flex
         direction='column'
         style={
@@ -61,7 +39,6 @@ export const ConditionGroup = ({ group, groupIndex, groupCount, isConditionGroup
             conditionIndex={conditionIndex}
             groupIndex={groupIndex}
             conditionsCount={group.conditions.length}
-            setConditionGroups={setConditionGroups}
           />
         ))}
         <Button onClick={() => addCondition(groupIndex)} icon={IvyIcons.Plus} aria-label='Add Condition' variant='outline'>
