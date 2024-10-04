@@ -204,6 +204,10 @@ export class FormClientMock implements FormClient {
     switch (path) {
       case 'meta/data/attributes':
         return Promise.resolve(MetaMock.ATTRIBUTES);
+      case 'meta/composite/all':
+        return Promise.resolve(MetaMock.COMPOSITES);
+      case 'meta/composite/params':
+        return Promise.resolve(MetaMock.COMPOSITE_PARAMS);
       case 'meta/data/logic':
       default:
         throw Error('mock meta path not programmed');

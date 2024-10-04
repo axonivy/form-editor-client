@@ -47,7 +47,6 @@ export const isFreeLayout = (component?: Component | ComponentData): component i
   return isLayout(component) && component.config.gridVariant === 'FREE';
 };
 
-
 export type FormEditorProps = { context: FormContext; directSave?: boolean };
 
 export type FormEditorData = {

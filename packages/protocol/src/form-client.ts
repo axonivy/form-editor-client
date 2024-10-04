@@ -1,5 +1,6 @@
+import type { FormContext } from './data/form';
+import type { FormEditorData, FormSaveDataArgs, FormActionArgs } from './data/form-data';
 import type { FormMetaRequestTypes } from './form-protocol';
-import type { FormActionArgs, FormContext, FormEditorData, FormSaveDataArgs } from './data';
 
 export interface Event<T> {
   (listener: (e: T) => any, thisArgs?: any, disposables?: Disposable[]): Disposable;
