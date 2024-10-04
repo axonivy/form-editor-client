@@ -11,13 +11,14 @@ test('address', async ({ page }) => {
   const properties = editor.inscription.section('Properties');
   const parameters = editor.inscription.section('Parameters');
   const section = properties.collapsible('General');
-  const name = section.input({ label: 'Name' });
+  const composite = section.input({ label: 'Composite' });
   const method = section.select({ label: 'Start Method' });
   const section2 = parameters.collapsible('General');
   const addressParam = section2.input({ label: 'Address' });
   const labelParam = section2.input({ label: 'Label' });
 
-  await name.expectValue('form.test.project.AddressComponent');
+  await composite.expectValue('form.test.project.AddressComponent');
+  await expect(composite.locator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Address)', 'empty()']);
   await parameters.toggle();
@@ -40,7 +41,6 @@ test('address', async ({ page }) => {
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
-  await name.expectValue('form.test.project.AddressComponent');
   await method.expectValue('start(Address)');
   await parameters.toggle();
   await addressParam.expectValue('#{data.address}');
@@ -57,12 +57,13 @@ test('person', async ({ page }) => {
   const properties = editor.inscription.section('Properties');
   const parameters = editor.inscription.section('Parameters');
   const section = properties.collapsible('General');
-  const name = section.input({ label: 'Name' });
+  const composite = section.input({ label: 'Composite' });
   const method = section.select({ label: 'Start Method' });
   const section2 = parameters.collapsible('General');
   const person = section2.input({ label: 'Person' });
 
-  await name.expectValue('form.test.project.PersonComponent');
+  await composite.expectValue('form.test.project.PersonComponent');
+  await expect(composite.locator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Person)']);
   await method.choose('start(Person)');
@@ -73,7 +74,6 @@ test('person', async ({ page }) => {
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
-  await name.expectValue('form.test.project.PersonComponent');
   await method.expectValue('start(Person)');
   await parameters.toggle();
   await person.expectValue('#{data.person}');
