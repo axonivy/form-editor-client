@@ -20,13 +20,13 @@ export const ConditionBuilderContext = createContext<ConditionContextType | unde
 export const ConditionBuilderProvider = ({ children }: { children: ReactNode }) => {
   const [isConditionGroupEnabled, setIsConditionGroupEnabled] = useState(false);
   const [conditionGroups, setConditionGroups] = useState<ConditionGroup[]>([
-    { conditions: [{ argument1: '', operator: '==', argument2: '', logicalOperator: 'and' }], logicalOperator: 'and' }
+    { conditions: [{ argument1: '', operator: 'eq', argument2: '', logicalOperator: 'and' }], logicalOperator: 'and' }
   ]);
 
   const addConditionGroup = () => {
     setConditionGroups([
       ...conditionGroups,
-      { conditions: [{ argument1: '', operator: '==', argument2: '', logicalOperator: 'and' }], logicalOperator: 'and' }
+      { conditions: [{ argument1: '', operator: 'eq', argument2: '', logicalOperator: 'and' }], logicalOperator: 'and' }
     ]);
   };
 
@@ -41,7 +41,7 @@ export const ConditionBuilderProvider = ({ children }: { children: ReactNode }) 
   const addCondition = (groupIndex: number) => {
     setConditionGroups(old => {
       const newGroups = [...old];
-      newGroups[groupIndex].conditions.push({ argument1: '', operator: '==', argument2: '', logicalOperator: 'and' });
+      newGroups[groupIndex].conditions.push({ argument1: '', operator: 'eq', argument2: '', logicalOperator: 'and' });
       return newGroups;
     });
   };
@@ -90,7 +90,7 @@ export const ConditionBuilderProvider = ({ children }: { children: ReactNode }) 
           const formattedArg2 = wrapInQuotesIfNeeded(con.argument2);
           const condition = `${formattedArg1} ${con.operator} ${formattedArg2}`;
           const logicalOp = index < group.conditions.length - 1 ? ` ${con.logicalOperator.toLowerCase()} ` : '';
-          return con.operator === 'isTrue' ? formattedArg1 : condition + logicalOp;
+          return con.operator === 'isTrue' ? formattedArg1 : con.operator === 'isFalse' ? '!' + formattedArg1 : condition + logicalOp;
         })
         .join('');
 

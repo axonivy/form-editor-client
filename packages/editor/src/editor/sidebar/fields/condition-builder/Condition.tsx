@@ -5,13 +5,14 @@ import { SelectField } from '../SelectField';
 import { useConditionBuilderContext } from './ConditionBuilderContext';
 
 const typeOptions = [
-  { label: 'equal to', value: '==' },
-  { label: 'not equal to', value: '!=' },
-  { label: 'less than', value: '<' },
-  { label: 'greater than', value: '>' },
-  { label: 'less or equal to', value: '<=' },
-  { label: 'greater or equal to', value: '>=' },
-  { label: 'is true', value: 'isTrue' }
+  { label: 'equal to', value: 'eq' },
+  { label: 'not equal to', value: 'ne' },
+  { label: 'is true', value: 'isTrue' },
+  { label: 'is false', value: 'isFalse' },
+  { label: 'less than', value: 'lt' },
+  { label: 'greater than', value: 'gt' },
+  { label: 'less or equal to', value: 'le' },
+  { label: 'greater or equal to', value: 'ge' }
 ] as const;
 type ConditionType = (typeof typeOptions)[number]['value'];
 
@@ -61,7 +62,7 @@ export const Condition = ({ condition, conditionIndex, groupIndex, conditionsCou
           onChange={val => updateCondition(groupIndex, conditionIndex, 'operator', val as ConditionType)}
           width='150px'
         />
-        {condition.operator !== 'isTrue' && (
+        {condition.operator !== 'isTrue' && condition.operator !== 'isFalse' && (
           <InputFieldWithBrowser
             value={condition.argument2}
             onChange={val => updateCondition(groupIndex, conditionIndex, 'argument2', val)}
