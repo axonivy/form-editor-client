@@ -27,7 +27,20 @@ export const TableField = <TData extends object>({ label, data, onChange, column
   const changeData = useCallback(
     (change: TData[]) => {
       setTableData(change);
-      onChange(change.filter(obj => !deepEqual(obj, emptyDataObject)));
+      //enable one empty option
+      let hasEmptyDataObject = false;
+      const filteredData = change.filter(obj => {
+        if (deepEqual(obj, emptyDataObject)) {
+          if (!hasEmptyDataObject) {
+            hasEmptyDataObject = true;
+            return true;
+          }
+          return false;
+        }
+        return true;
+      });
+
+      onChange(filteredData);
     },
     [emptyDataObject, onChange]
   );
@@ -52,7 +65,7 @@ export const TableField = <TData extends object>({ label, data, onChange, column
   };
 
   const showAddButton = () => {
-    if (tableData.filter(obj => deepEqual(obj, emptyDataObject)).length === 0) {
+    if (tableData.filter(obj => deepEqual(obj, emptyDataObject)).length <= 1) {
       return <TableAddRow addRow={addRow} />;
     }
     return null;
