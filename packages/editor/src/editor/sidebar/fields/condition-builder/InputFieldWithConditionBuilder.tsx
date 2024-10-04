@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { InputFieldProps } from '../InputField';
 import type { TextBrowserFieldOptions } from '../../../../types/config';
 import { ConditionBuilder } from './ConditionBuilder';
+import { ConditionBuilderProvider } from './ConditionBuilderContext';
 
 export const InputFieldWithConditionBuilder = ({
   label,
@@ -26,7 +27,9 @@ export const InputFieldWithConditionBuilder = ({
         </InputGroup>
       </BasicField>
       <DialogContent style={{ height: '80vh', maxWidth: '600px' }}>
-        <ConditionBuilder onChange={onChange} apply={() => setOpen(false)} />
+        <ConditionBuilderProvider>
+          <ConditionBuilder onChange={onChange} apply={() => setOpen(false)} />
+        </ConditionBuilderProvider>
       </DialogContent>
     </Dialog>
   );

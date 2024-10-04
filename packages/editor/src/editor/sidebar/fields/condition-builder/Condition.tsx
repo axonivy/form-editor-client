@@ -2,7 +2,7 @@ import { Button, Flex, Label } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { InputFieldWithBrowser } from '../InputFieldWithBrowser';
 import { SelectField } from '../SelectField';
-import type { ConditionGroup } from './ConditionGroup';
+import { useConditionBuilderContext } from './ConditionBuilderContext';
 
 const typeOptions = [
   { label: 'equal to', value: '==' },
@@ -33,36 +33,17 @@ export interface ConditionProps {
   conditionIndex: number;
   groupIndex: number;
   conditionsCount: number;
-  setConditionGroups: React.Dispatch<React.SetStateAction<ConditionGroup[]>>;
 }
 
-export const Condition = ({ condition, conditionIndex, groupIndex, conditionsCount, setConditionGroups }: ConditionProps) => {
-  const updateCondition = <TKey extends keyof Condition>(
-    groupIndex: number,
-    conditionIndex: number,
-    key: TKey,
-    newValue: Condition[TKey]
-  ) => {
-    setConditionGroups(old => {
-      const newGroups = [...old];
-      newGroups[groupIndex].conditions[conditionIndex] = {
-        ...newGroups[groupIndex].conditions[conditionIndex],
-        [key]: newValue
-      };
-      return newGroups;
-    });
-  };
-
-  const removeCondition = (groupIndex: number, conditionIndex: number) => {
-    setConditionGroups(old => {
-      const newGroups = [...old];
-      newGroups[groupIndex].conditions.splice(conditionIndex, 1);
-      return newGroups;
-    });
-  };
+export const Condition = ({ condition, conditionIndex, groupIndex, conditionsCount }: ConditionProps) => {
+  const { updateCondition, removeCondition } = useConditionBuilderContext();
 
   return (
-    <Flex direction='column' style={{ border: 'var(--basic-border', borderRadius: 'var(--border-r2)', padding: 'var(--size-2)' }}>
+    <Flex
+      direction='column'
+      style={{ border: 'var(--basic-border', borderRadius: 'var(--border-r2)', padding: 'var(--size-2)' }}
+      className='condition-builder__condition'
+    >
       <Flex direction='row' justifyContent='space-between'>
         <Label>{`Condition ${conditionIndex + 1}`}</Label>
         <Button onClick={() => removeCondition(groupIndex, conditionIndex)} icon={IvyIcons.Trash} aria-label='Remove Condition' />

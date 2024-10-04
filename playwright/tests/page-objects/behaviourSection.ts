@@ -14,6 +14,14 @@ export class VisibleInput {
   async expectVisible() {
     await this.visibleField.expectValue('true');
   }
+
+  async expectVisibleAfterBuilder() {
+    await this.visibleField.expectValue("#{(data.value1 == '10' and data.value2 > '5') or (data.value3 < '6')}");
+  }
+
+  async openConditionBuilder() {
+    await this.visibleField.openBrowser();
+  }
 }
 
 export class DisableInput extends VisibleInput {
