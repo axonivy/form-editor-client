@@ -32,6 +32,7 @@ export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComp
 
 export type TextFieldOptions = {
   placeholder?: string;
+  disabled?: boolean;
 };
 
 export type OnlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';

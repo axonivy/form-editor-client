@@ -11,6 +11,12 @@ export type InputFieldProps = {
 
 export const InputField = ({ label, value, onChange, onBlur, message, options }: InputFieldProps & { options?: TextFieldOptions }) => (
   <BasicField label={label} message={message}>
-    <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
+    <Input
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      onBlur={onBlur}
+      placeholder={options?.placeholder}
+      disabled={options?.disabled}
+    />
   </BasicField>
 );
