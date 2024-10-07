@@ -15,18 +15,20 @@ interface ConditionGroupProps extends Pick<ConditionProps, 'groupIndex'> {
 }
 
 export const ConditionGroup = ({ group, groupIndex, groupCount }: ConditionGroupProps) => {
-  const { updateLogicalOperator, addCondition, removeConditionGroup, isConditionGroupEnabled } = useConditionBuilderContext();
+  const { updateLogicalOperator, addCondition, removeConditionGroup, conditionMode } = useConditionBuilderContext();
 
   return (
     <Flex direction='column' gap={2} className='condition-builder__group'>
       <Flex
         direction='column'
         style={
-          isConditionGroupEnabled ? { border: 'var(--basic-border', borderRadius: 'var(--border-r2)', padding: 'var(--size-2)' } : undefined
+          conditionMode === 'nested-condition'
+            ? { border: 'var(--basic-border', borderRadius: 'var(--border-r2)', padding: 'var(--size-2)' }
+            : undefined
         }
         gap={2}
       >
-        {isConditionGroupEnabled && (
+        {conditionMode === 'nested-condition' && (
           <Flex direction='row' justifyContent='space-between'>
             <Label>{`Group ${groupIndex + 1}`}</Label>
             <Button onClick={() => removeConditionGroup(groupIndex)} icon={IvyIcons.Trash} aria-label='Remove Group' />
@@ -45,7 +47,7 @@ export const ConditionGroup = ({ group, groupIndex, groupCount }: ConditionGroup
           Add Condition
         </Button>
       </Flex>
-      {groupIndex < groupCount - 1 && (
+      {groupIndex < groupCount - 1 && conditionMode === 'nested-condition' && (
         <SelectField
           options={logicalOperatorOptions}
           value={group.logicalOperator}
