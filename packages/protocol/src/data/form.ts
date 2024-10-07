@@ -8,6 +8,7 @@
 
 export type ContentObjectType = ("STRING" | "FILE" | "FOLDER")
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
+export type SymbolPosition = "p" | "s";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
 export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
 export type LayoutJustifyContent = "NORMAL" | "END";
@@ -196,12 +197,15 @@ export interface Fieldset {
   visible: string;
 }
 export interface Input {
+  decimalPlaces: string;
   disabled: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
   required: string;
   requiredMessage: string;
+  symbol: string;
+  symbolPosition: SymbolPosition;
   type: InputType;
   updateOnChange: boolean;
   value: string;
