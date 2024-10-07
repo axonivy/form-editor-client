@@ -6,9 +6,10 @@ import type {
   ContentObject,
   CompositeInfo,
   ParameterInfo,
-  CompositeContext
+  CompositeContext,
+  ValidationResult
 } from './data/form';
-import type { FormEditorData, FormSaveDataArgs, FormActionArgs } from './data/form-data';
+import type { FormEditor, FormSaveData, FormAction } from './data/form-data';
 
 export interface FormMetaRequestTypes {
   'meta/data/attributes': [FormContext, VariableInfo];
@@ -19,14 +20,17 @@ export interface FormMetaRequestTypes {
 }
 
 export interface FormRequestTypes extends FormMetaRequestTypes {
-  data: [FormContext, FormEditorData];
-  saveData: [FormSaveDataArgs, void];
+  data: [FormContext, FormEditor];
+  saveData: [FormSaveData, void];
+
+  validate: [FormContext, ValidationResult[]];
 }
 
 export interface FormNotificationTypes {
-  action: FormActionArgs;
+  action: FormAction;
 }
 
 export interface FormOnNotificationTypes {
   dataChanged: void;
+  validationChanged: void;
 }

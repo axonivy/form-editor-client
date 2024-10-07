@@ -4,10 +4,11 @@ import type {
   FormMetaRequestTypes,
   FormContext,
   FormClient,
-  FormEditorData,
-  FormSaveDataArgs,
-  FormActionArgs,
-  FormOnNotificationTypes
+  FormEditor,
+  FormSaveData,
+  FormAction,
+  FormOnNotificationTypes,
+  ValidationResult
 } from '@axonivy/form-editor-protocol';
 import {
   BaseRpcClient,
@@ -21,19 +22,27 @@ import {
 
 export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
   protected onDataChangedEmitter = new Emitter<void>();
+  protected onValidaitonChangedEmitter = new Emitter<void>();
   onDataChanged = this.onDataChangedEmitter.event;
+  onValidationChanged = this.onValidaitonChangedEmitter.event;
   protected override setupConnection(): void {
     super.setupConnection();
     this.toDispose.push(this.onDataChangedEmitter);
+    this.toDispose.push(this.onValidaitonChangedEmitter);
     this.onNotification('dataChanged', data => this.onDataChangedEmitter.fire(data));
+    this.onNotification('validationChanged', data => this.onValidaitonChangedEmitter.fire(data));
   }
 
-  data(context: FormContext): Promise<FormEditorData> {
+  data(context: FormContext): Promise<FormEditor> {
     return this.sendRequest('data', { ...context });
   }
 
-  saveData(saveData: FormSaveDataArgs): Promise<void> {
+  saveData(saveData: FormSaveData): Promise<void> {
     return this.sendRequest('saveData', { ...saveData });
+  }
+
+  validate(context: FormContext): Promise<ValidationResult[]> {
+    return this.sendRequest('validate', { ...context });
   }
 
   meta<TMeta extends keyof FormMetaRequestTypes>(
@@ -43,7 +52,7 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
     return this.sendRequest(path, args);
   }
 
-  action(action: FormActionArgs): void {
+  action(action: FormAction): void {
     this.sendNotification('action', action);
   }
 
