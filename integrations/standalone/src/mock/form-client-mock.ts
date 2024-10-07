@@ -1,13 +1,14 @@
-import {
-  type Event,
-  type FormActionArgs,
-  type FormClient,
-  type FormData,
-  type FormEditorData,
-  type FormMetaRequestTypes,
-  type FormSaveDataArgs
+import type {
+  FormAction,
+  FormClient,
+  FormData,
+  FormEditor,
+  FormMetaRequestTypes,
+  FormSaveData,
+  ValidationResult
 } from '@axonivy/form-editor-protocol';
 import { MetaMock } from './meta-mock';
+import { Emitter } from '@axonivy/jsonrpc';
 
 const data: FormData = {
   id: 'a5c1d16e-1d08-4e1f-a9f0-436c553a3881',
@@ -184,20 +185,29 @@ const data: FormData = {
 };
 
 export class FormClientMock implements FormClient {
-  private formData: FormEditorData = {
+  private formData: FormEditor = {
     context: { app: 'mock', pmv: 'mock', file: 'mock.f.json' },
     readonly: false,
     defaults: {},
     data
   };
 
-  data(): Promise<FormEditorData> {
+  protected onValidationChangedEmitter = new Emitter<void>();
+  onValidationChanged = this.onValidationChangedEmitter.event;
+  protected onDataChangedEmitter = new Emitter<void>();
+  onDataChanged = this.onDataChangedEmitter.event;
+
+  data(): Promise<FormEditor> {
     return Promise.resolve(this.formData);
   }
 
-  saveData(saveData: FormSaveDataArgs): Promise<void> {
+  saveData(saveData: FormSaveData): Promise<void> {
     this.formData.data = saveData.data;
     return Promise.resolve();
+  }
+
+  validate(): Promise<ValidationResult[]> {
+    return Promise.resolve([]);
   }
 
   meta<TMeta extends keyof FormMetaRequestTypes>(path: TMeta): Promise<FormMetaRequestTypes[TMeta][1]> {
@@ -214,9 +224,7 @@ export class FormClientMock implements FormClient {
     }
   }
 
-  action(action: FormActionArgs): void {
+  action(action: FormAction): void {
     console.log('action', action);
   }
-
-  onDataChanged: Event<void>;
 }

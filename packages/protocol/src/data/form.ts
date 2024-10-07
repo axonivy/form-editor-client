@@ -16,6 +16,7 @@ export type LayoutType = "GRID" | "FLEX";
 export type OrientationType = "horizontal" | "vertical";
 export type TextIconStyle = "INLINE" | "BLOCK";
 export type TextType = "RAW" | "MARKDOWN";
+export type Severity = "INFO" | "WARNING" | "ERROR";
 
 export interface Forms {
   cmsMetaRequest: CmsMetaRequest;
@@ -23,10 +24,17 @@ export interface Forms {
   compositeInfo: CompositeInfo[];
   contentObject: ContentObject[];
   form: Form;
+  formActionArgs: FormActionArgs;
   formContext: FormContext;
+  formEditorContent: FormEditorContent;
+  formEditorData: FormEditorData;
+  formSaveDataArgs: FormSaveDataArgs;
   logicInfo: LogicInfo;
   parameterInfo: ParameterInfo[];
+  string: string[];
+  validationResult: ValidationResult[];
   variableInfo: VariableInfo;
+  void: Void;
   [k: string]: unknown;
 }
 export interface CmsMetaRequest {
@@ -293,6 +301,25 @@ export interface Textarea {
   value: string;
   visible: string;
 }
+export interface FormActionArgs {
+  actionId: string;
+  context: FormContext;
+  payload: unknown;
+}
+export interface FormEditorContent {
+  content: string;
+}
+export interface FormEditorData {
+  context: FormContext;
+  data: Form;
+  defaults: DefaultConfig;
+  readonly: boolean;
+}
+export interface DefaultConfig {}
+export interface FormSaveDataArgs {
+  context: FormContext;
+  data: Form;
+}
 export interface LogicInfo {
   eventStarts: LogicEventInfo[];
   startMethods: LogicMethodInfo[];
@@ -311,6 +338,11 @@ export interface Parameter {
   name: string;
   type: string;
 }
+export interface ValidationResult {
+  message: string;
+  path: string;
+  severity: Severity;
+}
 export interface VariableInfo {
   types: MapStringListVariable;
   variables: Variable[];
@@ -324,3 +356,4 @@ export interface Variable {
   simpleType: string;
   type: string;
 }
+export interface Void {}

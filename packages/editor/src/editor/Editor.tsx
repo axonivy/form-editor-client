@@ -5,7 +5,7 @@ import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGrou
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../context/ClientContext';
 import type { Unary } from '../types/types';
-import type { FormData, FormEditorData, FormEditorProps } from '@axonivy/form-editor-protocol';
+import type { FormData, FormEditor, FormEditorProps } from '@axonivy/form-editor-protocol';
 import { DndContext } from '../context/DndContext';
 import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -51,7 +51,7 @@ export const Editor = (props: FormEditorProps) => {
   const mutation = useMutation({
     mutationKey: queryKeys.saveData(),
     mutationFn: (updateData: Unary<FormData>) => {
-      const saveData = queryClient.setQueryData<FormEditorData>(queryKeys.data(), prevData => {
+      const saveData = queryClient.setQueryData<FormEditor>(queryKeys.data(), prevData => {
         if (prevData) {
           return { ...prevData, data: updateData(prevData.data) };
         }

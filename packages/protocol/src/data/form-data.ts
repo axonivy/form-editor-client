@@ -1,5 +1,15 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type { Component, DataTableColumn, Fieldset, Form, FormContext, Layout } from './form';
+import type {
+  Component,
+  DataTableColumn,
+  Fieldset,
+  Form,
+  FormActionArgs,
+  FormContext,
+  FormEditorData,
+  FormSaveDataArgs,
+  Layout
+} from './form';
 
 export type ComponentType = Component['type'] | 'DataTableColumn';
 
@@ -49,21 +59,15 @@ export const isFreeLayout = (component?: Component | ComponentData): component i
 
 export type FormEditorProps = { context: FormContext; directSave?: boolean };
 
-export type FormEditorData = {
-  context: FormContext;
-  defaults: any;
-  readonly: boolean;
+export type FormEditor = Omit<FormEditorData, 'data'> & {
   data: FormData;
 };
 
-export type FormSaveDataArgs = {
-  context: FormContext;
+export type FormSaveData = Omit<FormSaveDataArgs, 'data'> & {
   data: FormData;
   directSave?: boolean;
 };
 
-export interface FormActionArgs {
+export type FormAction = FormActionArgs & {
   actionId: 'openDataClass' | 'openProcess';
-  payload: string;
-  context: FormContext;
-}
+};
