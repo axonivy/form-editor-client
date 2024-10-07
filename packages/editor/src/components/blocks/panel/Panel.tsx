@@ -36,19 +36,27 @@ export const PanelComponent: ComponentConfig<PanelProps> = {
     components: { subsection: 'General', type: 'hidden' },
     title: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE', 'CMS'] },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
-    collapsed: { subsection: 'Behaviour', label: 'Default collapsed', type: 'checkbox' },
+    collapsed: { subsection: 'Behaviour', label: 'Collapsed by default', type: 'checkbox', options: {}, hide: data => !data.collapsible },
     ...visibleComponentField,
     ...baseComponentFields
   }
 };
 
-const UiBlock = ({ id, components, title, collapsible, visible }: UiComponentProps<PanelProps>) => (
-  <div className='i-panel'>
+const UiBlock = ({ id, components, title, collapsible, collapsed, visible }: UiComponentProps<PanelProps>) => (
+  <div className={`i-panel ${collapsible && collapsed ? 'default-collapsed' : ''}`}>
     <div className='i-panel-header'>
       {title}
       <Flex gap={1} alignItems='center'>
         <UiBlockHeaderVisiblePart visible={visible} />
-        <IvyIcon icon={IvyIcons.Plus} className={`${collapsible ? '' : 'i-panel-non-collapsible'}`} />
+        {collapsible ? (
+          collapsed ? (
+            <IvyIcon icon={IvyIcons.Plus} className={`${collapsible ? '' : 'i-panel-non-collapsible'}`} />
+          ) : (
+            <svg width='12' height='1.3' viewBox='0 0 13 2' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <path d='M1 1L12 1' stroke='#4a4a4a' strokeWidth='1.13' strokeLinecap='round' />
+            </svg>
+          )
+        ) : null}
       </Flex>
     </div>
     {components.map((component, index) => (

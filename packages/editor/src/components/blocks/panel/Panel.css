@@ -9,7 +9,7 @@
 }
 
 .i-panel-header {
-  cursor: pointer;
+  cursor: default;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -17,6 +17,6 @@
   border-radius: 4px;
 }
 
-.i-panel-non-collapsible {
-  visibility: collapse;
+.canvas[data-help-paddings='false'] .i-panel.default-collapsed .drop-zone {
+  display: none;
 }

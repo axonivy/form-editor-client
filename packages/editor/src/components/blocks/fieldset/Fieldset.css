@@ -9,12 +9,11 @@ fieldset {
 }
 
 fieldset.collapsible {
-  cursor: pointer;
+  cursor: default;
 }
 
-fieldset.collapsible > legend:before {
-  content: '-';
-  padding: 0 5px 0 0;
+.canvas[data-help-paddings='false'] fieldset.collapsible.default-collapsed .drop-zone {
+  display: none;
 }
 
 legend {
