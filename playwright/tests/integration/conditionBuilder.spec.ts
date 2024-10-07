@@ -21,7 +21,7 @@ export async function applyConditionBuilder(page: Page) {
   const condition = page.locator('.condition-builder__condition');
   const group = page.locator('.condition-builder__group');
 
-  await expect(page.getByLabel('Enable Grouping')).not.toBeChecked();
+  expect(page.getByRole('dialog').getByRole('combobox').nth(0)).toHaveText('Basic Condition');
   expect(await condition.count()).toBe(1);
   expect(await condition.locator('.ui-inputgroup').count()).toBe(2);
 
@@ -36,11 +36,13 @@ export async function applyConditionBuilder(page: Page) {
   await page.getByRole('option', { name: 'greater than', exact: true }).first().click();
   await condition.nth(1).locator('.ui-input').nth(1).fill('5');
 
-  page.getByLabel('Enable Grouping').check();
+  await page.getByRole('dialog').getByRole('combobox').nth(0).click();
+  await page.getByRole('option', { name: 'Nested Condition', exact: true }).first().click();
+
   expect(await group.count()).toBe(1);
   await page.getByLabel('Add Condition Group').click();
   expect(await group.count()).toBe(2);
-  await page.locator('.ui-dialog-content').getByRole('combobox').nth(3).click();
+  await page.locator('.ui-dialog-content').getByRole('combobox').nth(4).click();
   await page.getByRole('option', { name: 'or', exact: true }).first().click();
 
   await condition.nth(2).locator('.ui-input').nth(0).fill('data.value3');

@@ -9,6 +9,8 @@ const typeOptions = [
   { label: 'not equal to', value: 'ne' },
   { label: 'is true', value: 'isTrue' },
   { label: 'is false', value: 'isFalse' },
+  { label: 'is empty', value: 'isEmpty' },
+  { label: 'is not empty', value: 'isNotEmpty' },
   { label: 'less than', value: 'lt' },
   { label: 'greater than', value: 'gt' },
   { label: 'less or equal to', value: 'le' },
@@ -62,14 +64,17 @@ export const Condition = ({ condition, conditionIndex, groupIndex, conditionsCou
           onChange={val => updateCondition(groupIndex, conditionIndex, 'operator', val as ConditionType)}
           width='150px'
         />
-        {condition.operator !== 'isTrue' && condition.operator !== 'isFalse' && (
-          <InputFieldWithBrowser
-            value={condition.argument2}
-            onChange={val => updateCondition(groupIndex, conditionIndex, 'argument2', val)}
-            browsers={['ATTRIBUTE']}
-            options={{ directApply: true }}
-          />
-        )}
+        {condition.operator !== 'isTrue' &&
+          condition.operator !== 'isFalse' &&
+          condition.operator !== 'isEmpty' &&
+          condition.operator !== 'isNotEmpty' && (
+            <InputFieldWithBrowser
+              value={condition.argument2}
+              onChange={val => updateCondition(groupIndex, conditionIndex, 'argument2', val)}
+              browsers={['ATTRIBUTE']}
+              options={{ directApply: true }}
+            />
+          )}
         {conditionIndex < conditionsCount - 1 && (
           <SelectField
             options={logicalOperatorOptions}

@@ -12,7 +12,7 @@ describe('ConditionBuilderContext', () => {
 
     expect(result.current.conditionGroups.length).toBe(1);
     expect(result.current.conditionGroups[0].conditions.length).toBe(1);
-    expect(result.current.isConditionGroupEnabled).toBe(false);
+    expect(result.current.conditionMode).toBe('basic-condition');
   });
 
   test('add condition group', () => {
@@ -92,11 +92,11 @@ describe('ConditionBuilderContext', () => {
   test('toggle condition group enabled state', () => {
     const { result } = renderConditionBuilderHook();
 
-    act(() => result.current.setIsConditionGroupEnabled(true));
-    expect(result.current.isConditionGroupEnabled).toBe(true);
+    act(() => result.current.setConditionMode('nested-condition'));
+    expect(result.current.conditionMode).toBe('nested-condition');
 
-    act(() => result.current.setIsConditionGroupEnabled(false));
-    expect(result.current.isConditionGroupEnabled).toBe(false);
+    act(() => result.current.setConditionMode('basic-condition'));
+    expect(result.current.conditionMode).toBe('basic-condition');
   });
 
   test('generate complex condition', () => {
@@ -108,11 +108,11 @@ describe('ConditionBuilderContext', () => {
       result.current.updateCondition(0, 0, 'argument2', '10');
       result.current.addCondition(0);
       result.current.updateCondition(0, 1, 'argument1', 'data.value2');
-      result.current.updateCondition(0, 1, 'operator', '!=' as Condition['operator']);
-      result.current.updateCondition(0, 1, 'argument2', '20');
+      result.current.updateCondition(0, 1, 'operator', 'isEmpty' as Condition['operator']);
     });
 
     act(() => {
+      result.current.setConditionMode('nested-condition');
       result.current.addConditionGroup();
       result.current.updateCondition(1, 0, 'argument1', 'value3');
       result.current.updateCondition(1, 0, 'operator', '>' as Condition['operator']);
@@ -128,6 +128,6 @@ describe('ConditionBuilderContext', () => {
     });
 
     const conditionString = result.current.generateConditionString();
-    expect(conditionString).toBe("#{(data.value1 == '10' and data.value2 != '20') or ('value3' > '30' and 'value4' <= '40')}");
+    expect(conditionString).toBe("#{(data.value1 == '10' and empty data.value2) or ('value3' > '30' and 'value4' <= '40')}");
   });
 });

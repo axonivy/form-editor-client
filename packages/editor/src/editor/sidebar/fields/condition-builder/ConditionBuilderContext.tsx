@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { Condition, LogicalOperator } from './Condition';
 import type { ConditionGroup } from './ConditionGroup';
+import type { ConditionMode } from './ConditionBuilder';
 
 interface ConditionContextType {
-  isConditionGroupEnabled: boolean;
-  setIsConditionGroupEnabled: (value: boolean) => void;
+  conditionMode: ConditionMode;
+  setConditionMode: (value: ConditionMode) => void;
   conditionGroups: ConditionGroup[];
   addConditionGroup: () => void;
   updateLogicalOperator: (index: number, newValue: LogicalOperator) => void;
@@ -18,7 +19,7 @@ interface ConditionContextType {
 export const ConditionBuilderContext = createContext<ConditionContextType | undefined>(undefined);
 
 export const ConditionBuilderProvider = ({ children }: { children: ReactNode }) => {
-  const [isConditionGroupEnabled, setIsConditionGroupEnabled] = useState(false);
+  const [conditionMode, setConditionMode] = useState<ConditionMode>('basic-condition');
   const [conditionGroups, setConditionGroups] = useState<ConditionGroup[]>([
     { conditions: [{ argument1: '', operator: 'eq', argument2: '', logicalOperator: 'and' }], logicalOperator: 'and' }
   ]);
@@ -78,24 +79,51 @@ export const ConditionBuilderProvider = ({ children }: { children: ReactNode }) 
     });
   };
 
+  const getLogicalOperator = (index: number, totalConditions: number, logicalOperator: string) => {
+    return index < totalConditions - 1 ? ` ${logicalOperator.toLowerCase()} ` : '';
+  };
+
+  const formatCondition = (con: Condition, formattedArg1: string, formattedArg2: string, logicalOp: string) => {
+    switch (con.operator) {
+      case 'isTrue':
+        return `${formattedArg1}${logicalOp}`;
+      case 'isFalse':
+        return `!${formattedArg1}${logicalOp}`;
+      case 'isEmpty':
+        return `empty ${formattedArg1}${logicalOp}`;
+      case 'isNotEmpty':
+        return `not empty ${formattedArg1}${logicalOp}`;
+      default:
+        return `${formattedArg1} ${con.operator} ${formattedArg2}${logicalOp}`;
+    }
+  };
+
   const generateConditionString = () => {
+    if (conditionMode === 'always-true') {
+      return 'true';
+    }
+    if (conditionMode === 'always-false') {
+      return 'false';
+    }
     const wrapInQuotesIfNeeded = (arg: string) => {
       return arg.startsWith('data.') || arg === 'data' ? arg : `'${arg}'`;
     };
 
     const groupStrings = conditionGroups.map((group, index) => {
+      if (conditionMode === 'basic-condition' && index > 0) return '';
       const conditions = group.conditions
-        .map((con, index) => {
+        .map((con, conditionIndex) => {
           const formattedArg1 = wrapInQuotesIfNeeded(con.argument1);
           const formattedArg2 = wrapInQuotesIfNeeded(con.argument2);
-          const condition = `${formattedArg1} ${con.operator} ${formattedArg2}`;
-          const logicalOp = index < group.conditions.length - 1 ? ` ${con.logicalOperator.toLowerCase()} ` : '';
-          return con.operator === 'isTrue' ? formattedArg1 : con.operator === 'isFalse' ? '!' + formattedArg1 : condition + logicalOp;
+          const logicalOp = getLogicalOperator(conditionIndex, group.conditions.length, con.logicalOperator);
+          return formatCondition(con, formattedArg1, formattedArg2, logicalOp);
         })
         .join('');
 
       const logicGroupOp = index < conditionGroups.length - 1 ? group.logicalOperator.toLowerCase() : '';
-      return conditionGroups.length === 1 ? conditions : `(${conditions})${logicGroupOp ? ` ${logicGroupOp} ` : ''}`;
+      return conditionGroups.length === 1 || conditionMode === 'basic-condition'
+        ? conditions
+        : `(${conditions})${logicGroupOp ? ` ${logicGroupOp} ` : ''}`;
     });
 
     return `#{${groupStrings.join('')}}`;
@@ -104,8 +132,8 @@ export const ConditionBuilderProvider = ({ children }: { children: ReactNode }) 
   return (
     <ConditionBuilderContext.Provider
       value={{
-        isConditionGroupEnabled,
-        setIsConditionGroupEnabled,
+        conditionMode,
+        setConditionMode,
         conditionGroups,
         addConditionGroup,
         updateLogicalOperator,
