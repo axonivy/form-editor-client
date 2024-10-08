@@ -12,6 +12,7 @@ import { Palette } from '../palette/Palette';
 import { allComponentsByCategory, componentByName } from '../../components/components';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
+import { DataClassDialog, getSelectedElementId } from './data-class/DataClassDialog';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -53,7 +54,9 @@ const Draggable = ({ config, data }: DraggableProps) => {
     );
   };
   const createElement = (name: string) =>
-    setData(oldData => modifyData(oldData, { type: 'add', data: { componentName: name, targetId: data.id } }).newData);
+    setData(
+      oldData => modifyData(oldData, { type: 'add', data: { componentName: name, targetId: getSelectedElementId(data.id) } }).newData
+    );
   const validations = useValidations(data.id);
   return (
     <Popover open={isSelected && !isDragging}>
@@ -99,6 +102,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
         deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
         duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
         createAction={config.quickActions.includes('CREATE') ? createElement : undefined}
+        createFromDataAction={config.quickActions.includes('CREATEFROMDATA') ? data.id : undefined}
         createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
       />
     </Popover>
@@ -115,9 +119,10 @@ type QuickbarProps = {
   duplicateAction?: () => void;
   createAction?: (name: string) => void;
   createColumnAction?: () => void;
+  createFromDataAction?: string;
 };
 
-const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAction }: QuickbarProps) => {
+const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAction, createFromDataAction }: QuickbarProps) => {
   const [menu, setMenu] = useState(false);
   return (
     <PopoverContent className='quickbar' sideOffset={8} onOpenAutoFocus={e => e.preventDefault()} hideWhenDetached={true}>
@@ -127,6 +132,9 @@ const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAct
             {deleteAction && <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />}
             {duplicateAction && (
               <Button icon={IvyIcons.SubActivitiesDashed} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />
+            )}
+            {(createColumnAction || createAction || createFromDataAction) && (
+              <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
             )}
             {createColumnAction && (
               <Button
@@ -138,19 +146,29 @@ const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAct
               />
             )}
             {/* <Button icon={IvyIcons.ChangeType} title='Change Type' /> */}
-            {createAction && (
-              <>
-                <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
+            {createFromDataAction && (
+              <DataClassDialog worfkflowButtonsInit={false} creationTarget={createFromDataAction}>
                 <Button
-                  icon={IvyIcons.Task}
-                  aria-label='All Components'
-                  title='All Components'
+                  icon={IvyIcons.DatabaseLink}
+                  size='small'
+                  aria-label='Create from data'
+                  title='Create from data'
                   onClick={e => {
                     e.stopPropagation();
-                    setMenu(old => !old);
                   }}
                 />
-              </>
+              </DataClassDialog>
+            )}
+            {createAction && (
+              <Button
+                icon={IvyIcons.Task}
+                aria-label='All Components'
+                title='All Components'
+                onClick={e => {
+                  e.stopPropagation();
+                  setMenu(old => !old);
+                }}
+              />
             )}
           </Flex>
         </PopoverAnchor>

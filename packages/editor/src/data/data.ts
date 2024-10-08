@@ -200,14 +200,23 @@ export const createInitiTableColumns = (id: string, data: FormData, creates: Arr
   return data;
 };
 
-export const createInitForm = (data: FormData, creates: Array<CreateComponentData>, workflowButtons: boolean) => {
+export const createInitForm = (
+  data: FormData,
+  creates: Array<CreateComponentData>,
+  workflowButtons: boolean,
+  selectedElementId?: string
+) => {
   creates.forEach(create => {
-    data = modifyData(data, { type: 'add', data: { componentName: create.componentName, create } }).newData;
+    data = modifyData(data, { type: 'add', data: { componentName: create.componentName, create, targetId: selectedElementId } }).newData;
   });
   if (workflowButtons) {
     const { newData, newComponentId } = modifyData(data, {
       type: 'add',
-      data: { componentName: 'Layout', create: { label: '', value: '', defaultProps: { type: 'FLEX', justifyContent: 'END' } } }
+      data: {
+        componentName: 'Layout',
+        create: { label: '', value: '', defaultProps: { type: 'FLEX', justifyContent: 'END' } },
+        targetId: selectedElementId
+      }
     });
     const layoutId = `${STRUCTURE_DROPZONE_ID_PREFIX}${newComponentId}`;
     data = modifyData(newData, {

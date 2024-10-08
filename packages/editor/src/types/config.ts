@@ -111,6 +111,6 @@ export type Config<Props extends { [key: string]: any } = { [key: string]: any }
   };
 };
 
-export type QuickAction = 'DELETE' | 'DUPLICATE' | 'CREATE' | 'CREATECOLUMN';
+export type QuickAction = 'DELETE' | 'DUPLICATE' | 'CREATE' | 'CREATEFROMDATA' | 'CREATECOLUMN';
 
-export const DEFAULT_QUICK_ACTIONS: Array<QuickAction> = ['DELETE', 'DUPLICATE', 'CREATE'] as const;
+export const DEFAULT_QUICK_ACTIONS: Array<QuickAction> = ['DELETE', 'DUPLICATE', 'CREATE', 'CREATEFROMDATA'] as const;
