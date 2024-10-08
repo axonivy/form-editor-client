@@ -23,22 +23,41 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { rowToCreateData, variableTreeData } from '../../../data/variable-tree-data';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
-import { createInitForm } from '../../../data/data';
+import { createInitForm, STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
 
-export const DataClassDialog = ({ children, worfkflowButtonsInit = true }: { children: ReactNode; worfkflowButtonsInit?: boolean }) => (
+export const DataClassDialog = ({
+  children,
+  worfkflowButtonsInit = true,
+  creationTarget
+}: {
+  children: ReactNode;
+  worfkflowButtonsInit?: boolean;
+  creationTarget?: string;
+}) => (
   <Dialog>
     <DialogTrigger asChild>{children}</DialogTrigger>
-    <DialogContent>
+    <DialogContent onClick={e => e.stopPropagation()}>
       <DialogHeader>
         <DialogTitle>Create from data</DialogTitle>
       </DialogHeader>
-      <DataClassSelect worfkflowButtonsInit={worfkflowButtonsInit} />
+      <DataClassSelect worfkflowButtonsInit={worfkflowButtonsInit} creationTarget={creationTarget} />
     </DialogContent>
   </Dialog>
 );
+export const getSelectedElementId = (selectedElementId: string | undefined) => {
+  if (
+    selectedElementId &&
+    (selectedElementId.startsWith('Layout') || selectedElementId.startsWith('Panel') || selectedElementId.startsWith('Fieldset'))
+  ) {
+    return STRUCTURE_DROPZONE_ID_PREFIX + selectedElementId;
+  } else {
+    return selectedElementId;
+  }
+};
 
-const DataClassSelect = ({ worfkflowButtonsInit }: { worfkflowButtonsInit: boolean }) => {
+export const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worfkflowButtonsInit: boolean; creationTarget?: string }) => {
   const { context, setData } = useAppContext();
+
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const [workflowButtons, setWorkflowButtons] = useState(worfkflowButtonsInit);
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
@@ -87,7 +106,7 @@ const DataClassSelect = ({ worfkflowButtonsInit }: { worfkflowButtonsInit: boole
         .getSelectedRowModel()
         .flatRows.map(rowToCreateData)
         .filter(create => create !== undefined);
-      return createInitForm(data, creates, workflowButtons);
+      return createInitForm(data, creates, workflowButtons, creationTarget && getSelectedElementId(creationTarget));
     });
   };
   return (
