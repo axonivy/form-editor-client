@@ -6,6 +6,16 @@
   &.dragging {
     opacity: 0.5;
   }
+  &.validation {
+    &:where(.error) {
+      border: 1.5px solid var(--error-color);
+      background-color: hsl(from var(--error-color) h s l / 0.1);
+    }
+    &:where(.warning) {
+      border: 1.5px solid var(--warning-color);
+      background-color: hsl(from var(--warning-color) h s l / 0.1);
+    }
+  }
   &.dragging,
   &.selected,
   &:hover:not(:has(.draggable:hover)),

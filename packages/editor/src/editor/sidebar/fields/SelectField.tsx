@@ -1,4 +1,4 @@
-import { BasicField, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@axonivy/ui-components';
+import { BasicField, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, type MessageData } from '@axonivy/ui-components';
 import type { FieldOption } from '../../../types/config';
 
 type SelectFieldProps = {
@@ -7,10 +7,11 @@ type SelectFieldProps = {
   value: string;
   onChange: (value: string) => void;
   width?: string;
+  message?: MessageData;
 };
 
-export const SelectField = ({ options, label, value, onChange, width }: SelectFieldProps) => (
-  <BasicField label={label}>
+export const SelectField = ({ options, label, value, onChange, width, message }: SelectFieldProps) => (
+  <BasicField label={label} message={message}>
     <Select value={value} onValueChange={change => onChange(change)}>
       <SelectTrigger style={{ whiteSpace: 'nowrap' }}>
         <SelectValue placeholder='Select an option' />

@@ -2,7 +2,7 @@
   > .ui-fieldset-label .ui-label {
     line-height: 20px;
   }
-  .ui-table .ui-table-row {
+  .ui-table .ui-table-row:not(.ui-message-row) {
     .ui-table-cell {
       padding: 0px;
       .ui-inputgroup,

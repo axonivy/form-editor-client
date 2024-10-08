@@ -1,8 +1,9 @@
-import { flexRender, type ColumnDef, useReactTable, getCoreRowModel } from '@tanstack/react-table';
+import { flexRender, type ColumnDef, useReactTable, getCoreRowModel, type Row } from '@tanstack/react-table';
 import {
   BasicField,
   Button,
   deepEqual,
+  MessageRow,
   SelectRow,
   Table,
   TableAddRow,
@@ -13,6 +14,7 @@ import {
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useCallback, useState } from 'react';
+import { useValidation } from '../../../../context/useValidation';
 
 export type TableFieldProps<TData extends object> = {
   label: string;
@@ -20,9 +22,17 @@ export type TableFieldProps<TData extends object> = {
   onChange: (change: TData[]) => void;
   columns: ColumnDef<TData, string>[];
   emptyDataObject: TData;
+  validationPath: string;
 };
 
-export const TableField = <TData extends object>({ label, data, onChange, columns, emptyDataObject }: TableFieldProps<TData>) => {
+export const TableField = <TData extends object>({
+  label,
+  data,
+  onChange,
+  columns,
+  emptyDataObject,
+  validationPath
+}: TableFieldProps<TData>) => {
   const [tableData, setTableData] = useState(data);
   const changeData = useCallback(
     (change: TData[]) => {
@@ -108,15 +118,26 @@ export const TableField = <TData extends object>({ label, data, onChange, column
         <TableResizableHeader headerGroups={table.getHeaderGroups()} onClick={() => table.setRowSelection({})} />
         <TableBody>
           {table.getRowModel().rows.map(row => (
-            <SelectRow key={row.id} row={row}>
-              {row.getVisibleCells().map(cell => (
-                <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-              ))}
-            </SelectRow>
+            <ValidationRow key={row.id} row={row} validationPath={validationPath} />
           ))}
         </TableBody>
       </Table>
       {showAddButton()}
     </BasicField>
+  );
+};
+
+const ValidationRow = <TData,>({ row, validationPath }: { row: Row<TData>; validationPath: string }) => {
+  const message = useValidation(`${validationPath}.${row.index}`);
+  const cells = row.getVisibleCells();
+  return (
+    <>
+      <SelectRow key={row.id} row={row}>
+        {cells.map(cell => (
+          <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+        ))}
+      </SelectRow>
+      <MessageRow message={message} columnCount={cells.length} />
+    </>
   );
 };

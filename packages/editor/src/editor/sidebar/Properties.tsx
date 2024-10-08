@@ -67,6 +67,7 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
                 (element.config as ConfigData)[key] = change;
                 setElement(element);
               }}
+              fieldKey={key}
               field={{ ...field, label: field.label ?? key }}
             />
           ))}

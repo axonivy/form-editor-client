@@ -5,7 +5,8 @@ import { useAppContext } from '../../../../context/AppContext';
 import { useData } from '../../../../data/data';
 import { isComposite } from '../Composite';
 import { InputFieldWithBrowser } from '../../../../editor/sidebar/fields/InputFieldWithBrowser';
-import type { PrimitiveValue } from '@axonivy/form-editor-protocol';
+import type { ParameterInfo, PrimitiveValue } from '@axonivy/form-editor-protocol';
+import { useValidation } from '../../../../context/useValidation';
 
 export const renderParameters = (props: GenericFieldProps) => {
   return <Parameters {...props} />;
@@ -14,7 +15,7 @@ export const renderParameters = (props: GenericFieldProps) => {
 const isStringRecord = (primitive?: PrimitiveValue): primitive is Record<string, string> =>
   primitive !== undefined && typeof primitive === 'object';
 
-const Parameters = ({ value, onChange }: GenericFieldProps) => {
+const Parameters = ({ value, ...props }: GenericFieldProps) => {
   const { context } = useAppContext();
   const { element } = useData();
   const method = useMeta('meta/composite/all', context, [])
@@ -28,34 +29,37 @@ const Parameters = ({ value, onChange }: GenericFieldProps) => {
   if (method === undefined || (method?.parameters.length === 0 && params.length === 0)) {
     return <Message variant='info' message='No parameters' />;
   }
+  return (
+    <Flex direction='column' gap={2}>
+      {method.parameters.map(param => (
+        <ParameterInput key={param.name} {...param} {...props} value={value} />
+      ))}
+      {params.map(param => (
+        <ParameterInput key={param.name} {...param} {...props} value={value} />
+      ))}
+    </Flex>
+  );
+};
+
+type ParameterInputProps = ParameterInfo &
+  Omit<GenericFieldProps, 'value'> & {
+    value: Record<string, string>;
+  };
+
+const ParameterInput = ({ value, onChange, name, description, type, validationPath }: ParameterInputProps) => {
+  const message = useValidation(`${validationPath}.${name}`);
   const updateValue = (key: string, newValue: string) => {
     value[key] = newValue;
     onChange(value);
   };
   return (
-    <Flex direction='column' gap={2}>
-      {method.parameters.map(param => (
-        <InputFieldWithBrowser
-          key={param.name}
-          label={capitalize(param.name)}
-          value={value[param.name]}
-          onChange={change => updateValue(param.name, change)}
-          browsers={['ATTRIBUTE']}
-          message={{ variant: 'description', message: param.description }}
-          options={{ onlyTypesOf: param.type }}
-        />
-      ))}
-      {params.map(param => (
-        <InputFieldWithBrowser
-          key={param.name}
-          label={capitalize(param.name)}
-          value={value[param.name]}
-          onChange={change => updateValue(param.name, change)}
-          browsers={['ATTRIBUTE']}
-          message={{ variant: 'description', message: param.description }}
-          options={{ onlyTypesOf: param.type }}
-        />
-      ))}
-    </Flex>
+    <InputFieldWithBrowser
+      label={capitalize(name)}
+      value={value[name]}
+      onChange={change => updateValue(name, change)}
+      browsers={['ATTRIBUTE']}
+      message={message ?? { variant: 'description', message: description }}
+      options={{ onlyTypesOf: type }}
+    />
   );
 };

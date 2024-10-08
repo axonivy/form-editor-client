@@ -5,12 +5,13 @@ import './ComponentBlock.css';
 import { useDraggable } from '@dnd-kit/core';
 import { modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../data/data';
 import { dragData } from './drag-data';
-import { Button, cn, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
+import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useState } from 'react';
 import { Palette } from '../palette/Palette';
 import { allComponentsByCategory, componentByName } from '../../components/components';
 import { DropZone, type DropZoneProps } from './DropZone';
+import { useValidations } from '../../context/useValidation';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -53,7 +54,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
   };
   const createElement = (name: string) =>
     setData(oldData => modifyData(oldData, { type: 'add', data: { componentName: name, targetId: data.id } }).newData);
-
+  const validations = useValidations(data.id);
   return (
     <Popover open={isSelected && !isDragging}>
       <PopoverAnchor asChild>
@@ -81,7 +82,12 @@ const Draggable = ({ config, data }: DraggableProps) => {
               setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.id } }).newData);
             }
           }}
-          className={cn('draggable', isSelected && 'selected', isDragging && 'dragging')}
+          className={cn(
+            'draggable',
+            isSelected && 'selected',
+            isDragging && 'dragging',
+            validations.length > 0 && `validation ${evalDotState(validations, undefined)}`
+          )}
           ref={setNodeRef}
           {...listeners}
           {...attributes}

@@ -31,15 +31,32 @@ export const Editor = (props: FormEditorProps) => {
   const queryKeys = useMemo(() => {
     return {
       data: () => genQueryKey('data', context),
-      saveData: () => genQueryKey('saveData', context)
+      saveData: () => genQueryKey('saveData', context),
+      validation: () => genQueryKey('validations', context)
     };
   }, [context]);
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isPending, isError, isSuccess, error } = useQuery({
     queryKey: queryKeys.data(),
     queryFn: () => client.data(context),
     structuralSharing: false
   });
+
+  const { data: validations } = useQuery({
+    queryKey: queryKeys.validation(),
+    queryFn: () => client.validate(context),
+    initialData: [],
+    enabled: isSuccess
+  });
+
+  useEffect(() => {
+    const validationDispose = client.onValidationChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.validation() }));
+    const dataDispose = client.onDataChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.data() }));
+    return () => {
+      validationDispose.dispose();
+      dataDispose.dispose();
+    };
+  }, [client, context, queryClient, queryKeys]);
 
   useEffect(() => {
     if (data?.data !== undefined && initialData === undefined) {
@@ -61,7 +78,8 @@ export const Editor = (props: FormEditorProps) => {
         return client.saveData({ context, data: saveData.data, directSave });
       }
       return Promise.resolve();
-    }
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.validation() })
   });
 
   if (isPending) {
@@ -79,7 +97,9 @@ export const Editor = (props: FormEditorProps) => {
   }
 
   return (
-    <AppProvider value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi, context, history }}>
+    <AppProvider
+      value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi, context, history, validations }}
+    >
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
           <MasterPart />

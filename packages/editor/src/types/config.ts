@@ -64,7 +64,7 @@ export type SelectField<ComponentProps extends DefaultComponentProps = DefaultCo
   options: readonly FieldOption[];
 };
 
-export type GenericFieldProps = { label: string; value: PrimitiveValue; onChange: (value: PrimitiveValue) => void };
+export type GenericFieldProps = { label: string; value: PrimitiveValue; onChange: (value: PrimitiveValue) => void; validationPath: string };
 
 export type GenericField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'generic';
