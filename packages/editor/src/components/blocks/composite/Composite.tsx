@@ -32,7 +32,7 @@ export const CompositeComponent: ComponentConfig<CompositeProps> = {
   fields: {
     name: { subsection: 'General', label: 'Composite', type: 'text', options: { disabled: true } },
     startMethod: { subsection: 'General', label: 'Start Method', type: 'generic', render: renderStartMethodSelect },
-    parameters: { section: 'Parameters', subsection: 'General', label: 'Parameters', type: 'generic', render: renderParameters },
+    parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters },
     ...baseComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS

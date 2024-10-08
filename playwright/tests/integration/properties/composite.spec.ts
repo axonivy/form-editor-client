@@ -9,31 +9,25 @@ test('address', async ({ page }) => {
   await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Composite');
   const properties = editor.inscription.section('Properties');
-  const parameters = editor.inscription.section('Parameters');
-  const section = properties.collapsible('General');
-  const composite = section.input({ label: 'Composite' });
-  const method = section.select({ label: 'Start Method' });
-  const section2 = parameters.collapsible('General');
-  const addressParam = section2.input({ label: 'Address' });
-  const labelParam = section2.input({ label: 'Label' });
+  const general = properties.collapsible('General');
+  const composite = general.input({ label: 'Composite' });
+  const method = general.select({ label: 'Start Method' });
+  const parameters = properties.collapsible('Parameters');
+  const addressParam = parameters.input({ label: 'Address' });
+  const labelParam = parameters.input({ label: 'Label' });
 
   await composite.expectValue('form.test.project.AddressComponent');
   await expect(composite.locator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Address)', 'empty()']);
-  await parameters.toggle();
   await expect(addressParam.locator).toBeHidden();
   await expect(labelParam.locator).toBeHidden();
 
-  await properties.toggle();
   await method.choose('empty()');
-  await parameters.toggle();
   await expect(addressParam.locator).toBeHidden();
   await expect(labelParam.locator).toBeVisible();
 
-  await properties.toggle();
   await method.choose('start(Address)');
-  await parameters.toggle();
   await addressParam.expectValue('');
   await addressParam.fill('#{data.address}');
   await labelParam.expectValue('');
@@ -42,7 +36,6 @@ test('address', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await method.expectValue('start(Address)');
-  await parameters.toggle();
   await addressParam.expectValue('#{data.address}');
   await labelParam.expectValue('my composite');
 });
@@ -55,19 +48,17 @@ test('person', async ({ page }) => {
   await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Composite');
   const properties = editor.inscription.section('Properties');
-  const parameters = editor.inscription.section('Parameters');
-  const section = properties.collapsible('General');
-  const composite = section.input({ label: 'Composite' });
-  const method = section.select({ label: 'Start Method' });
-  const section2 = parameters.collapsible('General');
-  const person = section2.input({ label: 'Person' });
+  const general = properties.collapsible('General');
+  const composite = general.input({ label: 'Composite' });
+  const method = general.select({ label: 'Start Method' });
+  const parameters = properties.collapsible('Parameters');
+  const person = parameters.input({ label: 'Person' });
 
   await composite.expectValue('form.test.project.PersonComponent');
   await expect(composite.locator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Person)']);
   await method.choose('start(Person)');
-  await parameters.toggle();
 
   await person.expectValue('');
   await person.fill('#{data.person}');
@@ -75,24 +66,22 @@ test('person', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await method.expectValue('start(Person)');
-  await parameters.toggle();
   await person.expectValue('#{data.person}');
 });
 
 test('parameters browser', async ({ page }) => {
   const editor = await FormEditor.openForm(page);
   await editor.canvas.blockByText('PersonComponent').inscribe();
-  const parameters = editor.inscription.section('Parameters');
-  const section = parameters.collapsible('General');
-  const person = section.input({ label: 'Person' });
+  const section = editor.inscription.section('Properties');
+  const parameters = section.collapsible('Parameters');
+  const person = parameters.input({ label: 'Person' });
 
-  await parameters.toggle();
   let browser = await person.openBrowser();
   await browser.expectEntries(['data.person']);
   await browser.close();
 
   await editor.canvas.blockByText('AddressComponent').inscribe();
-  const address = section.input({ label: 'Address' });
+  const address = parameters.input({ label: 'Address' });
   browser = await address.openBrowser();
   await browser.expectEntries(['data.address', 'data.person.billingAddress', 'data.person.deliveryAddress']);
 });
