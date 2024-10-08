@@ -34,17 +34,20 @@ export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
     components: { subsection: 'General', type: 'hidden' },
     legend: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE', 'CMS'] },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
-    collapsed: { subsection: 'Behaviour', label: 'Default collapsed', type: 'checkbox' },
+    collapsed: { subsection: 'Behaviour', label: 'Collapsed by default', type: 'checkbox', hide: data => !data.collapsible },
     ...visibleComponentField,
     ...baseComponentFields
   }
 };
 
-const UiBlock = ({ id, components, legend, collapsible, visible }: UiComponentProps<FieldsetProps>) => (
+const UiBlock = ({ id, components, legend, collapsible, collapsed, visible }: UiComponentProps<FieldsetProps>) => (
   <>
     <UiBlockHeader visible={visible} />
-    <fieldset className={`${collapsible ? 'collapsible' : ''}`}>
-      <legend>{legend}</legend>
+    <fieldset className={`${collapsible ? (collapsed ? 'collapsible default-collapsed' : 'collapsible') : ''}`}>
+      <legend>
+        {collapsible ? (collapsed ? '+ ' : '- ') : ''}
+        {legend}
+      </legend>
       {components.map((component, index) => (
         <ComponentBlock key={component.id} component={component} preId={components[index - 1]?.id} />
       ))}
