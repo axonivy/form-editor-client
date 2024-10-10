@@ -1,6 +1,7 @@
 import type { ComponentType, ConfigData, PrimitiveValue } from '@axonivy/form-editor-protocol';
 import type React from 'react';
 import type { ReactNode } from 'react';
+import type { BrowserOptions, BrowserType } from '../editor/sidebar/fields/browser/Browser';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
 
@@ -35,14 +36,7 @@ export type TextFieldOptions = {
   disabled?: boolean;
 };
 
-export type OnlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
-export type Browser = 'ATTRIBUTE' | 'LOGIC' | 'CMS';
-
-export type TextBrowserFieldOptions = TextFieldOptions & {
-  onlyTypesOf?: string;
-  onlyAttributes?: OnlyAttributeSelection;
-  directApply?: boolean;
-};
+export type TextBrowserFieldOptions = TextFieldOptions & BrowserOptions;
 
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'text' | 'number' | 'textarea' | 'checkbox' | 'textConditionBuilder';
@@ -51,7 +45,7 @@ export type TextField<ComponentProps extends DefaultComponentProps = DefaultComp
 
 export type TextBrowserField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'textBrowser';
-  browsers: Browser[];
+  browsers: Array<BrowserType>;
   options?: TextBrowserFieldOptions;
 };
 

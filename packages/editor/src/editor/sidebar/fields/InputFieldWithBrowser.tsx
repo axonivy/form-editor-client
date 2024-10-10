@@ -1,12 +1,10 @@
-import { BasicField, BrowsersView, Button, Dialog, DialogContent, DialogTrigger, Input, InputGroup } from '@axonivy/ui-components';
+import { BasicField, Button, Dialog, DialogContent, DialogTrigger, Input, InputGroup } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useRef, useState } from 'react';
-import { useAttributeBrowser } from './browser/useAttributeBrowser';
 import type { InputFieldProps } from './InputField';
-import type { Browser, TextBrowserFieldOptions } from '../../../types/config';
-import { useLogicBrowser } from './browser/useLogicBrowser';
+import type { TextBrowserFieldOptions } from '../../../types/config';
 import { focusBracketContent } from '../../../utils/focus';
-import { CMS_BROWSER_ID, useCmsBrowser } from './browser/useCmsBrowser';
+import { Browser, type BrowserType } from './browser/Browser';
 
 export const InputFieldWithBrowser = ({
   label,
@@ -16,19 +14,9 @@ export const InputFieldWithBrowser = ({
   onBlur,
   message,
   options
-}: InputFieldProps & { browsers: Browser[]; options?: TextBrowserFieldOptions }) => {
+}: InputFieldProps & { browsers: Array<BrowserType>; options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const attrBrowser = useAttributeBrowser(options?.onlyAttributes, options?.onlyTypesOf);
-  const logicBrowser = useLogicBrowser();
-  const cmsBrowser = useCmsBrowser();
-
-  const activeBrowsers = [
-    ...(browsers.includes('ATTRIBUTE') ? [attrBrowser] : []),
-    ...(browsers.includes('LOGIC') ? [logicBrowser] : []),
-    ...(browsers.includes('CMS') ? [cmsBrowser] : [])
-  ];
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <BasicField label={label} message={message} style={{ flex: '1' }}>
@@ -41,19 +29,9 @@ export const InputFieldWithBrowser = ({
       </BasicField>
       <DialogContent
         style={{ height: '80vh' }}
-        onCloseAutoFocus={activeBrowsers.includes(logicBrowser) ? e => focusBracketContent(e, value, inputRef.current) : undefined}
+        onCloseAutoFocus={browsers.includes('LOGIC') ? e => focusBracketContent(e, value, inputRef.current) : undefined}
       >
-        <BrowsersView
-          browsers={activeBrowsers}
-          apply={(browserName, result) => {
-            if (result && browserName === CMS_BROWSER_ID) {
-              onChange(`${value}#{${result.value}}`);
-            } else if (result) {
-              onChange(options?.onlyAttributes || options?.directApply ? `${result.value}` : `#{${result.value}}`);
-            }
-            setOpen(false);
-          }}
-        />
+        <Browser activeBrowsers={browsers} close={() => setOpen(false)} value={value} onChange={onChange} options={options} />
       </DialogContent>
     </Dialog>
   );

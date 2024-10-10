@@ -1,17 +1,7 @@
-import {
-  BasicField,
-  BrowsersView,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  Flex,
-  Textarea,
-  type MessageData
-} from '@axonivy/ui-components';
+import { BasicField, Button, Dialog, DialogContent, DialogTrigger, Flex, Textarea, type MessageData } from '@axonivy/ui-components';
 import { useState } from 'react';
-import { useCmsBrowser } from './browser/useCmsBrowser';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { Browser } from './browser/Browser';
 
 type TextareaFieldProps = {
   label: string;
@@ -22,8 +12,6 @@ type TextareaFieldProps = {
 
 export const TextareaField = ({ label, value, onChange, message }: TextareaFieldProps) => {
   const [open, setOpen] = useState(false);
-  const cmsBrowser = useCmsBrowser();
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <BasicField label={label} message={message}>
@@ -35,15 +23,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
         </Flex>
       </BasicField>
       <DialogContent style={{ height: '80vh' }}>
-        <BrowsersView
-          browsers={[cmsBrowser]}
-          apply={(browserName, result) => {
-            if (result) {
-              onChange(`${value}#{${result.value}}`);
-            }
-            setOpen(false);
-          }}
-        />
+        <Browser activeBrowsers={['CMS']} close={() => setOpen(false)} value={value} onChange={onChange} />
       </DialogContent>
     </Dialog>
   );
