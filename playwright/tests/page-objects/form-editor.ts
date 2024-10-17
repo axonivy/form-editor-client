@@ -4,7 +4,7 @@ import { Canvas } from './canvas';
 import { Inscription } from './inscription';
 import { v4 as uuid } from 'uuid';
 
-export const testForm = 'form/test/project/test/test';
+export const testForm = 'src_hd/form/test/project/test/test';
 const server = process.env.BASE_URL ?? 'http://localhost:8081';
 const ws = process.env.TEST_WS ?? '';
 const app = process.env.TEST_APP ?? 'designer';
@@ -51,7 +51,7 @@ export class FormEditor {
     if (!result.ok) {
       console.log(`Failed to create form: ${result.status}`);
     }
-    const editor = await this.openForm(page, `${namespace}/${name}/${name}`);
+    const editor = await this.openForm(page, `src_hd/${namespace}/${name}/${name}`);
     if (options?.block) {
       await editor.createBlock(options.block);
     }
