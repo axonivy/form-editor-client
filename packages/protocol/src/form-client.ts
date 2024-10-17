@@ -1,5 +1,5 @@
-import type { FormContext, ValidationResult } from './data/form';
-import type { FormEditor, FormSaveData, FormAction } from './data/form-data';
+import type { FormContext, ValidationResult, FormActionArgs } from './data/form';
+import type { FormEditor, FormSaveData } from './data/form-data';
 import type { FormMetaRequestTypes } from './form-protocol';
 
 export interface Event<T> {
@@ -21,7 +21,7 @@ export interface FormClient {
     args: FormMetaRequestTypes[TMeta][0]
   ): Promise<FormMetaRequestTypes[TMeta][1]>;
 
-  action(action: FormAction): void;
+  action(action: FormActionArgs): void;
 
   onDataChanged: Event<void>;
   onValidationChanged: Event<void>;

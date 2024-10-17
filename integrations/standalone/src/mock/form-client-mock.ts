@@ -1,5 +1,5 @@
 import type {
-  FormAction,
+  FormActionArgs,
   FormClient,
   FormEditor,
   FormMetaRequestTypes,
@@ -51,7 +51,7 @@ export class FormClientMock implements FormClient {
     }
   }
 
-  action(action: FormAction): void {
+  action(action: FormActionArgs): void {
     console.log('action', action);
   }
 }

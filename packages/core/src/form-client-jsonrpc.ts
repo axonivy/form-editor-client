@@ -6,9 +6,9 @@ import type {
   FormClient,
   FormEditor,
   FormSaveData,
-  FormAction,
   FormOnNotificationTypes,
-  ValidationResult
+  ValidationResult,
+  FormActionArgs
 } from '@axonivy/form-editor-protocol';
 import {
   BaseRpcClient,
@@ -52,7 +52,7 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
     return this.sendRequest(path, args);
   }
 
-  action(action: FormAction): void {
+  action(action: FormActionArgs): void {
     this.sendNotification('action', action);
   }
 
