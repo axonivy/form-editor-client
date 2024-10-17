@@ -1,15 +1,5 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type {
-  Component,
-  DataTableColumn,
-  Fieldset,
-  Form,
-  FormActionArgs,
-  FormContext,
-  FormEditorData,
-  FormSaveDataArgs,
-  Layout
-} from './form';
+import type { Component, DataTableColumn, Fieldset, Form, FormContext, FormEditorData, FormSaveDataArgs, Layout } from './form';
 
 export type ComponentType = Component['type'] | 'DataTableColumn';
 
@@ -66,8 +56,4 @@ export type FormEditor = Omit<FormEditorData, 'data'> & {
 export type FormSaveData = Omit<FormSaveDataArgs, 'data'> & {
   data: FormData;
   directSave?: boolean;
-};
-
-export type FormAction = FormActionArgs & {
-  actionId: 'openDataClass' | 'openProcess';
 };

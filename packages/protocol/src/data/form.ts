@@ -302,9 +302,9 @@ export interface Textarea {
   visible: string;
 }
 export interface FormActionArgs {
-  actionId: string;
+  actionId: "openDataClass" | "openProcess";
   context: FormContext;
-  payload: unknown;
+  payload: string;
 }
 export interface FormEditorContent {
   content: string;

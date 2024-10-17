@@ -1,12 +1,12 @@
-import type { FormAction } from '@axonivy/form-editor-protocol';
 import { useClient } from './ClientContext';
 import { useAppContext } from './AppContext';
+import type { FormActionArgs } from '@axonivy/form-editor-protocol';
 
-export function useAction(actionId: FormAction['actionId']) {
+export function useAction(actionId: FormActionArgs['actionId']) {
   const { context } = useAppContext();
   const client = useClient();
 
-  return (content?: FormAction['payload']) => {
+  return (content?: FormActionArgs['payload']) => {
     let payload = content ?? '';
     if (typeof payload === 'object') {
       payload = JSON.stringify(payload);
