@@ -3,7 +3,7 @@ import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
 import { useDraggable } from '@dnd-kit/core';
-import { modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../data/data';
+import { creationTargetId, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../data/data';
 import { dragData } from './drag-data';
 import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -12,7 +12,7 @@ import { Palette } from '../palette/Palette';
 import { allComponentsByCategory, componentByName } from '../../components/components';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
-import { DataClassDialog, getSelectedElementId } from './data-class/DataClassDialog';
+import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -55,7 +55,8 @@ const Draggable = ({ config, data }: DraggableProps) => {
   };
   const createElement = (name: string) =>
     setData(
-      oldData => modifyData(oldData, { type: 'add', data: { componentName: name, targetId: getSelectedElementId(data.id) } }).newData
+      oldData =>
+        modifyData(oldData, { type: 'add', data: { componentName: name, targetId: creationTargetId(oldData.components, data.id) } }).newData
     );
   const validations = useValidations(data.id);
   return (

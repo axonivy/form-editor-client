@@ -1,10 +1,9 @@
 import type { Variable, VariableInfo } from '@axonivy/form-editor-protocol';
-import type { BrowserNode } from '@axonivy/ui-components';
+import { labelText, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { Row } from '@tanstack/react-table';
-import { componentForType } from '../components/components';
-import { labelText } from '../utils/string';
-import type { CreateComponentData } from '../types/config';
+import { componentForType } from '../../../components/components';
+import type { CreateComponentData } from '../../../types/config';
 
 export const variableTreeData = () => {
   const of = (paramInfo: VariableInfo): Array<BrowserNode<Variable>> => {

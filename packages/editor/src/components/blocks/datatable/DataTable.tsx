@@ -7,11 +7,11 @@ import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { useAppContext } from '../../../context/AppContext';
 import { Button, Flex, Message } from '@axonivy/ui-components';
 import { useMeta } from '../../../context/useMeta';
-import { findAttributesOfType } from '../../../data/variable-tree-data';
 import { componentByName } from '../../components';
 import { createInitiTableColumns } from '../../../data/data';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
+import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
 
 type DataTableProps = Prettify<DataTable>;
 

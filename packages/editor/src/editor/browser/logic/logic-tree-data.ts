@@ -1,7 +1,7 @@
 import type { LogicEventInfo, LogicInfo, LogicMethodInfo } from '@axonivy/form-editor-protocol';
 import type { BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { typesString, simpleType } from '../utils/string';
+import { simpleType, typesString } from '../../../utils/string';
 
 export const logicTreeData = (logicInfo: LogicInfo): Array<BrowserNode<LogicMethodInfo>> => {
   return [

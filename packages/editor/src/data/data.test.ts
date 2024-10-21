@@ -8,7 +8,7 @@ import {
   type ConfigData,
   type DataTableColumnComponent
 } from '@axonivy/form-editor-protocol';
-import { createInitForm, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
+import { createInitForm, creationTargetId, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
 import type { DeepPartial } from '../types/types';
 
 describe('findComponentElement', () => {
@@ -258,6 +258,17 @@ describe('findParentTableComponent', () => {
     };
     expect(findParentTableComponent(noTableData, element)).toBeUndefined();
   });
+});
+
+test('creationTargetId', () => {
+  const components = filledData().components;
+  expect(creationTargetId(components)).toEqual(undefined);
+  expect(creationTargetId(components, 'abc')).toEqual('abc');
+  expect(creationTargetId(components, '1')).toEqual('1');
+  expect(creationTargetId(components, '3')).toEqual('layout-3');
+  expect(creationTargetId(components, '31')).toEqual('31');
+  expect(creationTargetId(components, '4')).toEqual('layout-4');
+  expect(creationTargetId(components, '5')).toEqual('layout-5');
 });
 
 const emptyData = () => {

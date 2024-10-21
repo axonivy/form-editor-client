@@ -1,7 +1,7 @@
 import { BrowsersView } from '@axonivy/ui-components';
-import { CMS_BROWSER_ID, useCmsBrowser } from './useCmsBrowser';
-import { useAttributeBrowser } from './useAttributeBrowser';
-import { useLogicBrowser } from './useLogicBrowser';
+import { useAttributeBrowser } from './data-class/useAttributeBrowser';
+import { useCmsBrowser, CMS_BROWSER_ID } from './cms/useCmsBrowser';
+import { useLogicBrowser } from './logic/useLogicBrowser';
 
 type OnlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
 

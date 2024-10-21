@@ -4,10 +4,10 @@ import type { BrowserNode } from '@axonivy/ui-components';
 import { useAppContext } from '../../../../context/AppContext';
 import { createId, useData } from '../../../../data/data';
 import { useMeta } from '../../../../context/useMeta';
-import { findAttributesOfType } from '../../../../data/variable-tree-data';
 import type { CheckboxColumn } from './ColumnsCheckboxField';
 import { useEffect, useState } from 'react';
 import { DataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
+import { findAttributesOfType } from '../../../browser/data-class/variable-tree-data';
 
 export const useDataTableColumns = () => {
   const { context } = useAppContext();

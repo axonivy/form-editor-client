@@ -1,7 +1,7 @@
 import { BasicField, Button, Dialog, DialogContent, DialogTrigger, Flex, Textarea, type MessageData } from '@axonivy/ui-components';
 import { useState } from 'react';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { Browser } from './browser/Browser';
+import { Browser } from '../../browser/Browser';
 
 type TextareaFieldProps = {
   label: string;
