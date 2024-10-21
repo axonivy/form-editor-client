@@ -1,5 +1,5 @@
 import { PanelMessage, cn, Flex, Button } from '@axonivy/ui-components';
-import { DataClassDialog } from './data-class/DataClassDialog';
+import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 import { DropZone } from './DropZone';
 import './EmptyBlock.css';
 import { IvyIcons } from '@axonivy/ui-icons';

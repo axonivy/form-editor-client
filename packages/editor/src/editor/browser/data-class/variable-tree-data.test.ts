@@ -1,7 +1,7 @@
 import type { VariableInfo } from '@axonivy/form-editor-protocol';
-import { findVariablesOfType, findAttributesOfType, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
 import type { BrowserNode } from '@axonivy/ui-components';
 import type { Row } from '@tanstack/react-table';
+import { findAttributesOfType, findVariablesOfType, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
 
 const variableInfo: VariableInfo = {
   variables: [

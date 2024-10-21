@@ -239,6 +239,17 @@ export const createInitForm = (
   return data;
 };
 
+export const creationTargetId = (data: Array<ComponentData>, elementId?: string) => {
+  if (elementId === undefined) {
+    return elementId;
+  }
+  const structure = findStructureComponent(data, elementId);
+  if (structure) {
+    return STRUCTURE_DROPZONE_ID_PREFIX + elementId;
+  }
+  return elementId;
+};
+
 export const useData = () => {
   const { data, setData, selectedElement, setSelectedElement, history } = useAppContext();
   const foundElement = selectedElement !== undefined ? findComponentElement(data, selectedElement) : undefined;

@@ -25,7 +25,7 @@ import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
 import { useAction } from '../context/useAction';
-import { DataClassDialog } from './canvas/data-class/DataClassDialog';
+import { DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';

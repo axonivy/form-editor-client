@@ -1,5 +1,5 @@
 import type { LogicEventInfo, LogicInfo, LogicMethodInfo } from '@axonivy/form-editor-protocol';
-import { logicTreeData, formatLogicMethodInfo, convertEventsToMethods } from './logic-tree-data';
+import { convertEventsToMethods, formatLogicMethodInfo, logicTreeData } from './logic-tree-data';
 
 const logicInfo: LogicInfo = {
   startMethods: [

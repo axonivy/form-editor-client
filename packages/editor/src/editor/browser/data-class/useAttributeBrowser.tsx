@@ -1,12 +1,12 @@
 import { useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useMeta } from '../../../../context/useMeta';
-import { findAttributesOfType, fullVariablePath, variableTreeData, findVariablesOfType } from '../../../../data/variable-tree-data';
+import { useMeta } from '../../../context/useMeta';
 import { useCallback, useEffect, useState } from 'react';
 import type { ConfigData, Variable } from '@axonivy/form-editor-protocol';
-import { useAppContext } from '../../../../context/AppContext';
-import { findParentTableComponent, useData } from '../../../../data/data';
-import type { BrowserOptions } from './Browser';
+import { useAppContext } from '../../../context/AppContext';
+import { findParentTableComponent, useData } from '../../../data/data';
+import type { BrowserOptions } from '../Browser';
+import { findVariablesOfType, findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute' as const;
 

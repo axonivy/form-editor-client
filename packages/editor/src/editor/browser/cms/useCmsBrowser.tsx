@@ -1,10 +1,10 @@
 import { BasicCheckbox, useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useMeta } from '../../../../context/useMeta';
+import { useMeta } from '../../../context/useMeta';
 import { useMemo, useState } from 'react';
 import type { ContentObject } from '@axonivy/form-editor-protocol';
-import { useAppContext } from '../../../../context/AppContext';
-import { cmsTreeData } from '../../../../data/cms-tree-data';
+import { useAppContext } from '../../../context/AppContext';
+import { cmsTreeData } from './cms-tree-data';
 import type { Row } from '@tanstack/react-table';
 
 export const CMS_BROWSER_ID = 'CMS' as const;

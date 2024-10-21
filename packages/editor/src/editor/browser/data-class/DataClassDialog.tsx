@@ -21,9 +21,9 @@ import { useMeta } from '../../../context/useMeta';
 import { useAppContext } from '../../../context/AppContext';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
-import { rowToCreateData, variableTreeData } from '../../../data/variable-tree-data';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
-import { createInitForm, STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
+import { createInitForm, creationTargetId } from '../../../data/data';
+import { variableTreeData, rowToCreateData } from './variable-tree-data';
 
 export const DataClassDialog = ({
   children,
@@ -44,18 +44,8 @@ export const DataClassDialog = ({
     </DialogContent>
   </Dialog>
 );
-export const getSelectedElementId = (selectedElementId: string | undefined) => {
-  if (
-    selectedElementId &&
-    (selectedElementId.startsWith('Layout') || selectedElementId.startsWith('Panel') || selectedElementId.startsWith('Fieldset'))
-  ) {
-    return STRUCTURE_DROPZONE_ID_PREFIX + selectedElementId;
-  } else {
-    return selectedElementId;
-  }
-};
 
-export const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worfkflowButtonsInit: boolean; creationTarget?: string }) => {
+const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worfkflowButtonsInit: boolean; creationTarget?: string }) => {
   const { context, setData } = useAppContext();
 
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
@@ -106,7 +96,7 @@ export const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worf
         .getSelectedRowModel()
         .flatRows.map(rowToCreateData)
         .filter(create => create !== undefined);
-      return createInitForm(data, creates, workflowButtons, creationTarget && getSelectedElementId(creationTarget));
+      return createInitForm(data, creates, workflowButtons, creationTargetId(data.components, creationTarget));
     });
   };
   return (

@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import type { InputFieldProps } from './InputField';
 import type { TextBrowserFieldOptions } from '../../../types/config';
 import { focusBracketContent } from '../../../utils/focus';
-import { Browser, type BrowserType } from './browser/Browser';
+import { Browser, type BrowserType } from '../../browser/Browser';
 
 export const InputFieldWithBrowser = ({
   label,
