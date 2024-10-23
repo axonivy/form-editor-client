@@ -2,6 +2,7 @@ import type { ComponentType, ConfigData, PrimitiveValue } from '@axonivy/form-ed
 import type React from 'react';
 import type { ReactNode } from 'react';
 import type { BrowserOptions, BrowserType } from '../editor/browser/Browser';
+import type { CollapsibleControlProps } from '@axonivy/ui-components';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
 
@@ -17,7 +18,7 @@ export type FieldOption<TValue = PrimitiveValue> = {
 };
 
 export type CreateData = { label: string; value: string; defaultProps?: Record<string, unknown> };
-export type CreateComponentData = { componentName: string } & CreateData;
+export type CreateComponentData = { componentName: ComponentType } & CreateData;
 
 export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
   typeof data === 'object' && data !== null && 'componentName' in data;
@@ -50,7 +51,7 @@ export type TextBrowserField<ComponentProps extends DefaultComponentProps = Defa
 };
 
 export type TableField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
-  type: 'selectTable' | 'selectColums';
+  type: 'selectTable';
 };
 
 export type SelectField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
@@ -96,6 +97,7 @@ export type ComponentConfig<ComponentProps extends DefaultComponentProps = Defau
   defaultProps: DefaultProps;
   fields: Fields<ComponentProps>;
   quickActions: QuickAction[];
+  subSectionControls?: (props: CollapsibleControlProps, subSection: Subsection) => ReactNode;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

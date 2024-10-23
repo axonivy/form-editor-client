@@ -2,7 +2,7 @@ import type { ComponentConfig, CreateComponentData, CreateData } from '../types/
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
 import { v4 as uuid } from 'uuid';
-import { isStructure, isTable, type ComponentData, type DataTable, type FormData } from '@axonivy/form-editor-protocol';
+import { isStructure, isTable, type ComponentData, type ComponentType, type DataTable, type FormData } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
 import type { UpdateConsumer } from '../types/types';
 
@@ -119,7 +119,7 @@ type ModifyAction =
         create?: CreateData;
       };
     }
-  | { type: 'add'; data: { componentName: string; create?: CreateData; targetId?: string }; insideTable?: boolean }
+  | { type: 'add'; data: { componentName: ComponentType; create?: CreateData; targetId?: string } }
   | { type: 'duplicate' | 'remove' | 'moveUp' | 'moveDown'; data: { id: string } };
 
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
@@ -141,7 +141,7 @@ const createComponentData = (config: ComponentConfig, data?: CreateData): Compon
   config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
 });
 
-export const createId = (name: string) => `${name}-${uuid()}`;
+const createId = (name: ComponentType) => `${name}-${uuid()}`;
 
 const duplicateComponent = (data: FormData, id: string) => {
   const newComponent = structuredClone(findComponentElement(data, id));
@@ -190,7 +190,7 @@ export const findComponentElement = (data: FormData, id: string) => {
   return;
 };
 
-export const createInitiTableColumns = (id: string, data: FormData, creates: Array<CreateComponentData>) => {
+export const createInitTableColumns = (id: string, data: FormData, creates: Array<CreateComponentData>) => {
   creates.forEach(create => {
     data = modifyData(data, {
       type: 'add',
