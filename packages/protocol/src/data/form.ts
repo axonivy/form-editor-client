@@ -85,7 +85,7 @@ export interface FormConfig {
   theme: string;
 }
 export interface Component {
-  id: string;
+  cid: string;
   type:
     | "Button"
     | "Checkbox"
@@ -123,6 +123,7 @@ export interface Button {
   action: string;
   disabled: string;
   icon: string;
+  id: string;
   lgSpan: string;
   mdSpan: string;
   name: string;
@@ -132,6 +133,7 @@ export interface Button {
 }
 export interface Checkbox {
   disabled: string;
+  id: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
@@ -142,6 +144,7 @@ export interface Checkbox {
 export interface Combobox {
   completeMethod: string;
   disabled: string;
+  id: string;
   itemLabel: string;
   itemValue: string;
   label: string;
@@ -155,6 +158,7 @@ export interface Combobox {
   withDropdown: boolean;
 }
 export interface Composite {
+  id: string;
   lgSpan: string;
   mdSpan: string;
   name: string;
@@ -163,6 +167,7 @@ export interface Composite {
 }
 export interface DataTable {
   components: DataTableColumn[];
+  id: string;
   lgSpan: string;
   maxRows: string;
   mdSpan: string;
@@ -171,8 +176,8 @@ export interface DataTable {
   visible: string;
 }
 export interface DataTableColumn {
+  cid: string;
   config: DataTableColumnConfig;
-  id: string;
 }
 export interface DataTableColumnConfig {
   filterable: boolean;
@@ -184,6 +189,7 @@ export interface DataTableColumnConfig {
 export interface DatePicker {
   datePattern: string;
   disabled: string;
+  id: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
@@ -199,6 +205,7 @@ export interface Fieldset {
   collapsed: boolean;
   collapsible: boolean;
   components: Component[];
+  id: string;
   legend: string;
   lgSpan: string;
   mdSpan: string;
@@ -207,6 +214,7 @@ export interface Fieldset {
 export interface Input {
   decimalPlaces: string;
   disabled: string;
+  id: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
@@ -222,6 +230,7 @@ export interface Input {
 export interface Layout {
   components: Component[];
   gridVariant: LayoutGridVariant;
+  id: string;
   justifyContent: LayoutJustifyContent;
   lgSpan: string;
   mdSpan: string;
@@ -230,6 +239,7 @@ export interface Layout {
 }
 export interface Link {
   href: string;
+  id: string;
   lgSpan: string;
   mdSpan: string;
   name: string;
@@ -239,6 +249,7 @@ export interface Panel {
   collapsed: boolean;
   collapsible: boolean;
   components: Component[];
+  id: string;
   lgSpan: string;
   mdSpan: string;
   title: string;
@@ -249,6 +260,7 @@ export interface Radio {
   dynamicItemsLabel: string;
   dynamicItemsList: string;
   dynamicItemsValue: string;
+  id: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
@@ -269,6 +281,7 @@ export interface Select {
   dynamicItemsLabel: string;
   dynamicItemsList: string;
   dynamicItemsValue: string;
+  id: string;
   label: string;
   lgSpan: string;
   mdSpan: string;
@@ -283,6 +296,7 @@ export interface Text {
   content: string;
   icon: string;
   iconStyle: TextIconStyle;
+  id: string;
   lgSpan: string;
   mdSpan: string;
   type: TextType;
@@ -291,6 +305,7 @@ export interface Text {
 export interface Textarea {
   autoResize: boolean;
   disabled: string;
+  id: string;
   label: string;
   lgSpan: string;
   mdSpan: string;

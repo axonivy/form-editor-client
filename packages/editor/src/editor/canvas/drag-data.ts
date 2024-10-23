@@ -9,7 +9,7 @@ const disabledIds = (data: Component | ComponentData): Array<string> => {
     const ids: Array<string> = [];
     for (const component of data.config.components) {
       ids.push(...disabledIds(component));
-      ids.push(component.id);
+      ids.push(component.cid);
     }
     return ids;
   }

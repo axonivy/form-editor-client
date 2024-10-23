@@ -49,11 +49,11 @@ const UiBlock = ({ id, components, legend, collapsible, collapsed, visible }: Ui
         {legend}
       </legend>
       {components.map((component, index) => (
-        <ComponentBlock key={component.id} component={component} preId={components[index - 1]?.id} />
+        <ComponentBlock key={component.cid} component={component} preId={components[index - 1]?.cid} />
       ))}
       <EmtpyBlock
         id={`${STRUCTURE_DROPZONE_ID_PREFIX}${id}`}
-        preId={components[components.length - 1]?.id}
+        preId={components[components.length - 1]?.cid}
         forLayout={true}
         dragHint={{ display: components.length === 0, message: 'Drag first element inside the fieldset', mode: 'row' }}
       />

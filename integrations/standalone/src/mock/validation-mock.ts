@@ -13,12 +13,12 @@ const validateDeep = (components: Array<ComponentData>, validations: Array<Valid
     }
     if (c.type === 'Input') {
       if (c.config.value === undefined || (c.config.value as string).length === 0) {
-        validations.push({ path: `${c.id}.value`, message: 'Value is required', severity: 'ERROR' });
+        validations.push({ path: `${c.cid}.value`, message: 'Value is required', severity: 'ERROR' });
       }
     }
     if (c.type === 'Select') {
       if (c.config.value === undefined || (c.config.value as string).length === 0) {
-        validations.push({ path: `${c.id}.value`, message: 'Value is required', severity: 'WARNING' });
+        validations.push({ path: `${c.cid}.value`, message: 'Value is required', severity: 'WARNING' });
       }
     }
   });

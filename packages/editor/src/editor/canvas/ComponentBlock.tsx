@@ -20,7 +20,7 @@ type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
 };
 
 export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => (
-  <DropZone id={component.id} preId={preId} {...props}>
+  <DropZone id={component.cid} preId={preId} {...props}>
     <Draggable config={componentByName(component.type)} data={component} />
   </DropZone>
 );
@@ -34,37 +34,38 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
   const { setData } = useData();
   const readonly = useReadonly();
-  const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ disabled: readonly, id: data.id, data: dragData(data) });
+  const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ disabled: readonly, id: data.cid, data: dragData(data) });
   const { selectedElement, setSelectedElement } = useAppContext();
-  const isSelected = selectedElement === data.id;
+  const isSelected = selectedElement === data.cid;
   const elementConfig = { ...config.defaultProps, ...data.config };
   const deleteElement = () => {
-    setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.id } }).newData);
+    setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.cid } }).newData);
     setSelectedElement(undefined);
   };
-  const duplicateElement = () => setData(oldData => modifyData(oldData, { type: 'duplicate', data: { id: data.id } }).newData);
+  const duplicateElement = () => setData(oldData => modifyData(oldData, { type: 'duplicate', data: { id: data.cid } }).newData);
   const createColumn = () => {
     setData(
       oldData =>
         modifyData(oldData, {
           type: 'add',
-          data: { componentName: 'DataTableColumn', targetId: TABLE_DROPZONE_ID_PREFIX + data.id }
+          data: { componentName: 'DataTableColumn', targetId: TABLE_DROPZONE_ID_PREFIX + data.cid }
         }).newData
     );
   };
   const createElement = (name: ComponentType) =>
     setData(
       oldData =>
-        modifyData(oldData, { type: 'add', data: { componentName: name, targetId: creationTargetId(oldData.components, data.id) } }).newData
+        modifyData(oldData, { type: 'add', data: { componentName: name, targetId: creationTargetId(oldData.components, data.cid) } })
+          .newData
     );
-  const validations = useValidations(data.id);
+  const validations = useValidations(data.cid);
   return (
     <Popover open={isSelected && !isDragging}>
       <PopoverAnchor asChild>
         <div
           onClick={e => {
             e.stopPropagation();
-            setSelectedElement(data.id);
+            setSelectedElement(data.cid);
           }}
           onDoubleClick={e => {
             e.stopPropagation();
@@ -73,16 +74,16 @@ const Draggable = ({ config, data }: DraggableProps) => {
           onKeyUp={e => {
             e.stopPropagation();
             if (e.key === 'Enter') {
-              setSelectedElement(data.id);
+              setSelectedElement(data.cid);
             }
             if (e.key === 'Delete') {
               deleteElement();
             }
             if (e.key === 'ArrowUp') {
-              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.id } }).newData);
+              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
             }
             if (e.key === 'ArrowDown') {
-              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.id } }).newData);
+              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
             }
           }}
           className={cn(
@@ -95,14 +96,14 @@ const Draggable = ({ config, data }: DraggableProps) => {
           {...listeners}
           {...attributes}
         >
-          {config.render({ ...elementConfig, id: data.id })}
+          {config.render({ ...elementConfig, id: data.cid })}
         </div>
       </PopoverAnchor>
       <Quickbar
         deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
         duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
         createAction={config.quickActions.includes('CREATE') ? createElement : undefined}
-        createFromDataAction={config.quickActions.includes('CREATEFROMDATA') ? data.id : undefined}
+        createFromDataAction={config.quickActions.includes('CREATEFROMDATA') ? data.cid : undefined}
         createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
       />
     </Popover>
@@ -111,7 +112,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
 
 export const ComponentBlockOverlay = ({ config, data }: DraggableProps) => {
   const elementConfig = { ...config.defaultProps, ...data.config };
-  return <div className='draggable dragging'>{config.render({ ...elementConfig, id: data.id })}</div>;
+  return <div className='draggable dragging'>{config.render({ ...elementConfig, id: data.cid })}</div>;
 };
 
 type QuickbarProps = {

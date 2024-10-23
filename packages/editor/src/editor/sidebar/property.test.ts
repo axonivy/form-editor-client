@@ -32,13 +32,13 @@ describe('visibleSections', () => {
   });
 
   test('parent is grid layout', () => {
-    expect(visibleSections(visibleFields, { id: 'grid-layout', type: 'Layout', config: { gridVariant: 'GRID', components: [] } })).toEqual(
+    expect(visibleSections(visibleFields, { cid: 'grid-layout', type: 'Layout', config: { gridVariant: 'GRID', components: [] } })).toEqual(
       new Map([['Properties', [visibleFields[0], visibleFields[1]]]])
     );
   });
 
   test('parent is free layout', () => {
-    expect(visibleSections(visibleFields, { id: 'free-layout', type: 'Layout', config: { gridVariant: 'FREE', components: [] } })).toEqual(
+    expect(visibleSections(visibleFields, { cid: 'free-layout', type: 'Layout', config: { gridVariant: 'FREE', components: [] } })).toEqual(
       new Map([
         ['Properties', [visibleFields[0], visibleFields[1]]],
         ['Layout', [visibleFields[2]]]

@@ -1,7 +1,7 @@
 import type { SelectItem } from '@axonivy/form-editor-protocol';
 import type { FieldOption, Fields } from '../../types/config';
 
-type BaseComponentProps = { lgSpan: string; mdSpan: string };
+type BaseComponentProps = { id: string; lgSpan: string; mdSpan: string };
 type SelectItemsProps = {
   label: string;
   value: string;
@@ -31,6 +31,7 @@ export const defaultBehaviourComponent: BehaviourItemProps = {
 } as const;
 
 export const defaultBaseComponent: BaseComponentProps = {
+  id: '',
   lgSpan: '6',
   mdSpan: '12'
 } as const;
@@ -45,6 +46,7 @@ const spanOptions: FieldOption<string>[] = [
 ] as const;
 
 export const baseComponentFields: Fields<BaseComponentProps> = {
+  id: { subsection: 'General', type: 'hidden' },
   lgSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Large Span', options: spanOptions },
   mdSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Medium Span', options: spanOptions }
 };

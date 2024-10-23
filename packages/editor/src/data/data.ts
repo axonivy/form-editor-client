@@ -29,7 +29,7 @@ const findComponent = (
 };
 
 const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: ComponentData) => {
-  const index = data.findIndex(obj => obj.id === id);
+  const index = data.findIndex(obj => obj.cid === id);
   if (index < 0) {
     for (const element of data) {
       if (isTable(element) || isStructure(element)) {
@@ -72,7 +72,7 @@ export const findParentTableComponent = (data: Array<ComponentData>, element: Co
   for (const component of data) {
     if (component.type === 'DataTable') {
       const hasMatchingColumn = (component.config as unknown as DataTable).components.some(
-        childComponent => childComponent.id === element?.id
+        childComponent => childComponent.cid === element?.cid
       );
       if (hasMatchingColumn) {
         return component.config as unknown as DataTable;
@@ -86,10 +86,10 @@ const addComponent = (data: Array<ComponentData>, component: ComponentData, id: 
   const find = findComponent(data, id);
   if (find) {
     add(find.data, component, find.index);
-    return component.id;
+    return component.cid;
   }
   data.push(component);
-  return component.id;
+  return component.cid;
 };
 
 const removeComponent = (data: Array<ComponentData>, id: string) => {
@@ -136,7 +136,7 @@ const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { t
 };
 
 const createComponentData = (config: ComponentConfig, data?: CreateData): ComponentData => ({
-  id: createId(config.name),
+  cid: createId(config.name),
   type: config.name,
   config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
 });
@@ -146,7 +146,7 @@ const createId = (name: ComponentType) => `${name}-${uuid()}`;
 const duplicateComponent = (data: FormData, id: string) => {
   const newComponent = structuredClone(findComponentElement(data, id));
   if (newComponent) {
-    newComponent.element.id = createId(newComponent.element.type);
+    newComponent.element.cid = createId(newComponent.element.type);
     return addComponent(data.components, newComponent.element, id);
   }
   return undefined;
@@ -262,7 +262,7 @@ export const useData = () => {
   };
   const setElement = (element: ComponentData) => {
     setHistoricisedData(oldData => {
-      const findElement = findComponentElement(oldData, element.id);
+      const findElement = findComponentElement(oldData, element.cid);
       if (findElement) {
         findElement.element = element;
       }

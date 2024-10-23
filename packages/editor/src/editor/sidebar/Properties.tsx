@@ -61,7 +61,7 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
         <Flex direction='column' gap={2}>
           {fields.map(({ key, field, value }) => (
             <PropertyItem
-              key={`${element.id}-${key}`}
+              key={`${element.cid}-${key}`}
               value={value}
               onChange={change => {
                 (element.config as ConfigData)[key] = change;
