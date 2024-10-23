@@ -1,4 +1,4 @@
-import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
+import type { Component, ComponentData, ComponentType } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
@@ -48,12 +48,11 @@ const Draggable = ({ config, data }: DraggableProps) => {
       oldData =>
         modifyData(oldData, {
           type: 'add',
-          data: { componentName: 'DataTableColumn', targetId: TABLE_DROPZONE_ID_PREFIX + data.id },
-          insideTable: true
+          data: { componentName: 'DataTableColumn', targetId: TABLE_DROPZONE_ID_PREFIX + data.id }
         }).newData
     );
   };
-  const createElement = (name: string) =>
+  const createElement = (name: ComponentType) =>
     setData(
       oldData =>
         modifyData(oldData, { type: 'add', data: { componentName: name, targetId: creationTargetId(oldData.components, data.id) } }).newData
@@ -118,7 +117,7 @@ export const ComponentBlockOverlay = ({ config, data }: DraggableProps) => {
 type QuickbarProps = {
   deleteAction?: () => void;
   duplicateAction?: () => void;
-  createAction?: (name: string) => void;
+  createAction?: (name: ComponentType) => void;
   createColumnAction?: () => void;
   createFromDataAction?: string;
 };
@@ -174,7 +173,7 @@ const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAct
           </Flex>
         </PopoverAnchor>
         <PopoverContent className='quickbar-menu' sideOffset={8} onClick={e => e.stopPropagation()}>
-          <Palette sections={allComponentsByCategory()} directCreate={createAction} />
+          <Palette sections={allComponentsByCategory()} directCreate={type => createAction?.(type as ComponentType)} />
         </PopoverContent>
       </Popover>
     </PopoverContent>

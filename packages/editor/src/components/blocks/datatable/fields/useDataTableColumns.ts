@@ -1,27 +1,24 @@
-import type { DataTable, DataTableColumn, Variable } from '@axonivy/form-editor-protocol';
+import { isTable, type DataTableColumnConfig, type Variable } from '@axonivy/form-editor-protocol';
 
 import type { BrowserNode } from '@axonivy/ui-components';
 import { useAppContext } from '../../../../context/AppContext';
-import { createId, useData } from '../../../../data/data';
+import { useData } from '../../../../data/data';
 import { useMeta } from '../../../../context/useMeta';
 import type { CheckboxColumn } from './ColumnsCheckboxField';
 import { useEffect, useState } from 'react';
 import { DataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
-import { findAttributesOfType } from '../../../browser/data-class/variable-tree-data';
+import { findAttributesOfType } from '../../../../editor/browser/data-class/variable-tree-data';
 
 export const useDataTableColumns = () => {
   const { context } = useAppContext();
   const { element } = useData();
 
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
-  const attributesOfTableType = findAttributesOfType(
-    variableInfo,
-    element && element.id.startsWith('DataTable') ? (element.config as unknown as DataTable).value : ''
-  );
-  const activeColumns = element && element.id.startsWith('DataTable') ? (element.config as unknown as DataTable).components : [];
+  const attributesOfTableType = findAttributesOfType(variableInfo, isTable(element) ? element.config.value : '');
+  const activeColumns = isTable(element) ? element.config.components.map(c => c.config) : [];
   const boundColumns = convertBrowserNodesToColumns(attributesOfTableType);
 
-  const [activeColumnsHistory, setActiveColumnsHistory] = useState<DataTableColumn[]>(activeColumns);
+  const [activeColumnsHistory, setActiveColumnsHistory] = useState<DataTableColumnConfig[]>(activeColumns);
 
   const boundSelectColumns = boundColumns.map<CheckboxColumn>(column => ({
     ...(activeColumnsHistory.find(col => isSameColumn(col, column)) ?? column),
@@ -68,29 +65,13 @@ export const useDataTableColumns = () => {
   };
 };
 
-const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): DataTableColumn[] => {
-  const columns: DataTableColumn[] = [];
-
-  const convertNode = (node: BrowserNode<Variable>) => {
+const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): DataTableColumnConfig[] => {
+  return nodes.flatMap(node => {
     if (!node.children || node.children.length === 0) {
-      columns.push({
-        id: createId('DataTableColumn'),
-        config: DataTableColumnComponent.create({ label: node.data?.attribute ?? '', value: '' })
-      });
-    } else {
-      node.children.forEach(childNode => {
-        columns.push({
-          id: createId('DataTableColumn'),
-          config: DataTableColumnComponent.create({ label: childNode.value, value: childNode.value })
-        });
-      });
+      return [DataTableColumnComponent.create({ label: node.data?.attribute ?? '', value: '' })];
     }
-  };
-
-  nodes.forEach(convertNode);
-
-  return columns;
+    return node.children.map(childNode => DataTableColumnComponent.create({ label: childNode.value, value: childNode.value }));
+  });
 };
 
-export const isSameColumn = (col1: DataTableColumn | CheckboxColumn, col2: DataTableColumn | CheckboxColumn) =>
-  col1.config.value === col2.config.value;
+export const isSameColumn = (col1: DataTableColumnConfig, col2: DataTableColumnConfig) => col1.value === col2.value;

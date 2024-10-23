@@ -8,10 +8,12 @@ import { useAppContext } from '../../../context/AppContext';
 import { Button, Flex, Message } from '@axonivy/ui-components';
 import { useMeta } from '../../../context/useMeta';
 import { componentByName } from '../../components';
-import { createInitiTableColumns } from '../../../data/data';
+import { createInitTableColumns } from '../../../data/data';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
 import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
+import { ColumnControl } from './controls/ColumnControl';
+import { ColumnsCheckboxField } from './fields/ColumnsCheckboxField';
 
 type DataTableProps = Prettify<DataTable>;
 
@@ -42,13 +44,14 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
       browsers: ['ATTRIBUTE'],
       options: { onlyTypesOf: 'List<' }
     },
-    components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'selectColums' },
+    components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsCheckboxField /> },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
     ...visibleComponentField,
     ...baseComponentFields
   },
-  quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN']
+  quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN'],
+  subSectionControls: (props, subSection) => (subSection === 'Columns' ? <ColumnControl {...props} /> : null)
 };
 
 const UiBlock = ({ id, components, value, paginator, maxRows, visible }: UiComponentProps<DataTableProps>) => (
@@ -108,7 +111,7 @@ const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string
           };
         })
         .filter(create => create !== undefined);
-      return createInitiTableColumns(id, data, creates);
+      return createInitTableColumns(id, data, creates);
     });
   };
 

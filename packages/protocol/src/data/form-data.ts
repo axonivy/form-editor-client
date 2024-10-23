@@ -1,5 +1,5 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type { Component, DataTableColumn, Fieldset, Form, FormContext, FormEditorData, FormSaveDataArgs, Layout } from './form';
+import type { Component, DataTable, DataTableColumn, Fieldset, Form, FormContext, FormEditorData, FormSaveDataArgs, Layout } from './form';
 
 export type ComponentType = Component['type'] | 'DataTableColumn';
 
@@ -19,6 +19,8 @@ export type ComponentData =
     })
   | DataTableColumnComponent;
 
+export type TableConfig = ComponentData & { config: Omit<DataTable, 'components'> & { components: Array<DataTableColumnComponent> } };
+
 export type LayoutConfig = ComponentData & { config: Omit<Layout, 'components'> & { components: Array<ComponentData> } };
 
 export type FieldsetConfig = ComponentData & { config: Omit<Fieldset, 'components'> & { components: Array<ComponentData> } };
@@ -35,7 +37,7 @@ export const isStructure = (component?: Component | ComponentData): component is
   );
 };
 
-export const isTable = (component?: Component | ComponentData): component is LayoutConfig => {
+export const isTable = (component?: Component | ComponentData): component is TableConfig => {
   return component !== undefined && component.type === 'DataTable' && 'components' in component.config;
 };
 
