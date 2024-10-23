@@ -1,91 +1,65 @@
 {
-  "$schema" : "https://json-schema.axonivy.com/form/11.3.0/form.json",
+  "$schema" : "https://json-schema.axonivy.com/form/12.0.1/form.json",
   "id" : "a5c1d16e-1d08-4e1f-a9f0-436c553a3881",
   "config" : {
     "renderer" : "JSF",
     "theme" : "freya-ivy"
   },
   "components" : [ {
-    "id" : "Text-642f44ef-19ac-43be-bcb0-8613594e75d6",
+    "cid" : "Text1",
     "type" : "Text",
     "config" : {
-      "lgSpan" : "6",
-      "mdSpan" : "12",
-      "type" : "RAW",
       "content" : "This form uses a grid layout for address data and some Ivy Components."
     }
   }, {
-    "id" : "Input-360dd44c-050a-4a2e-b66d-84f7ce49e759",
+    "cid" : "Input2",
     "type" : "Input",
     "config" : {
-      "lgSpan" : "6",
-      "mdSpan" : "12",
+      "required" : "false",
       "label" : "Address",
-      "required" : false,
-      "value" : "#{data.address.street}",
-      "type" : "TEXT"
+      "value" : "#{data.address.street}"
     }
   }, {
-    "id" : "Layout-0679249e-43df-4a08-b20b-6f3262c1fc76",
+    "cid" : "Layout3",
     "type" : "Layout",
     "config" : {
-      "lgSpan" : "6",
-      "mdSpan" : "12",
       "components" : [ {
-        "id" : "Input-6d48ad0f-c1c1-4596-b35d-a4d880cd6805",
+        "cid" : "Input4",
         "type" : "Input",
         "config" : {
-          "lgSpan" : "6",
-          "mdSpan" : "12",
+          "required" : "false",
           "label" : "City",
-          "required" : false,
-          "value" : "#{data.address.city}",
-          "type" : "TEXT"
+          "value" : "#{data.address.city}"
         }
       }, {
-        "id" : "Layout-f5b19382-2514-4599-8ade-712fe6fc905e",
+        "cid" : "Layout5",
         "type" : "Layout",
         "config" : {
-          "lgSpan" : "6",
-          "mdSpan" : "12",
           "components" : [ {
-            "id" : "Input-fd6e7cf6-0d5d-4245-95ec-7fd53c0fbec3",
+            "cid" : "Input6",
             "type" : "Input",
             "config" : {
-              "lgSpan" : "6",
-              "mdSpan" : "12",
+              "required" : "false",
               "label" : "Zip",
-              "required" : false,
-              "value" : "#{data.address.zip}",
-              "type" : "TEXT"
+              "value" : "#{data.address.zip}"
             }
           }, {
-            "id" : "Input-c01b43e9-72f3-40a4-8a94-70552890dc48",
+            "cid" : "Input7",
             "type" : "Input",
             "config" : {
-              "lgSpan" : "6",
-              "mdSpan" : "12",
+              "required" : "false",
               "label" : "Country",
-              "required" : false,
-              "value" : "#{data.address.country}",
-              "type" : "TEXT"
+              "value" : "#{data.address.country}"
             }
-          } ],
-          "type" : "GRID",
-          "gridVariant" : "GRID2",
-          "justifyContent" : "NORMAL"
+          } ]
         }
       } ],
-      "type" : "GRID",
-      "gridVariant" : "FREE",
-      "justifyContent" : "NORMAL"
+      "gridVariant" : "FREE"
     }
   }, {
-    "id" : "Composite-5a44f187-43de-4e19-b483-3195f3bf9db4",
+    "cid" : "Composite8",
     "type" : "Composite",
     "config" : {
-      "lgSpan" : "6",
-      "mdSpan" : "12",
       "name" : "form.test.project.PersonComponent",
       "startMethod" : "start",
       "parameters" : {
@@ -93,11 +67,9 @@
       }
     }
   }, {
-    "id" : "Composite-fdcd3bf7-ac27-4f9b-b47d-fd9908177741",
+    "cid" : "Composite9",
     "type" : "Composite",
     "config" : {
-      "lgSpan" : "6",
-      "mdSpan" : "12",
       "name" : "form.test.project.AddressComponent",
       "startMethod" : "start",
       "parameters" : {
@@ -105,36 +77,26 @@
       }
     }
   }, {
-    "id" : "Layout-98a996ec-0acd-4e60-9001-80b0a7c3d294",
+    "cid" : "Layout10",
     "type" : "Layout",
     "config" : {
-      "lgSpan" : "6",
-      "mdSpan" : "12",
       "components" : [ {
-        "id" : "Button-6a868ed3-323d-4187-b8ac-30f576e1853b",
+        "cid" : "Button11",
         "type" : "Button",
         "config" : {
-          "lgSpan" : "6",
-          "mdSpan" : "12",
           "name" : "Cancel",
           "action" : "#{ivyWorkflowView.cancel()}",
-          "variant" : "SECONDARY",
-          "icon" : ""
+          "variant" : "SECONDARY"
         }
       }, {
-        "id" : "Button-7f311e7a-1450-456c-8628-50a09240f18e",
+        "cid" : "Button12",
         "type" : "Button",
         "config" : {
-          "lgSpan" : "6",
-          "mdSpan" : "12",
           "name" : "Proceed",
-          "action" : "#{logic.close}",
-          "variant" : "PRIMARY",
-          "icon" : ""
+          "action" : "#{logic.close}"
         }
       } ],
       "type" : "FLEX",
-      "gridVariant" : "GRID2",
       "justifyContent" : "END"
     }
   } ]
