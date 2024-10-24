@@ -36,7 +36,7 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
     row => setTree(tree => variableTreeData().loadChildrenFor(variableInfo, row.info, tree)),
     [variableInfo, setTree]
   );
-  const browser = useBrowser(tree, options?.onlyTypesOf ? undefined : row => loadChildren(row.original));
+  const browser = useBrowser(tree, { loadChildren: options?.onlyTypesOf ? undefined : row => loadChildren(row.original) });
   return {
     name: ATTRIBUTE_BROWSER_ID,
     icon: IvyIcons.Attribute,

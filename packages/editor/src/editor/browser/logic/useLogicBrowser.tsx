@@ -12,7 +12,7 @@ export const useLogicBrowser = (): Browser => {
   const { context } = useAppContext();
   const logicInfo = useMeta('meta/data/logic', context, { startMethods: [], eventStarts: [] }).data;
   const tree = useMemo(() => logicTreeData(logicInfo), [logicInfo]);
-  const browser = useBrowser(tree, undefined, '', true);
+  const browser = useBrowser(tree, { expandedState: true });
   return {
     name: LOGIC_BROWSER_ID,
     icon: IvyIcons.Process,
