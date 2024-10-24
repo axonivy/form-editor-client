@@ -46,21 +46,21 @@ const expectDragData = (data: DragData, ids: Array<string>) => {
 const filledData = () => {
   const prefilledData: DeepPartial<FormData> = {
     components: [
-      { id: '1', type: 'Input', config: {} },
-      { id: '2', type: 'Button', config: {} },
+      { cid: '1', type: 'Input', config: {} },
+      { cid: '2', type: 'Button', config: {} },
       {
-        id: '3',
+        cid: '3',
         type: 'Layout',
         config: {
           components: [
-            { id: '31', type: 'Text', config: {} },
-            { id: '32', type: 'Button', config: {} },
-            { id: '33', type: 'Input', config: {} }
+            { cid: '31', type: 'Text', config: {} },
+            { cid: '32', type: 'Button', config: {} },
+            { cid: '33', type: 'Input', config: {} }
           ]
         }
       },
       {
-        id: '4',
+        cid: '4',
         type: 'Fieldset',
         config: {
           legend: 'Legend',
@@ -68,23 +68,23 @@ const filledData = () => {
           disabled: false,
           collapsed: false,
           components: [
-            { id: '41', type: 'Text', config: { content: 'Hello' } },
-            { id: '42', type: 'Button', config: {} },
-            { id: '43', type: 'Input', config: {} }
+            { cid: '41', type: 'Text', config: { content: 'Hello' } },
+            { cid: '42', type: 'Button', config: {} },
+            { cid: '43', type: 'Input', config: {} }
           ]
         }
       },
       {
-        id: '5',
+        cid: '5',
         type: 'Panel',
         config: {
           title: 'Title',
           collapsible: true,
           collapsed: false,
           components: [
-            { id: '51', type: 'Text', config: { content: 'Hello' } },
-            { id: '52', type: 'Button', config: {} },
-            { id: '53', type: 'Input', config: {} }
+            { cid: '51', type: 'Text', config: { content: 'Hello' } },
+            { cid: '52', type: 'Button', config: {} },
+            { cid: '53', type: 'Input', config: {} }
           ]
         }
       }

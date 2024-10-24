@@ -24,7 +24,7 @@ export const ColumnControl = (props: CollapsibleControlProps) => {
             value: column.value
           }))
           .filter(create => create !== undefined);
-        return createInitTableColumns(element.id, data, creates);
+        return createInitTableColumns(element.cid, data, creates);
       });
     }
   };

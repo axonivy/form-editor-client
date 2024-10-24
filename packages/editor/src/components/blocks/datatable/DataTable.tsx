@@ -63,7 +63,7 @@ const UiBlock = ({ id, components, value, paginator, maxRows, visible }: UiCompo
         <div className='block-table__columns'>
           {components.map((column, index) => {
             const columnComponent: DataTableColumnComponent = { ...column, type: 'DataTableColumn' };
-            return <ComponentBlock key={column.id} component={columnComponent} preId={components[index - 1]?.id} />;
+            return <ComponentBlock key={column.cid} component={columnComponent} preId={components[index - 1]?.cid} />;
           })}
         </div>
       )}

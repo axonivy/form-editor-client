@@ -46,7 +46,7 @@ describe('modifyData', () => {
       const data = modifyData(emptyData(), { type: 'dnd', data: { activeId: 'Input', targetId: '' } }).newData;
       expect(data).to.not.deep.equals(emptyData);
       expect(data.components).to.have.length(1);
-      expect(data.components[0].id).to.match(/^Input-/);
+      expect(data.components[0].cid).to.match(/^Input-/);
       expect(data.components[0].type).to.equals('Input');
       expect(data.components[0].config).not.toBeUndefined();
     });
@@ -61,8 +61,8 @@ describe('modifyData', () => {
 
     test('add deep', () => {
       let data = modifyData(emptyData(), { type: 'dnd', data: { activeId: 'Layout', targetId: '' } }).newData;
-      data = modifyData(data, { type: 'dnd', data: { activeId: 'Button', targetId: `layout-${data.components[0].id}` } }).newData;
-      data = modifyData(data, { type: 'dnd', data: { activeId: 'Text', targetId: `layout-${data.components[0].id}` } }).newData;
+      data = modifyData(data, { type: 'dnd', data: { activeId: 'Button', targetId: `layout-${data.components[0].cid}` } }).newData;
+      data = modifyData(data, { type: 'dnd', data: { activeId: 'Text', targetId: `layout-${data.components[0].cid}` } }).newData;
       expect(data).to.not.deep.equals(emptyData());
       expect(data.components).to.have.length(1);
       const layoutData = (data.components[0] as LayoutConfig).config.components;
@@ -147,16 +147,16 @@ describe('modifyData', () => {
       const data = modifyData(filledData(), { type: 'duplicate', data: { id: '1' } }).newData;
       expect(data).not.toEqual(filledData());
       expect(data.components).toHaveLength(6);
-      expect(data.components[0].id).toMatch(/Input-/);
+      expect(data.components[0].cid).toMatch(/Input-/);
     });
 
     test('duplicate deep', () => {
       const data = modifyData(filledData(), { type: 'duplicate', data: { id: '32' } }).newData;
       expect(data.components).toHaveLength(5);
-      const component = data.components.find(c => c.id === '31');
+      const component = data.components.find(c => c.cid === '31');
       if (component && isStructure(component)) {
         expect(component.config.components).toHaveLength(4);
-        expect(component.config.components[1].id).toMatch(/Text-/);
+        expect(component.config.components[1].cid).toMatch(/Text-/);
         expect((component.config.components[1].config as ConfigData).content).toEqual('Hello');
       }
     });
@@ -215,14 +215,14 @@ describe('createInitForm', () => {
 describe('findParentTableComponent', () => {
   const dataTable: DeepPartial<DataTable> = {
     components: [
-      { id: 'column-1', config: {} },
-      { id: 'column-2', config: {} }
+      { cid: 'column-1', config: {} },
+      { cid: 'column-2', config: {} }
     ]
   };
 
   const data: ComponentData[] = [
     {
-      id: '3',
+      cid: '3',
       type: 'DataTable',
       config: { components: dataTable.components as ComponentData[] }
     }
@@ -230,7 +230,7 @@ describe('findParentTableComponent', () => {
 
   test('return DataTable containing the element', () => {
     const element: DataTableColumnComponent = {
-      id: 'column-1',
+      cid: 'column-1',
       type: 'DataTableColumn',
       config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }
     };
@@ -238,7 +238,7 @@ describe('findParentTableComponent', () => {
   });
 
   test('return undefined if element is no Column', () => {
-    const element: ComponentData = { id: 'button', type: 'Button', config: {} };
+    const element: ComponentData = { cid: 'button', type: 'Button', config: {} };
     expect(findParentTableComponent(data, element)).toBeUndefined();
   });
 
@@ -248,11 +248,11 @@ describe('findParentTableComponent', () => {
 
   test('return undefined if there are no DataTable components', () => {
     const noTableData: ComponentData[] = [
-      { id: '1', type: 'Input', config: {} },
-      { id: '2', type: 'Button', config: {} }
+      { cid: '1', type: 'Input', config: {} },
+      { cid: '2', type: 'Button', config: {} }
     ];
     const element: DataTableColumnComponent = {
-      id: 'column-1',
+      cid: 'column-1',
       type: 'DataTableColumn',
       config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }
     };
@@ -278,21 +278,21 @@ const emptyData = () => {
 const filledData = () => {
   const prefilledData: DeepPartial<FormData> = {
     components: [
-      { id: '1', type: 'Input', config: {} },
-      { id: '2', type: 'Button', config: {} },
+      { cid: '1', type: 'Input', config: {} },
+      { cid: '2', type: 'Button', config: {} },
       {
-        id: '3',
+        cid: '3',
         type: 'Layout',
         config: {
           components: [
-            { id: '31', type: 'Text', config: { content: 'Hello' } },
-            { id: '32', type: 'Button', config: {} },
-            { id: '33', type: 'Input', config: {} }
+            { cid: '31', type: 'Text', config: { content: 'Hello' } },
+            { cid: '32', type: 'Button', config: {} },
+            { cid: '33', type: 'Input', config: {} }
           ]
         }
       },
       {
-        id: '4',
+        cid: '4',
         type: 'Fieldset',
         config: {
           legend: 'Legend',
@@ -300,23 +300,23 @@ const filledData = () => {
           disabled: false,
           collapsed: false,
           components: [
-            { id: '41', type: 'Text', config: { content: 'Hello' } },
-            { id: '42', type: 'Button', config: {} },
-            { id: '43', type: 'Input', config: {} }
+            { cid: '41', type: 'Text', config: { content: 'Hello' } },
+            { cid: '42', type: 'Button', config: {} },
+            { cid: '43', type: 'Input', config: {} }
           ]
         }
       },
       {
-        id: '5',
+        cid: '5',
         type: 'Panel',
         config: {
           title: 'Title',
           collapsible: true,
           collapsed: false,
           components: [
-            { id: '51', type: 'Text', config: { content: 'Hello' } },
-            { id: '52', type: 'Button', config: {} },
-            { id: '53', type: 'Input', config: {} }
+            { cid: '51', type: 'Text', config: { content: 'Hello' } },
+            { cid: '52', type: 'Button', config: {} },
+            { cid: '53', type: 'Input', config: {} }
           ]
         }
       }
@@ -331,12 +331,12 @@ const filledData = () => {
 };
 
 const expectOrder = (data: FormData, order: string[]) => {
-  expect(data.components.map(c => c.id)).to.eql(order);
+  expect(data.components.map(c => c.cid)).to.eql(order);
 };
 
 const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
-  const component = data.components.find(c => c.id === deepId);
+  const component = data.components.find(c => c.cid === deepId);
   if (component && isStructure(component)) {
-    expect(component.config.components.map(c => c.id)).to.eql(order);
+    expect(component.config.components.map(c => c.cid)).to.eql(order);
   }
 };

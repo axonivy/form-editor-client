@@ -24,7 +24,7 @@ const toOutlineNodes = (components: Array<ComponentData>): Array<OutlineNode> =>
       children = toOutlineNodes(component.config.components);
     }
     return {
-      id: component.id,
+      id: component.cid,
       title: component.type,
       info: config.outlineInfo(component.config),
       icon: iconByCategory(config.category),
@@ -35,5 +35,5 @@ const toOutlineNodes = (components: Array<ComponentData>): Array<OutlineNode> =>
 export const FormOutline = ({ hideOutline }: { hideOutline: () => void }) => {
   const { data, element, setSelectedElement } = useData();
   const outlineData = toOutlineNodes(data.components);
-  return <Outline outline={outlineData} selection={element?.id} onClick={setSelectedElement} onDoubleClick={hideOutline} />;
+  return <Outline outline={outlineData} selection={element?.cid} onClick={setSelectedElement} onDoubleClick={hideOutline} />;
 };

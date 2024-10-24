@@ -8,12 +8,12 @@ export const data: FormData = {
   },
   components: [
     {
-      id: 'Layout-a5c1d16e-1d08-4e1f-a9f0-436c553a388f',
+      cid: 'Layout-a5c1d16e-1d08-4e1f-a9f0-436c553a388f',
       type: 'Layout',
       config: {
         components: [
           {
-            id: 'Input-c1fabd9a-d85a-4a03-af03-2371aae32b4a',
+            cid: 'Input-c1fabd9a-d85a-4a03-af03-2371aae32b4a',
             type: 'Input',
             config: {
               label: 'Firstname',
@@ -25,7 +25,7 @@ export const data: FormData = {
             }
           },
           {
-            id: 'Input-faa1131b-89a3-48f3-b81b-089aaf23fae6',
+            cid: 'Input-faa1131b-89a3-48f3-b81b-089aaf23fae6',
             type: 'Input',
             config: {
               label: 'Lastname',
@@ -37,7 +37,7 @@ export const data: FormData = {
             }
           },
           {
-            id: 'Input-1',
+            cid: 'Input-1',
             type: 'Input',
             config: {
               label: 'Address',
@@ -45,7 +45,7 @@ export const data: FormData = {
             }
           },
           {
-            id: 'Select-360dd44c-050a-4a2e-b66d-84f7ce49e758',
+            cid: 'Select-360dd44c-050a-4a2e-b66d-84f7ce49e758',
             type: 'Select',
             config: {
               label: 'City',
@@ -53,7 +53,7 @@ export const data: FormData = {
             }
           },
           {
-            id: 'Input-c01b43e9-72f3-40a4-8a94-70552890dc48',
+            cid: 'Input-c01b43e9-72f3-40a4-8a94-70552890dc48',
             type: 'Input',
             config: {
               label: 'State',
@@ -65,7 +65,7 @@ export const data: FormData = {
             }
           },
           {
-            id: 'Input-fd6e7cf6-0d5d-4245-95ec-7fd53c0fbec3',
+            cid: 'Input-fd6e7cf6-0d5d-4245-95ec-7fd53c0fbec3',
             type: 'Input',
             config: {
               label: 'Zip',
@@ -82,12 +82,12 @@ export const data: FormData = {
       }
     },
     {
-      id: 'Layout-98a996ec-0acd-4e60-9001-80b0a7c3d294',
+      cid: 'Layout-98a996ec-0acd-4e60-9001-80b0a7c3d294',
       type: 'Layout',
       config: {
         components: [
           {
-            id: 'Button-6a868ed3-323d-4187-b8ac-30f576e1853b',
+            cid: 'Button-6a868ed3-323d-4187-b8ac-30f576e1853b',
             type: 'Button',
             config: {
               name: 'Cancel',
@@ -97,7 +97,7 @@ export const data: FormData = {
             }
           },
           {
-            id: 'Button-7f311e7a-1450-456c-8628-50a09240f18e',
+            cid: 'Button-7f311e7a-1450-456c-8628-50a09240f18e',
             type: 'Button',
             config: {
               name: 'Proceed',
@@ -112,7 +112,7 @@ export const data: FormData = {
       }
     },
     {
-      id: 'Fieldset-dd040544-90c6-47e3-867a-ee310c74391c',
+      cid: 'Fieldset-dd040544-90c6-47e3-867a-ee310c74391c',
       type: 'Fieldset',
       config: {
         legend: 'Legend',
@@ -121,7 +121,7 @@ export const data: FormData = {
         collapsed: false,
         components: [
           {
-            id: 'Input-c1fabd9a-a83c-4a03-af03-2371aae32b4a',
+            cid: 'Input-c1fabd9a-a83c-4a03-af03-2371aae32b4a',
             type: 'Input',
             config: {
               label: 'Title',
@@ -136,28 +136,28 @@ export const data: FormData = {
       }
     },
     {
-      id: 'DataTable-a1ff78f7-0cb5-4a5f-902d-7b95b4e65a69',
+      cid: 'DataTable-a1ff78f7-0cb5-4a5f-902d-7b95b4e65a69',
       type: 'DataTable',
       config: {
         lgSpan: '6',
         mdSpan: '12',
         components: [
           {
-            id: 'DataTableColumn-2392d412-47a3-4d25-af6f-1f9e08b83861',
+            cid: 'DataTableColumn-2392d412-47a3-4d25-af6f-1f9e08b83861',
             config: {
               header: 'birthday',
               value: 'birthday'
             }
           },
           {
-            id: 'DataTableColumn-d5105b17-3059-4e8e-bb42-610b9f4257fa',
+            cid: 'DataTableColumn-d5105b17-3059-4e8e-bb42-610b9f4257fa',
             config: {
               header: 'age',
               value: 'age'
             }
           },
           {
-            id: 'DataTableColumn-ad2ee959-6d68-4f14-8680-93e4cb85f236',
+            cid: 'DataTableColumn-ad2ee959-6d68-4f14-8680-93e4cb85f236',
             config: {
               header: 'first name',
               value: 'first name'

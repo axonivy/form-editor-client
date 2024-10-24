@@ -86,12 +86,12 @@ const UiBlock = ({ id, components, type, justifyContent, gridVariant, visible }:
           if (gridVariant === 'FREE') {
             componentCols = `col-span-${component.config.lgSpan ?? '6'} col-md-span-${component.config.mdSpan ?? '12'}`;
           }
-          return <ComponentBlock key={component.id} component={component} preId={components[index - 1]?.id} className={componentCols} />;
+          return <ComponentBlock key={component.cid} component={component} preId={components[index - 1]?.cid} className={componentCols} />;
         })}
       </div>
       <EmtpyBlock
         id={`${STRUCTURE_DROPZONE_ID_PREFIX}${id}`}
-        preId={components[components.length - 1]?.id}
+        preId={components[components.length - 1]?.cid}
         forLayout={true}
         dragHint={{ display: components.length === 0, message: 'Drag first element inside the layout', mode: 'row' }}
       />

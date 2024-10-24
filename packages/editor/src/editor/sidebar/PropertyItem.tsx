@@ -27,7 +27,7 @@ const toSelectItems = (primitive?: PrimitiveValue): Array<SelectItem> => (Array.
 export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: PropertyItemProps) => {
   const [value, setValue] = useState<PrimitiveValue>(initValue);
   const { element } = useData();
-  const validationPath = `${element?.id}.${fieldKey}`;
+  const validationPath = `${element?.cid}.${fieldKey}`;
   const message = useValidation(validationPath);
   const updateValue = (newValue: PrimitiveValue) => {
     setValue(newValue);

@@ -13,11 +13,11 @@ export const Canvas = () => {
   return (
     <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.deviceMode}>
       {data.components.map((component, index) => (
-        <ComponentBlock key={component.id} component={component} preId={data.components.at(index - 1)?.id} />
+        <ComponentBlock key={component.cid} component={component} preId={data.components.at(index - 1)?.cid} />
       ))}
       <EmtpyBlock
         id={CANVAS_DROPZONE_ID}
-        preId={data.components.at(-1)?.id ?? ''}
+        preId={data.components.at(-1)?.cid ?? ''}
         dragHint={{ display: data.components.length === 0, message: 'Drag first element inside the canvas', mode: 'column' }}
       />
       <DeleteDropZone />

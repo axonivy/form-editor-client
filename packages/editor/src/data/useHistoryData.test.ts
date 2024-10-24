@@ -3,15 +3,15 @@ import { useHistoryData } from './useHistoryData';
 import { EMPTY_FORM, type FormData } from '@axonivy/form-editor-protocol';
 
 const setData = vi.fn();
-const history1: FormData = { ...EMPTY_FORM, components: [{ id: '1', type: 'Input', config: {} }] };
+const history1: FormData = { ...EMPTY_FORM, components: [{ cid: '1', type: 'Input', config: {} }] };
 const history2: FormData = {
   ...EMPTY_FORM,
   components: [
-    { id: '1', type: 'Input', config: {} },
-    { id: '2', type: 'Text', config: {} }
+    { cid: '1', type: 'Input', config: {} },
+    { cid: '2', type: 'Text', config: {} }
   ]
 };
-const history3: FormData = { ...EMPTY_FORM, components: [{ id: '2', type: 'Text', config: {} }] };
+const history3: FormData = { ...EMPTY_FORM, components: [{ cid: '2', type: 'Text', config: {} }] };
 
 beforeEach(() => {
   setData.mockImplementation(data => data());
