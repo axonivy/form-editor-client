@@ -10,6 +10,7 @@
   --draw-padding: var(--size-2) var(--size-4);
   --draw-margin: var(--size-2);
   --select-border: 1.5px solid var(--N100);
+  --select-active-border: 1.5px dashed var(--P75);
   --layout-border-size: 1.5px;
   &[data-responsive-mode='tablet'] {
     width: 800px;
@@ -20,10 +21,11 @@
     margin-inline: auto;
   }
   &[data-help-paddings='false'] {
-    padding: var(--size-2);
-    gap: var(--size-2);
+    padding: 20px;
+    gap: var(--size-4);
     --draw-padding: 0;
     --select-border: 0;
+    --select-active-border: 0;
     --layout-border-size: 0;
     --draw-margin: 0;
     .empty-block {

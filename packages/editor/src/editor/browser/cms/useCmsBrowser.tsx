@@ -14,7 +14,7 @@ export const useCmsBrowser = (): Browser => {
   const { context } = useAppContext();
   const cmsTree = useMeta('meta/data/cms', { context, requiredProjects: requiredProject }, []).data;
   const tree = useMemo(() => cmsTreeData(cmsTree), [cmsTree]);
-  const browser = useBrowser(tree, undefined, '', true);
+  const browser = useBrowser(tree, { expandedState: true });
   return {
     name: CMS_BROWSER_ID,
     icon: IvyIcons.Process,

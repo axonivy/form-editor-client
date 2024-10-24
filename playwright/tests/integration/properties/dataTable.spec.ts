@@ -6,7 +6,7 @@ test('default', async ({ page }) => {
   await editor.canvas.blockByNth(0).quickAction('Create Column');
   const table = editor.canvas.blockByNth(0, { datatable: true });
 
-  await table.block.locator('.header-block__label').dblclick();
+  await table.block.dblclick({ position: { x: 10, y: 10 } });
   await editor.inscription.expectHeader('DataTable');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
@@ -73,7 +73,7 @@ test('edit column and update table', async ({ page }) => {
 
   const table = editor.canvas.blockByNth(0, { datatable: true });
 
-  await table.block.locator('.header-block__label').dblclick();
+  await table.block.dblclick({ position: { x: 10, y: 10 } });
   await editor.inscription.expectHeader('DataTable');
   const properties = editor.inscription.section('Properties');
 
@@ -89,7 +89,7 @@ test('columns from attribute', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const table = editor.canvas.blockByNth(0, { datatable: true });
 
-  await table.block.locator('.header-block__label').dblclick();
+  await table.block.dblclick({ position: { x: 10, y: 10 } });
   await editor.inscription.expectHeader('DataTable');
 
   const properties = editor.inscription.section('Properties');

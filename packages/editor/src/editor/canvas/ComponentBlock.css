@@ -20,7 +20,7 @@
   &.selected,
   &:hover:not(:has(.draggable:hover)),
   &:hover:not(:has(.draggable:hover)) > .block-layout > div {
-    border: 1.5px dashed var(--P75);
+    border: var(--select-active-border);
     background-color: var(--P50);
   }
 }
