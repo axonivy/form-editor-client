@@ -36,7 +36,7 @@ export class FormEditor {
   }
 
   static async openNewForm(page: Page, options?: { block?: string }) {
-    const name = uuid();
+    const name = `tmp${uuid().replaceAll('-', '')}`;
     const namespace = 'temp';
     const user = 'Developer';
     const result = await fetch(`${server}${ws}/api/web-ide/hd`, {
