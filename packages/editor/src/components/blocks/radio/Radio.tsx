@@ -45,10 +45,10 @@ export const RadioComponent: ComponentConfig<RadioProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
+    ...baseComponentFields,
     ...selectItemsComponentFields,
     orientation: { subsection: 'General', label: 'Orientation', type: 'select', options: orientationOptions },
-    ...behaviourComponentFields,
-    ...baseComponentFields
+    ...behaviourComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

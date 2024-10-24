@@ -31,12 +31,12 @@ export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
   create: ({ defaultProps }) => ({ ...defaultFieldsetProps, ...defaultProps }),
   outlineInfo: component => component.legend,
   fields: {
+    ...baseComponentFields,
     components: { subsection: 'General', type: 'hidden' },
     legend: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE', 'CMS'] },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
     collapsed: { subsection: 'Behaviour', label: 'Collapsed by default', type: 'checkbox', hide: data => !data.collapsible },
-    ...visibleComponentField,
-    ...baseComponentFields
+    ...visibleComponentField
   }
 };
 

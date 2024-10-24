@@ -27,12 +27,12 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
   create: ({ label, value, defaultProps }) => ({ ...defaultDataTableColumnProps, header: label, value, ...defaultProps }),
   outlineInfo: component => component.header,
   fields: {
+    ...baseComponentFields,
     header: { subsection: 'General', label: 'Header', type: 'textBrowser', browsers: ['CMS'] },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'], options: { onlyAttributes: 'COLUMN' } },
     sortable: { subsection: 'General', label: 'Enable Sorting', type: 'checkbox' },
     filterable: { subsection: 'General', label: 'Enable Filtering', type: 'checkbox' },
-    ...visibleComponentField,
-    ...baseComponentFields
+    ...visibleComponentField
   },
   quickActions: ['DELETE', 'DUPLICATE']
 };

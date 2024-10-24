@@ -1,5 +1,8 @@
 import type { SelectItem } from '@axonivy/form-editor-protocol';
-import type { FieldOption, Fields } from '../../types/config';
+import type { FieldOption, Fields, GenericFieldProps } from '../../types/config';
+import { BasicField, Input } from '@axonivy/ui-components';
+import { useAppContext } from '../../context/AppContext';
+import { useValidation } from '../../context/useValidation';
 
 type BaseComponentProps = { id: string; lgSpan: string; mdSpan: string };
 type SelectItemsProps = {
@@ -46,7 +49,7 @@ const spanOptions: FieldOption<string>[] = [
 ] as const;
 
 export const baseComponentFields: Fields<BaseComponentProps> = {
-  id: { subsection: 'General', type: 'hidden' },
+  id: { subsection: 'General', type: 'generic', label: 'Id', render: props => <IdInput {...props} /> },
   lgSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Large Span', options: spanOptions },
   mdSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Medium Span', options: spanOptions }
 };
@@ -106,4 +109,14 @@ export const selectItemsComponentFields: Fields<SelectItemsProps> = {
     },
     hide: data => data.dynamicItemsList.length == 0
   }
+};
+
+const IdInput = ({ label, onChange, value, validationPath }: GenericFieldProps) => {
+  const { selectedElement } = useAppContext();
+  const message = useValidation(validationPath);
+  return (
+    <BasicField label={label} message={message}>
+      <Input value={value as string} onChange={e => onChange(e.target.value)} placeholder={selectedElement} />
+    </BasicField>
+  );
 };

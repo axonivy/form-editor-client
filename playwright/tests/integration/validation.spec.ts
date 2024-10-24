@@ -16,3 +16,10 @@ test('inscription input', async ({ page }) => {
   await input.fill('bla');
   await expect(input.locator).not.toHaveAccessibleDescription('Value is required');
 });
+
+test('global sidebar', async ({ page }) => {
+  const { canvas, inscription } = await FormEditor.openMock(page);
+  await canvas.blockByText('Address').inscribe();
+  await expect(inscription.messages).toHaveCount(1);
+  await expect(inscription.messages).toHaveText('Global warning');
+});

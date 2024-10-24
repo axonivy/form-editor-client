@@ -37,9 +37,9 @@ export const SelectComponent: ComponentConfig<SelectProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
+    ...baseComponentFields,
     ...selectItemsComponentFields,
-    ...behaviourComponentFields,
-    ...baseComponentFields
+    ...behaviourComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

@@ -47,6 +47,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
   create: ({ defaultProps }) => ({ ...defaultLayoutProps, ...defaultProps }),
   outlineInfo: component => component.type,
   fields: {
+    ...baseComponentFields,
     components: { subsection: 'General', type: 'hidden' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     justifyContent: {
@@ -63,8 +64,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
       options: gridVariantOptions,
       hide: data => data.type !== 'GRID'
     },
-    ...visibleComponentField,
-    ...baseComponentFields
+    ...visibleComponentField
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

@@ -34,12 +34,12 @@ export const TextComponent: ComponentConfig<TextProps> = {
   create: ({ value }) => ({ ...defaultTextProps, content: value }),
   outlineInfo: component => component.content,
   fields: {
+    ...baseComponentFields,
     content: { subsection: 'General', label: 'Content', type: 'textarea' },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     icon: { subsection: 'Icon', label: 'Icon', type: 'hidden' },
     iconStyle: { subsection: 'Icon', label: 'Icon style', type: 'hidden' },
-    ...visibleComponentField,
-    ...baseComponentFields
+    ...visibleComponentField
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

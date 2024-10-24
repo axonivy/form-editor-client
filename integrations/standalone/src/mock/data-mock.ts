@@ -13,7 +13,7 @@ export const data: FormData = {
       config: {
         components: [
           {
-            cid: 'Input-c1fabd9a-d85a-4a03-af03-2371aae32b4a',
+            cid: 'Input1',
             type: 'Input',
             config: {
               label: 'Firstname',

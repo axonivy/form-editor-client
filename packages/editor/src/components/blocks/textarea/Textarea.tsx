@@ -27,12 +27,12 @@ export const TextareaComponent: ComponentConfig<TextareaProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
+    ...baseComponentFields,
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     rows: { subsection: 'General', label: 'Visible Rows', type: 'number' },
     autoResize: { subsection: 'General', label: 'Auto Resize', type: 'checkbox' },
-    ...behaviourComponentFields,
-    ...baseComponentFields
+    ...behaviourComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
