@@ -31,6 +31,7 @@ export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultComboboxProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
+    ...baseComponentFields,
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     completeMethod: { subsection: 'Options', label: 'Complete Method', type: 'textBrowser', browsers: ['LOGIC'] },
@@ -47,8 +48,7 @@ export const ComboboxComponent: ComponentConfig<ComboboxProps> = {
       hide: data => data.completeMethod.length === 0
     },
     withDropdown: { subsection: 'Options', label: 'Add Dropdown-Button to Combobox', type: 'checkbox' },
-    ...behaviourComponentFields,
-    ...baseComponentFields
+    ...behaviourComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

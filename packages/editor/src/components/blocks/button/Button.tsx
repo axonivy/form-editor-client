@@ -34,13 +34,13 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   create: ({ label, value, defaultProps }) => ({ ...defaultButtonProps, name: label, action: value, ...defaultProps }),
   outlineInfo: component => component.name,
   fields: {
+    ...baseComponentFields,
     name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: ['CMS'] },
     action: { subsection: 'General', label: 'Action', type: 'textBrowser', browsers: ['LOGIC'] },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
     icon: { subsection: 'General', label: 'Icon', type: 'hidden' },
     processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
-    ...disabledComponentFields,
-    ...baseComponentFields
+    ...disabledComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

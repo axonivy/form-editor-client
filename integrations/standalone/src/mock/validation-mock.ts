@@ -3,6 +3,7 @@ import type { ComponentData, FormData, ValidationResult } from '@axonivy/form-ed
 export const validateMock = (data: FormData): Array<ValidationResult> => {
   const validations: Array<ValidationResult> = [];
   validateDeep(data.components, validations);
+  validations.push({ path: 'Input-1', message: 'Global warning', severity: 'WARNING' });
   return validations;
 };
 

@@ -33,12 +33,12 @@ export const PanelComponent: ComponentConfig<PanelProps> = {
   create: ({ defaultProps }) => ({ ...defaultPanelProps, ...defaultProps }),
   outlineInfo: component => component.title,
   fields: {
+    ...baseComponentFields,
     components: { subsection: 'General', type: 'hidden' },
     title: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE', 'CMS'] },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
     collapsed: { subsection: 'Behaviour', label: 'Collapsed by default', type: 'checkbox', options: {}, hide: data => !data.collapsible },
-    ...visibleComponentField,
-    ...baseComponentFields
+    ...visibleComponentField
   }
 };
 

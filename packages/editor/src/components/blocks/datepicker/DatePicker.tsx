@@ -28,6 +28,7 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultDatePickerProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
+    ...baseComponentFields,
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'], options: { onlyTypesOf: 'Date' } },
     datePattern: { subsection: 'General', label: 'Date Pattern', type: 'text', options: { placeholder: 'e.g. dd.MM.yyyy' } },
@@ -39,8 +40,7 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
       options: { placeholder: 'e.g. HH:mm' },
       hide: data => !data.showTime
     },
-    ...behaviourComponentFields,
-    ...baseComponentFields
+    ...behaviourComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

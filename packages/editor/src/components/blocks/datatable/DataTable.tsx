@@ -37,6 +37,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultDataTableProps, label, value, ...defaultProps }),
   outlineInfo: component => component.value,
   fields: {
+    ...baseComponentFields,
     value: {
       subsection: 'General',
       label: 'List of Objects',
@@ -47,8 +48,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
     components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsCheckboxField /> },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
-    ...visibleComponentField,
-    ...baseComponentFields
+    ...visibleComponentField
   },
   quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN'],
   subSectionControls: (props, subSection) => (subSection === 'Columns' ? <ColumnControl {...props} /> : null)

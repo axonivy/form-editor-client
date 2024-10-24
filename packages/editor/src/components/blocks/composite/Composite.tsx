@@ -30,10 +30,10 @@ export const CompositeComponent: ComponentConfig<CompositeProps> = {
   create: ({ label, defaultProps }) => ({ ...defaultCompositeProps, name: label, ...defaultProps }),
   outlineInfo: component => component.name,
   fields: {
+    ...baseComponentFields,
     name: { subsection: 'General', label: 'Composite', type: 'text', options: { disabled: true } },
     startMethod: { subsection: 'General', label: 'Start Method', type: 'generic', render: renderStartMethodSelect },
-    parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters },
-    ...baseComponentFields
+    parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters }
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 } as const;
