@@ -11,10 +11,9 @@ test('canvas', async ({ page }) => {
 test('inscription input', async ({ page }) => {
   const { canvas, inscription } = await FormEditor.openMock(page);
   await canvas.blockByText('Address').inscribe();
-  const input = inscription.section('Properties').collapsible('General').input({ label: 'Value' });
-  await expect(input.locator).toHaveAccessibleDescription(/Value is required/);
-  await input.fill('bla');
-  await expect(input.locator).not.toHaveAccessibleDescription('Value is required');
+  const badge = inscription.section('Properties').collapsible('General').badge({ label: 'Value' });
+  await expect(badge.locator).toBeVisible();
+  await expect(badge.outputLocator).toHaveAccessibleDescription(/Value is required/);
 });
 
 test('global sidebar', async ({ page }) => {

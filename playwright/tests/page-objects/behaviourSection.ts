@@ -1,10 +1,10 @@
-import type { Collapsible, Input } from './inscription';
+import type { Badge, Collapsible } from './inscription';
 
 export class VisibleInput {
-  private visibleField: Input;
+  private visibleField: Badge;
 
   constructor(behaviourSection: Collapsible) {
-    this.visibleField = behaviourSection.input({ label: 'Visible' });
+    this.visibleField = behaviourSection.badge({ label: 'Visible' });
   }
 
   async fillVisible() {
@@ -16,7 +16,7 @@ export class VisibleInput {
   }
 
   async expectVisibleAfterBuilder() {
-    await this.visibleField.expectValue("#{(data.value1 eq '10' and data.value2 gt '5') or (data.value3 lt '6')}");
+    await this.visibleField.expectValue("(data.value1 eq '10' and data.value2 gt '5') or (data.value3 lt '6')");
   }
 
   async openConditionBuilder() {
@@ -25,11 +25,11 @@ export class VisibleInput {
 }
 
 export class DisableInput extends VisibleInput {
-  private disabledField: Input;
+  private disabledField: Badge;
 
   constructor(behaviourSection: Collapsible) {
     super(behaviourSection);
-    this.disabledField = behaviourSection.input({ label: 'Disable' });
+    this.disabledField = behaviourSection.badge({ label: 'Disable' });
   }
 
   async fillDisable() {
@@ -44,13 +44,13 @@ export class DisableInput extends VisibleInput {
 }
 
 export class RequiredInput extends DisableInput {
-  private requiredField: Input;
-  private requiredMessageField: Input;
+  private requiredField: Badge;
+  private requiredMessageField: Badge;
 
   constructor(behaviourSection: Collapsible) {
     super(behaviourSection);
-    this.requiredField = behaviourSection.input({ label: 'Required' });
-    this.requiredMessageField = behaviourSection.input({ label: 'Required Message' });
+    this.requiredField = behaviourSection.badge({ label: 'Required' });
+    this.requiredMessageField = behaviourSection.badge({ label: 'Required Message' });
   }
 
   async fillRequired() {

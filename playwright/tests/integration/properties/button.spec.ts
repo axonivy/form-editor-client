@@ -7,8 +7,8 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Button');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const name = section.input({ label: 'Name' });
-  const action = section.input({ label: 'Action' });
+  const name = section.badge({ label: 'Name' });
+  const action = section.badge({ label: 'Action' });
   const variant = section.select({ label: 'Variant' });
   const behaviour = properties.behaviour();
 
@@ -16,14 +16,14 @@ test('default', async ({ page }) => {
   await action.expectValue('');
   await variant.expectValue('Primary');
   await name.fill('Cancel');
-  await action.fill('#{locig.close}');
+  await action.fill('#{logic.close}');
   await variant.choose('Secondary');
   await behaviour.fillDisable();
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await name.expectValue('Cancel');
-  await action.expectValue('#{locig.close}');
+  await action.expectValue('close');
   await variant.expectValue('Secondary');
   await behaviour.excpectDisabled();
 });

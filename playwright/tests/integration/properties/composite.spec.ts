@@ -10,14 +10,15 @@ test('address', async ({ page }) => {
   await editor.inscription.expectHeader('Composite');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const composite = general.input({ label: 'Composite' });
+  const composite = general.badge({ label: 'Composite' });
   const method = general.select({ label: 'Start Method' });
   const parameters = properties.collapsible('Parameters');
-  const addressParam = parameters.input({ label: 'Address' });
-  const labelParam = parameters.input({ label: 'Label' });
+  const addressParam = parameters.badge({ label: 'Address' });
+  const labelParam = parameters.badge({ label: 'Label' });
 
   await composite.expectValue('form.test.project.AddressComponent');
-  await expect(composite.locator).toBeDisabled();
+  await composite.focus();
+  await expect(composite.inputLocator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Address)', 'empty()']);
   await expect(addressParam.locator).toBeHidden();
@@ -36,7 +37,7 @@ test('address', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await method.expectValue('start(Address)');
-  await addressParam.expectValue('#{data.address}');
+  await addressParam.expectValue('address');
   await labelParam.expectValue('my composite');
 });
 
@@ -49,13 +50,14 @@ test('person', async ({ page }) => {
   await editor.inscription.expectHeader('Composite');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const composite = general.input({ label: 'Composite' });
+  const composite = general.badge({ label: 'Composite' });
   const method = general.select({ label: 'Start Method' });
   const parameters = properties.collapsible('Parameters');
-  const person = parameters.input({ label: 'Person' });
+  const person = parameters.badge({ label: 'Person' });
 
   await composite.expectValue('form.test.project.PersonComponent');
-  await expect(composite.locator).toBeDisabled();
+  await composite.focus();
+  await expect(composite.inputLocator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Person)']);
   await method.choose('start(Person)');
@@ -66,7 +68,7 @@ test('person', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await method.expectValue('start(Person)');
-  await person.expectValue('#{data.person}');
+  await person.expectValue('person');
 });
 
 test('parameters browser', async ({ page }) => {
@@ -74,14 +76,14 @@ test('parameters browser', async ({ page }) => {
   await editor.canvas.blockByText('PersonComponent').inscribe();
   const section = editor.inscription.section('Properties');
   const parameters = section.collapsible('Parameters');
-  const person = parameters.input({ label: 'Person' });
+  const person = parameters.badge({ label: 'Person' });
 
   let browser = await person.openBrowser();
   await browser.expectEntries(['data.person']);
   await browser.close();
 
-  await editor.canvas.blockByText('AddressComponent').inscribe();
-  const address = parameters.input({ label: 'Address' });
+  await editor.canvas.blockByText('AddressComponent').block.dblclick({ position: { x: 10, y: 10 } });
+  const address = parameters.badge({ label: 'Address' });
   browser = await address.openBrowser();
   await browser.expectEntries(['data.address', 'data.person.billingAddress', 'data.person.deliveryAddress']);
 });

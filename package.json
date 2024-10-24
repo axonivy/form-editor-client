@@ -45,5 +45,8 @@
     "packages/*",
     "integrations/*",
     "playwright"
-  ]
+  ],
+  "dependencies": {
+    "react-aria": "^3.35.1"
+  }
 }

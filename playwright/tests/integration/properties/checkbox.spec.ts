@@ -7,8 +7,8 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Checkbox');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const label = section.input({ label: 'Label' });
-  const selected = section.input({ label: 'Selected' });
+  const label = section.badge({ label: 'Label' });
+  const selected = section.badge({ label: 'Selected' });
   const behaviour = properties.behaviour();
 
   await label.expectValue('Label');
@@ -21,6 +21,6 @@ test('default', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await label.expectValue('Hi');
-  await selected.expectValue('#{data.approve}');
+  await selected.expectValue('approve');
   await behaviour.excpectDisabled();
 });

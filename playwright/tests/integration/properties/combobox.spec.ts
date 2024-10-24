@@ -7,12 +7,12 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Combobox');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const label = general.input({ label: 'Label' });
-  const value = general.input({ label: 'Value' });
+  const label = general.badge({ label: 'Label' });
+  const value = general.badge({ label: 'Value' });
   const options = properties.collapsible('Options');
-  const complete = options.input({ label: 'Complete Method' });
-  const itemLabel = options.input({ label: 'Item Label' });
-  const itemValue = options.input({ label: 'Item Value' });
+  const complete = options.badge({ label: 'Complete Method' });
+  const itemLabel = options.badge({ label: 'Item Label' });
+  const itemValue = options.badge({ label: 'Item Value' });
   const button = options.checkbox({ label: 'Add Dropdown-Button to Combobox' });
   const behaviour = properties.behaviour();
 
@@ -33,8 +33,8 @@ test('default', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await label.expectValue('Hi');
-  await value.expectValue('#{data.zag}');
-  await complete.expectValue('#{data.complete}');
+  await value.expectValue('zag');
+  await complete.expectValue('complete');
   await itemLabel.expectValue('label');
   await itemValue.expectValue('value');
   await button.expectValue(true);

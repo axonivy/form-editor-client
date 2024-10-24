@@ -7,12 +7,12 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Input');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const label = section.input({ label: 'Label' });
-  const value = section.input({ label: 'Value' });
+  const label = section.badge({ label: 'Label' });
+  const value = section.badge({ label: 'Value' });
   const type = section.select({ label: 'Type' });
   const formattingSection = properties.collapsible('Formatting');
   const decimalPlaces = formattingSection.input({ label: 'Decimal Places', type: 'number' });
-  const symbol = formattingSection.input({ label: 'Symbol' });
+  const symbol = formattingSection.badge({ label: 'Symbol' });
   const symbolPosition = formattingSection.select({ label: 'Symbol Position' });
   const behaviour = properties.behaviour();
 
@@ -35,7 +35,7 @@ test('default', async ({ page }) => {
   await value.expectValue('New Value');
   await type.expectValue('Number');
   await decimalPlaces.expectValue('2');
-  await symbol.expectValue('CHF ');
+  await symbol.expectValue('CHF');
   await symbolPosition.expectValue('Prefix');
   await behaviour.expectRequired();
 });
@@ -52,13 +52,16 @@ test('id', async ({ page }) => {
 
 test('cmsQuickfix', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
-  await editor.canvas.blockByNth(0).inscribe();
+  const block = editor.canvas.blockByNth(0);
+  block.inscribe();
   await editor.inscription.expectHeader('Input');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const label = section.input({ label: 'Label' });
+  const label = section.badge({ label: 'Label' });
 
   await label.expectValue('Firstname');
   await label.selectText();
   await label.openQuickfix();
+  await block.inscribe();
+  await label.expectValue('/Labels/Firstname');
 });
