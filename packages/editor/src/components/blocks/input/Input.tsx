@@ -4,6 +4,9 @@ import './Input.css';
 import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
 import IconSvg from './Input.svg?react';
 import { UiBlockHeader } from '../../UiBlockHeader';
+import { InputBadge } from '@axonivy/ui-components';
+import { IvyIcons } from '@axonivy/ui-icons';
+import { badgeProps } from '../../../utils/badge-properties';
 
 type InputProps = Prettify<Input>;
 
@@ -65,13 +68,18 @@ export const InputComponent: ComponentConfig<InputProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ label, required, visible, value, disabled, updateOnChange, symbol, symbolPosition }: UiComponentProps<InputProps>) => (
-  <div className='block-input'>
-    <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
-    <span className={`block-input__input ${disabled === 'true' ? 'disabled' : ''}`}>
-      {symbolPosition === 'p' && symbol}
-      {value}
-      {symbolPosition === 's' && symbol}
-    </span>
-  </div>
-);
+const UiBlock = ({ label, required, visible, value, disabled, updateOnChange, symbol, symbolPosition }: UiComponentProps<InputProps>) => {
+  console.log(symbol);
+  return (
+    <div className='block-input'>
+      <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
+      <span className={disabled === 'true' ? 'disabled' : ''}>
+        {symbolPosition === 'p' && symbol}
+        <InputBadge badgeProps={badgeProps} value={value} />
+        {symbolPosition === 's' && symbol}
+      </span>
+    </div>
+  );
+};
+
+// <InputBadge badgeProps={badgeProps} value={value} />

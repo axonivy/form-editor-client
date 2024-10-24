@@ -3,15 +3,3 @@
   flex-direction: column;
   gap: var(--size-1);
 }
-
-.block-input__input {
-  flex: 1 0 auto;
-  padding: var(--size-2);
-  height: 18px;
-  color: var(--N900);
-  border: var(--basic-border);
-  background-color: var(--N25);
-  outline: 0 none;
-  font-size: 1rem;
-  border-radius: var(--border-r2);
-}

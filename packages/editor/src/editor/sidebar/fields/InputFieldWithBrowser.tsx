@@ -5,6 +5,7 @@ import type { InputFieldProps } from './InputField';
 import type { TextBrowserFieldOptions } from '../../../types/config';
 import { focusBracketContent } from '../../../utils/focus';
 import { Browser, type BrowserType } from '../../browser/Browser';
+import { BadgeField } from './BadgeField';
 
 export const InputFieldWithBrowser = ({
   label,
@@ -19,14 +20,14 @@ export const InputFieldWithBrowser = ({
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <BasicField label={label} message={message} style={{ flex: '1' }}>
+      <BadgeField value={value} label={label} message={message} style={{ flex: '1' }}>
         <InputGroup>
           <Input ref={inputRef} value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
           <DialogTrigger asChild>
             <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
           </DialogTrigger>
         </InputGroup>
-      </BasicField>
+      </BadgeField>
       <DialogContent
         style={{ height: '80vh' }}
         onCloseAutoFocus={browsers.includes('LOGIC') ? e => focusBracketContent(e, value, inputRef.current) : undefined}

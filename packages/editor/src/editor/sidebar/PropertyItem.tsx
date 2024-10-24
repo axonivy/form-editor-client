@@ -11,6 +11,7 @@ import { SelectTableField } from './fields/table-field/SelectTableField';
 import { InputFieldWithConditionBuilder } from './fields/condition-builder/InputFieldWithConditionBuilder';
 import { useValidation } from '../../context/useValidation';
 import { useData } from '../../data/data';
+import { BadgeField } from './fields/BadgeField';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
