@@ -15,6 +15,7 @@ import { useState, type ReactNode } from 'react';
 import { findComponentElement, modifyData, useData } from '../data/data';
 import { ItemDragOverlay } from '../editor/ItemDragOverlay';
 import { isCreateComponentData, type CreateComponentData } from '../types/config';
+import { useAppContext } from './AppContext';
 
 const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...args }) => {
   const rectIntersectionCollisions = rectIntersection({
@@ -31,6 +32,7 @@ const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...arg
 };
 
 export const DndContext = ({ children }: { children: ReactNode }) => {
+  const { ui } = useAppContext();
   const { data, setData, setSelectedElement } = useData();
   const [activeId, setActiveId] = useState<string | undefined>();
   const [createData, setCreateData] = useState<CreateComponentData | undefined>();
@@ -63,7 +65,7 @@ export const DndContext = ({ children }: { children: ReactNode }) => {
   };
 
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 15 } });
-  const sensors = useSensors(mouseSensor);
+  const sensors = useSensors(ui.helpPaddings ? mouseSensor : undefined);
 
   return (
     <DndKitContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors} collisionDetection={ownCollisionDetection}>

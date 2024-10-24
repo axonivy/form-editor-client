@@ -11,7 +11,7 @@ type UiBlockHeaderProps = {
 };
 
 export const UiBlockHeader = ({ visible, label, required, disabled, additionalInfo, updateOnChange }: UiBlockHeaderProps) => (
-  <Flex direction='row' justifyContent='space-between' alignItems='center' style={{ paddingBottom: '3px' }} className='header-block__label'>
+  <Flex direction='row' justifyContent='space-between' alignItems='center' className='header-block__label'>
     <span>
       {label}
       {required && required !== 'false' ? (required === 'false' ? '' : ' *') : ''}

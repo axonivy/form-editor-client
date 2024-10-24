@@ -1,3 +1,10 @@
-.palette-button i {
-  font-size: 14px;
+.palette-button {
+  gap: 0.125rem;
+  justify-content: space-evenly;
+  .ui-button {
+    height: 24px;
+  }
+  i {
+    font-size: 14px;
+  }
 }
