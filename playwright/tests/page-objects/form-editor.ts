@@ -2,7 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { Toolbar } from './toolbar';
 import { Canvas } from './canvas';
 import { Inscription } from './inscription';
-import { v4 as uuid } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export const testForm = 'src_hd/form/test/project/test/test';
 const server = process.env.BASE_URL ?? 'http://localhost:8081';
@@ -36,7 +36,7 @@ export class FormEditor {
   }
 
   static async openNewForm(page: Page, options?: { block?: string }) {
-    const name = `tmp${uuid().replaceAll('-', '')}`;
+    const name = `tmp${randomUUID().replaceAll('-', '')}`;
     const namespace = 'temp';
     const user = 'Developer';
     const result = await fetch(`${server}${ws}/api/web-ide/hd`, {

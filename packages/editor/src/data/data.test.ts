@@ -4,7 +4,6 @@ import {
   type FormData,
   type LayoutConfig,
   type DataTable,
-  isStructure,
   type ConfigData,
   type DataTableColumnComponent
 } from '@axonivy/form-editor-protocol';
@@ -46,8 +45,8 @@ describe('modifyData', () => {
       const data = modifyData(emptyData(), { type: 'dnd', data: { activeId: 'Input', targetId: '' } }).newData;
       expect(data).to.not.deep.equals(emptyData);
       expect(data.components).to.have.length(1);
-      expect(data.components[0].cid).to.match(/^Input-/);
-      expect(data.components[0].type).to.equals('Input');
+      expect(data.components[0].cid).toEqual('Input1');
+      expect(data.components[0].type).toEqual('Input');
       expect(data.components[0].config).not.toBeUndefined();
     });
 
@@ -147,18 +146,16 @@ describe('modifyData', () => {
       const data = modifyData(filledData(), { type: 'duplicate', data: { id: '1' } }).newData;
       expect(data).not.toEqual(filledData());
       expect(data.components).toHaveLength(6);
-      expect(data.components[0].cid).toMatch(/Input-/);
+      expect(data.components[0].cid).toEqual('Input54');
     });
 
     test('duplicate deep', () => {
-      const data = modifyData(filledData(), { type: 'duplicate', data: { id: '32' } }).newData;
+      const data = modifyData(filledData(), { type: 'duplicate', data: { id: '31' } }).newData;
       expect(data.components).toHaveLength(5);
-      const component = data.components.find(c => c.cid === '31');
-      if (component && isStructure(component)) {
-        expect(component.config.components).toHaveLength(4);
-        expect(component.config.components[1].cid).toMatch(/Text-/);
-        expect((component.config.components[1].config as ConfigData).content).toEqual('Hello');
-      }
+      const component = data.components.find(c => c.cid === '3') as LayoutConfig;
+      expect(component.config.components).toHaveLength(4);
+      expect(component.config.components[0].cid).toEqual('Text54');
+      expect((component.config.components[0].config as ConfigData).content).toEqual('Hello');
     });
   });
 
@@ -335,8 +332,6 @@ const expectOrder = (data: FormData, order: string[]) => {
 };
 
 const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
-  const component = data.components.find(c => c.cid === deepId);
-  if (component && isStructure(component)) {
-    expect(component.config.components.map(c => c.cid)).to.eql(order);
-  }
+  const component = data.components.find(c => c.cid === deepId) as LayoutConfig;
+  expect(component.config.components.map(c => c.cid)).to.eql(order);
 };

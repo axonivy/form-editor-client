@@ -1,7 +1,6 @@
 import type { ComponentConfig, CreateComponentData, CreateData } from '../types/config';
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
-import { v4 as uuid } from 'uuid';
 import { isStructure, isTable, type ComponentData, type ComponentType, type DataTable, type FormData } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
 import type { UpdateConsumer } from '../types/types';
@@ -125,7 +124,7 @@ type ModifyAction =
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
   const component = componentByName(action.activeId);
   if (component) {
-    return addComponent(data, createComponentData(component, action.create), action.targetId);
+    return addComponent(data, createComponentData(data, component, action.create), action.targetId);
   } else {
     const removed = removeComponent(data, action.activeId);
     if (removed && action.targetId !== DELETE_DROPZONE_ID) {
@@ -135,18 +134,46 @@ const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { t
   }
 };
 
-const createComponentData = (config: ComponentConfig, data?: CreateData): ComponentData => ({
-  cid: createId(config.name),
+const createComponentData = (data: Array<ComponentData>, config: ComponentConfig, createData?: CreateData): ComponentData => ({
+  cid: createId(data, config.name),
   type: config.name,
-  config: (data ? config.create(data) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
+  config: (createData ? config.create(createData) : structuredClone(config.defaultProps)) as Extract<ComponentData, 'config'>
 });
 
-const createId = (name: ComponentType) => `${name}-${uuid()}`;
+const createId = (components: Array<ComponentData>, name: ComponentType) => {
+  const ids = allCids(components);
+  const nextId = `${name}${highestIdNumber(ids) + 1}`;
+  if (ids.has(nextId)) {
+    return createId(components, name);
+  }
+  return nextId;
+};
+
+const highestIdNumber = (ids: Set<string>): number => {
+  const numbers = Array.from(ids)
+    .map(id => {
+      const match = id.match(/\d+$/);
+      return match ? parseInt(match[0]) : -1;
+    })
+    .filter(num => num !== -1);
+  return numbers.length > 0 ? Math.max(...numbers) : 0;
+};
+
+const allCids = (components: Array<ComponentData>) => {
+  const ids = new Set<string>();
+  for (const component of components) {
+    ids.add(component.cid);
+    if ('components' in component.config) {
+      allCids(component.config.components as Array<ComponentData>).forEach(id => ids.add(id));
+    }
+  }
+  return ids;
+};
 
 const duplicateComponent = (data: FormData, id: string) => {
   const newComponent = structuredClone(findComponentElement(data, id));
   if (newComponent) {
-    newComponent.element.cid = createId(newComponent.element.type);
+    newComponent.element.cid = createId(data.components, newComponent.element.type);
     return addComponent(data.components, newComponent.element, id);
   }
   return undefined;
@@ -162,7 +189,7 @@ export const modifyData = (data: FormData, action: ModifyAction) => {
     case 'add':
       newComponentId = addComponent(
         newData.components,
-        createComponentData(componentByName(action.data.componentName), action.data.create),
+        createComponentData(newData.components, componentByName(action.data.componentName), action.data.create),
         action.data.targetId ?? CANVAS_DROPZONE_ID
       );
       break;
