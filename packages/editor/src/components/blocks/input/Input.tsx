@@ -47,6 +47,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
+    ...baseComponentFields,
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
     value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
@@ -59,8 +60,7 @@ export const InputComponent: ComponentConfig<InputProps> = {
       options: positionOptions,
       hide: data => !(data.type === 'NUMBER' && data.symbol.length > 0)
     },
-    ...behaviourComponentFields,
-    ...baseComponentFields
+    ...behaviourComponentFields
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

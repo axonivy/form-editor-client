@@ -2,8 +2,11 @@ import type { Severity, ValidationResult } from '@axonivy/form-editor-protocol';
 import { useAppContext } from './AppContext';
 import type { MessageData } from '@axonivy/ui-components';
 
-export function useValidations(path: string): Array<MessageData> {
+export function useValidations(path: string, options?: { exact?: boolean }): Array<MessageData> {
   const { validations } = useAppContext();
+  if (options?.exact) {
+    return validations.filter(val => val.path === path).map<MessageData>(toMessageData);
+  }
   return validations.filter(val => val.path.startsWith(path)).map<MessageData>(toMessageData);
 }
 

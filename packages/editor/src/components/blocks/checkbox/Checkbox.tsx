@@ -27,11 +27,11 @@ export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
   create: ({ label, value, ...defaultProps }) => ({ ...defaultCheckboxProps, label, selected: value, ...defaultProps }),
   outlineInfo: component => component.label,
   fields: {
+    ...baseComponentFields,
     label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
     selected: { subsection: 'General', label: 'Selected', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
     ...disabledComponentFields,
-    updateOnChange: { subsection: 'Behaviour', label: 'Update Form on Change', type: 'checkbox' },
-    ...baseComponentFields
+    updateOnChange: { subsection: 'Behaviour', label: 'Update Form on Change', type: 'checkbox' }
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };

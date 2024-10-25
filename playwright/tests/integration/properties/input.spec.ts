@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
@@ -38,4 +38,14 @@ test('default', async ({ page }) => {
   await symbol.expectValue('CHF ');
   await symbolPosition.expectValue('Prefix');
   await behaviour.expectRequired();
+});
+
+test('id', async ({ page }) => {
+  const editor = await FormEditor.openMock(page);
+  await editor.canvas.blockByNth(0).inscribe();
+  const properties = editor.inscription.section('Properties');
+  const section = properties.collapsible('General');
+  const id = section.input({ label: 'Id' });
+  await expect(id.locator).toHaveAttribute('placeholder', 'Input1');
+  await id.expectEmpty();
 });

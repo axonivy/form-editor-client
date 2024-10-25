@@ -25,10 +25,10 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   create: () => defaultLinkProps,
   outlineInfo: component => component.name,
   fields: {
+    ...baseComponentFields,
     name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: ['CMS'] },
     href: { subsection: 'General', label: 'Href', type: 'text' },
-    ...visibleComponentField,
-    ...baseComponentFields
+    ...visibleComponentField
   },
   quickActions: DEFAULT_QUICK_ACTIONS
 };
