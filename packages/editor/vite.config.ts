@@ -30,8 +30,7 @@ export default defineConfig({
         'react',
         'react-error-boundary',
         'react/jsx-runtime',
-        'react-dom',
-        'uuid'
+        'react-dom'
       ]
     }
   }
