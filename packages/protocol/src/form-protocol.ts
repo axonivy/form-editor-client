@@ -8,14 +8,19 @@ import type {
   ParameterInfo,
   CompositeContext,
   ValidationResult,
-  FormActionArgs
+  FormActionArgs,
+  CmsQuickActionRequest,
+  CmsQuickAction,
+  ExecuteCmsQuickActionRequest
 } from './data/form';
 import type { FormEditor, FormSaveData } from './data/form-data';
 
 export interface FormMetaRequestTypes {
   'meta/data/attributes': [FormContext, VariableInfo];
   'meta/data/logic': [FormContext, LogicInfo];
-  'meta/data/cms': [CmsMetaRequest, Array<ContentObject>];
+  'meta/cms/cmsTree': [CmsMetaRequest, Array<ContentObject>];
+  'meta/cms/executeCmsQuickAction': [ExecuteCmsQuickActionRequest, string];
+  'meta/cms/cmsQuickActions': [CmsQuickActionRequest, Array<CmsQuickAction>];
   'meta/composite/all': [FormContext, Array<CompositeInfo>];
   'meta/composite/params': [CompositeContext, Array<ParameterInfo>];
 }

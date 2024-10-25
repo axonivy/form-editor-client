@@ -45,6 +45,10 @@ export class FormClientMock implements FormClient {
         return Promise.resolve(MetaMock.COMPOSITES);
       case 'meta/composite/params':
         return Promise.resolve(MetaMock.COMPOSITE_PARAMS);
+      case 'meta/cms/cmsQuickActions':
+        return Promise.resolve(MetaMock.CMSQUICKACTIONS);
+      case 'meta/cms/executeCmsQuickAction':
+        return Promise.resolve("#{ivy.cms.co('/Labels/Firstname')}");
       case 'meta/data/logic':
       default:
         throw Error('mock meta path not programmed');

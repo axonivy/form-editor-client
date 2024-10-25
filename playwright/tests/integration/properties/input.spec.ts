@@ -49,3 +49,16 @@ test('id', async ({ page }) => {
   await expect(id.locator).toHaveAttribute('placeholder', 'Input1');
   await id.expectEmpty();
 });
+
+test('cmsQuickaction', async ({ page }) => {
+  const editor = await FormEditor.openMock(page);
+  await editor.canvas.blockByNth(0).inscribe();
+  await editor.inscription.expectHeader('Input');
+  const properties = editor.inscription.section('Properties');
+  const section = properties.collapsible('General');
+  const label = section.input({ label: 'Label' });
+
+  await label.expectValue('Firstname');
+  await label.selectText();
+  await label.openQuickaction();
+});

@@ -6,7 +6,8 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type ContentObjectType = ("STRING" | "FILE" | "FOLDER")
+export type CmsQuickactionCategory = ("global" | "local")
+export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type SymbolPosition = "p" | "s";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
@@ -20,9 +21,12 @@ export type Severity = "INFO" | "WARNING" | "ERROR";
 
 export interface Forms {
   cmsMetaRequest: CmsMetaRequest;
+  cmsQuickAction: CmsQuickAction[];
+  cmsQuickActionRequest: CmsQuickActionRequest;
   compositeContext: CompositeContext;
   compositeInfo: CompositeInfo[];
   contentObject: ContentObject[];
+  executeCmsQuickActionRequest: ExecuteCmsQuickActionRequest;
   form: Form;
   formActionArgs: FormActionArgs;
   formContext: FormContext;
@@ -31,7 +35,7 @@ export interface Forms {
   formSaveDataArgs: FormSaveDataArgs;
   logicInfo: LogicInfo;
   parameterInfo: ParameterInfo[];
-  string: string[];
+  string: string;
   validationResult: ValidationResult[];
   variableInfo: VariableInfo;
   void: Void;
@@ -45,6 +49,16 @@ export interface FormContext {
   app: string;
   file: string;
   pmv: string;
+}
+export interface CmsQuickAction {
+  category: CmsQuickactionCategory;
+  coContent: string;
+  coName: string;
+  parentUri: string;
+}
+export interface CmsQuickActionRequest {
+  context: FormContext;
+  text: string;
 }
 export interface CompositeContext {
   compositeId: string;
@@ -73,6 +87,10 @@ export interface ContentObject {
 }
 export interface MapStringString {
   [k: string]: string;
+}
+export interface ExecuteCmsQuickActionRequest {
+  cmsQuickAction: CmsQuickAction;
+  context: FormContext;
 }
 export interface Form {
   $schema: string;
