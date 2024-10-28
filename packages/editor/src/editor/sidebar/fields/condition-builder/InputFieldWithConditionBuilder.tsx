@@ -22,7 +22,7 @@ export const InputFieldWithConditionBuilder = ({
         <InputGroup>
           <Input value={value} onChange={e => onChange(e.target.value)} onBlur={onBlur} placeholder={options?.placeholder} />
           <DialogTrigger asChild title='Open Condition-Builder'>
-            <Button icon={IvyIcons.DataClass} aria-label='Browser' />
+            <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
           </DialogTrigger>
         </InputGroup>
       </BasicField>
