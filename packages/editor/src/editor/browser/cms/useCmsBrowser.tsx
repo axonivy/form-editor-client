@@ -17,7 +17,7 @@ export const useCmsBrowser = (): Browser => {
   const browser = useBrowser(tree, { expandedState: true });
   return {
     name: CMS_BROWSER_ID,
-    icon: IvyIcons.Process,
+    icon: IvyIcons.Cms,
     browser,
     header: (
       <BasicCheckbox
