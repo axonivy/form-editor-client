@@ -142,7 +142,7 @@ const createComponentData = (data: Array<ComponentData>, config: ComponentConfig
 
 const createId = (components: Array<ComponentData>, name: ComponentType) => {
   const ids = allCids(components);
-  const nextId = `${name}${highestIdNumber(ids) + 1}`;
+  const nextId = `${name}${highestIdNumber(ids) + 1}`.toLowerCase();
   if (ids.has(nextId)) {
     return createId(components, name);
   }

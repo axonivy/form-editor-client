@@ -45,7 +45,7 @@ describe('modifyData', () => {
       const data = modifyData(emptyData(), { type: 'dnd', data: { activeId: 'Input', targetId: '' } }).newData;
       expect(data).to.not.deep.equals(emptyData);
       expect(data.components).to.have.length(1);
-      expect(data.components[0].cid).toEqual('Input1');
+      expect(data.components[0].cid).toEqual('input1');
       expect(data.components[0].type).toEqual('Input');
       expect(data.components[0].config).not.toBeUndefined();
     });
@@ -146,7 +146,7 @@ describe('modifyData', () => {
       const data = modifyData(filledData(), { type: 'duplicate', data: { id: '1' } }).newData;
       expect(data).not.toEqual(filledData());
       expect(data.components).toHaveLength(6);
-      expect(data.components[0].cid).toEqual('Input54');
+      expect(data.components[0].cid).toEqual('input54');
     });
 
     test('duplicate deep', () => {
@@ -154,7 +154,7 @@ describe('modifyData', () => {
       expect(data.components).toHaveLength(5);
       const component = data.components.find(c => c.cid === '3') as LayoutConfig;
       expect(component.config.components).toHaveLength(4);
-      expect(component.config.components[0].cid).toEqual('Text54');
+      expect(component.config.components[0].cid).toEqual('text54');
       expect((component.config.components[0].config as ConfigData).content).toEqual('Hello');
     });
   });

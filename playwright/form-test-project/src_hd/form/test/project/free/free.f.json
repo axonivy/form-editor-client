@@ -1,95 +1,108 @@
 {
-  "$schema" : "https://json-schema.axonivy.com/form/12.0.1/form.json",
-  "id" : "a5c1d16e-1d08-4e1f-a9f0-436c553a3881",
-  "config" : {
-    "renderer" : "JSF",
-    "theme" : ""
+  "$schema": "https://json-schema.axonivy.com/form/12.0.1/form.json",
+  "id": "a5c1d16e-1d08-4e1f-a9f0-436c553a3881",
+  "config": {
+    "renderer": "JSF",
+    "theme": ""
   },
-  "components" : [ {
-    "cid" : "Layout1",
-    "type" : "Layout",
-    "config" : {
-      "components" : [ {
-        "cid" : "Input2",
-        "type" : "Input",
-        "config" : {
-          "lgSpan" : "8",
-          "mdSpan" : "6",
-          "required" : "true",
-          "label" : "Firstname",
-          "value" : "data.value"
-        }
-      }, {
-        "cid" : "Input3",
-        "type" : "Input",
-        "config" : {
-          "lgSpan" : "4",
-          "mdSpan" : "6",
-          "required" : "false",
-          "label" : "Lastname",
-          "value" : "data.value"
-        }
-      }, {
-        "cid" : "Input4",
-        "type" : "Input",
-        "config" : {
-          "lgSpan" : "12",
-          "label" : "Address"
-        }
-      }, {
-        "cid" : "Input5",
-        "type" : "Input",
-        "config" : {
-          "mdSpan" : "4",
-          "required" : "false",
-          "label" : "City",
-          "value" : "data.value"
-        }
-      }, {
-        "cid" : "Input6",
-        "type" : "Input",
-        "config" : {
-          "lgSpan" : "4",
-          "mdSpan" : "4",
-          "required" : "false",
-          "label" : "State",
-          "value" : "data.value"
-        }
-      }, {
-        "cid" : "Input7",
-        "type" : "Input",
-        "config" : {
-          "lgSpan" : "2",
-          "mdSpan" : "4",
-          "required" : "false",
-          "label" : "Zip",
-          "value" : "data.value"
-        }
-      } ],
-      "gridVariant" : "FREE"
+  "components": [
+    {
+      "cid": "layout1",
+      "type": "Layout",
+      "config": {
+        "components": [
+          {
+            "cid": "input2",
+            "type": "Input",
+            "config": {
+              "lgSpan": "8",
+              "mdSpan": "6",
+              "required": "true",
+              "label": "Firstname",
+              "value": "data.value"
+            }
+          },
+          {
+            "cid": "input3",
+            "type": "Input",
+            "config": {
+              "lgSpan": "4",
+              "mdSpan": "6",
+              "required": "false",
+              "label": "Lastname",
+              "value": "data.value"
+            }
+          },
+          {
+            "cid": "input4",
+            "type": "Input",
+            "config": {
+              "lgSpan": "12",
+              "label": "Address"
+            }
+          },
+          {
+            "cid": "input5",
+            "type": "Input",
+            "config": {
+              "mdSpan": "4",
+              "required": "false",
+              "label": "City",
+              "value": "data.value"
+            }
+          },
+          {
+            "cid": "input6",
+            "type": "Input",
+            "config": {
+              "lgSpan": "4",
+              "mdSpan": "4",
+              "required": "false",
+              "label": "State",
+              "value": "data.value"
+            }
+          },
+          {
+            "cid": "input7",
+            "type": "Input",
+            "config": {
+              "lgSpan": "2",
+              "mdSpan": "4",
+              "required": "false",
+              "label": "Zip",
+              "value": "data.value"
+            }
+          }
+        ],
+        "gridVariant": "FREE"
+      }
+    },
+    {
+      "cid": "layout8",
+      "type": "Layout",
+      "config": {
+        "components": [
+          {
+            "cid": "button9",
+            "type": "Button",
+            "config": {
+              "name": "Cancel",
+              "action": "#{ivyWorkflowView.cancel()}",
+              "variant": "SECONDARY"
+            }
+          },
+          {
+            "cid": "button10",
+            "type": "Button",
+            "config": {
+              "name": "Proceed",
+              "action": "#{logic.close}"
+            }
+          }
+        ],
+        "type": "FLEX",
+        "justifyContent": "END"
+      }
     }
-  }, {
-    "cid" : "Layout8",
-    "type" : "Layout",
-    "config" : {
-      "components" : [ {
-        "cid" : "Button9",
-        "type" : "Button",
-        "config" : {
-          "name" : "Cancel",
-          "action" : "#{ivyWorkflowView.cancel()}",
-          "variant" : "SECONDARY"
-        }
-      }, {
-        "cid" : "Button10",
-        "type" : "Button",
-        "config" : {
-          "name" : "Proceed",
-          "action" : "#{logic.close}"
-        }
-      } ],
-      "type" : "FLEX",
-      "justifyContent" : "END"
-    }
-  } ]
+  ]
 }
