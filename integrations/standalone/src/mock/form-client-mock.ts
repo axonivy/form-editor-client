@@ -16,7 +16,8 @@ export class FormClientMock implements FormClient {
     context: { app: 'mock', pmv: 'mock', file: 'mock.f.json' },
     readonly: false,
     defaults: {},
-    data: data
+    data: data,
+    helpUrl: 'https://dev.axonivy.com'
   };
 
   protected onValidationChangedEmitter = new Emitter<void>();

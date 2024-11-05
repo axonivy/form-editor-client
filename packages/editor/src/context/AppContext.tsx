@@ -34,6 +34,7 @@ export type AppContext = {
   context: FormContext;
   history: ReturnType<typeof useHistoryData>;
   validations: Array<ValidationResult>;
+  helpUrl: string;
 };
 
 export const appContext = createContext<AppContext>({
@@ -44,7 +45,8 @@ export const appContext = createContext<AppContext>({
   setUi: () => {},
   context: { app: '', pmv: '', file: '' },
   history: { pushHistory: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
-  validations: []
+  validations: [],
+  helpUrl: ''
 });
 
 export const AppProvider = appContext.Provider;

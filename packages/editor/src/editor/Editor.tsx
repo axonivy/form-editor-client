@@ -98,7 +98,18 @@ export const Editor = (props: FormEditorProps) => {
 
   return (
     <AppProvider
-      value={{ data: data.data, setData: mutation.mutate, selectedElement, setSelectedElement, ui, setUi, context, history, validations }}
+      value={{
+        data: data.data,
+        setData: mutation.mutate,
+        selectedElement,
+        setSelectedElement,
+        ui,
+        setUi,
+        context,
+        history,
+        validations,
+        helpUrl: data.helpUrl
+      }}
     >
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
