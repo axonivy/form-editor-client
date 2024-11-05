@@ -3,8 +3,7 @@ import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } fr
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import IconSvg from './Fieldset.svg?react';
 import { defaultBaseComponent, baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
-import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
-import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
+import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import './Fieldset.css';
 import { UiBlockHeader } from '../../UiBlockHeader';
 
@@ -51,12 +50,7 @@ const UiBlock = ({ id, components, legend, collapsible, collapsed, visible }: Ui
       {components.map((component, index) => (
         <ComponentBlock key={component.cid} component={component} preId={components[index - 1]?.cid} />
       ))}
-      <EmtpyBlock
-        id={`${STRUCTURE_DROPZONE_ID_PREFIX}${id}`}
-        preId={components[components.length - 1]?.cid}
-        forLayout={true}
-        dragHint={{ display: components.length === 0, message: 'Drag first element inside the fieldset', mode: 'row' }}
-      />
+      <EmptyLayoutBlock id={id} components={components} type='fieldset' />
     </fieldset>
   </>
 );

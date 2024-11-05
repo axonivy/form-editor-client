@@ -131,9 +131,7 @@ const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAct
         <PopoverAnchor asChild>
           <Flex gap={1}>
             {deleteAction && <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />}
-            {duplicateAction && (
-              <Button icon={IvyIcons.SubActivitiesDashed} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />
-            )}
+            {duplicateAction && <Button icon={IvyIcons.Duplicate} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />}
             {(createColumnAction || createAction || createFromDataAction) && (
               <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
             )}

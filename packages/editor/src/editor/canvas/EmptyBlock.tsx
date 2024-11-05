@@ -1,33 +1,40 @@
-import { PanelMessage, cn, Flex, Button } from '@axonivy/ui-components';
-import { DataClassDialog } from '../browser/data-class/DataClassDialog';
+import { Button, cn, Flex, PanelMessage } from '@axonivy/ui-components';
 import { DropZone } from './DropZone';
 import './EmptyBlock.css';
-import { IvyIcons } from '@axonivy/ui-icons';
+import { DataClassDialog } from '../browser/data-class/DataClassDialog';
+import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../data/data';
+import type { Component, ComponentData } from '@axonivy/form-editor-protocol';
 
 type EmptyBlockProps = {
   id: string;
-  preId: string;
-  forLayout?: boolean;
-  dragHint?: { display: boolean; mode: 'row' | 'column'; message: string };
+  components: Array<ComponentData> | Array<Component>;
 };
 
-export const EmtpyBlock = ({ id, preId, forLayout, dragHint }: EmptyBlockProps) => (
-  <DropZone id={id} preId={preId}>
-    {dragHint?.display ? (
-      <>
-        <PanelMessage message={dragHint.message} mode={dragHint.mode} className={cn('drag-hint', dragHint.mode)} />
-        {!forLayout && (
-          <Flex justifyContent='center'>
-            <DataClassDialog>
-              <Button icon={IvyIcons.DatabaseLink} size='large' variant='outline'>
-                Create from data
-              </Button>
-            </DataClassDialog>
-          </Flex>
-        )}
-      </>
+export const EmptyBlock = ({ id, components }: EmptyBlockProps) => (
+  <DropZone id={id} preId={components.at(-1)?.cid ?? ''}>
+    {components.length === 0 ? (
+      <Flex direction='column' alignItems='center' justifyContent='center' className='canvas-empty-message'>
+        <PanelMessage message='Drag first element inside the canvas or' mode='column' className={cn('drag-hint', 'column')} />
+        <Flex justifyContent='center'>
+          <DataClassDialog>
+            <Button className='drag-hint-button' size='large' variant='primary'>
+              Create from data
+            </Button>
+          </DataClassDialog>
+        </Flex>
+      </Flex>
     ) : (
-      <div className={cn('empty-block', forLayout && 'for-layout')} />
+      <div className='empty-block' />
+    )}
+  </DropZone>
+);
+
+export const EmptyLayoutBlock = ({ id, components, type }: EmptyBlockProps & { type: string }) => (
+  <DropZone id={`${STRUCTURE_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
+    {components.length === 0 ? (
+      <PanelMessage message={`Drag first element inside the ${type}`} mode='row' className='drag-hint row' />
+    ) : (
+      <div className='empty-block for-layout' />
     )}
   </DropZone>
 );
