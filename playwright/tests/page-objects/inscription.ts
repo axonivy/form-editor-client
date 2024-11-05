@@ -188,6 +188,28 @@ export class Input {
   async expectEmpty() {
     await expect(this.locator).toBeEmpty();
   }
+
+  async selectText() {
+    await this.locator.evaluate((input: HTMLInputElement) => input.select());
+    await this.locator.click();
+  }
+
+  async openQuickaction() {
+    await this.page.getByRole('button', { name: 'CMS-Quickaction' }).click();
+
+    const popover = this.page.locator('[role="dialog"][data-state="open"]').nth(1);
+    await expect(popover).toBeVisible();
+
+    const localButton = popover.getByRole('button', { name: 'CMS-Quickaction-local' });
+    const globalButton = popover.getByRole('button', { name: 'CMS-Quickaction-global' });
+
+    await expect(localButton).toBeVisible();
+    await expect(globalButton).toBeVisible();
+
+    await globalButton.click();
+    await expect(popover).not.toBeVisible();
+    await this.expectValue("#{ivy.cms.co('/Labels/Firstname')}");
+  }
 }
 
 class Checkbox {

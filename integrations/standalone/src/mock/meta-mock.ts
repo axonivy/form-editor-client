@@ -1,4 +1,4 @@
-import type { CompositeInfo, ParameterInfo, VariableInfo } from '@axonivy/form-editor-protocol';
+import type { CmsQuickAction, CompositeInfo, ParameterInfo, VariableInfo } from '@axonivy/form-editor-protocol';
 
 export namespace MetaMock {
   export const ATTRIBUTES: VariableInfo = {
@@ -91,6 +91,21 @@ export namespace MetaMock {
           deprecated: false
         }
       ]
+    }
+  ];
+
+  export const CMSQUICKACTIONS: Array<CmsQuickAction> = [
+    {
+      category: 'global',
+      coContent: '',
+      coName: 'Firstname',
+      parentUri: '/Labels/'
+    },
+    {
+      category: 'local',
+      coContent: '',
+      coName: 'Firstname',
+      parentUri: '/Dialogs/'
     }
   ];
 
