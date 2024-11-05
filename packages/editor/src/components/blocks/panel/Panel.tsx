@@ -5,8 +5,7 @@ import IconSvg from './Panel.svg?react';
 import { Flex, IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
-import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
-import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
+import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import './Panel.css';
 import { UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
 
@@ -62,11 +61,6 @@ const UiBlock = ({ id, components, title, collapsible, collapsed, visible }: UiC
     {components.map((component, index) => (
       <ComponentBlock key={component.cid} component={component} preId={components[index - 1]?.cid} />
     ))}
-    <EmtpyBlock
-      id={`${STRUCTURE_DROPZONE_ID_PREFIX}${id}`}
-      preId={components[components.length - 1]?.cid}
-      forLayout={true}
-      dragHint={{ display: components.length === 0, message: 'Drag first element inside the panel', mode: 'row' }}
-    />
+    <EmptyLayoutBlock id={id} components={components} type='panel' />
   </div>
 );

@@ -5,7 +5,7 @@ import { cn, IvyIcon } from '@axonivy/ui-components';
 import { useDndContext, useDroppable } from '@dnd-kit/core';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { ComponentBlock } from './ComponentBlock';
-import { EmtpyBlock } from './EmptyBlock';
+import { EmptyBlock } from './EmptyBlock';
 import { isDragData } from './drag-data';
 
 export const Canvas = () => {
@@ -15,11 +15,7 @@ export const Canvas = () => {
       {data.components.map((component, index) => (
         <ComponentBlock key={component.cid} component={component} preId={data.components.at(index - 1)?.cid} />
       ))}
-      <EmtpyBlock
-        id={CANVAS_DROPZONE_ID}
-        preId={data.components.at(-1)?.cid ?? ''}
-        dragHint={{ display: data.components.length === 0, message: 'Drag first element inside the canvas', mode: 'column' }}
-      />
+      <EmptyBlock id={CANVAS_DROPZONE_ID} components={data.components} />
       <DeleteDropZone />
     </div>
   );

@@ -1,12 +1,11 @@
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Layout.css';
 import type { Layout, LayoutGridVariant, LayoutJustifyContent, LayoutType, Prettify } from '@axonivy/form-editor-protocol';
-import { STRUCTURE_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { useAppContext } from '../../../context/AppContext';
 import { defaultBaseComponent, baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
 import IconSvg from './Layout.svg?react';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
-import { EmtpyBlock } from '../../../editor/canvas/EmptyBlock';
+import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import { UiBlockHeader } from '../../UiBlockHeader';
 
 type LayoutProps = Prettify<Layout>;
@@ -89,12 +88,7 @@ const UiBlock = ({ id, components, type, justifyContent, gridVariant, visible }:
           return <ComponentBlock key={component.cid} component={component} preId={components[index - 1]?.cid} className={componentCols} />;
         })}
       </div>
-      <EmtpyBlock
-        id={`${STRUCTURE_DROPZONE_ID_PREFIX}${id}`}
-        preId={components[components.length - 1]?.cid}
-        forLayout={true}
-        dragHint={{ display: components.length === 0, message: 'Drag first element inside the layout', mode: 'row' }}
-      />
+      <EmptyLayoutBlock id={id} components={components} type='layout' />
     </>
   );
 };
