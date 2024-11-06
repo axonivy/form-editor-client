@@ -190,8 +190,7 @@ export class Input {
   }
 
   async selectText() {
-    this.locator.click();
-    this.locator.selectText();
+    await this.locator.dblclick();
   }
 
   async openQuickaction() {
