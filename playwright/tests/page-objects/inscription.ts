@@ -190,8 +190,8 @@ export class Input {
   }
 
   async selectText() {
-    await this.locator.evaluate((input: HTMLInputElement) => input.select());
-    await this.locator.click();
+    this.locator.click();
+    this.locator.selectText();
   }
 
   async openQuickaction() {
