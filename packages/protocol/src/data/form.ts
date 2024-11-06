@@ -335,7 +335,7 @@ export interface Textarea {
   visible: string;
 }
 export interface FormActionArgs {
-  actionId: "openDataClass" | "openProcess";
+  actionId: "openDataClass" | "openProcess" | "openUrl";
   context: FormContext;
   payload: string;
 }
@@ -346,6 +346,7 @@ export interface FormEditorData {
   context: FormContext;
   data: Form;
   defaults: DefaultConfig;
+  helpUrl: string;
   readonly: boolean;
 }
 export interface DefaultConfig {}
