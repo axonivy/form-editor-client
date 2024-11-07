@@ -193,14 +193,14 @@ export class Input {
     await this.locator.dblclick();
   }
 
-  async openQuickaction() {
-    await this.page.getByRole('button', { name: 'CMS-Quickaction' }).click();
+  async openQuickfix() {
+    await this.page.getByRole('button', { name: 'CMS-Quickfix' }).click();
 
     const popover = this.page.locator('[role="dialog"][data-state="open"]').nth(1);
     await expect(popover).toBeVisible();
 
-    const localButton = popover.getByRole('button', { name: 'CMS-Quickaction-local' });
-    const globalButton = popover.getByRole('button', { name: 'CMS-Quickaction-global' });
+    const localButton = popover.getByRole('button', { name: 'CMS-Quickfix-local' });
+    const globalButton = popover.getByRole('button', { name: 'CMS-Quickfix-global' });
 
     await expect(localButton).toBeVisible();
     await expect(globalButton).toBeVisible();

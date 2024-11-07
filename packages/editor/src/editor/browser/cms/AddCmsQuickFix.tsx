@@ -6,24 +6,25 @@ import { useAppContext } from '../../../context/AppContext';
 import { useFunction } from '../../../context/useFunction';
 import { useQueryClient } from '@tanstack/react-query';
 import { genQueryKey } from '../../../query/query-client';
+import type { InputTextAreaRef, Selection } from './useTextSelection';
 
-export const AddCmsQuickActionPopover = ({
+export const AddCmsQuickFixPopover = ({
   value,
   onChange,
-  savedSelection,
+  selection,
   inputRef
 }: {
   value: string;
   onChange: (value: string) => void;
-  savedSelection: { start: number; end: number };
-  inputRef: React.RefObject<HTMLInputElement>;
+  selection: Selection;
+  inputRef: InputTextAreaRef;
 }) => {
   const [open, setOpen] = useState(false);
 
   const { context } = useAppContext();
   const queryClient = useQueryClient();
-  const cmsQuickActions = useMeta('meta/cms/cmsQuickActions', { context, text: value }, []).data;
-  const executeCmsQuickAction = useFunction(
+  const cmsQuickFixes = useMeta('meta/cms/cmsQuickActions', { context, text: value }, []).data;
+  const executeCmsQuickFix = useFunction(
     'meta/cms/executeCmsQuickAction',
     {
       context,
@@ -36,9 +37,9 @@ export const AddCmsQuickActionPopover = ({
         queryClient.invalidateQueries({
           queryKey: genQueryKey('meta/cms/cmsQuickActions', { context, text: value })
         });
-        if (inputRef.current && savedSelection) {
+        if (inputRef.current && selection) {
           const currentValue = inputRef.current.value;
-          const newValue = currentValue.slice(0, savedSelection.start) + data + currentValue.slice(savedSelection.end);
+          const newValue = currentValue.slice(0, selection.start) + data + currentValue.slice(selection.end);
 
           onChange(newValue);
           setOpen(false);
@@ -52,8 +53,8 @@ export const AddCmsQuickActionPopover = ({
 
   const restoreSelection = (e: Event) => {
     e.preventDefault();
-    if (inputRef.current && savedSelection) {
-      inputRef.current.setSelectionRange(savedSelection.start, savedSelection.end);
+    if (inputRef.current && selection) {
+      inputRef.current.setSelectionRange(selection.start, selection.end);
       inputRef.current.focus();
     }
   };
@@ -61,26 +62,26 @@ export const AddCmsQuickActionPopover = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button icon={IvyIcons.Cms} aria-label='CMS-Quickaction' title='CMS-Quickaction' />
+        <Button icon={IvyIcons.Cms} aria-label='CMS-Quickfix' title='CMS-Quickfix' />
       </PopoverTrigger>
       <PopoverContent sideOffset={12} collisionPadding={5} onOpenAutoFocus={restoreSelection} onFocusOutside={e => e.preventDefault()}>
         <Flex direction='column' gap={2} alignItems='center'>
           {value.length > 0 &&
-            cmsQuickActions?.map((action, index) => (
+            cmsQuickFixes?.map((fix, index) => (
               <Button
                 key={index}
                 icon={IvyIcons.Cms}
-                aria-label={`CMS-Quickaction-${action.category}`}
-                title={`Create content object: '${action.parentUri}${action.coName}' value: ${action.coContent}`}
+                aria-label={`CMS-Quickfix-${fix.category}`}
+                title={`Create content object: '${fix.parentUri}${fix.coName}' value: ${fix.coContent}`}
                 onClick={() => {
-                  executeCmsQuickAction.mutate({
+                  executeCmsQuickFix.mutate({
                     context,
-                    cmsQuickAction: action
+                    cmsQuickAction: fix
                   });
                 }}
                 style={{ width: '100%', justifyContent: 'start' }}
               >
-                {`Create ${action.category} '${action.coName}'`}
+                {`Create ${fix.category} CMS-Object: '${fix.coName}'`}
               </Button>
             ))}
         </Flex>
