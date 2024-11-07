@@ -50,7 +50,7 @@ test('id', async ({ page }) => {
   await id.expectEmpty();
 });
 
-test('cmsQuickaction', async ({ page }) => {
+test('cmsQuickfix', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   await editor.canvas.blockByNth(0).inscribe();
   await editor.inscription.expectHeader('Input');
@@ -60,5 +60,5 @@ test('cmsQuickaction', async ({ page }) => {
 
   await label.expectValue('Firstname');
   await label.selectText();
-  await label.openQuickaction();
+  await label.openQuickfix();
 });
