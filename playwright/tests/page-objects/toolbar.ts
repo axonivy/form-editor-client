@@ -49,11 +49,6 @@ export class Toolbar {
     await dialog.getByRole('switch', { name: 'Theme' }).click();
   }
 
-  async toggleDataSource() {
-    const dialog = await this.openOptionsMenu();
-    await dialog.getByRole('switch', { name: 'Data Source' }).click();
-  }
-
   async toggleProperties() {
     await this.toolbar.getByRole('button', { name: 'Toggle Property View' }).click();
   }

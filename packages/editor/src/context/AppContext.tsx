@@ -6,12 +6,11 @@ import type { useHistoryData } from '../data/useHistoryData';
 
 type UI = {
   properties: boolean;
-  dataStructure: boolean;
   helpPaddings: boolean;
   deviceMode: 'desktop' | 'tablet' | 'mobile';
 };
 
-const DEFAULT_UI: UI = { properties: true, dataStructure: false, helpPaddings: true, deviceMode: 'desktop' };
+const DEFAULT_UI: UI = { properties: true, helpPaddings: true, deviceMode: 'desktop' };
 
 export const useUiState = () => {
   const readonly = useReadonly();

@@ -4,13 +4,12 @@ import { useAppContext } from '../context/AppContext';
 import { useData } from '../data/data';
 import { Canvas } from './canvas/Canvas';
 import { ErrorFallback } from './canvas/ErrorFallback';
-import { DataStructure } from './data-structure/DataStructure';
 import { FormToolbar } from './FormToolbar';
 import { useRef, type ComponentProps } from 'react';
 
 export const MasterPart = () => {
-  const { ui, history, setSelectedElement } = useAppContext();
-  const { setUnhistoricisedData } = useData();
+  const { history, setSelectedElement } = useAppContext();
+  const { data, setUnhistoricisedData } = useData();
   const keyHandler: ComponentProps<'div'>['onKeyDown'] = e => {
     if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
       e.stopPropagation();
@@ -38,8 +37,8 @@ export const MasterPart = () => {
     >
       <Flex direction='column' className='canvas-panel' tabIndex={1} onKeyDown={keyHandler}>
         <FormToolbar ref={toolbarDiv} />
-        <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[ui.dataStructure]}>
-          {ui.dataStructure ? <DataStructure /> : <Canvas />}
+        <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[data]}>
+          <Canvas />
         </ErrorBoundary>
       </Flex>
     </ResizablePanel>

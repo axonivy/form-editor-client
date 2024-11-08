@@ -115,14 +115,14 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       <Flex gap={1} alignItems='center'>
         <Button aria-label='Open Data Class' icon={IvyIcons.DatabaseLink} size='large' onClick={() => openDataClass()} />
         <Button aria-label='Open Process' icon={IvyIcons.Process} size='large' onClick={() => openProcess()} />
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button aria-label='Options' icon={IvyIcons.Settings} size='large' />
-          </PopoverTrigger>
-          <PopoverContent sideOffset={12} collisionPadding={5}>
-            <ReadonlyProvider readonly={false}>
-              <Flex direction='column' gap={2}>
-                {theme !== 'system' && (
+        {theme !== 'system' && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button aria-label='Options' icon={IvyIcons.Settings} size='large' />
+            </PopoverTrigger>
+            <PopoverContent sideOffset={12} collisionPadding={5}>
+              <ReadonlyProvider readonly={false}>
+                <Flex direction='column' gap={2}>
                   <Field direction='row' alignItems='center' justifyContent='space-between' gap={4}>
                     <Label>
                       <Flex alignItems='center' gap={1}>
@@ -132,25 +132,12 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
                     </Label>
                     <Switch defaultChecked={theme === 'dark'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} size='small' />
                   </Field>
-                )}
-                <Field direction='row' alignItems='center' justifyContent='space-between' gap={4}>
-                  <Label>
-                    <Flex alignItems='center' gap={1}>
-                      <IvyIcon icon={IvyIcons.Download} />
-                      Data Source
-                    </Flex>
-                  </Label>
-                  <Switch
-                    defaultChecked={ui.dataStructure}
-                    onClick={() => setUi(old => ({ ...old, dataStructure: !old.dataStructure }))}
-                    size='small'
-                  />
-                </Field>
-              </Flex>
-              <PopoverArrow />
-            </ReadonlyProvider>
-          </PopoverContent>
-        </Popover>
+                </Flex>
+                <PopoverArrow />
+              </ReadonlyProvider>
+            </PopoverContent>
+          </Popover>
+        )}
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
           aria-label='Toggle Property View'

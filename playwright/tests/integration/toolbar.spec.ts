@@ -55,15 +55,6 @@ test('theme', async ({ page }) => {
   await expect(html).toHaveClass('dark');
 });
 
-test('data source', async ({ page }) => {
-  const editor = await FormEditor.openMock(page);
-  const toolbar = editor.toolbar;
-  expect(editor.canvas.locator).toBeVisible();
-  await toolbar.toggleDataSource();
-  expect(editor.canvas.locator).toBeHidden();
-  await expect(page.getByRole('textbox')).toHaveValue(/components/);
-});
-
 test('properties', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const toolbar = editor.toolbar;
