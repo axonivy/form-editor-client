@@ -22,7 +22,7 @@ export const defaultPanelProps: PanelProps = {
 
 export const PanelComponent: ComponentConfig<PanelProps> = {
   name: 'Panel',
-  category: 'Structure',
+  category: 'Structures',
   subcategory: 'General',
   icon: <IconSvg />,
   description: 'A group of components',

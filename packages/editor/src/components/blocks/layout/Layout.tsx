@@ -37,7 +37,7 @@ export const defaultLayoutProps: LayoutProps = {
 
 export const LayoutComponent: ComponentConfig<LayoutProps> = {
   name: 'Layout',
-  category: 'Structure',
+  category: 'Structures',
   subcategory: 'General',
   icon: <IconSvg />,
   description: 'A flexable layout',

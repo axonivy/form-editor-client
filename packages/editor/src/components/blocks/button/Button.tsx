@@ -25,7 +25,7 @@ export const defaultButtonProps: Button = {
 
 export const ButtonComponent: ComponentConfig<ButtonProps> = {
   name: 'Button',
-  category: 'Action',
+  category: 'Actions',
   subcategory: 'General',
   icon: <IconSvg />,
   description: 'A button for fire actions',

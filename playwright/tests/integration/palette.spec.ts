@@ -6,7 +6,7 @@ test('filter', async ({ page }) => {
   const palette = await toolbar.openPalette('All Components');
   const button = palette.paletteItem('Button');
   const input = palette.paletteItem('Input');
-  await palette.expectSections(['Elements', 'Action', 'Structure']);
+  await palette.expectSections(['Elements', 'Actions', 'Structures']);
   await expect(button).toBeVisible();
   await expect(input).toBeVisible();
 
@@ -18,7 +18,7 @@ test('filter', async ({ page }) => {
 
 test('add elements', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page);
-  const palette = await editor.toolbar.openPalette('Structure');
+  const palette = await editor.toolbar.openPalette('Structures');
   await palette.dndTo('Layout', editor.canvas.dropZone);
   const layout = editor.canvas.blockByNth(0, { layout: true });
   await expect(layout.block).toContainText('Drag first element inside the layout');
@@ -29,7 +29,7 @@ test('add elements', async ({ page }) => {
   await expect(layout.block).not.toContainText('Drag first element inside the layout');
   await expect(layout.block).toContainText('This is a text');
 
-  await editor.toolbar.openPalette('Action');
+  await editor.toolbar.openPalette('Actions');
   await palette.dndTo('Button', text.block);
   await editor.canvas.expectFormOrder(['Action', 'This is a text']);
 });
