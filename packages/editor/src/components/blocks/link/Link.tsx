@@ -16,7 +16,7 @@ export const defaultLinkProps: LinkProps = {
 
 export const LinkComponent: ComponentConfig<LinkProps> = {
   name: 'Link',
-  category: 'Action',
+  category: 'Actions',
   subcategory: 'General',
   icon: <IconSvg />,
   description: 'Link to somewhere',

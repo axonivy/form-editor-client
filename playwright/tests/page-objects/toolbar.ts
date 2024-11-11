@@ -34,7 +34,7 @@ export class Toolbar {
     await this.toolbar.getByRole('button', { name: 'Device mode' }).click();
   }
 
-  async openPalette(name: string) {
+  async openPalette(name: 'All Components' | 'Structures' | 'Elements' | 'Actions' | 'Composites') {
     await expect(async () => {
       const paletteBtn = this.palette.getByRole('button', { name });
       await expect(paletteBtn).toHaveAttribute('data-state', 'closed');

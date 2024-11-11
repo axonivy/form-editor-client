@@ -96,12 +96,12 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           </PalettePopover>
           <ToolbarContainer maxWidth={650}>
             <Flex gap={3}>
-              <PaletteCategoryPopover label='Structure' icon={IvyIcons.LaneSwimlanes} />
+              <PaletteCategoryPopover label='Structures' icon={IvyIcons.LaneSwimlanes} />
               <PaletteCategoryPopover label='Elements' icon={IvyIcons.ChangeType} />
-              <PaletteCategoryPopover label='Action' icon={IvyIcons.MultiSelection} />
+              <PaletteCategoryPopover label='Actions' icon={IvyIcons.MultiSelection} />
             </Flex>
           </ToolbarContainer>
-          <PalettePopover label='Composite' icon={IvyIcons.File}>
+          <PalettePopover label='Composites' icon={IvyIcons.File}>
             <CompositePalette />
           </PalettePopover>
           <PaletteButton text='Data'>

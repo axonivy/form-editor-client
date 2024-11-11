@@ -20,7 +20,7 @@ export const defaultFieldsetProps: FieldsetProps = {
 
 export const FieldsetComponent: ComponentConfig<FieldsetProps> = {
   name: 'Fieldset',
-  category: 'Structure',
+  category: 'Structures',
   subcategory: 'General',
   icon: <IconSvg />,
   description: 'A group of inputs',

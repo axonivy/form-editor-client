@@ -3,7 +3,7 @@ import { FormEditor } from '../../page-objects/form-editor';
 
 test('address', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page);
-  const palette = await editor.toolbar.openPalette('Composite');
+  const palette = await editor.toolbar.openPalette('Composites');
   await palette.dndTo('Address Component', editor.canvas.dropZone);
 
   await editor.canvas.blockByNth(0).inscribe();
@@ -42,7 +42,7 @@ test('address', async ({ page }) => {
 
 test('person', async ({ page }) => {
   const editor = await FormEditor.openNewForm(page);
-  const palette = await editor.toolbar.openPalette('Composite');
+  const palette = await editor.toolbar.openPalette('Composites');
   await palette.dndTo('Person Component', editor.canvas.dropZone);
 
   await editor.canvas.blockByNth(0).inscribe();
