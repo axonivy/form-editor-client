@@ -1,7 +1,3 @@
-.canvas-empty-message {
-  height: calc(100vh - 48px - 4 * var(--size-4));
-}
-
 .empty-block {
   height: 1px;
   &.for-layout {

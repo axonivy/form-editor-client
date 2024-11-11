@@ -22,6 +22,6 @@ export default defineConfig({
     { name: 'integration-chrome', use: { ...devices['Desktop Chrome'] }, testDir: './tests/integration' },
     { name: 'integration-firefox', use: { ...devices['Desktop Firefox'] }, testDir: './tests/integration' },
     { name: 'integration-webkit', use: { ...devices['Desktop Safari'] }, testDir: './tests/integration' },
-    { name: 'screenshots', use: { ...devices['Desktop Chrome'] }, testDir: './tests/screenshots', retries: 0 }
+    { name: 'screenshots', use: { ...devices['Desktop Chrome'], colorScheme: 'light' }, testDir: './tests/screenshots', retries: 0 }
   ]
 });
