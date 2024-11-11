@@ -7,6 +7,7 @@
   padding: var(--size-2);
   overflow: auto;
   border-radius: var(--border-r2);
+  user-select: none;
   --draw-padding: var(--size-2) var(--size-4);
   --draw-margin: var(--size-2);
   --select-border: 1.5px solid var(--N100);
@@ -31,6 +32,10 @@
     .empty-block {
       display: none;
     }
+  }
+  &:has(.canvas-empty-message) {
+    height: calc(100% - 48px);
+    justify-content: center;
   }
 }
 

@@ -9,19 +9,24 @@ pipeline {
     cron '@midnight'
   }
 
+  parameters {
+    string(name: 'engineSource', defaultValue: 'https://product.ivyteam.io/', description: 'Engine page url')
+  }
+
   stages {
     stage('Screenshot') {
       steps {
         script {
           catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
             docker.build('node-webtest', '-f build/Dockerfile.playwright .').inside {
+              sh 'npm run update:axonivy:next'
               sh 'npm install && npm run package'
-              dir ('playwright') {
-                sh 'npm run webtest:screenshots'
+              dir ('playwright/form-test-project') {
+                maven cmd: "-ntp verify -Dengine.page.url=${params.engineSource} -Dwebtest.cmd=webtest:screenshots"
               }
             }
           }
-          archiveArtifacts artifacts: '**/playwright/target/screenshots/**', allowEmptyArchive: true
+          archiveArtifacts artifacts: '**/playwright/form-test-project/target/screenshots/**', allowEmptyArchive: true
           withChecks('Screenshots') {
             junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: 'playwright/**/report.xml'
           }
