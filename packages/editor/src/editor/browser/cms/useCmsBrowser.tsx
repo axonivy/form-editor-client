@@ -33,7 +33,10 @@ export const useCmsBrowser = (): Browser => {
 };
 
 const CmsInfoProvider = ({ row }: { row?: Row<BrowserNode> }) => {
-  const node = row?.original.data as unknown as ContentObject;
+  if (row?.original.data === undefined) {
+    return;
+  }
+  const node = row.original.data as ContentObject;
   return (
     <>
       <div>{node.name}</div>
