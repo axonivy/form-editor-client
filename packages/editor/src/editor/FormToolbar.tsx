@@ -63,13 +63,14 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
               onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
               size='large'
               aria-label='Help Paddings'
-              title='Help Paddings'
+              title={ui.helpPaddings ? 'Edit' : 'Preview'}
             />
             <ToolbarContainer maxWidth={450}>
               <Flex>
                 <Separator orientation='vertical' style={{ height: '26px', marginInline: 'var(--size-2)' }} />
                 <Flex gap={1}>
                   <Button
+                    title='Undo'
                     aria-label='Undo'
                     icon={IvyIcons.Undo}
                     size='large'
@@ -77,6 +78,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
                     disabled={!history.canUndo}
                   />
                   <Button
+                    title='Redo'
                     aria-label='Redo'
                     icon={IvyIcons.Redo}
                     size='large'
@@ -113,12 +115,18 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       )}
 
       <Flex gap={1} alignItems='center'>
-        <Button aria-label='Open Data Class' icon={IvyIcons.DatabaseLink} size='large' onClick={() => openDataClass()} />
-        <Button aria-label='Open Process' icon={IvyIcons.Process} size='large' onClick={() => openProcess()} />
+        <Button
+          title='Open Data Class'
+          aria-label='Open Data Class'
+          icon={IvyIcons.DatabaseLink}
+          size='large'
+          onClick={() => openDataClass()}
+        />
+        <Button title='Open Process' aria-label='Open Process' icon={IvyIcons.Process} size='large' onClick={() => openProcess()} />
         {theme !== 'system' && (
           <Popover>
             <PopoverTrigger asChild>
-              <Button aria-label='Options' icon={IvyIcons.Settings} size='large' />
+              <Button title='Options' aria-label='Options' icon={IvyIcons.Settings} size='large' />
             </PopoverTrigger>
             <PopoverContent sideOffset={12} collisionPadding={5}>
               <ReadonlyProvider readonly={false}>
@@ -140,6 +148,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
         )}
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
+          title='Toggle Property View'
           aria-label='Toggle Property View'
           size='large'
           onClick={() => setUi(old => ({ ...old, properties: !old.properties }))}
