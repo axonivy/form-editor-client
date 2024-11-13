@@ -9,8 +9,8 @@
   <version>12.0.0-SNAPSHOT</version>
   <packaging>iar</packaging>
   <properties>
-    <engine.test.app>ivy-dev-form-test</engine.test.app>
-    <engine.test.ws>form-test</engine.test.ws>
+    <engine.test.app>Developer-form-test-project</engine.test.app>
+    <engine.test.ws>form-test-project</engine.test.ws>
     <engine.dir>${project.build.directory}/ivyEngine</engine.dir>
     <project.build.plugin.version>12.0.1-SNAPSHOT</project.build.plugin.version>
     <engine.page.url>https://product.ivyteam.io/</engine.page.url>
@@ -42,7 +42,7 @@
             </goals>
             <configuration>
               <outputDirectory>
-                ${engine.dir}/neo-designer-workspaces/${engine.test.ws}/form-test-project</outputDirectory>
+                ${engine.dir}/data/workspaces/Developer/${engine.test.ws}/form-test-project</outputDirectory>
               <resources>
                 <resource>
                   <directory>.</directory>
@@ -102,7 +102,7 @@
               </arguments>
               <environmentVariables>
                 <BASE_URL>${test.engine.url}</BASE_URL>
-                <TEST_WS>ivy-dev-${engine.test.ws}</TEST_WS>
+                <TEST_WS>~Developer-${engine.test.ws}</TEST_WS>
                 <TEST_APP>${engine.test.app}</TEST_APP>
                 <SCREENSHOT_DIR>${project.build.directory}</SCREENSHOT_DIR>
               </environmentVariables>
