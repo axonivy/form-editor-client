@@ -7,14 +7,14 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Select');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const label = general.badge({ label: 'Label' });
-  const value = general.badge({ label: 'Value' });
+  const label = general.input({ label: 'Label' });
+  const value = general.input({ label: 'Value' });
   const staticOptions = properties.collapsible('Static Options');
   const table = staticOptions.table(['input', 'input']);
   const dynamicOptions = properties.collapsible('Dynamic Options');
-  const list = dynamicOptions.badge({ label: 'List of objects' });
-  const itemLabel = dynamicOptions.badge({ label: 'Object Label' });
-  const itemValue = dynamicOptions.badge({ label: 'Object Value' });
+  const list = dynamicOptions.input({ label: 'List of objects' });
+  const itemLabel = dynamicOptions.input({ label: 'Object Label' });
+  const itemValue = dynamicOptions.input({ label: 'Object Value' });
   const behaviour = properties.behaviour();
 
   await label.expectValue('Select');

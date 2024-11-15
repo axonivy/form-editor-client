@@ -10,7 +10,7 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('DataTable');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const listOfObjects = section.badge({ label: 'List of Objects' });
+  const listOfObjects = section.input({ label: 'List of Objects' });
   const behaviour = properties.behaviour();
 
   const columnsSection = properties.collapsible('Columns');
@@ -38,8 +38,8 @@ test('dataTableColumn', async ({ page }) => {
   await editor.inscription.expectHeader('DataTableColumn');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const header = section.badge({ label: 'Header' });
-  const value = section.badge({ label: 'Value' });
+  const header = section.input({ label: 'Header' });
+  const value = section.input({ label: 'Value' });
   const behaviour = properties.behaviour();
 
   await header.expectValue('header');
@@ -63,8 +63,8 @@ test('edit column and update table', async ({ page }) => {
   await editor.inscription.expectHeader('DataTableColumn');
   const columnProperties = editor.inscription.section('Properties');
   const columnSection = columnProperties.collapsible('General');
-  const header = columnSection.badge({ label: 'Header' });
-  const value = columnSection.badge({ label: 'Value' });
+  const header = columnSection.input({ label: 'Header' });
+  const value = columnSection.input({ label: 'Value' });
 
   await header.expectValue('header');
   await value.expectValue('value');
@@ -94,7 +94,7 @@ test('columns from attribute', async ({ page }) => {
 
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const listOfObjects = section.badge({ label: 'List of Objects' });
+  const listOfObjects = section.input({ label: 'List of Objects' });
 
   const columnsSection = properties.collapsible('Columns');
   const columnAdress = columnsSection.checkbox({ label: 'address' });

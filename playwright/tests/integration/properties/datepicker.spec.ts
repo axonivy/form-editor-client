@@ -7,11 +7,11 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('DatePicker');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const label = general.badge({ label: 'Label' });
-  const value = general.badge({ label: 'Value' });
-  const datePattern = general.badge({ label: 'Date Pattern' });
+  const label = general.input({ label: 'Label' });
+  const value = general.input({ label: 'Value' });
+  const datePattern = general.input({ label: 'Date Pattern' });
   const showTime = general.checkbox({ label: 'Show Time' });
-  const timePattern = general.badge({ label: 'Time Pattern' });
+  const timePattern = general.input({ label: 'Time Pattern' });
   const behaviour = properties.behaviour();
 
   await label.expectValue('Date Picker');

@@ -7,7 +7,7 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Text');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const content = general.badge({ label: 'Content', textarea: true });
+  const content = general.input({ label: 'Content' });
   const behaviour = properties.behaviour();
 
   await content.expectValue('This is a text');

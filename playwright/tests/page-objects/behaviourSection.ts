@@ -1,10 +1,10 @@
-import type { Badge, Collapsible } from './inscription';
+import type { Collapsible, Input } from './inscription';
 
 export class VisibleInput {
-  private visibleField: Badge;
+  private visibleField: Input;
 
   constructor(behaviourSection: Collapsible) {
-    this.visibleField = behaviourSection.badge({ label: 'Visible' });
+    this.visibleField = behaviourSection.input({ label: 'Visible' });
   }
 
   async fillVisible() {
@@ -25,11 +25,11 @@ export class VisibleInput {
 }
 
 export class DisableInput extends VisibleInput {
-  private disabledField: Badge;
+  private disabledField: Input;
 
   constructor(behaviourSection: Collapsible) {
     super(behaviourSection);
-    this.disabledField = behaviourSection.badge({ label: 'Disable' });
+    this.disabledField = behaviourSection.input({ label: 'Disable' });
   }
 
   async fillDisable() {
@@ -44,13 +44,13 @@ export class DisableInput extends VisibleInput {
 }
 
 export class RequiredInput extends DisableInput {
-  private requiredField: Badge;
-  private requiredMessageField: Badge;
+  private requiredField: Input;
+  private requiredMessageField: Input;
 
   constructor(behaviourSection: Collapsible) {
     super(behaviourSection);
-    this.requiredField = behaviourSection.badge({ label: 'Required' });
-    this.requiredMessageField = behaviourSection.badge({ label: 'Required Message' });
+    this.requiredField = behaviourSection.input({ label: 'Required' });
+    this.requiredMessageField = behaviourSection.input({ label: 'Required Message' });
   }
 
   async fillRequired() {

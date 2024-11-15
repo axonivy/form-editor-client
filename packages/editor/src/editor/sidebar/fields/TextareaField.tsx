@@ -10,7 +10,7 @@ import {
   Textarea,
   type MessageData
 } from '@axonivy/ui-components';
-import { useEffect, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { Browser } from '../../browser/Browser';
 import { AddCmsQuickFixPopover } from '../../browser/cms/AddCmsQuickFix';
@@ -31,10 +31,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
   const cmsQuickFixPopoverRef = useRef<HTMLDivElement>(null);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(textAreaRef);
-  const [height, setHeight] = useState(14);
-  useEffect(() => {
-    setHeight(splitNewLine(value).length * 14);
-  }, [value]);
+  const height = useMemo(() => splitNewLine(value).length * 14, [value]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

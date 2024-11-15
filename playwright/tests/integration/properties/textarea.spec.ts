@@ -7,8 +7,8 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Textarea');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const label = section.badge({ label: 'Label' });
-  const value = section.badge({ label: 'Value' });
+  const label = section.input({ label: 'Label' });
+  const value = section.input({ label: 'Value' });
   const rows = section.input({ label: 'Visible Rows', type: 'number' });
   const behaviour = properties.behaviour();
 

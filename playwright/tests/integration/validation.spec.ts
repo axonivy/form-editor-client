@@ -11,7 +11,7 @@ test('canvas', async ({ page }) => {
 test('inscription input', async ({ page }) => {
   const { canvas, inscription } = await FormEditor.openMock(page);
   await canvas.blockByText('Address').inscribe();
-  const badge = inscription.section('Properties').collapsible('General').badge({ label: 'Value' });
+  const badge = inscription.section('Properties').collapsible('General').input({ label: 'Value' });
   await expect(badge.locator).toBeVisible();
   await expect(badge.outputLocator).toHaveAccessibleDescription(/Value is required/);
 });
