@@ -27,7 +27,7 @@ test('default', async ({ page }) => {
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
-  await listOfObjects.expectValue('#{data.locations}');
+  await listOfObjects.expectValue('locations');
   await behaviour.expectVisible();
 });
 
@@ -103,7 +103,7 @@ test('columns from attribute', async ({ page }) => {
   const columnFirstName = columnsSection.checkbox({ label: 'first name' });
   const columnAge = columnsSection.checkbox({ label: 'age (unbound)' });
 
-  await listOfObjects.expectValue('#{data.data.persons}');
+  await listOfObjects.expectValue('data.persons');
   await columnAdress.expectValue(false);
   await columnBirthday.expectValue(true);
   await columnSurname.expectValue(false);

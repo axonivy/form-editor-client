@@ -17,7 +17,8 @@ test('address', async ({ page }) => {
   const labelParam = parameters.input({ label: 'Label' });
 
   await composite.expectValue('form.test.project.AddressComponent');
-  await expect(composite.locator).toBeDisabled();
+  await composite.focus();
+  await expect(composite.inputLocator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Address)', 'empty()']);
   await expect(addressParam.locator).toBeHidden();
@@ -36,7 +37,7 @@ test('address', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await method.expectValue('start(Address)');
-  await addressParam.expectValue('#{data.address}');
+  await addressParam.expectValue('address');
   await labelParam.expectValue('my composite');
 });
 
@@ -55,7 +56,8 @@ test('person', async ({ page }) => {
   const person = parameters.input({ label: 'Person' });
 
   await composite.expectValue('form.test.project.PersonComponent');
-  await expect(composite.locator).toBeDisabled();
+  await composite.focus();
+  await expect(composite.inputLocator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Person)']);
   await method.choose('start(Person)');
@@ -66,7 +68,7 @@ test('person', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await method.expectValue('start(Person)');
-  await person.expectValue('#{data.person}');
+  await person.expectValue('person');
 });
 
 test('parameters browser', async ({ page }) => {
@@ -80,7 +82,7 @@ test('parameters browser', async ({ page }) => {
   await browser.expectEntries(['data.person']);
   await browser.close();
 
-  await editor.canvas.blockByText('AddressComponent').inscribe();
+  await editor.canvas.blockByText('AddressComponent').block.dblclick({ position: { x: 10, y: 10 } });
   const address = parameters.input({ label: 'Address' });
   browser = await address.openBrowser();
   await browser.expectEntries(['data.address', 'data.person.billingAddress', 'data.person.deliveryAddress']);

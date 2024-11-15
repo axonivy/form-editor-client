@@ -40,7 +40,7 @@ test('default', async ({ page }) => {
   await label.expectValue('select');
   await value.expectValue('bla');
   await table.row(2).expectValues(['one', 'two']);
-  await list.expectValue('#{data.list}');
+  await list.expectValue('list');
   await itemLabel.expectValue('label');
   await itemValue.expectValue('value');
   await behaviour.expectRequired();

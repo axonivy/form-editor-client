@@ -16,7 +16,7 @@ export class VisibleInput {
   }
 
   async expectVisibleAfterBuilder() {
-    await this.visibleField.expectValue("#{(data.value1 eq '10' and data.value2 gt '5') or (data.value3 lt '6')}");
+    await this.visibleField.expectValue("(data.value1 eq '10' and data.value2 gt '5') or (data.value3 lt '6')");
   }
 
   async openConditionBuilder() {

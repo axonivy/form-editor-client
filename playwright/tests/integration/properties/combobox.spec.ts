@@ -33,8 +33,8 @@ test('default', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await label.expectValue('Hi');
-  await value.expectValue('#{data.zag}');
-  await complete.expectValue('#{data.complete}');
+  await value.expectValue('zag');
+  await complete.expectValue('complete');
   await itemLabel.expectValue('label');
   await itemValue.expectValue('value');
   await button.expectValue(true);

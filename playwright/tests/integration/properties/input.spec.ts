@@ -35,7 +35,7 @@ test('default', async ({ page }) => {
   await value.expectValue('New Value');
   await type.expectValue('Number');
   await decimalPlaces.expectValue('2');
-  await symbol.expectValue('CHF ');
+  await symbol.expectValue('CHF');
   await symbolPosition.expectValue('Prefix');
   await behaviour.expectRequired();
 });
@@ -45,14 +45,15 @@ test('id', async ({ page }) => {
   await editor.canvas.blockByNth(0).inscribe();
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const id = section.input({ label: 'Id' });
-  await expect(id.locator).toHaveAttribute('placeholder', 'Input1');
+  const id = section.input({ label: 'Id', type: 'id' });
+  await expect(id.inputLocator).toHaveAttribute('placeholder', 'Input1');
   await id.expectEmpty();
 });
 
 test('cmsQuickfix', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
-  await editor.canvas.blockByNth(0).inscribe();
+  const block = editor.canvas.blockByNth(0);
+  await block.inscribe();
   await editor.inscription.expectHeader('Input');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
@@ -61,4 +62,7 @@ test('cmsQuickfix', async ({ page }) => {
   await label.expectValue('Firstname');
   await label.selectText();
   await label.openQuickfix();
+  await block.inscribe();
+  await label.expectValue('/Labels/Firstname');
+  await label.expectInputValue("#{ivy.cms.co('/Labels/Firstname')}");
 });

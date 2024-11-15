@@ -16,14 +16,14 @@ test('default', async ({ page }) => {
   await action.expectValue('');
   await variant.expectValue('Primary');
   await name.fill('Cancel');
-  await action.fill('#{locig.close}');
+  await action.fill('#{logic.close}');
   await variant.choose('Secondary');
   await behaviour.fillDisable();
 
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await name.expectValue('Cancel');
-  await action.expectValue('#{locig.close}');
+  await action.expectValue('close');
   await variant.expectValue('Secondary');
   await behaviour.excpectDisabled();
 });

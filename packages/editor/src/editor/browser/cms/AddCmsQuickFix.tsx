@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type RefObject } from 'react';
 import { useMeta } from '../../../context/useMeta';
 import { Button, Flex, Popover, PopoverArrow, PopoverContent, PopoverTrigger, toast } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -12,12 +12,14 @@ export const AddCmsQuickFixPopover = ({
   value,
   onChange,
   selection,
-  inputRef
+  inputRef,
+  contentRef
 }: {
   value: string;
   onChange: (value: string) => void;
   selection: Selection;
   inputRef: InputTextAreaRef;
+  contentRef: RefObject<HTMLDivElement>;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -40,7 +42,6 @@ export const AddCmsQuickFixPopover = ({
         if (inputRef.current && selection) {
           const currentValue = inputRef.current.value;
           const newValue = currentValue.slice(0, selection.start) + data + currentValue.slice(selection.end);
-
           onChange(newValue);
           setOpen(false);
         }
@@ -64,7 +65,13 @@ export const AddCmsQuickFixPopover = ({
       <PopoverTrigger asChild>
         <Button icon={IvyIcons.Cms} aria-label='CMS-Quickfix' title='CMS-Quickfix' />
       </PopoverTrigger>
-      <PopoverContent sideOffset={12} collisionPadding={5} onOpenAutoFocus={restoreSelection} onFocusOutside={e => e.preventDefault()}>
+      <PopoverContent
+        ref={contentRef}
+        sideOffset={12}
+        collisionPadding={5}
+        onOpenAutoFocus={restoreSelection}
+        onFocusOutside={e => e.preventDefault()}
+      >
         <Flex direction='column' gap={2} alignItems='center'>
           {value.length > 0 &&
             cmsQuickFixes?.map((fix, index) => (

@@ -95,7 +95,7 @@ export class Collapsible {
     return new Select(this.page, this.content, options);
   }
 
-  input(options?: { label?: string; nth?: number; type?: string }) {
+  input(options?: { label?: string; nth?: number; type?: 'number' | 'id' }) {
     return new Input(this.page, this.content, options);
   }
 
@@ -151,46 +151,87 @@ class Select {
 
 export class Input {
   readonly locator: Locator;
+  readonly outputLocator: Locator;
+  readonly inputLocator: Locator;
 
   constructor(
     readonly page: Page,
     readonly parentLocator: Locator,
-    options?: { label?: string; nth?: number; type?: string }
+    options?: { label?: string; nth?: number; type?: 'number' | 'id' }
   ) {
     const role = options?.type === 'number' ? 'spinbutton' : 'textbox';
-    if (options?.label) {
-      this.locator = parentLocator.getByRole(role, { name: options.label }).first();
+    const badgeLocator = parentLocator.locator('.badge-field');
+    if (options?.type) {
+      if (options?.label) {
+        this.locator = parentLocator.getByRole(role, { name: options.label }).first();
+      } else {
+        this.locator = parentLocator.getByRole(role).nth(options?.nth ?? 0);
+      }
+      this.inputLocator = this.locator;
+    } else if (options?.label) {
+      this.locator = badgeLocator.filter({ has: page.locator('.ui-fieldset-label', { hasText: options.label }) }).first();
+      this.inputLocator = this.locator.getByRole(role, { name: options.label }).first();
+      this.outputLocator = this.locator.locator('output').first();
     } else {
-      this.locator = parentLocator.getByRole(role).nth(options?.nth ?? 0);
+      this.locator = badgeLocator.locator('.badge-field').nth(options?.nth ?? 0);
+      this.inputLocator = this.locator.getByRole(role).first();
+      this.outputLocator = this.locator.locator('output').first();
+    }
+  }
+
+  async focus() {
+    if (!(await this.inputLocator.isVisible())) {
+      await this.locator.click();
+    }
+  }
+
+  async blur() {
+    if (await this.inputLocator.isVisible()) {
+      await this.inputLocator.blur();
     }
   }
 
   async clear() {
-    await this.locator.clear();
+    await this.focus();
+    await this.inputLocator.clear();
   }
 
   async fill(value: string) {
+    await this.focus();
     await this.clear();
-    await this.locator.fill(value);
+    await this.inputLocator.fill(value);
   }
 
   async openBrowser() {
-    await this.locator.locator('+ .ui-button').click();
+    await this.focus();
+    await this.inputLocator.locator('+ .ui-button').click();
     const browser = new Browser(this.page);
     await expect(browser.view).toBeVisible();
     return browser;
   }
 
   async expectValue(value: string | RegExp) {
-    await expect(this.locator).toHaveValue(value);
+    if (this.outputLocator) {
+      await this.blur();
+      await expect(this.outputLocator).toContainText(value, { useInnerText: true });
+    } else {
+      await this.expectInputValue(value);
+    }
+  }
+
+  async expectInputValue(value: string | RegExp) {
+    await this.focus();
+    await expect(this.inputLocator).toHaveValue(value);
   }
 
   async expectEmpty() {
-    await expect(this.locator).toBeEmpty();
+    await this.focus();
+    await expect(this.inputLocator).toBeEmpty();
   }
 
   async selectText() {
-    await this.locator.dblclick();
+    await this.focus();
+    await this.inputLocator.dblclick();
   }
 
   async openQuickfix() {
@@ -207,7 +248,6 @@ export class Input {
 
     await globalButton.click();
     await expect(popover).not.toBeVisible();
-    await this.expectValue("#{ivy.cms.co('/Labels/Firstname')}");
   }
 }
 

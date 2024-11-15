@@ -21,6 +21,6 @@ test('default', async ({ page }) => {
   await page.reload();
   await editor.canvas.blockByNth(0).inscribe();
   await label.expectValue('Hi');
-  await selected.expectValue('#{data.approve}');
+  await selected.expectValue('approve');
   await behaviour.excpectDisabled();
 });

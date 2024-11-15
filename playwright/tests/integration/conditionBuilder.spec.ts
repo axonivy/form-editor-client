@@ -9,8 +9,10 @@ test.describe('Condition Builder', () => {
     const properties = editor.inscription.section('Properties');
     const behaviour = properties.behaviour();
 
+    await page.getByText('Visible').click();
     await behaviour.openConditionBuilder();
     await applyConditionBuilder(page);
+    await page.getByText('Visible').click();
     await behaviour.expectVisibleAfterBuilder();
   });
 });
@@ -23,18 +25,24 @@ export async function applyConditionBuilder(page: Page) {
 
   expect(page.getByRole('dialog').getByRole('combobox').nth(0)).toHaveText('Basic Condition');
   expect(await condition.count()).toBe(1);
-  expect(await condition.locator('.ui-inputgroup').count()).toBe(2);
+  expect(await condition.locator('output').count()).toBe(2);
 
+  await condition.first().locator('output').first().click();
   await condition.locator('.ui-input').nth(0).fill('data.value1');
-  await condition.locator('.ui-input').nth(1).fill('10');
+  await condition.first().getByRole('combobox').click();
+  await page.getByRole('option', { name: 'equal to', exact: true }).first().click();
+  await condition.first().locator('output').nth(1).click();
+  await condition.locator('.ui-input').nth(0).fill('10');
 
   await page.getByLabel('Add Condition').click();
   const newConditions = await condition.count();
   expect(newConditions).toBe(2);
+  await condition.nth(1).locator('output').nth(0).click();
   await condition.nth(1).locator('.ui-input').nth(0).fill('data.value2');
   await condition.nth(1).getByRole('combobox').click();
   await page.getByRole('option', { name: 'greater than', exact: true }).first().click();
-  await condition.nth(1).locator('.ui-input').nth(1).fill('5');
+  await condition.nth(1).locator('output').nth(1).click();
+  await condition.nth(1).locator('.ui-input').nth(0).fill('5');
 
   await page.getByRole('dialog').getByRole('combobox').nth(0).click();
   await page.getByRole('option', { name: 'Nested Condition', exact: true }).first().click();
@@ -45,10 +53,12 @@ export async function applyConditionBuilder(page: Page) {
   await page.locator('.ui-dialog-content').getByRole('combobox').nth(4).click();
   await page.getByRole('option', { name: 'or', exact: true }).first().click();
 
+  await condition.nth(2).locator('output').nth(0).click();
   await condition.nth(2).locator('.ui-input').nth(0).fill('data.value3');
   await page.locator('.condition-builder__condition').nth(2).getByRole('combobox').click();
   await page.getByRole('option', { name: 'less than', exact: true }).first().click();
-  await condition.nth(2).locator('.ui-input').nth(1).fill('6');
+  await condition.nth(2).locator('output').nth(1).click();
+  await condition.nth(2).locator('.ui-input').nth(0).fill('6');
 
   await page.getByRole('button', { name: 'Apply' }).click();
 }
