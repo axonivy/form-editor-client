@@ -29,7 +29,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
   const [open, setOpen] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
-  const cmsQuickRef = useRef<HTMLDivElement>(null);
+  const cmsQuickFixPopoverRef = useRef<HTMLDivElement>(null);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(textAreaRef);
   const [height, setHeight] = useState(14);
   useEffect(() => {
@@ -39,7 +39,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <BasicField label={label} message={message} className='badge-field' {...focusWithinProps} tabIndex={0}>
-        {isFocusWithin || cmsQuickRef.current ? (
+        {isFocusWithin || cmsQuickFixPopoverRef.current ? (
           <Flex direction='row'>
             <Textarea
               value={value}
@@ -62,7 +62,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
                   selection={selection}
                   inputRef={textAreaRef}
                   onChange={onChange}
-                  reference={cmsQuickRef}
+                  contentRef={cmsQuickFixPopoverRef}
                 />
               )}
               <DialogTrigger asChild>

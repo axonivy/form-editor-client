@@ -2,13 +2,13 @@ import { IvyIcons } from '@axonivy/ui-icons';
 
 const badgePropertyData = {
   regex: /#{\s*data\.[^}]+}/,
-  icon: IvyIcons.File,
+  icon: IvyIcons.Attribute,
   badgeTextGen: (text: string) => text.replaceAll(/#{\s*data\.|}/g, '')
 };
 
 const badgePropertyLogic = {
   regex: /#{\s*logic\.[^}]+}/,
-  icon: IvyIcons.Bpmn,
+  icon: IvyIcons.Process,
   badgeTextGen: (text: string) => text.replaceAll(/#{\s*logic\.|}/g, '')
 };
 

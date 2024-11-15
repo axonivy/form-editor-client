@@ -13,13 +13,13 @@ export const AddCmsQuickFixPopover = ({
   onChange,
   selection,
   inputRef,
-  reference
+  contentRef
 }: {
   value: string;
   onChange: (value: string) => void;
   selection: Selection;
   inputRef: InputTextAreaRef;
-  reference: RefObject<HTMLDivElement>;
+  contentRef: RefObject<HTMLDivElement>;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -66,7 +66,7 @@ export const AddCmsQuickFixPopover = ({
         <Button icon={IvyIcons.Cms} aria-label='CMS-Quickfix' title='CMS-Quickfix' />
       </PopoverTrigger>
       <PopoverContent
-        ref={reference}
+        ref={contentRef}
         sideOffset={12}
         collisionPadding={5}
         onOpenAutoFocus={restoreSelection}
