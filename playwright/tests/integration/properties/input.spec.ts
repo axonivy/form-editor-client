@@ -53,7 +53,7 @@ test('id', async ({ page }) => {
 test('cmsQuickfix', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const block = editor.canvas.blockByNth(0);
-  block.inscribe();
+  await block.inscribe();
   await editor.inscription.expectHeader('Input');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
@@ -64,4 +64,5 @@ test('cmsQuickfix', async ({ page }) => {
   await label.openQuickfix();
   await block.inscribe();
   await label.expectValue('/Labels/Firstname');
+  await label.expectInputValue("#{ivy.cms.co('/Labels/Firstname')}");
 });

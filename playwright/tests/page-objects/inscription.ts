@@ -161,7 +161,7 @@ export class Input {
   ) {
     const role = options?.type === 'number' ? 'spinbutton' : 'textbox';
     const badgeLocator = parentLocator.locator('.badge-field');
-    if (role === 'spinbutton' || options?.type === 'id') {
+    if (options?.type) {
       if (options?.label) {
         this.locator = parentLocator.getByRole(role, { name: options.label }).first();
       } else {
@@ -185,14 +185,14 @@ export class Input {
     }
   }
 
-  async focusOut() {
+  async blur() {
     if (await this.inputLocator.isVisible()) {
       await this.inputLocator.blur();
     }
   }
 
   async clear() {
-    this.focus();
+    await this.focus();
     await this.inputLocator.clear();
   }
 
@@ -212,11 +212,16 @@ export class Input {
 
   async expectValue(value: string | RegExp) {
     if (this.outputLocator) {
-      await this.focusOut();
-      expect(await this.outputLocator.innerText()).toBe(value);
+      await this.blur();
+      await expect(this.outputLocator).toContainText(value, { useInnerText: true });
     } else {
-      expect(this.inputLocator).toHaveValue(value);
+      await this.expectInputValue(value);
     }
+  }
+
+  async expectInputValue(value: string | RegExp) {
+    await this.focus();
+    await expect(this.inputLocator).toHaveValue(value);
   }
 
   async expectEmpty() {
