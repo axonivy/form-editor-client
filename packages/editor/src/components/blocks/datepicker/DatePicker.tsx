@@ -3,7 +3,7 @@ import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } fr
 import './DatePicker.css';
 import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
 import IconSvg from './DatePicker.svg?react';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type DatePickerProps = Prettify<DatePicker>;
 
@@ -59,7 +59,7 @@ const UiBlock = ({
   <div className='block-input'>
     <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <span className='block-input__input'>
-      {value === '' ? (showTime ? datePattern + ' ' + timePattern : datePattern) : value}
+      {value === '' ? showTime ? datePattern + ' ' + timePattern : datePattern : <UiBadge value={value} />}
       <svg width='17' height='17' viewBox='0 0 17 17' fill='none' xmlns='http://www.w3.org/2000/svg'>
         <g clipPath='url(#clip0_35_14)'>
           <path

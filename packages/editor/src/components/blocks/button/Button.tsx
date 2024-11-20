@@ -3,7 +3,7 @@ import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiC
 import './Button.css';
 import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
 import IconSvg from './Button.svg?react';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type ButtonProps = Prettify<Button>;
 
@@ -50,7 +50,7 @@ const UiBlock = ({ name, icon, variant, visible, disabled }: UiComponentProps<Bu
     <UiBlockHeader visible={visible} disabled={disabled} />
     <button className='block-button' data-variant={variant.toLocaleLowerCase()}>
       {icon && <i className={icon} />}
-      <span>{name}</span>
+      <UiBadge value={name} />
     </button>
   </>
 );

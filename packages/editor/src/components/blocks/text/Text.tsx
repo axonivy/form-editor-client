@@ -5,7 +5,7 @@ import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, vis
 import IconSvg from './Text.svg?react';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { IvyIcon } from '@axonivy/ui-components';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type TextProps = Prettify<Text>;
 
@@ -53,7 +53,7 @@ const UiBlock = ({ content, icon, iconStyle, visible }: UiComponentProps<TextPro
       <UiBlockHeader visible={visible} />
       <p className='block-text'>
         {icon && <IvyIcon icon={IvyIcons.InfoCircle} />}
-        {content}
+        <UiBadge value={content} />
       </p>
     </>
   );

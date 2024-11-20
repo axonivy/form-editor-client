@@ -6,8 +6,10 @@ describe('UiBlockHeader', () => {
   test('render label and required symbol', () => {
     render(<UiBlockHeader visible='true' label='Test Label' required='true' />);
 
-    const label = screen.getByText('Test Label *');
+    const label = screen.getByText('Test Label');
+    const required = screen.getByText('*');
     expect(label).toBeInTheDocument();
+    expect(required).toBeInTheDocument();
   });
 
   test('not render required symbol', () => {

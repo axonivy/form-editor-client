@@ -1,5 +1,6 @@
-import { Flex } from '@axonivy/ui-components';
+import { Flex, InputBadge } from '@axonivy/ui-components';
 import './UiBlockHeader.css';
+import { badgeProps } from '../utils/badge-properties';
 
 type UiBlockHeaderProps = {
   visible: string;
@@ -12,10 +13,10 @@ type UiBlockHeaderProps = {
 
 export const UiBlockHeader = ({ visible, label, required, disabled, additionalInfo, updateOnChange }: UiBlockHeaderProps) => (
   <Flex direction='row' justifyContent='space-between' alignItems='center' className='header-block__label'>
-    <span>
-      {label}
+    <Flex direction='row'>
+      {label && <UiBadge value={label ?? ''} />}
       {required && required !== 'false' ? (required === 'false' ? '' : ' *') : ''}
-    </span>
+    </Flex>
     <Flex alignItems='center' gap={1} className='header-block__indicators'>
       {additionalInfo && additionalInfo.length === 0 ? null : <span style={{ color: 'var(--N600)' }}>{additionalInfo}</span>}
       <UiBlockHeaderUpdateOnChangePart updateOnChange={updateOnChange} />
@@ -71,3 +72,5 @@ export const UiBlockHeaderUpdateOnChangePart = ({ updateOnChange }: { updateOnCh
       />
     </svg>
   ) : null;
+
+export const UiBadge = ({ value }: { value: string }) => <InputBadge value={value} badgeProps={badgeProps} className='ui-badge-label' />;

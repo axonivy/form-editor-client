@@ -9,8 +9,8 @@ import {
   selectItemsComponentFields
 } from '../base';
 import IconSvg from './Radio.svg?react';
-import { Field, Label, Message, RadioGroup, RadioGroupItem } from '@axonivy/ui-components';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { Field, Message, RadioGroup, RadioGroupItem } from '@axonivy/ui-components';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type RadioProps = Prettify<Radio>;
 
@@ -72,13 +72,13 @@ const UiBlock = ({
       {staticItems.map(item => (
         <Field key={item.value} direction='row' alignItems='center' gap={2}>
           <RadioGroupItem value={item.value} />
-          <Label>{item.label}</Label>
+          <UiBadge value={item.label} />
         </Field>
       ))}
       {dynamicItemsList !== '' && (
         <Field direction='row' alignItems='center' gap={2}>
           <RadioGroupItem value={dynamicItemsList} />
-          <Label>{dynamicItemsList}</Label>
+          <UiBadge value={dynamicItemsList} />
         </Field>
       )}
     </RadioGroup>

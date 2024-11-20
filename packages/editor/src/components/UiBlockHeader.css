@@ -6,3 +6,37 @@
 .canvas[data-help-paddings='false'] .header-block__visible {
   display: none;
 }
+
+.canvas .ui-badge-label {
+  background: transparent;
+  border: none;
+  color: inherit;
+  min-height: auto;
+  width: auto;
+  padding: 0;
+  line-height: inherit;
+  font-size: inherit;
+  display: flex;
+}
+
+.canvas .ui-badge-label:empty::after {
+  content: '.';
+  visibility: hidden;
+}
+
+.canvas .ui-badge-label .ui-flex {
+  padding: 0;
+  margin-inline: 3px;
+}
+
+.canvas[data-help-paddings='false'] .ui-badge-label .ui-flex {
+  font-style: italic;
+  background: inherit;
+  color: inherit;
+  border: none;
+  gap: 0;
+}
+
+.canvas[data-help-paddings='false'] .ui-badge-label .ivy {
+  display: none;
+}

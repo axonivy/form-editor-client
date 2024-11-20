@@ -1,19 +1,20 @@
-.block-checkbox {
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-1);
-}
-
-.block-checkbox button:hover {
-  color: var(--N900);
-  border: var(--basic-border);
+.checkbox-button {
   background-color: var(--N25);
-  cursor: default;
+  border-radius: var(--border-r1);
+  border: var(--basic-border);
+  width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.block-checkbox button[data-state='checked']:hover {
-  color: var(--N900);
-  border: var(--activ-border);
+.checkbox-icon {
+  color: var(--P300);
+}
+
+.checkbox-button.checkbox-checked {
   background-color: var(--P50);
-  cursor: default;
+  border: var(--activ-border);
 }
