@@ -63,6 +63,6 @@ test('cmsQuickfix', async ({ page }) => {
   await label.selectText();
   await label.openQuickfix();
   await block.inscribe();
-  await label.expectValue('/Labels/Firstname');
+  await label.expectValue('Firstname');
   await label.expectInputValue("#{ivy.cms.co('/Labels/Firstname')}");
 });

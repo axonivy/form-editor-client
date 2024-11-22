@@ -3,7 +3,7 @@ import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } fr
 import './Link.css';
 import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } from '../base';
 import IconSvg from './Link.svg?react';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type LinkProps = Prettify<Link>;
 
@@ -37,7 +37,7 @@ const UiBlock = ({ name, visible, ...props }: UiComponentProps<LinkProps>) => (
   <>
     <UiBlockHeader visible={visible} />
     <a className='block-link' {...props}>
-      {name}
+      <UiBadge value={name} />
     </a>
   </>
 );

@@ -3,7 +3,7 @@ import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiC
 import './Input.css';
 import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
 import IconSvg from './Input.svg?react';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type InputProps = Prettify<Input>;
 
@@ -70,7 +70,7 @@ const UiBlock = ({ label, required, visible, value, disabled, updateOnChange, sy
     <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <span className={`block-input__input ${disabled === 'true' ? 'disabled' : ''}`}>
       {symbolPosition === 'p' && symbol}
-      {value}
+      <UiBadge value={value} />
       {symbolPosition === 's' && symbol}
     </span>
   </div>

@@ -11,7 +11,7 @@ import {
 import IconSvg from './Select.svg?react';
 import { IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type SelectProps = Prettify<Select>;
 
@@ -48,7 +48,7 @@ const UiBlock = ({ label, value, visible, required, disabled, updateOnChange }: 
   <div className='block-input'>
     <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
     <div className='block-input__input'>
-      <span>{value}</span>
+      <UiBadge value={value} />
       <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
     </div>
   </div>

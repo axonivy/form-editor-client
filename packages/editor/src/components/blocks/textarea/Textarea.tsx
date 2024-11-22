@@ -3,7 +3,7 @@ import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } fr
 import './Textarea.css';
 import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
 import IconSvg from './Textarea.svg?react';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type TextareaProps = Prettify<Textarea>;
 
@@ -49,7 +49,9 @@ const UiBlock = ({ label, value, rows, autoResize, visible, required, disabled, 
         updateOnChange={updateOnChange}
       />
       <div className='block-textarea__input-wrapper'>
-        <span className='block-textarea__input'>{value}</span>
+        <span className='block-textarea__input'>
+          <UiBadge value={value} />
+        </span>
         {!autoResize && <div className='resize-icon' />}
       </div>
     </div>
