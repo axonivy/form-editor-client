@@ -36,8 +36,8 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
 const UiBlock = ({ name, visible, ...props }: UiComponentProps<LinkProps>) => (
   <>
     <UiBlockHeader visible={visible} />
-    <a className='block-link' {...props}>
+    <p className='block-link' {...props}>
       <UiBadge value={name} />
-    </a>
+    </p>
   </>
 );
