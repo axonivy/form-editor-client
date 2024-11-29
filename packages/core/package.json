@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@axonivy/form-editor-protocol": "12.0.1-next",
-    "@axonivy/jsonrpc": "~12.0.0-next.380"
+    "@axonivy/jsonrpc": "~12.0.1-next.384"
   },
   "devDependencies": {
     "vite": "^5.4.2"
