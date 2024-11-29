@@ -42,6 +42,7 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
     icon: IvyIcons.Attribute,
     browser,
     infoProvider: row => row?.original.info,
-    applyModifier: row => ({ value: options?.onlyTypesOf ? row.original.value : fullVariablePath(row, options?.onlyAttributes && true) })
+    applyModifier: row =>
+      row ? { value: options?.onlyTypesOf ? row.original.value : fullVariablePath(row, options?.onlyAttributes && true) } : { value: '' }
   };
 };

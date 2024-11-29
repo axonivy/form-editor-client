@@ -55,17 +55,17 @@ export const baseComponentFields: Fields<BaseComponentProps> = {
 };
 
 export const visibleComponentField: Fields<VisibleItemProps> = {
-  visible: { subsection: 'Behaviour', label: 'Visible', type: 'textConditionBuilder' }
+  visible: { subsection: 'Behaviour', label: 'Visible', type: 'textBrowser', browsers: ['CONDITION'] }
 };
 
 export const disabledComponentFields: Fields<DisabledItemProps> = {
   ...visibleComponentField,
-  disabled: { subsection: 'Behaviour', label: 'Disable', type: 'textConditionBuilder' }
+  disabled: { subsection: 'Behaviour', label: 'Disable', type: 'textBrowser', browsers: ['CONDITION'] }
 };
 
 export const behaviourComponentFields: Fields<BehaviourItemProps> = {
   ...disabledComponentFields,
-  required: { subsection: 'Behaviour', label: 'Required', type: 'textConditionBuilder' },
+  required: { subsection: 'Behaviour', label: 'Required', type: 'textBrowser', browsers: ['CONDITION'] },
   requiredMessage: {
     subsection: 'Behaviour',
     label: 'Required Message',

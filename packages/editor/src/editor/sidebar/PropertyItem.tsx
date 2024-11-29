@@ -8,7 +8,6 @@ import type { PrimitiveValue, SelectItem } from '@axonivy/form-editor-protocol';
 import { InputField } from './fields/InputField';
 import { InputFieldWithBrowser } from './fields/InputFieldWithBrowser';
 import { SelectTableField } from './fields/table-field/SelectTableField';
-import { InputFieldWithConditionBuilder } from './fields/condition-builder/InputFieldWithConditionBuilder';
 import { useValidation } from '../../context/useValidation';
 import { useData } from '../../data/data';
 
@@ -49,8 +48,6 @@ export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: Pr
             message={message}
           />
         );
-      case 'textConditionBuilder':
-        return <InputFieldWithConditionBuilder label={label} value={toString(value)} onChange={updateValue} message={message} />;
       case 'selectTable':
         return <SelectTableField label={label} data={toSelectItems(value)} onChange={updateValue} validationPath={validationPath} />;
       case 'number':

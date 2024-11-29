@@ -40,7 +40,7 @@ export type TextFieldOptions = {
 export type TextBrowserFieldOptions = TextFieldOptions & BrowserOptions;
 
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
-  type: 'text' | 'number' | 'textarea' | 'checkbox' | 'textConditionBuilder';
+  type: 'text' | 'number' | 'textarea' | 'checkbox';
   options?: TextFieldOptions;
 };
 
