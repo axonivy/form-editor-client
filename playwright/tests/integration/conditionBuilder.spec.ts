@@ -20,8 +20,8 @@ test.describe('Condition Builder', () => {
 export async function applyConditionBuilder(page: Page) {
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.getByText('Condition').first().click();
-  const condition = page.locator('.condition-builder__condition');
-  const group = page.locator('.condition-builder__group');
+  const condition = page.locator('.ui-condition-builder-condition');
+  const group = page.locator('.ui-condition-builder-group');
 
   expect(page.getByRole('dialog').getByRole('combobox').nth(0)).toHaveText('Basic Condition');
   expect(await condition.count()).toBe(1);
@@ -55,7 +55,7 @@ export async function applyConditionBuilder(page: Page) {
 
   await condition.nth(2).locator('output').nth(0).click();
   await condition.nth(2).locator('.ui-input').nth(0).fill('data.value3');
-  await page.locator('.condition-builder__condition').nth(2).getByRole('combobox').click();
+  await page.locator('.ui-condition-builder-condition').nth(2).getByRole('combobox').click();
   await page.getByRole('option', { name: 'less than', exact: true }).first().click();
   await condition.nth(2).locator('output').nth(1).click();
   await condition.nth(2).locator('.ui-input').nth(0).fill('6');

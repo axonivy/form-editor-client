@@ -18,6 +18,6 @@ export const useLogicBrowser = (): Browser => {
     icon: IvyIcons.Process,
     browser,
     infoProvider: row => (row?.original.data ? formatLogicMethodInfo(row?.original.data as LogicMethodInfo) : row?.original.info),
-    applyModifier: row => ({ value: 'logic.' + row.original.value })
+    applyModifier: row => ({ value: 'logic.' + row?.original.value })
   };
 };
