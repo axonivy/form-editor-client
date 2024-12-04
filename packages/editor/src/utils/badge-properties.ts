@@ -18,10 +18,10 @@ const badgePropertyCMS = {
   badgeTextGen: (text: string) => text.replaceAll(/#{\s*ivy.cms.co\(['"]|\/*[^\\]+\/|['"]\)\s*}/g, '')
 };
 
-const badgePropertyCondition = {
-  regex: /#{\s*[^\s}]+(?:\s+[^\s}]+)+\s*}/,
+const badgePropertyExpression = {
+  regex: /#{[^}]*}/,
   icon: IvyIcons.StartProgram,
-  badgeTextGen: (text: string) => text.replaceAll(/#{\s*|}/g, '')
+  badgeTextGen: (text: string) => text.replaceAll(/#{\s*|\s*}/g, '')
 };
 
-export const badgeProps = [badgePropertyData, badgePropertyLogic, badgePropertyCMS, badgePropertyCondition];
+export const badgeProps = [badgePropertyExpression, badgePropertyData, badgePropertyLogic, badgePropertyCMS];
