@@ -17,6 +17,7 @@ export default defineConfig({
   },
   build: {
     outDir: 'lib',
+    sourcemap: true,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       fileName: 'editor',
@@ -24,6 +25,8 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
+        '@axonivy/ui-components',
+        '@axonivy/ui-icons',
         '@dnd-kit/core',
         '@tanstack/react-query',
         '@tanstack/react-query-devtools',
