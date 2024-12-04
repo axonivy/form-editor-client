@@ -1,4 +1,6 @@
 import { IvyIcons } from '@axonivy/ui-icons';
+import { useMeta } from '../context/useMeta';
+import { useAppContext } from '../context/AppContext';
 
 const badgePropertyData = {
   regex: /#{\s*data\.[^\s}]+\s*}/,
@@ -21,7 +23,9 @@ const badgePropertyCMS = {
 const badgePropertyCondition = {
   regex: /#{[^}]*}/,
   icon: IvyIcons.StartProgram,
-  badgeTextGen: (text: string) => text.replaceAll(/#{\s*|}/g, '')
+  badgeTextGen: (text: string) => {
+    return text;
+  }
 };
 
 export const badgeProps = [badgePropertyCondition, badgePropertyData, badgePropertyLogic, badgePropertyCMS];
