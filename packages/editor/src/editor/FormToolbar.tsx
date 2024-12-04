@@ -33,7 +33,7 @@ type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { ui, setUi, selectedElement, history } = useAppContext();
   const { setUnhistoricisedData } = useData();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, disabled } = useTheme();
   const editable = !useReadonly();
   useEffect(() => {
     if (selectedElement === undefined) {
@@ -123,7 +123,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           onClick={() => openDataClass()}
         />
         <Button title='Open Process' aria-label='Open Process' icon={IvyIcons.Process} size='large' onClick={() => openProcess()} />
-        {theme !== 'system' && (
+        {!disabled && (
           <Popover>
             <PopoverTrigger asChild>
               <Button title='Options' aria-label='Options' icon={IvyIcons.Settings} size='large' />
