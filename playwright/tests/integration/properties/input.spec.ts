@@ -66,3 +66,21 @@ test('cmsQuickfix', async ({ page }) => {
   await label.expectValue('Firstname');
   await label.expectInputValue("#{ivy.cms.co('/Labels/Firstname')}");
 });
+
+test('badges', async ({ page }) => {
+  const value = "#{data.testData} #{logic.testLogic} #{ivy.cms.co('/Categories/agile/cssIcon')} #{el.expression}";
+  const editor = await FormEditor.openMock(page);
+  const block = editor.canvas.blockByNth(0);
+  await block.inscribe();
+  await editor.inscription.expectHeader('Input');
+  const properties = editor.inscription.section('Properties');
+  const section = properties.collapsible('General');
+  const label = section.input({ label: 'Label' });
+
+  await label.fill(value);
+  await label.expectInputValue(value);
+  await label.expectBadge('testData', 'ivy-attribute');
+  await label.expectBadge('testLogic', 'ivy-process');
+  await label.expectBadge('cssIcon', 'ivy-cms');
+  await label.expectBadge('el.expression', 'ivy-start-program');
+});

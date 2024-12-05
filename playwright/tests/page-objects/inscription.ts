@@ -224,6 +224,16 @@ export class Input {
     await expect(this.inputLocator).toHaveValue(value);
   }
 
+  async expectBadge(value: string, icon: string) {
+    expect(this.outputLocator).toBeDefined();
+    await this.blur();
+    const badge = this.outputLocator
+      .locator('.ui-flex')
+      .filter({ has: this.page.locator(`[class*="${icon}"]`), hasText: value })
+      .first();
+    await expect(badge).toContainText(value, { useInnerText: true });
+  }
+
   async expectEmpty() {
     await this.focus();
     await expect(this.inputLocator).toBeEmpty();
