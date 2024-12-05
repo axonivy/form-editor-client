@@ -1,6 +1,6 @@
 import { Flex, InputBadge } from '@axonivy/ui-components';
 import './UiBlockHeader.css';
-import { badgeProps } from '../utils/badge-properties';
+import { useBadgeProps } from '../utils/badge-properties';
 
 type UiBlockHeaderProps = {
   visible: string;
@@ -73,4 +73,7 @@ export const UiBlockHeaderUpdateOnChangePart = ({ updateOnChange }: { updateOnCh
     </svg>
   ) : null;
 
-export const UiBadge = ({ value }: { value: string }) => <InputBadge value={value} badgeProps={badgeProps} className='ui-badge-label' />;
+export const UiBadge = ({ value }: { value: string }) => {
+  const badgeProps = useBadgeProps();
+  return <InputBadge value={value} badgeProps={badgeProps} className='ui-badge-label' />;
+}

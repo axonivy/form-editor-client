@@ -1,7 +1,7 @@
 import { BasicField, Input, InputBadge, type MessageData } from '@axonivy/ui-components';
 import type { TextFieldOptions } from '../../../types/config';
 import { useOnFocus } from '../../../context/useOnFocus';
-import { badgeProps } from '../../../utils/badge-properties';
+import { useBadgeProps } from '../../../utils/badge-properties';
 
 export type InputFieldProps = {
   label?: string;
@@ -13,6 +13,7 @@ export type InputFieldProps = {
 
 export const InputField = ({ label, value, onChange, onBlur, message, options }: InputFieldProps & { options?: TextFieldOptions }) => {
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
+  const badgeProps = useBadgeProps();
   return (
     <BasicField label={label} message={message} {...focusWithinProps} className='badge-field' tabIndex={0}>
       {isFocusWithin ? (

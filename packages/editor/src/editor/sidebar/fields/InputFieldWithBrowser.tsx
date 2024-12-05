@@ -7,11 +7,8 @@ import { focusBracketContent } from '../../../utils/focus';
 import { Browser, type BrowserType } from '../../browser/Browser';
 import { AddCmsQuickFixPopover } from '../../browser/cms/AddCmsQuickFix';
 import useTextSelection from '../../browser/cms/useTextSelection';
-import { badgeProps } from '../../../utils/badge-properties';
+import { useBadgeProps } from '../../../utils/badge-properties';
 import { useOnFocus } from '../../../context/useOnFocus';
-import { useAppContext } from '../../../context/AppContext';
-import { useMeta } from '../../../context/useMeta';
-import type { ContentObject } from '@axonivy/form-editor-protocol';
 
 export const InputFieldWithBrowser = ({
   label,
@@ -27,27 +24,7 @@ export const InputFieldWithBrowser = ({
   const cmsQuickFixPopoverRef = useRef<HTMLDivElement>(null);
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(inputRef);
-  const { context } = useAppContext();
-  const cmsTree = useMeta('meta/cms/cmsTree', { context, requiredProjects: false }, []).data;
-
-  const findDeep = (str: string) => {
-    if (cmsTree.length < 1) return null;
-    const obj: ContentObject = cmsTree[0];
-    return findDeepRec(obj, str);
-  };
-
-  const findDeepRec = (obj: ContentObject, str: string) => {
-    if (obj.fullPath === str) return obj.values;
-    if (obj.children && obj.children.length < 1) return null;
-    const nObj = obj.children.find(e => str.startsWith(e.fullPath)) ?? null;
-    if (!nObj) return null;
-    return findDeepRec(nObj, str);
-  };
-  const m = badgeProps[3];
-  m.badgeTextGen = text => {
-    text = m.badgeTextGen(text);
-    return (findDeep(text ?? '').toString();
-  }
+  const badgeProps = useBadgeProps();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

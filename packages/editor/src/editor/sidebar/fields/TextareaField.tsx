@@ -16,7 +16,7 @@ import { Browser } from '../../browser/Browser';
 import { AddCmsQuickFixPopover } from '../../browser/cms/AddCmsQuickFix';
 import useTextSelection from '../../browser/cms/useTextSelection';
 import { useOnFocus } from '../../../context/useOnFocus';
-import { badgeProps } from '../../../utils/badge-properties';
+import { useBadgeProps } from '../../../utils/badge-properties';
 
 type TextareaFieldProps = {
   label: string;
@@ -32,7 +32,8 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
   const cmsQuickFixPopoverRef = useRef<HTMLDivElement>(null);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(textAreaRef);
   const height = useMemo(() => splitNewLine(value).length * 14, [value]);
-
+  const badgeProps = useBadgeProps();
+  
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <BasicField label={label} message={message} className='badge-field' {...focusWithinProps} tabIndex={0}>
