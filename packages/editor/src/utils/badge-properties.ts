@@ -24,4 +24,4 @@ const badgePropertyExpression = {
   badgeTextGen: (text: string) => text.replaceAll(/#{\s*|\s*}/g, '')
 };
 
-export const badgeProps = [badgePropertyExpression, badgePropertyData, badgePropertyLogic, badgePropertyCMS];
+export const badgeProps = [badgePropertyData, badgePropertyLogic, badgePropertyCMS, badgePropertyExpression];
