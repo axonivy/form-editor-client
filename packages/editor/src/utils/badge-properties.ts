@@ -16,7 +16,7 @@ const badgePropertyLogic: BadgeType = {
 const badgePropertyCMS: BadgeType = {
   regex: /#{\s*ivy.cms.co[^}]+}/,
   icon: IvyIcons.Cms,
-  badgeTextGen: (text: string) => text.replaceAll(/#{\s*ivy.cms.co\(['"]|\/*[^\\]+\/|['"]\)\s*}/g, '')
+  badgeTextGen: (text: string) => '.../' + text.replaceAll(/#{\s*ivy.cms.co\(['"]|\/*[^\\]+\/|['"]\)\s*}/g, '')
 };
 
 const badgePropertyExpression: BadgeType = {

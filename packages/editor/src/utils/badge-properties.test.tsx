@@ -6,11 +6,11 @@ import { render, screen } from '@testing-library/react';
 describe('createBadges', () => {
   const inputValues = "#{data.testData} #{logic.testLogic} #{ivy.cms.co('/Categories/agile/cssIcon')} #{el.expression}";
 
-  test('focus and select text inside parentheses in input', () => {
+  test('test all badgeProperties', () => {
     render(<InputBadge badgeProps={badgeProps} value={inputValues} className='badge-output' />);
     const testDataBadge = screen.getByText('testData').parentElement;
     const logicBadge = screen.getByText('testLogic').parentElement;
-    const cmsBadge = screen.getByText('cssIcon');
+    const cmsBadge = screen.getByText('.../cssIcon');
     const expBadge = screen.getByText('el.expression');
 
     expect(testDataBadge).toBeVisible();
@@ -20,7 +20,7 @@ describe('createBadges', () => {
 
     expect(testDataBadge).toHaveTextContent('testData');
     expect(logicBadge).toHaveTextContent('testLogic');
-    expect(cmsBadge).toHaveTextContent('cssIcon');
+    expect(cmsBadge).toHaveTextContent('.../cssIcon');
     expect(expBadge).toHaveTextContent('el.expression');
 
     expect(testDataBadge?.querySelector('i.ivy-attribute')).toBeVisible();
