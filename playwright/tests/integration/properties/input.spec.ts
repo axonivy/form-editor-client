@@ -12,7 +12,7 @@ test('default', async ({ page }) => {
   const type = section.select({ label: 'Type' });
   const formattingSection = properties.collapsible('Formatting');
   const decimalPlaces = formattingSection.input({ label: 'Decimal Places', type: 'number' });
-  const symbol = formattingSection.input({ label: 'Symbol' });
+  const symbol = formattingSection.input({ label: 'Symbol', type: 'text' });
   const symbolPosition = formattingSection.select({ label: 'Symbol Position' });
   const behaviour = properties.behaviour();
 
@@ -35,7 +35,7 @@ test('default', async ({ page }) => {
   await value.expectValue('New Value');
   await type.expectValue('Number');
   await decimalPlaces.expectValue('2');
-  await symbol.expectValue('CHF');
+  await symbol.expectValue('CHF ');
   await symbolPosition.expectValue('Prefix');
   await behaviour.expectRequired();
 });
@@ -45,7 +45,7 @@ test('id', async ({ page }) => {
   await editor.canvas.blockByNth(0).inscribe();
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const id = section.input({ label: 'Id', type: 'id' });
+  const id = section.input({ label: 'Id', type: 'text' });
   await expect(id.inputLocator).toHaveAttribute('placeholder', 'Input1');
   await id.expectEmpty();
 });
