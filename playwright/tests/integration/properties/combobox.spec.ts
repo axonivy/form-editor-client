@@ -11,8 +11,8 @@ test('default', async ({ page }) => {
   const value = general.input({ label: 'Value' });
   const options = properties.collapsible('Options');
   const complete = options.input({ label: 'Complete Method' });
-  const itemLabel = options.input({ label: 'Item Label' });
-  const itemValue = options.input({ label: 'Item Value' });
+  const itemLabel = options.input({ label: 'Item Label', type: 'text' });
+  const itemValue = options.input({ label: 'Item Value', type: 'text' });
   const button = options.checkbox({ label: 'Add Dropdown-Button to Combobox' });
   const behaviour = properties.behaviour();
 

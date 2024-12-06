@@ -10,14 +10,13 @@ test('address', async ({ page }) => {
   await editor.inscription.expectHeader('Composite');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const composite = general.input({ label: 'Composite' });
+  const composite = general.input({ label: 'Composite', type: 'text' });
   const method = general.select({ label: 'Start Method' });
   const parameters = properties.collapsible('Parameters');
   const addressParam = parameters.input({ label: 'Address' });
   const labelParam = parameters.input({ label: 'Label' });
 
   await composite.expectValue('form.test.project.AddressComponent');
-  await composite.focus();
   await expect(composite.inputLocator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Address)', 'empty()']);
@@ -50,13 +49,12 @@ test('person', async ({ page }) => {
   await editor.inscription.expectHeader('Composite');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const composite = general.input({ label: 'Composite' });
+  const composite = general.input({ label: 'Composite', type: 'text' });
   const method = general.select({ label: 'Start Method' });
   const parameters = properties.collapsible('Parameters');
   const person = parameters.input({ label: 'Person' });
 
   await composite.expectValue('form.test.project.PersonComponent');
-  await composite.focus();
   await expect(composite.inputLocator).toBeDisabled();
   await method.expectValue('');
   await method.expectOptions(['start(Person)']);

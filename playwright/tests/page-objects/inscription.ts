@@ -95,7 +95,7 @@ export class Collapsible {
     return new Select(this.page, this.content, options);
   }
 
-  input(options?: { label?: string; nth?: number; type?: 'number' | 'id' }) {
+  input(options?: { label?: string; nth?: number; type?: 'text' | 'number' }) {
     return new Input(this.page, this.content, options);
   }
 
@@ -157,7 +157,7 @@ export class Input {
   constructor(
     readonly page: Page,
     readonly parentLocator: Locator,
-    options?: { label?: string; nth?: number; type?: 'number' | 'id' }
+    options?: { label?: string; nth?: number; type?: 'text' | 'number' }
   ) {
     const role = options?.type === 'number' ? 'spinbutton' : 'textbox';
     const badgeLocator = parentLocator.locator('.badge-field');

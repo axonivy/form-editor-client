@@ -9,9 +9,9 @@ test('default', async ({ page }) => {
   const general = properties.collapsible('General');
   const label = general.input({ label: 'Label' });
   const value = general.input({ label: 'Value' });
-  const datePattern = general.input({ label: 'Date Pattern' });
+  const datePattern = general.input({ label: 'Date Pattern', type: 'text' });
   const showTime = general.checkbox({ label: 'Show Time' });
-  const timePattern = general.input({ label: 'Time Pattern' });
+  const timePattern = general.input({ label: 'Time Pattern', type: 'text' });
   const behaviour = properties.behaviour();
 
   await label.expectValue('Date Picker');
