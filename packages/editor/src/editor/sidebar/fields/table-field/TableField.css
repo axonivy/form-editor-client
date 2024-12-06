@@ -11,6 +11,11 @@
         border: none;
         background-color: unset;
       }
+      .badge-field output {
+        background-color: inherit;
+        color: inherit;
+        border: none;
+      }
     }
     .ui-fieldset {
       gap: 0;
