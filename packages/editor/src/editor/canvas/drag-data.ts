@@ -1,8 +1,11 @@
-import { isStructure, isTable, type Component, type ComponentData } from '@axonivy/form-editor-protocol';
+import { isStructure, isTable, type Component, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
 import type { Active } from '@dnd-kit/core';
 import { STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
 
-export type DragData = { disabledIds: Array<string> };
+export type DragData = {
+  componentType: ComponentType;
+  disabledIds: Array<string>;
+};
 
 const disabledIds = (data: Component | ComponentData): Array<string> => {
   if (isStructure(data) || isTable(data)) {
@@ -17,40 +20,45 @@ const disabledIds = (data: Component | ComponentData): Array<string> => {
 };
 
 export const dragData = (data: Component | ComponentData): DragData => {
-  return { disabledIds: disabledIds(data) };
+  return { componentType: data.type, disabledIds: disabledIds(data) };
 };
 
 export const isDragData = (data: unknown): data is DragData => {
-  return typeof data === 'object' && data !== null && 'disabledIds' in data;
+  return typeof data === 'object' && data !== null && 'componentType' in data && 'disabledIds' in data;
 };
 
-export const isDropZoneDisabled = (id: string, active: Active | null, preId?: string) => {
-  const dropZoneId = active?.id;
-
-  if (disableDropZoneDataTableColumn(id, dropZoneId?.toString())) {
-    return true;
+export const isDropZoneDisabled = (dropId: string, dropType?: ComponentType, active?: Active | null, preDropId?: string) => {
+  if (active === undefined || active === null) {
+    return false;
   }
+  const dragId = active.id;
   if (
-    dropZoneId === id ||
-    `${STRUCTURE_DROPZONE_ID_PREFIX}${dropZoneId}` === id ||
-    `${TABLE_DROPZONE_ID_PREFIX}${dropZoneId}` === id ||
-    dropZoneId === preId
+    dragId === dropId ||
+    `${STRUCTURE_DROPZONE_ID_PREFIX}${dragId}` === dropId ||
+    `${TABLE_DROPZONE_ID_PREFIX}${dragId}` === dropId ||
+    dragId === preDropId
   ) {
     return true;
   }
-  const data = active?.data.current;
+
+  const data = active.data.current;
   if (isDragData(data)) {
-    return data.disabledIds.includes(id);
+    if (disableDataTableColumnDropZone(dropType, data.componentType)) {
+      return true;
+    }
+    return data.disabledIds.includes(dropId);
   }
   return false;
 };
 
-const disableDropZoneDataTableColumn = (id: string, dropZoneId: string | undefined) => {
-  const isColumn = id.startsWith('DataTableColumn');
-  const isColumnTarget = dropZoneId ? dropZoneId.includes('DataTableColumn') : false;
-
+const disableDataTableColumnDropZone = (dropType: ComponentType | undefined, dragType: ComponentType) => {
+  const isColumn = dragType === 'DataTableColumn';
+  const isColumnTarget = dropType === 'DataTableColumn';
   if (isColumn) {
     return !isColumnTarget;
   }
-  return isColumnTarget;
+  if (isColumnTarget) {
+    return !isColumn;
+  }
+  return false;
 };
