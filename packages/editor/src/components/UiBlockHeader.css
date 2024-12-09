@@ -2,6 +2,7 @@
   width: 100%;
 }
 
+.canvas .header-block__indicators,
 .canvas[data-help-paddings='false'] .header-block__indicators,
 .canvas[data-help-paddings='false'] .header-block__visible {
   display: none;
