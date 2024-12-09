@@ -128,7 +128,7 @@ export const TableField = <TData extends object>({
 };
 
 const ValidationRow = <TData,>({ row, validationPath }: { row: Row<TData>; validationPath: string }) => {
-  const message = useValidation(`${validationPath}.${row.index}`);
+  const message = useValidation(`${validationPath}.[${row.index}]`);
   const cells = row.getVisibleCells();
   return (
     <>
