@@ -2,46 +2,72 @@ import type { FormData } from '@axonivy/form-editor-protocol';
 import { dragData, isDropZoneDisabled, type DragData } from './drag-data';
 import type { Active } from '@dnd-kit/core';
 import type { DeepPartial } from '../../types/types';
+import { STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
 
 describe('dragData', () => {
   test('normal', () => {
     const data = filledData();
-    expectDragData(dragData(data.components[0]), []);
+    expect(dragData(data.components[0])).toEqual<DragData>({ componentType: 'Input', disabledIds: [] });
   });
 
   test('layout', () => {
     const data = filledData();
-    expectDragData(dragData(data.components[2]), ['31', '32', '33']);
+    expect(dragData(data.components[2])).toEqual<DragData>({ componentType: 'Layout', disabledIds: ['31', '32', '33'] });
   });
 
   test('fieldset', () => {
     const data = filledData();
-    expectDragData(dragData(data.components[3]), ['41', '42', '43']);
+    expect(dragData(data.components[3])).toEqual<DragData>({ componentType: 'Fieldset', disabledIds: ['41', '42', '43'] });
   });
 
   test('panel', () => {
     const data = filledData();
-    expectDragData(dragData(data.components[4]), ['51', '52', '53']);
+    expect(dragData(data.components[4])).toEqual<DragData>({ componentType: 'Panel', disabledIds: ['51', '52', '53'] });
   });
 });
 
-describe('isDragZoneDisabled', () => {
-  test('false', () => {
-    const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled('', active as Active)).toBeFalsy();
-    expect(isDropZoneDisabled('2', active as Active)).toBeFalsy();
+describe('isDropZoneDisabled', () => {
+  test('inactive draggable', () => {
+    expect(isDropZoneDisabled('1', undefined, null)).toBeFalsy();
+    expect(isDropZoneDisabled('1', undefined, undefined)).toBeFalsy();
   });
 
-  test('true', () => {
+  test('drop zone from draggable', () => {
     const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled('1', active as Active)).toBeTruthy();
-    expect(isDropZoneDisabled('2', active as Active, '1')).toBeTruthy();
+    expect(isDropZoneDisabled('1', undefined, active as Active)).toBeTruthy();
+  });
+
+  test('drop zone from pre element', () => {
+    const active: Partial<Active> = { id: '1', data: { current: undefined } };
+    expect(isDropZoneDisabled('2', undefined, active as Active, '1')).toBeTruthy();
+  });
+
+  test('empty drop zone from structure element', () => {
+    const active: Partial<Active> = { id: '1', data: { current: undefined } };
+    expect(isDropZoneDisabled(`${STRUCTURE_DROPZONE_ID_PREFIX}1`, undefined, active as Active)).toBeTruthy();
+  });
+
+  test('empty drop zone from table element', () => {
+    const active: Partial<Active> = { id: '1', data: { current: undefined } };
+    expect(isDropZoneDisabled(`${TABLE_DROPZONE_ID_PREFIX}1`, undefined, active as Active)).toBeTruthy();
+  });
+
+  test('disable all children for structure', () => {
+    const active: Partial<Active> = { id: '0', data: { current: { componentType: 'Layout', disabledIds: ['2', '3'] } } };
+    expect(isDropZoneDisabled('1', undefined, active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('2', undefined, active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('3', undefined, active as Active)).toBeTruthy();
+  });
+
+  test('disable columns', () => {
+    let active: Partial<Active> = { id: '0', data: { current: { componentType: 'Input', disabledIds: [] } } };
+    expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeTruthy();
+    active = { id: '0', data: { current: { componentType: 'DataTableColumn', disabledIds: [] } } };
+    expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeFalsy();
   });
 });
-
-const expectDragData = (data: DragData, ids: Array<string>) => {
-  expect(data).to.deep.equals({ disabledIds: ids });
-};
 
 const filledData = () => {
   const prefilledData: DeepPartial<FormData> = {
