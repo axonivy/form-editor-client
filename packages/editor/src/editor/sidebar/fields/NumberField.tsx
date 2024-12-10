@@ -1,4 +1,4 @@
-import { Input, BasicField, type MessageData } from '@axonivy/ui-components';
+import { BasicField, type MessageData, BasicInput } from '@axonivy/ui-components';
 
 type InputFieldProps = {
   label: string;
@@ -9,6 +9,6 @@ type InputFieldProps = {
 
 export const NumberField = ({ label, value, onChange, message }: InputFieldProps) => (
   <BasicField label={label} message={message}>
-    <Input type='number' value={value} onChange={e => onChange(Number(e.target.value))} />
+    <BasicInput type='number' value={value} onChange={e => onChange(Number(e.target.value))} />
   </BasicField>
 );
