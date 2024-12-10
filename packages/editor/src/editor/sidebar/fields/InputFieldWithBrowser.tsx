@@ -1,4 +1,4 @@
-import { BasicField, Button, Dialog, DialogContent, DialogTrigger, Input, InputBadge, InputGroup } from '@axonivy/ui-components';
+import { BasicField, BasicInput, Button, Dialog, DialogContent, DialogTrigger, InputBadge, InputGroup } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useRef, useState } from 'react';
 import type { InputFieldProps } from './InputField';
@@ -30,7 +30,7 @@ export const InputFieldWithBrowser = ({
       <BasicField label={label} message={message} style={{ flex: '1' }} {...focusWithinProps} className='badge-field' tabIndex={0}>
         {isFocusWithin || cmsQuickFixPopoverRef.current ? (
           <InputGroup>
-            <Input
+            <BasicInput
               ref={inputRef}
               value={value}
               onChange={e => onChange(e.target.value)}

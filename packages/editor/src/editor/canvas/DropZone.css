@@ -18,6 +18,9 @@
       background: var(--P50);
     }
   }
+  .canvas-empty-message {
+    height: 100%;
+  }
   .drop-zone-block {
     height: 0;
     transition: height 0.1s ease-out;
