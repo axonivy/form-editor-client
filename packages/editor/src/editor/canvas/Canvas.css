@@ -35,7 +35,10 @@
   }
   &:has(.canvas-empty-message) {
     height: calc(100% - 48px);
-    justify-content: center;
+    .drop-zone {
+      flex-grow: 1;
+      justify-content: center;
+    }
   }
 }
 
