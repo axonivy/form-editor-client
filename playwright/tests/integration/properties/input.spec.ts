@@ -66,3 +66,26 @@ test('cmsQuickfix', async ({ page }) => {
   await label.expectValue('Firstname');
   await label.expectInputValue("#{ivy.cms.co('/Labels/Firstname')}");
 });
+
+test('cmsToolTip', async ({ page }) => {
+  const editor = await FormEditor.openNewForm(page, { block: 'Input' });
+  await editor.canvas.blockByNth(0).inscribe();
+  await editor.inscription.expectHeader('Input');
+  const properties = editor.inscription.section('Properties');
+  const section = properties.collapsible('General');
+  const label = section.input({ label: 'Label' });
+  const badge = label.outputLocator.locator('.ui-flex').first();
+
+  await label.fill("#{ivy.cms.co('/greetings')}");
+  await label.blur();
+  await expect(badge).toContainText('greetings');
+
+  await badge.hover();
+  const tooltip = label.outputLocator
+    .locator('div', { has: page.locator('.ui-tooltip-content') })
+    .first()
+    .locator('.ui-tooltip-content')
+    .first();
+  await expect(tooltip).toBeVisible({ timeout: 1500 });
+  await expect(tooltip).toContainText('/greetingsen: Hello World');
+});
