@@ -5,7 +5,7 @@ import { useAppContext } from '../../../../context/AppContext';
 import { useData } from '../../../../data/data';
 import { useMeta } from '../../../../context/useMeta';
 import type { CheckboxColumn } from './ColumnsCheckboxField';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
 import { findAttributesOfType } from '../../../../editor/browser/data-class/variable-tree-data';
 
@@ -15,7 +15,7 @@ export const useDataTableColumns = () => {
 
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   const attributesOfTableType = findAttributesOfType(variableInfo, isTable(element) ? element.config.value : '');
-  const activeColumns = isTable(element) ? element.config.components.map(c => c.config) : [];
+  const activeColumns = useMemo(() => (isTable(element) ? element.config.components.map(c => c.config) : []), [element]);
   const boundColumns = convertBrowserNodesToColumns(attributesOfTableType);
 
   const [activeColumnsHistory, setActiveColumnsHistory] = useState<DataTableColumnConfig[]>(activeColumns);
@@ -24,15 +24,18 @@ export const useDataTableColumns = () => {
     ...(activeColumnsHistory.find(col => isSameColumn(col, column)) ?? column),
     selected: activeColumns ? activeColumns.some(col => isSameColumn(col, column)) : false
   }));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const activeUnboundSelectColumns = activeColumns
-    ? activeColumns
-        .filter(col => !boundColumns.some(dataCol => isSameColumn(col, dataCol)))
-        .map<CheckboxColumn>(column => ({
-          ...column,
-          selected: true
-        }))
-    : [];
+  const activeUnboundSelectColumns = useMemo(
+    () =>
+      activeColumns
+        ? activeColumns
+            .filter(col => !boundColumns.some(dataCol => isSameColumn(col, dataCol)))
+            .map<CheckboxColumn>(column => ({
+              ...column,
+              selected: true
+            }))
+        : [],
+    [activeColumns, boundColumns]
+  );
 
   const [unboundSelectColumns, setUnboundSelectColumns] = useState<CheckboxColumn[]>(activeUnboundSelectColumns);
 
