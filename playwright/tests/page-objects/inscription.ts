@@ -151,7 +151,7 @@ class Select {
 
 export class Input {
   readonly locator: Locator;
-  readonly outputLocator?: Locator;
+  readonly outputLocator: Locator;
   readonly inputLocator: Locator;
 
   constructor(

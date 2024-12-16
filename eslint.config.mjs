@@ -81,6 +81,7 @@ export default tseslint.config(
       '**/playwright.config.*',
       '**/*.d.ts',
       '**/lib/*',
+      '**/build/*',
       '**/schemaCodegen.cjs'
     ]
   },
