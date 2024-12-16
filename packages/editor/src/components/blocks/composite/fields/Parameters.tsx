@@ -49,8 +49,7 @@ type ParameterInputProps = ParameterInfo &
 const ParameterInput = ({ value, onChange, name, description, type, validationPath }: ParameterInputProps) => {
   const message = useValidation(`${validationPath}.${name}`);
   const updateValue = (key: string, newValue: string) => {
-    value[key] = newValue;
-    onChange(value);
+    onChange({ ...value, [key]: newValue });
   };
   return (
     <InputFieldWithBrowser

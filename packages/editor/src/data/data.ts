@@ -287,11 +287,14 @@ export const useData = () => {
       return newData;
     });
   };
-  const setElement = (element: ComponentData) => {
+  const setElement: UpdateConsumer<ComponentData> = updateElement => {
     setHistoricisedData(oldData => {
-      const findElement = findComponentElement(oldData, element.cid);
-      if (findElement) {
-        findElement.element = element;
+      if (foundElement === undefined) {
+        return oldData;
+      }
+      const findElement = findComponentElement(oldData, foundElement.element.cid);
+      if (findElement?.element) {
+        updateElement(findElement.element);
       }
       return oldData;
     });

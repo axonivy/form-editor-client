@@ -21,14 +21,13 @@ export const InputFieldWithBrowser = ({
 }: InputFieldProps & { browsers: Array<BrowserType>; options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const cmsQuickFixPopoverRef = useRef<HTMLDivElement>(null);
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(inputRef);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <BasicField label={label} message={message} style={{ flex: '1' }} {...focusWithinProps} className='badge-field' tabIndex={0}>
-        {isFocusWithin || cmsQuickFixPopoverRef.current ? (
+        {isFocusWithin || showQuickFix() ? (
           <InputGroup>
             <BasicInput
               ref={inputRef}
@@ -38,13 +37,15 @@ export const InputFieldWithBrowser = ({
               onBlur={onBlur}
               placeholder={options?.placeholder}
             />
-            {showQuickFix() && selection && browsers.some(b => b === 'CMS') && (
+            {showQuickFix() && browsers.some(b => b === 'CMS') && (
               <AddCmsQuickFixPopover
-                contentRef={cmsQuickFixPopoverRef}
                 value={getSelectedText()}
                 selection={selection}
                 inputRef={inputRef}
-                onChange={onChange}
+                onChange={change => {
+                  onChange(change);
+                  handleTextSelection();
+                }}
               />
             )}
             <DialogTrigger asChild>

@@ -4,7 +4,7 @@ export type Selection = { start: number; end: number };
 export type InputTextAreaRef = React.RefObject<HTMLInputElement> | React.RefObject<HTMLTextAreaElement>;
 
 const useTextSelection = (ref: InputTextAreaRef) => {
-  const [selection, setSelection] = useState<Selection | undefined>(undefined);
+  const [selection, setSelection] = useState<Selection | undefined>();
   const handleTextSelection = () => {
     if (ref.current) {
       const selectionStart = ref.current.selectionStart ?? 0;

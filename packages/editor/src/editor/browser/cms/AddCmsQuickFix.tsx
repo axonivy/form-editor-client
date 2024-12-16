@@ -1,4 +1,4 @@
-import { useState, type RefObject } from 'react';
+import { useState } from 'react';
 import { useMeta } from '../../../context/useMeta';
 import { Button, Flex, Popover, PopoverArrow, PopoverContent, PopoverTrigger, toast } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -8,19 +8,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { genQueryKey } from '../../../query/query-client';
 import type { InputTextAreaRef, Selection } from './useTextSelection';
 
-export const AddCmsQuickFixPopover = ({
-  value,
-  onChange,
-  selection,
-  inputRef,
-  contentRef
-}: {
+type AddCmsQuickFixPopoverProps = {
   value: string;
   onChange: (value: string) => void;
-  selection: Selection;
+  selection?: Selection;
   inputRef: InputTextAreaRef;
-  contentRef: RefObject<HTMLDivElement>;
-}) => {
+};
+
+export const AddCmsQuickFixPopover = ({ value, onChange, selection, inputRef }: AddCmsQuickFixPopoverProps) => {
   const [open, setOpen] = useState(false);
 
   const { context } = useAppContext();
@@ -42,6 +37,7 @@ export const AddCmsQuickFixPopover = ({
         if (inputRef.current && selection) {
           const currentValue = inputRef.current.value;
           const newValue = currentValue.slice(0, selection.start) + data + currentValue.slice(selection.end);
+          inputRef.current.setSelectionRange(selection.start + data.length, selection.start + data.length);
           onChange(newValue);
           setOpen(false);
         }
@@ -66,10 +62,13 @@ export const AddCmsQuickFixPopover = ({
         <Button icon={IvyIcons.Cms} aria-label='CMS-Quickfix' title='CMS-Quickfix' />
       </PopoverTrigger>
       <PopoverContent
-        ref={contentRef}
         sideOffset={12}
         collisionPadding={5}
         onOpenAutoFocus={restoreSelection}
+        onCloseAutoFocus={e => {
+          e.preventDefault();
+          inputRef.current?.focus();
+        }}
         onFocusOutside={e => e.preventDefault()}
       >
         <Flex direction='column' gap={2} alignItems='center'>
