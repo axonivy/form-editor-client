@@ -6,10 +6,10 @@ import type {
   FormSaveData,
   ValidationResult
 } from '@axonivy/form-editor-protocol';
-import { MetaMock } from './meta-mock';
 import { validateMock } from './validation-mock';
 import { Emitter } from '@axonivy/jsonrpc';
 import { data } from './data-mock';
+import { ATTRIBUTES, CMSQUICKACTIONS, COMPOSITE_PARAMS, COMPOSITES } from './meta-mock';
 
 export class FormClientMock implements FormClient {
   private formData: FormEditor = {
@@ -41,13 +41,13 @@ export class FormClientMock implements FormClient {
   meta<TMeta extends keyof FormMetaRequestTypes>(path: TMeta): Promise<FormMetaRequestTypes[TMeta][1]> {
     switch (path) {
       case 'meta/data/attributes':
-        return Promise.resolve(MetaMock.ATTRIBUTES);
+        return Promise.resolve(ATTRIBUTES);
       case 'meta/composite/all':
-        return Promise.resolve(MetaMock.COMPOSITES);
+        return Promise.resolve(COMPOSITES);
       case 'meta/composite/params':
-        return Promise.resolve(MetaMock.COMPOSITE_PARAMS);
+        return Promise.resolve(COMPOSITE_PARAMS);
       case 'meta/cms/cmsQuickActions':
-        return Promise.resolve(MetaMock.CMSQUICKACTIONS);
+        return Promise.resolve(CMSQUICKACTIONS);
       case 'meta/cms/executeCmsQuickAction':
         return Promise.resolve("#{ivy.cms.co('/Labels/Firstname')}");
       case 'meta/data/logic':

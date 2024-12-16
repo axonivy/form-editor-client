@@ -5,7 +5,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
 
-export async function start(): Promise<void> {
+export function start() {
   const formClient = new FormClientMock();
   const queryClient = initQueryClient();
 
