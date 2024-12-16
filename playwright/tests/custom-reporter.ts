@@ -10,19 +10,13 @@ class CustomReporter implements Reporter {
   }
 
   protected generateStartingMessage(config: FullConfig, suite: Suite): string {
-    const jobs = config.metadata.actualWorkers ?? config.workers;
+    const jobs = (config.metadata.actualWorkers as number | undefined) ?? config.workers;
     const shardDetails = config.shard ? `, shard ${config.shard.current} of ${config.shard.total}` : '';
     const totalTestCount = suite.allTests().length;
     if (!totalTestCount) {
       return '';
     }
-    return (
-      '\nRunning ' +
-      totalTestCount +
-      ` test${totalTestCount !== 1 ? 's' : ''} using ` +
-      jobs +
-      ` worker${jobs !== 1 ? 's' : ''}${shardDetails}`
-    );
+    return `\nRunning ${totalTestCount} test${totalTestCount !== 1 ? 's' : ''} using ${jobs} worker${jobs !== 1 ? 's' : ''}${shardDetails}`;
   }
 }
 

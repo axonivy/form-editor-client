@@ -11,8 +11,7 @@ export default tseslint.config(
   eslint.configs.recommended,
 
   // TypeScript recommended configs
-  ...tseslint.configs.recommended,
-  // ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.strict,
   {
     languageOptions: {
       parserOptions: {

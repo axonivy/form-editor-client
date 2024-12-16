@@ -9,7 +9,11 @@ export function start() {
   const formClient = new FormClientMock();
   const queryClient = initQueryClient();
 
-  createRoot(document.getElementById('root')!).render(
+  const root = document.getElementById('root');
+  if (root === null) {
+    throw new Error('Root element not found');
+  }
+  createRoot(root).render(
     <React.StrictMode>
       <ThemeProvider defaultTheme='light'>
         <ClientContextProvider client={formClient}>

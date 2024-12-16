@@ -24,10 +24,10 @@ describe('createBadges', () => {
     expect(cmsBadge).toHaveTextContent('cssIcon');
     expect(expBadge).toHaveTextContent('el.expression');
 
-    expect(testDataBadge?.querySelector('i.ivy-attribute')).toBeVisible();
-    expect(logicBadge?.querySelector('i.ivy-process')).toBeVisible();
-    expect(cmsBadge?.querySelector('i.ivy-cms')).toBeVisible();
-    expect(expBadge?.querySelector('i.ivy-start-program')).toBeVisible();
+    expect(testDataBadge.querySelector('i.ivy-attribute')).toBeVisible();
+    expect(logicBadge.querySelector('i.ivy-process')).toBeVisible();
+    expect(cmsBadge.querySelector('i.ivy-cms')).toBeVisible();
+    expect(expBadge.querySelector('i.ivy-start-program')).toBeVisible();
 
     await userEvent.hover(testDataBadge);
     const tooltip = await screen.findByRole('tooltip', {}, { timeout: 700 });
