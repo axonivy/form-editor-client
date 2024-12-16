@@ -13,6 +13,7 @@ export default tseslint.config(
   // TypeScript recommended configs
   ...tseslint.configs.strict,
   {
+    name: 'typescript-eslint',
     languageOptions: {
       parserOptions: {
         project: true, // Uses tsconfig.json from current directory
@@ -22,9 +23,16 @@ export default tseslint.config(
   },
 
   // React recommended configs
-  reactRecommended,
-  reactJsxRuntime,
   {
+    name: 'eslint-plugin-react/configs/recommended',
+    ...reactRecommended
+  },
+  {
+    name: 'eslint-plugin-react/configs/jsx-runtime',
+    ...reactJsxRuntime
+  },
+  {
+    name: 'eslint-plugin-react',
     languageOptions: {
       parserOptions: {
         ecmaFeatures: {
@@ -44,9 +52,8 @@ export default tseslint.config(
       'react/display-name': 'off'
     }
   },
-
-  // React Hooks plugin
   {
+    name: 'eslint-plugin-react-hooks',
     plugins: {
       'react-hooks': reactHooks
     },
@@ -54,9 +61,8 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules
     }
   },
-
-  // React Compiler plugin
   {
+    name: 'eslint-plugin-react-compiler',
     plugins: {
       'react-compiler': reactCompiler
     },
@@ -65,8 +71,9 @@ export default tseslint.config(
     }
   },
 
-  // Ignored files
+  // Project-specific overrides and custom rules
   {
+    name: 'ingored-files',
     ignores: [
       '**/node_modules/**',
       'eslint.config.*',
@@ -77,7 +84,11 @@ export default tseslint.config(
       '**/schemaCodegen.cjs'
     ]
   },
-
-  // Project-specific overrides and custom rules
-  { name: 'packages/core', files: ['packages/core/**/*.{js,mjs,cjs,ts,jsx,tsx}'], rules: { '@typescript-eslint/no-explicit-any': 'off' } }
+  {
+    name: 'packages/core',
+    files: ['packages/core/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
+  }
 );

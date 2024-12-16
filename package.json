@@ -18,6 +18,7 @@
     "lint": "eslint",
     "lint:ci": "eslint -o eslint.xml",
     "lint:fix": "eslint --fix",
+    "lint:inspect": "npx @eslint/config-inspector@latest",
     "protocol": "npm run --workspace=@axonivy/form-editor-protocol",
     "dev": "npm --prefix integrations/standalone run dev",
     "test": "npm --prefix packages/editor run test",
