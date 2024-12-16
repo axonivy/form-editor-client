@@ -8,7 +8,7 @@ import type { ContentObject } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
 import { cmsTreeData } from './cms-tree-data';
 
-export const CMS_BROWSER_ID = 'CMS' as const;
+export const CMS_BROWSER_ID = 'CMS';
 
 export const useCmsBrowser = (): Browser => {
   const [requiredProject, setRequiredProject] = useState<boolean>(false);

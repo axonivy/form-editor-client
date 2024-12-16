@@ -29,8 +29,12 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
     super.setupConnection();
     this.toDispose.push(this.onDataChangedEmitter);
     this.toDispose.push(this.onValidaitonChangedEmitter);
-    this.onNotification('dataChanged', data => this.onDataChangedEmitter.fire(data));
-    this.onNotification('validationChanged', data => this.onValidaitonChangedEmitter.fire(data));
+    this.onNotification('dataChanged', data => {
+      this.onDataChangedEmitter.fire(data);
+    });
+    this.onNotification('validationChanged', data => {
+      this.onValidaitonChangedEmitter.fire(data);
+    });
   }
 
   data(context: FormContext): Promise<FormEditor> {
@@ -53,10 +57,10 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
   }
 
   action(action: FormActionArgs): void {
-    this.sendNotification('action', action);
+    void this.sendNotification('action', action);
   }
 
-  sendRequest<K extends keyof FormRequestTypes>(command: K, args: FormRequestTypes[K][0]): Promise<FormRequestTypes[K][1]> {
+  sendRequest<K extends keyof FormRequestTypes>(command: K, args?: FormRequestTypes[K][0]): Promise<FormRequestTypes[K][1]> {
     return args === undefined ? this.connection.sendRequest(command) : this.connection.sendRequest(command, args);
   }
 

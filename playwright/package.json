@@ -16,8 +16,6 @@
   "scripts": {
     "type": "tsc --noEmit",
     "build": "tsc --build",
-    "lint": "eslint --ext .ts,.tsx ./tests",
-    "lint:fix": "eslint --fix --ext .ts,.tsx ./tests",
     "webtest": "playwright test --project=integration-chrome",
     "webtest:screenshots": "playwright test --project=screenshots",
     "webtest:*": "playwright test --project=integration-*",

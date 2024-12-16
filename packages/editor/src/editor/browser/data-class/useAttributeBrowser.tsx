@@ -8,7 +8,7 @@ import { findParentTableComponent, useData } from '../../../data/data';
 import type { BrowserOptions } from '../Browser';
 import { findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
 
-export const ATTRIBUTE_BROWSER_ID = 'Attribute' as const;
+export const ATTRIBUTE_BROWSER_ID = 'Attribute';
 
 export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);

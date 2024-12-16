@@ -30,10 +30,12 @@ export const groupFieldsBySubsection = (fields: VisibleFields) => {
   const subsections = new Map<string, { title: string; fields: VisibleFields }>();
   fields.forEach(visibleField => {
     const title = visibleField.field.subsection;
-    if (!subsections.has(title)) {
-      subsections.set(title, { title, fields: [] });
+    let subsection = subsections.get(title);
+    if (subsection === undefined) {
+      subsection = { title, fields: [] };
+      subsections.set(title, subsection);
     }
-    subsections.get(title)!.fields.push(visibleField);
+    subsection.fields.push(visibleField);
   });
   return Array.from(subsections.values());
 };

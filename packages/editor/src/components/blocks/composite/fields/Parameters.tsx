@@ -19,14 +19,14 @@ const Parameters = ({ value, ...props }: GenericFieldProps) => {
   const { context } = useAppContext();
   const { element } = useData();
   const method = useMeta('meta/composite/all', context, [])
-    .data.find(composite => isComposite(element) && composite.id === element?.config.name)
-    ?.startMethods.find(method => isComposite(element) && method.name === element?.config.startMethod);
+    .data.find(composite => isComposite(element) && composite.id === element.config.name)
+    ?.startMethods.find(method => isComposite(element) && method.name === element.config.startMethod);
   const params = useMeta('meta/composite/params', { context, compositeId: isComposite(element) ? element.config.name : '' }, []).data;
 
   if (!isStringRecord(value)) {
     return null;
   }
-  if (method === undefined || (method?.parameters.length === 0 && params.length === 0)) {
+  if (method === undefined || (method.parameters.length === 0 && params.length === 0)) {
     return <Message variant='info' message='No parameters' />;
   }
   return (

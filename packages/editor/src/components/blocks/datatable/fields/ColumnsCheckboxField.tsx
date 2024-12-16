@@ -21,14 +21,14 @@ export const ColumnsCheckboxField = () => {
             type: 'add',
             data: {
               componentName: 'DataTableColumn',
-              targetId: TABLE_DROPZONE_ID_PREFIX + element?.cid,
+              targetId: `${TABLE_DROPZONE_ID_PREFIX}${element?.cid}`,
               create: { value: newColumn.value, label: newColumn.header, defaultProps: { ...newColumn } }
             }
           }).newData
       );
     } else {
       setUnboundSelectColumns(unboundSelectColumns.map(col => (isSameColumn(col, column) ? { ...col, selected: false } : col)));
-      const columnId = isTable(element) ? element?.config.components.find(c => isSameColumn(c.config, column))?.cid : undefined;
+      const columnId = isTable(element) ? element.config.components.find(c => isSameColumn(c.config, column))?.cid : undefined;
       if (columnId) {
         setData(oldData => modifyData(oldData, { type: 'remove', data: { id: columnId } }).newData);
       }
