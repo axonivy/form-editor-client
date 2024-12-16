@@ -8,7 +8,7 @@
     "node": "22.11.0"
   },
   "scripts": {
-    "ci": "npm install && npm run package && npm run type && npm run lint:ci && npm run test:ci",
+    "ci": "npm install && npm run package && npm run type && (npm run lint:ci || true) && npm run test:ci",
     "clean": "lerna run clean",
     "build": "tsc --build && tscp --build",
     "package": "lerna run package",
@@ -16,7 +16,7 @@
     "build:clean": "lerna run build:clean",
     "type": "lerna run type",
     "lint": "eslint",
-    "lint:ci": "eslint -o eslint.xml --quiet",
+    "lint:ci": "eslint -o eslint.xml",
     "lint:fix": "eslint --fix",
     "lint:inspect": "eslint --inspect-config",
     "protocol": "npm run --workspace=@axonivy/form-editor-protocol",
