@@ -5,6 +5,7 @@ import reactJsxRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import testingLibrary from 'eslint-plugin-testing-library';
+import playwright from 'eslint-plugin-playwright';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import globals from 'globals';
 
@@ -78,6 +79,17 @@ export default tseslint.config(
     name: 'eslint-plugin-testing-library',
     files: ['**/*.test.{js,mjs,cjs,ts,jsx,tsx}'],
     ...testingLibrary.configs['flat/react']
+  },
+
+  // Playwright recommended configs
+  {
+    name: 'eslint-plugin-playwright',
+    files: ['**/*.spec.{js,mjs,cjs,ts,jsx,tsx}'],
+    ...playwright.configs['flat/recommended'],
+    rules: {
+      ...playwright.configs['flat/recommended'].rules,
+      'playwright/expect-expect': 'off'
+    }
   },
 
   // Tanstack recommended configs

@@ -35,8 +35,7 @@ export async function applyConditionBuilder(page: Page) {
   await condition.locator('.ui-input').nth(0).fill('10');
 
   await page.getByLabel('Add Condition').click();
-  const newConditions = await condition.count();
-  expect(newConditions).toBe(2);
+  await expect(condition).toHaveCount(2);
   await condition.nth(1).locator('output').nth(0).click();
   await condition.nth(1).locator('.ui-input').nth(0).fill('data.value2');
   await condition.nth(1).getByRole('combobox').click();
@@ -47,9 +46,9 @@ export async function applyConditionBuilder(page: Page) {
   await page.getByRole('dialog').getByRole('combobox').nth(0).click();
   await page.getByRole('option', { name: 'Nested Condition', exact: true }).first().click();
 
-  expect(await group.count()).toBe(1);
+  await expect(group).toHaveCount(1);
   await page.getByLabel('Add Condition Group').click();
-  expect(await group.count()).toBe(2);
+  await expect(group).toHaveCount(2);
   await page.locator('.ui-dialog-content').getByRole('combobox').nth(4).click();
   await page.getByRole('option', { name: 'or', exact: true }).first().click();
 
