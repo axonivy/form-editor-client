@@ -13,7 +13,7 @@ export const Canvas = () => {
   return (
     <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.deviceMode}>
       {data.components.map((component, index) => (
-        <ComponentBlock component={component} preId={data.components.at(index - 1)?.cid} />
+        <ComponentBlock key={component.cid} component={component} preId={data.components.at(index - 1)?.cid} />
       ))}
       <EmptyBlock id={CANVAS_DROPZONE_ID} components={data.components} />
       <DeleteDropZone />
