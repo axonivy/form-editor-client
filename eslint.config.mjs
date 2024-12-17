@@ -3,7 +3,9 @@ import tseslint from 'typescript-eslint';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
 import reactJsxRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactCompiler, { react } from 'eslint-plugin-react-compiler';
+import reactCompiler from 'eslint-plugin-react-compiler';
+import testingLibrary from 'eslint-plugin-testing-library';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import globals from 'globals';
 
 export default tseslint.config(
@@ -68,6 +70,24 @@ export default tseslint.config(
     },
     rules: {
       'react-compiler/react-compiler': 'error'
+    }
+  },
+
+  // Testing library recommended configs
+  {
+    name: 'eslint-plugin-testing-library',
+    files: ['**/*.test.{js,mjs,cjs,ts,jsx,tsx}'],
+    ...testingLibrary.configs['flat/react']
+  },
+
+  // Tanstack recommended configs
+  {
+    name: '@tanstack/eslint-plugin-query',
+    plugins: {
+      '@tanstack/query': pluginQuery
+    },
+    rules: {
+      ...pluginQuery.configs.recommended.rules
     }
   },
 
