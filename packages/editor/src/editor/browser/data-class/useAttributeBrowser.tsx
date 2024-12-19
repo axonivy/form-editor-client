@@ -1,4 +1,4 @@
-import { useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
+import { Message, useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../context/useMeta';
 import { useCallback, useEffect, useState } from 'react';
@@ -6,7 +6,7 @@ import type { ConfigData, Variable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
 import { findParentTableComponent, useData } from '../../../data/data';
 import type { BrowserOptions } from '../Browser';
-import { findVariablesOfType, findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
+import { findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute' as const;
 
@@ -18,31 +18,27 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
   const dynamicList = (element?.config as ConfigData).dynamicItemsList as string;
 
   useEffect(() => {
-    if (options?.onlyTypesOf) {
-      setTree(findVariablesOfType(variableInfo, options.onlyTypesOf));
+    if (options?.onlyAttributes === 'DYNAMICLIST') {
+      setTree(findAttributesOfType(variableInfo, dynamicList));
+    } else if (options?.onlyAttributes === 'COLUMN') {
+      const parentTableComponent = findParentTableComponent(data.components, element);
+      setTree(findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''));
     } else {
-      if (options?.onlyAttributes === 'DYNAMICLIST') {
-        setTree(findAttributesOfType(variableInfo, dynamicList));
-      } else if (options?.onlyAttributes === 'COLUMN') {
-        const parentTableComponent = findParentTableComponent(data.components, element);
-        setTree(findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''));
-      } else {
-        setTree(variableTreeData().of(variableInfo));
-      }
+      setTree(variableTreeData().of(variableInfo));
     }
-  }, [data.components, dynamicList, element, options?.onlyAttributes, options?.onlyTypesOf, variableInfo]);
+  }, [data.components, dynamicList, element, options?.onlyAttributes, variableInfo]);
 
   const loadChildren = useCallback<(row: BrowserNode) => void>(
     row => setTree(tree => variableTreeData().loadChildrenFor(variableInfo, row.info, tree)),
     [variableInfo, setTree]
   );
-  const browser = useBrowser(tree, { loadChildren: options?.onlyTypesOf ? undefined : row => loadChildren(row.original) });
+  const browser = useBrowser(tree, { loadChildren: row => loadChildren(row.original) });
   return {
     name: ATTRIBUTE_BROWSER_ID,
     icon: IvyIcons.Attribute,
     browser,
+    header: options?.typeHint ? <Message variant='info' message={`Type '${options.typeHint}' defined by the input field`} /> : undefined,
     infoProvider: row => row?.original.info,
-    applyModifier: row =>
-      row ? { value: options?.onlyTypesOf ? row.original.value : fullVariablePath(row, options?.onlyAttributes && true) } : { value: '' }
+    applyModifier: row => (row ? { value: fullVariablePath(row, options?.onlyAttributes && true) } : { value: '' })
   };
 };

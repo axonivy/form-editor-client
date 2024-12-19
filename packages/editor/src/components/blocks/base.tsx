@@ -85,7 +85,7 @@ export const selectItemsComponentFields: Fields<SelectItemsProps> = {
     label: 'List of Objects',
     type: 'textBrowser',
     browsers: ['ATTRIBUTE'],
-    options: { onlyTypesOf: 'List<', placeholder: 'e.g. #{data.dynamicList}' }
+    options: { typeHint: 'List', placeholder: 'e.g. #{data.dynamicList}' }
   },
   dynamicItemsLabel: {
     subsection: 'Dynamic Options',

@@ -77,11 +77,13 @@ test('parameters browser', async ({ page }) => {
   const person = parameters.input({ label: 'Person' });
 
   let browser = await person.openBrowser();
-  await browser.expectEntries(['data.person']);
+  await expect(browser.view).toContainText(`Type 'form.test.project.Person' defined by the input field`);
+  await browser.expectEntries(['data', 'address', 'age', 'name', 'person']);
   await browser.close();
 
   await editor.canvas.blockByText('AddressComponent').block.dblclick({ position: { x: 10, y: 10 } });
   const address = parameters.input({ label: 'Address' });
   browser = await address.openBrowser();
-  await browser.expectEntries(['data.address', 'data.person.billingAddress', 'data.person.deliveryAddress']);
+  await expect(browser.view).toContainText(`Type 'form.test.project.Address' defined by the input field`);
+  await browser.expectEntries(['data', 'address', 'age', 'name', 'person']);
 });

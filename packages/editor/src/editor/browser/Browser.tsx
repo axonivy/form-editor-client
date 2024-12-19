@@ -10,7 +10,7 @@ type OnlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
 export type BrowserType = 'ATTRIBUTE' | 'LOGIC' | 'CMS' | 'CONDITION';
 
 export type BrowserOptions = {
-  onlyTypesOf?: string;
+  typeHint?: string;
   onlyAttributes?: OnlyAttributeSelection;
   directApply?: boolean;
 };
