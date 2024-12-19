@@ -23,7 +23,7 @@ test('default', async ({ page }) => {
   await value.fill('bla');
   await datePattern.fill('dd/MM/yy');
   await showTime.check();
-  await expect(timePattern.locator).not.toBeHidden();
+  await expect(timePattern.locator).toBeVisible();
   await timePattern.expectValue('HH:mm');
   await timePattern.fill('HH:mm:ss');
   await behaviour.fillRequired();

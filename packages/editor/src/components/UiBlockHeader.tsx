@@ -14,7 +14,7 @@ type UiBlockHeaderProps = {
 export const UiBlockHeader = ({ visible, label, required, disabled, additionalInfo, updateOnChange }: UiBlockHeaderProps) => (
   <Flex direction='row' justifyContent='space-between' alignItems='center' className='header-block__label'>
     <Flex direction='row'>
-      {label && <UiBadge value={label ?? ''} />}
+      {label && <UiBadge value={label} />}
       {required && required !== 'false' ? (required === 'false' ? '' : ' *') : ''}
     </Flex>
     <Flex alignItems='center' gap={1} className='header-block__indicators'>

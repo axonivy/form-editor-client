@@ -30,9 +30,7 @@
     "package": "vite build",
     "type": "tsc --noEmit",
     "dev": "vite",
-    "serve": "vite preview",
-    "lint": "eslint --ext .ts,.tsx ./src",
-    "lint:fix": "eslint --fix --ext .ts,.tsx ./src"
+    "serve": "vite preview"
   },
   "type": "module",
   "browserslist": {

@@ -22,18 +22,16 @@ export const useDataTableColumns = () => {
 
   const boundSelectColumns = boundColumns.map<CheckboxColumn>(column => ({
     ...(activeColumnsHistory.find(col => isSameColumn(col, column)) ?? column),
-    selected: activeColumns ? activeColumns.some(col => isSameColumn(col, column)) : false
+    selected: activeColumns.some(col => isSameColumn(col, column))
   }));
   const activeUnboundSelectColumns = useMemo(
     () =>
       activeColumns
-        ? activeColumns
-            .filter(col => !boundColumns.some(dataCol => isSameColumn(col, dataCol)))
-            .map<CheckboxColumn>(column => ({
-              ...column,
-              selected: true
-            }))
-        : [],
+        .filter(col => !boundColumns.some(dataCol => isSameColumn(col, dataCol)))
+        .map<CheckboxColumn>(column => ({
+          ...column,
+          selected: true
+        })),
     [activeColumns, boundColumns]
   );
 
@@ -70,7 +68,7 @@ export const useDataTableColumns = () => {
 
 const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): DataTableColumnConfig[] => {
   return nodes.flatMap(node => {
-    if (!node.children || node.children.length === 0) {
+    if (node.children.length === 0) {
       return [DataTableColumnComponent.create({ label: node.data?.attribute ?? '', value: '' })];
     }
     return node.children.map(childNode => DataTableColumnComponent.create({ label: childNode.value, value: childNode.value }));

@@ -70,7 +70,7 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
                 });
               }}
               fieldKey={key}
-              field={{ ...field, label: field.label ?? key }}
+              field={field}
             />
           ))}
         </Flex>

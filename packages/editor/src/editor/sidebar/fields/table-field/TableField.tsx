@@ -63,7 +63,10 @@ export const TableField = <TData extends object>({
   };
 
   const removeRow = () => {
-    const index = table.getRowModel().rowsById[Object.keys(tableSelection.tableState.rowSelection!)[0]].index;
+    if (tableSelection.tableState.rowSelection === undefined) {
+      return;
+    }
+    const index = table.getRowModel().rowsById[Object.keys(tableSelection.tableState.rowSelection)[0]].index;
     const newData = [...tableData];
     newData.splice(index, 1);
     if (newData.length === 0) {

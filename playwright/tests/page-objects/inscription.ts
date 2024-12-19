@@ -162,10 +162,10 @@ export class Input {
     const role = options?.type === 'number' ? 'spinbutton' : 'textbox';
     const badgeLocator = parentLocator.locator('.badge-field');
     if (options?.type) {
-      if (options?.label) {
+      if (options.label) {
         this.locator = parentLocator.getByRole(role, { name: options.label }).first();
       } else {
-        this.locator = parentLocator.getByRole(role).nth(options?.nth ?? 0);
+        this.locator = parentLocator.getByRole(role).nth(options.nth ?? 0);
       }
       this.inputLocator = this.locator;
     } else if (options?.label) {
@@ -380,7 +380,7 @@ export class Row {
     await this.locator.click();
     await this.page.keyboard.press('Escape');
     await this.page.getByRole('button', { name: 'Remove row' }).click();
-    if (!withoutHeader || withoutHeader === undefined) {
+    if (!withoutHeader) {
       await this.header.click();
     }
   }
