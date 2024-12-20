@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-node-access */
 import { describe } from 'vitest';
 import { badgeProps } from './badge-properties';
 import { InputBadge } from '@axonivy/ui-components';
@@ -24,12 +25,12 @@ describe('createBadges', () => {
     expect(cmsBadge).toHaveTextContent('cssIcon');
     expect(expBadge).toHaveTextContent('el.expression');
 
-    expect(testDataBadge?.querySelector('i.ivy-attribute')).toBeVisible();
-    expect(logicBadge?.querySelector('i.ivy-process')).toBeVisible();
-    expect(cmsBadge?.querySelector('i.ivy-cms')).toBeVisible();
-    expect(expBadge?.querySelector('i.ivy-start-program')).toBeVisible();
+    expect(testDataBadge.querySelector('i.ivy-attribute')).toBeVisible();
+    expect(logicBadge.querySelector('i.ivy-process')).toBeVisible();
+    expect(cmsBadge.querySelector('i.ivy-cms')).toBeVisible();
+    expect(expBadge.querySelector('i.ivy-start-program')).toBeVisible();
 
-    await userEvent.hover(testDataBadge!);
+    await userEvent.hover(testDataBadge);
     const tooltip = await screen.findByRole('tooltip', {}, { timeout: 700 });
     expect(tooltip).toBeVisible();
     expect(tooltip).toHaveTextContent('#{data.testData}');

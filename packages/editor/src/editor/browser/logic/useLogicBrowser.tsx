@@ -6,7 +6,7 @@ import type { LogicMethodInfo } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
 import { logicTreeData, formatLogicMethodInfo } from './logic-tree-data';
 
-export const LOGIC_BROWSER_ID = 'Logic' as const;
+export const LOGIC_BROWSER_ID = 'Logic';
 
 export const useLogicBrowser = (): Browser => {
   const { context } = useAppContext();
