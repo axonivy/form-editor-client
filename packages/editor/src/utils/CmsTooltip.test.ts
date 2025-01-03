@@ -1,7 +1,7 @@
 import type { ContentObject } from '@axonivy/form-editor-protocol';
 import { findCmsEntries } from './CmsTooltip';
 
-test('test cms entry search', async () => {
+test('test cms entry search', () => {
   const cmsTree: Array<ContentObject> = [
     {
       name: 'form-test-project',

@@ -16,13 +16,7 @@ class CustomReporter implements Reporter {
     if (!totalTestCount) {
       return '';
     }
-    return (
-      '\nRunning ' +
-      totalTestCount +
-      ` test${totalTestCount !== 1 ? 's' : ''} using ` +
-      jobs +
-      ` worker${jobs !== 1 ? 's' : ''}${shardDetails}`
-    );
+    return `\nRunning ${totalTestCount} test${totalTestCount !== 1 ? 's' : ''} using ${jobs} worker${jobs !== 1 ? 's' : ''}${shardDetails}`;
   }
 }
 

@@ -21,14 +21,12 @@ describe('findComponentElement', () => {
   test('find deep', () => {
     const data = filledData();
     expect(findComponentElement(data, '31')).to.deep.equals({
-      // @ts-ignore
-      element: data.components[2].config.components[0],
+      element: (data.components[2] as LayoutConfig).config.components[0],
       parent: data.components[2]
     });
 
     expect(findComponentElement(data, '41')).to.deep.equals({
-      // @ts-ignore
-      element: data.components[3].config.components[0],
+      element: (data.components[3] as LayoutConfig).config.components[0],
       parent: data.components[3]
     });
     expect(findComponentElement(data, '35')).to.deep.equals(undefined);

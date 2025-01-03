@@ -16,7 +16,7 @@ export class Block {
       this.block = parent.locator('.draggable:has(>.block-layout)').nth(by.nth);
     } else if ('datatable' in by && by.datatable) {
       this.block = parent.locator('.draggable:has(>.block-table)').nth(by.nth);
-    } else if (by.nth !== undefined) {
+    } else {
       this.block = parent.locator('.draggable:not(:has(>.block-layout))').nth(by.nth);
     }
   }

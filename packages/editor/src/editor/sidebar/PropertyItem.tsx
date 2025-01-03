@@ -18,7 +18,7 @@ type PropertyItemProps = {
   fieldKey: string;
 };
 
-const toString = (primitive?: PrimitiveValue) => `${primitive ?? ''}`;
+const toString = (primitive?: PrimitiveValue) => primitive?.toString() ?? '';
 const toNumber = (primitive?: PrimitiveValue) => Number(primitive ?? 0);
 const toBoolean = (primitive?: PrimitiveValue) => Boolean(primitive ?? false);
 const toSelectItems = (primitive?: PrimitiveValue): Array<SelectItem> => (Array.isArray(primitive) ? primitive : []);
@@ -33,7 +33,7 @@ export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: Pr
     onChange(newValue);
   };
   const inputFor = (field: Field) => {
-    const label = field.label!;
+    const label = field.label ?? fieldKey;
     switch (field.type) {
       case 'text':
         return <InputField label={label} value={toString(value)} onChange={updateValue} options={field.options} message={message} />;

@@ -18,7 +18,7 @@ export const SelectField = ({ options, label, value, onChange, width, message }:
       </SelectTrigger>
       <SelectContent style={{ width: width }}>
         {options.map(option => (
-          <SelectItem key={`${option.value}`} value={option.value as string}>
+          <SelectItem key={option.value.toString()} value={option.value as string}>
             {option.label}
           </SelectItem>
         ))}

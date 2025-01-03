@@ -6,14 +6,13 @@ export interface ClientContext {
   client: FormClient;
 }
 
-/** We always use a provider so default can be undefined */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const defaultClientContext: any = undefined;
-
-const ClientContextInstance = createContext<ClientContext>(defaultClientContext);
+const ClientContextInstance = createContext<ClientContext | undefined>(undefined);
 export const useClient = (): FormClient => {
-  const { client } = useContext(ClientContextInstance);
-  return client;
+  const context = useContext(ClientContextInstance);
+  if (context === undefined) {
+    throw new Error('useClient must be used within a ClientContext');
+  }
+  return context.client;
 };
 
 export const ClientContextProvider = ({ client, children }: { client: FormClient; children: ReactNode }) => {
