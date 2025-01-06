@@ -1,13 +1,4 @@
-import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
-import reactJsxRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactCompiler from 'eslint-plugin-react-compiler';
-import testingLibrary from 'eslint-plugin-testing-library';
-import playwright from 'eslint-plugin-playwright';
-import pluginQuery from '@tanstack/eslint-plugin-query';
-import globals from 'globals';
 import config from '@axonivy/eslint-config';
 
 export default tseslint.config(
