@@ -247,7 +247,7 @@ export class Input {
     await expect(globalButton).toBeVisible();
 
     await globalButton.click();
-    await expect(popover).not.toBeVisible();
+    await expect(popover).toBeHidden();
   }
 }
 

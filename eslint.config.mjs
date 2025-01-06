@@ -84,7 +84,7 @@ export default tseslint.config(
   // Playwright recommended configs
   {
     name: 'eslint-plugin-playwright',
-    files: ['**/*.spec.{js,mjs,cjs,ts,jsx,tsx}'],
+    files: ['**/playwright/tests/**', '**/*.spec.{js,mjs,cjs,ts,jsx,tsx}'],
     ...playwright.configs['flat/recommended'],
     rules: {
       ...playwright.configs['flat/recommended'].rules,
