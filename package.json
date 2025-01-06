@@ -28,24 +28,13 @@
     "publish:next": "lerna publish --exact --canary --preid next --tag-version-prefix beta --pre-dist-tag next --no-git-tag-version --no-push --ignore-scripts --yes"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@tanstack/eslint-plugin-query": "^5.62.9",
+    "@axonivy/eslint-config": "~13.1.0-next.417",
     "@types/node": "^22.10.2",
-    "@typescript-eslint/eslint-plugin": "^8.19.0",
-    "@typescript-eslint/parser": "^8.19.0",
     "concurrently": "^9.1.0",
-    "eslint": "^9.17.0",
-    "eslint-formatter-checkstyle": "^8.40.0",
-    "eslint-plugin-playwright": "^2.1.0",
-    "eslint-plugin-react": "^7.37.3",
-    "eslint-plugin-react-compiler": "^19.0.0-beta-55955c9-20241229",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-testing-library": "^7.1.1",
     "lerna": "^8.1.9",
     "rimraf": "^6.0.1",
     "typescript": "~5.7.2",
-    "typescript-cp": "^0.1.9",
-    "typescript-eslint": "^8.19.0"
+    "typescript-cp": "^0.1.9"
   },
   "workspaces": [
     "packages/*",
