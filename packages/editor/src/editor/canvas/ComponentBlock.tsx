@@ -13,6 +13,7 @@ import { allComponentsByCategory, componentByName } from '../../components/compo
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
+import { useClipboard, type TextDropItem } from 'react-aria';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -42,7 +43,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
     setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.cid } }).newData);
     setSelectedElement(undefined);
   };
-  const duplicateElement = () => setData(oldData => modifyData(oldData, { type: 'duplicate', data: { id: data.cid } }).newData);
+  const duplicateElement = () => setData(oldData => modifyData(oldData, { type: 'paste', data: { id: data.cid } }).newData);
   const createColumn = () => {
     setData(
       oldData =>
@@ -59,6 +60,16 @@ const Draggable = ({ config, data }: DraggableProps) => {
           .newData
     );
   const validations = useValidations(data.cid);
+  const { clipboardProps } = useClipboard({
+    getItems() {
+      return [{ 'text/plain': data.cid }];
+    },
+    async onPaste(items) {
+      const item = items.filter(item => item.kind === 'text' && item.types.has('text/plain'))[0] as TextDropItem;
+      const cid = await item.getText('text/plain');
+      setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }).newData);
+    }
+  });
   return (
     <Popover open={isSelected && !isDragging}>
       <PopoverAnchor asChild>
@@ -71,18 +82,21 @@ const Draggable = ({ config, data }: DraggableProps) => {
             e.stopPropagation();
             setUi(old => ({ ...old, properties: true }));
           }}
-          onKeyUp={e => {
-            e.stopPropagation();
+          onKeyDown={e => {
             if (e.key === 'Enter') {
+              e.stopPropagation();
               setSelectedElement(data.cid);
             }
             if (e.key === 'Delete') {
+              e.stopPropagation();
               deleteElement();
             }
             if (e.key === 'ArrowUp') {
+              e.stopPropagation();
               setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
             }
             if (e.key === 'ArrowDown') {
+              e.stopPropagation();
               setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
             }
           }}
@@ -95,6 +109,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
           ref={setNodeRef}
           {...listeners}
           {...attributes}
+          {...clipboardProps}
         >
           {config.render({ ...elementConfig, id: data.cid })}
         </div>

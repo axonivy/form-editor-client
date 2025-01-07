@@ -119,7 +119,8 @@ type ModifyAction =
       };
     }
   | { type: 'add'; data: { componentName: ComponentType; create?: CreateData; targetId?: string } }
-  | { type: 'duplicate' | 'remove' | 'moveUp' | 'moveDown'; data: { id: string } };
+  | { type: 'remove' | 'moveUp' | 'moveDown'; data: { id: string } }
+  | { type: 'paste'; data: { id: string; targetId?: string } };
 
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
   const component = componentByName(action.activeId);
@@ -170,13 +171,23 @@ const allCids = (components: Array<ComponentData>) => {
   return ids;
 };
 
-const duplicateComponent = (data: FormData, id: string) => {
+const pasteComponent = (data: FormData, id: string, targetId?: string) => {
   const newComponent = structuredClone(findComponentElement(data, id));
   if (newComponent) {
-    newComponent.element.cid = createId(data.components, newComponent.element.type);
-    return addComponent(data.components, newComponent.element, id);
+    const added = addComponent(data.components, newComponent.element, targetId ?? id);
+    defineNewCid(data.components, newComponent.element);
+    return added;
   }
   return undefined;
+};
+
+const defineNewCid = (components: Array<ComponentData>, component: ComponentData) => {
+  component.cid = createId(components, component.type);
+  if (isStructure(component)) {
+    for (const child of component.config.components) {
+      defineNewCid(components, child);
+    }
+  }
 };
 
 export const modifyData = (data: FormData, action: ModifyAction) => {
@@ -193,8 +204,8 @@ export const modifyData = (data: FormData, action: ModifyAction) => {
         action.data.targetId ?? CANVAS_DROPZONE_ID
       );
       break;
-    case 'duplicate':
-      duplicateComponent(newData, action.data.id);
+    case 'paste':
+      pasteComponent(newData, action.data.id, action.data.targetId);
       break;
     case 'remove':
       removeComponent(newData.components, action.data.id);
