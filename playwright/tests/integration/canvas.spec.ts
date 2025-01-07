@@ -63,6 +63,30 @@ test.describe('keyboard', () => {
     await page.keyboard.press('Delete');
     await canvas.expectFormOrder(['Lastname', 'Address']);
   });
+
+  test('undo/redo', async ({ page }) => {
+    const { canvas } = await FormEditor.openMock(page);
+    await canvas.expectFormOrder(['Firstname', 'Lastname', 'Address']);
+    await canvas.blockByText('Firstname').select();
+    await page.keyboard.press('ArrowDown');
+    await canvas.expectFormOrder(['Lastname', 'Firstname', 'Address']);
+
+    await page.keyboard.press('ControlOrMeta+z');
+    await canvas.expectFormOrder(['Firstname', 'Lastname', 'Address']);
+    await page.keyboard.press('ControlOrMeta+Shift+z');
+    await canvas.expectFormOrder(['Lastname', 'Firstname', 'Address']);
+  });
+
+  test('paste', async ({ page, browserName }) => {
+    test.skip(browserName === 'webkit', 'Was not able to make it work on webkit');
+    const { canvas } = await FormEditor.openMock(page);
+    await canvas.expectFormOrder(['Firstname', 'Lastname']);
+    await canvas.blockByText('Firstname').select();
+    await page.keyboard.press(`ControlOrMeta+c`);
+    await canvas.blockByText('Address').select();
+    await page.keyboard.press(`ControlOrMeta+v`);
+    await canvas.expectFormOrder(['Firstname', 'Lastname', 'Firstname']);
+  });
 });
 
 test.describe('quickbar', () => {
