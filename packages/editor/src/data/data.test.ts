@@ -139,21 +139,39 @@ describe('modifyData', () => {
     expect(data.components[0].type).to.equals('Input');
   });
 
-  describe('duplicate', () => {
+  describe('paste', () => {
     test('duplicate', () => {
-      const data = modifyData(filledData(), { type: 'duplicate', data: { id: '1' } }).newData;
+      const data = modifyData(filledData(), { type: 'paste', data: { id: '1' } }).newData;
       expect(data).not.toEqual(filledData());
       expect(data.components).toHaveLength(6);
-      expect(data.components[0].cid).toEqual('input54');
+      expectOrder(data, ['input54', '1', '2', '3', '4', '5']);
+    });
+
+    test('paste', () => {
+      const data = modifyData(filledData(), { type: 'paste', data: { id: '1', targetId: '4' } }).newData;
+      expect(data).not.toEqual(filledData());
+      expect(data.components).toHaveLength(6);
+      expectOrder(data, ['1', '2', '3', 'input54', '4', '5']);
     });
 
     test('duplicate deep', () => {
-      const data = modifyData(filledData(), { type: 'duplicate', data: { id: '31' } }).newData;
+      const data = modifyData(filledData(), { type: 'paste', data: { id: '31' } }).newData;
       expect(data.components).toHaveLength(5);
       const component = data.components.find(c => c.cid === '3') as LayoutConfig;
       expect(component.config.components).toHaveLength(4);
       expect(component.config.components[0].cid).toEqual('text54');
       expect((component.config.components[0].config as ConfigData).content).toEqual('Hello');
+    });
+
+    test('duplicate layout', () => {
+      const data = modifyData(filledData(), { type: 'paste', data: { id: '3' } }).newData;
+      expect(data.components).toHaveLength(6);
+      const component = data.components.find(c => c.cid === 'layout54') as LayoutConfig;
+      expect(component.config.components).toHaveLength(3);
+      expect(component.config.components[0].cid).toEqual('text55');
+      expect((component.config.components[0].config as ConfigData).content).toEqual('Hello');
+      expect(component.config.components[1].cid).toEqual('button56');
+      expect(component.config.components[2].cid).toEqual('input57');
     });
   });
 
