@@ -56,22 +56,22 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
 
 const UiBlock = ({ id, components, value, paginator, maxRows, visible }: UiComponentProps<DataTableProps>) => (
   <>
-    <div className='block-table'>
+    <Flex direction='column' gap={4} className='block-table'>
       <UiBlockHeader visible={visible} additionalInfo={paginator ? `Rows per Page: ${maxRows}` : ''} />
 
       {components.length > 0 && (
-        <div className='block-table__columns'>
+        <Flex direction='row' gap={1} className='block-table__columns'>
           {components.map((column, index) => {
             const columnComponent: DataTableColumnComponent = { ...column, type: 'DataTableColumn' };
             return <ComponentBlock key={column.cid} component={columnComponent} preId={components[index - 1]?.cid} />;
           })}
-        </div>
+        </Flex>
       )}
       {components.length === 0 && <EmptyDataTableColumn id={id} initValue={value} />}
-    </div>
+    </Flex>
     {paginator && (
       <Flex direction='column' alignItems='center'>
-        <Flex className='block-paginator' direction='row' alignItems='center' gap={2}>
+        <Flex className='block-table__paginator' direction='row' alignItems='center' gap={2}>
           <div className='arrow'>«</div>
           <div className='arrow'>‹</div>
           <div className='page-item-active'>1</div>

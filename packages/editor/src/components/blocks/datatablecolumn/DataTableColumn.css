@@ -1,4 +1,16 @@
-.block-search__input {
+.block-column {
+  border-radius: var(--border-r1);
+  border: var(--basic-border);
+  background: var(--N25);
+  > div {
+    padding: var(--size-2);
+  }
+  .block-column__head {
+    font-weight: 600;
+    border-bottom: var(--basic-border);
+  }
+}
+.block-column__filter {
   flex: 1 0 auto;
   padding: var(--size-2);
   color: var(--N700);
@@ -11,4 +23,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  &[data-active='false'] {
+    display: none;
+  }
 }
