@@ -86,6 +86,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
             if (e.key === 'Enter') {
               e.stopPropagation();
               setSelectedElement(data.cid);
+              setUi(old => ({ ...old, properties: true }));
             }
             if (e.key === 'Delete') {
               e.stopPropagation();
