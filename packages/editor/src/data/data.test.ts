@@ -5,7 +5,8 @@ import {
   type LayoutConfig,
   type DataTable,
   type ConfigData,
-  type DataTableColumnComponent
+  type DataTableColumnComponent,
+  type TableConfig
 } from '@axonivy/form-editor-protocol';
 import { createInitForm, creationTargetId, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
 import type { DeepPartial } from '../types/types';
@@ -154,6 +155,16 @@ describe('modifyData', () => {
       expectOrder(data, ['1', '2', '3', 'input54', '4', '5']);
     });
 
+    test('paste datatable column', () => {
+      // paste a datatable column acts always as duplicate
+      const data = modifyData(tableData(), { type: 'paste', data: { id: '11', targetId: '1' } }).newData;
+      expect(data).not.toEqual(tableData());
+      expect(data.components).toHaveLength(1);
+      const component = data.components.find(c => c.cid === '1') as TableConfig;
+      expect(component.config.components).toHaveLength(4);
+      expect(component.config.components[0].cid).toEqual('datatablecolumn14');
+    });
+
     test('duplicate deep', () => {
       const data = modifyData(filledData(), { type: 'paste', data: { id: '31' } }).newData;
       expect(data.components).toHaveLength(5);
@@ -172,6 +183,17 @@ describe('modifyData', () => {
       expect((component.config.components[0].config as ConfigData).content).toEqual('Hello');
       expect(component.config.components[1].cid).toEqual('button56');
       expect(component.config.components[2].cid).toEqual('input57');
+    });
+
+    test('duplicate table', () => {
+      const data = modifyData(tableData(), { type: 'paste', data: { id: '1' } }).newData;
+      expect(data.components).toHaveLength(2);
+      const component = data.components.find(c => c.cid === 'datatable14') as TableConfig;
+      expect(component.config.components).toHaveLength(3);
+      expect(component.config.components[0].cid).toEqual('datatablecolumn15');
+      expect(component.config.components[0].config.value).toEqual('Hello');
+      expect(component.config.components[1].cid).toEqual('datatablecolumn16');
+      expect(component.config.components[2].cid).toEqual('datatablecolumn17');
     });
   });
 
@@ -341,6 +363,25 @@ const filledData = () => {
   expectOrderDeep(filledData, '4', ['41', '42', '43']);
   expectOrderDeep(filledData, '5', ['51', '52', '53']);
   return filledData;
+};
+
+const tableData = () => {
+  const prefilledData: DeepPartial<FormData> = {
+    components: [
+      {
+        cid: '1',
+        type: 'DataTable',
+        config: {
+          components: [
+            { cid: '11', type: 'DataTableColumn', config: { value: 'Hello' } },
+            { cid: '12', type: 'DataTableColumn', config: {} },
+            { cid: '13', type: 'DataTableColumn', config: {} }
+          ]
+        }
+      }
+    ]
+  };
+  return prefilledData as FormData;
 };
 
 const expectOrder = (data: FormData, order: string[]) => {

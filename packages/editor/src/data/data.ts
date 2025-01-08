@@ -174,7 +174,11 @@ const allCids = (components: Array<ComponentData>) => {
 const pasteComponent = (data: FormData, id: string, targetId?: string) => {
   const newComponent = structuredClone(findComponentElement(data, id));
   if (newComponent) {
-    const added = addComponent(data.components, newComponent.element, targetId ?? id);
+    let copyTarget = targetId ?? id;
+    if (newComponent.element.type === 'DataTableColumn') {
+      copyTarget = id;
+    }
+    const added = addComponent(data.components, newComponent.element, copyTarget);
     defineNewCid(data.components, newComponent.element);
     return added;
   }
@@ -183,7 +187,7 @@ const pasteComponent = (data: FormData, id: string, targetId?: string) => {
 
 const defineNewCid = (components: Array<ComponentData>, component: ComponentData) => {
   component.cid = createId(components, component.type);
-  if (isStructure(component)) {
+  if (isStructure(component) || isTable(component)) {
     for (const child of component.config.components) {
       defineNewCid(components, child);
     }
