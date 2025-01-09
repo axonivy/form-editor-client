@@ -48,9 +48,9 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
 const UiBlock = ({ name, icon, variant, visible, disabled }: UiComponentProps<ButtonProps>) => (
   <>
     <UiBlockHeader visible={visible} disabled={disabled} />
-    <button className='block-button' data-variant={variant.toLocaleLowerCase()}>
+    <div className='block-button' data-variant={variant.toLocaleLowerCase()}>
       {icon && <i className={icon} />}
       <UiBadge value={name} />
-    </button>
+    </div>
   </>
 );

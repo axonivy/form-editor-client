@@ -1,85 +1,51 @@
 .block-table {
-  gap: var(--size-4);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.block-table__label {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
+  .header-block__label {
+    display: none;
+  }
 }
 
 .block-table__columns {
-  display: flex;
-  flex-direction: row;
-  gap: var(--size-1);
+  width: 100%;
+  > div {
+    flex: 1 1 auto;
+  }
 }
 
-.block-table > div:not(.header-block__label) {
-  border: var(--layout-border-size, 1.5px) solid var(--N100);
-  border-radius: var(--border-r2);
-}
-
-.block-table > div > div {
-  border: none;
-}
-
-.selected > .block-table > div:not(.header-block__label) {
-  border: var(--layout-border-size, 1.5px) dashed var(--P75);
-}
-
-.block-paginator {
+.block-table__paginator {
   padding-top: var(--size-2);
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+  }
+  .page-item-active {
+    background-color: #007b9e;
+    color: #fff;
+    border-radius: var(--border-r2);
+  }
 }
 
-.block-paginator > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
+.canvas[data-help-paddings='false'] .block-table {
+  .block-table__columns {
+    gap: 0;
+    border-radius: var(--border-r1);
+    border: var(--basic-border);
+    .block-column {
+      border-radius: 0;
+      border: none;
+    }
+    .draggable {
+      border-radius: 0;
+    }
+  }
+  .header-block__label {
+    display: none;
+  }
 }
 
-.block-paginator .arrow {
-  font-size: 16px;
-  align-items: normal;
-}
-
-.block-paginator .page-item-active {
-  background-color: #007b9e;
-  color: #fff;
-  border-radius: var(--border-r2);
-}
-
-.canvas[data-help-paddings='false'] .block-table .block-table__columns {
-  gap: 0;
-}
-
-.canvas[data-help-paddings='false'] .block-table .header-block__label {
-  display: none;
-}
-
-.canvas[data-help-paddings='false'] .block-table .block-table__columns .ui-table-root {
-  border-radius: 0;
-  border: none;
-}
-
-.canvas[data-help-paddings='false'] .block-table .block-table__columns .draggable {
-  border-radius: 0;
-}
-
-.block-table__columns:has(.block-search__input) .block-search__placeholder {
-  border: 1px solid var(--N25);
-  color: var(--N25);
-  padding: var(--size-2);
-  font-size: 0.7rem;
-  font-weight: normal;
-  user-select: none;
-}
-
-.block-table__columns:not(:has(.block-search__input)) .block-search__placeholder {
-  display: none;
+.block-table__columns:has(.block-column__filter[data-active='true']) .block-column__filter[data-active='false'] {
+  display: block;
+  visibility: hidden;
 }

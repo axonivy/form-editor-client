@@ -9,7 +9,7 @@ import {
   selectItemsComponentFields
 } from '../base';
 import IconSvg from './Radio.svg?react';
-import { Field, Message, RadioGroup, RadioGroupItem } from '@axonivy/ui-components';
+import { Flex, Message } from '@axonivy/ui-components';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type RadioProps = Prettify<Radio>;
@@ -65,23 +65,23 @@ const UiBlock = ({
 }: UiComponentProps<RadioProps>) => (
   <div className='block-radio'>
     <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
-    <RadioGroup
-      defaultValue={staticItems.length > 0 ? staticItems[0].value : dynamicItemsList !== '' ? dynamicItemsList : 'No Options defined'}
-      orientation={orientation}
+    <Flex
+      gap={orientation === 'horizontal' ? 4 : 2}
+      direction={orientation === 'horizontal' ? 'row' : 'column'}
+      className='block-radio__items'
     >
       {staticItems.map(item => (
-        <Field key={item.value} direction='row' alignItems='center' gap={2}>
-          <RadioGroupItem value={item.value} />
-          <UiBadge value={item.label} />
-        </Field>
+        <RadioItem key={item.value} label={item.label} />
       ))}
-      {dynamicItemsList !== '' && (
-        <Field direction='row' alignItems='center' gap={2}>
-          <RadioGroupItem value={dynamicItemsList} />
-          <UiBadge value={dynamicItemsList} />
-        </Field>
-      )}
-    </RadioGroup>
+      {dynamicItemsList !== '' && <RadioItem label={dynamicItemsList} />}
+    </Flex>
     {staticItems.length === 0 && dynamicItemsList === '' && <Message variant='warning' message='No Options defined' />}
   </div>
+);
+
+const RadioItem = ({ label }: { label: string }) => (
+  <Flex direction='row' alignItems='center' gap={2} className='block-radio__item'>
+    <div className='block-radio__item-indicator' />
+    <UiBadge value={label} />
+  </Flex>
 );

@@ -2,7 +2,7 @@ import './DataTableColumn.css';
 import type { DataTableColumnConfig, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import { baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
-import { Flex, IvyIcon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@axonivy/ui-components';
+import { Flex, IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
 
@@ -38,31 +38,23 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
 };
 
 const UiBlock = ({ header, value, sortable, filterable, visible }: UiComponentProps<DataTableColumnProps>) => (
-  <Table className='placeholder-table'>
-    <TableHeader>
-      <TableRow>
-        <TableHead style={{ fontWeight: 'bold' }}>
-          <Flex justifyContent='space-between' direction='column' gap={2}>
-            <Flex direction='row' alignItems='center' gap={2} justifyContent='space-between'>
-              <Flex alignItems='center' gap={2}>
-                {header}
-                {sortable && <IvyIcon icon={IvyIcons.Selector} />}
-              </Flex>
-              <UiBlockHeaderVisiblePart visible={visible} />
-            </Flex>
-            {filterable ? (
-              <span className='block-search__input'>Filter By {header}</span>
-            ) : (
-              <span className='block-search__placeholder'>placeholder</span>
-            )}
+  <div className='block-column'>
+    <div className='block-column__head'>
+      <Flex justifyContent='space-between' direction='column' gap={2}>
+        <Flex direction='row' alignItems='center' gap={2} justifyContent='space-between'>
+          <Flex alignItems='center' gap={2}>
+            {header}
+            {sortable && <IvyIcon icon={IvyIcons.Selector} />}
           </Flex>
-        </TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      <TableRow>
-        <TableCell>{value.length === 0 ? 'Use entire Object' : value}</TableCell>
-      </TableRow>
-    </TableBody>
-  </Table>
+          <UiBlockHeaderVisiblePart visible={visible} />
+        </Flex>
+        <span className='block-column__filter' data-active={filterable}>
+          Filter By {header}
+        </span>
+      </Flex>
+    </div>
+    <div className='block-column__body'>
+      <span>{value.length === 0 ? 'Use entire Object' : value}</span>
+    </div>
+  </div>
 );

@@ -64,6 +64,17 @@ test.describe('keyboard', () => {
     await canvas.expectFormOrder(['Lastname', 'Address']);
   });
 
+  test('enter', async ({ page }) => {
+    const { canvas, inscription } = await FormEditor.openMock(page);
+    await expect(inscription.view).toBeHidden();
+    const block = canvas.blockByText('Firstname');
+    await block.select();
+    await page.keyboard.press('Enter');
+    await block.expectSelected();
+    await expect(inscription.view).toBeVisible();
+    await inscription.expectHeader('Input');
+  });
+
   test('undo/redo', async ({ page }) => {
     const { canvas } = await FormEditor.openMock(page);
     await canvas.expectFormOrder(['Firstname', 'Lastname', 'Address']);
