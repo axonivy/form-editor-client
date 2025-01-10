@@ -5,21 +5,11 @@ import { useData } from '../data/data';
 import { Canvas } from './canvas/Canvas';
 import { ErrorFallback } from './canvas/ErrorFallback';
 import { FormToolbar } from './FormToolbar';
-import { useRef, type ComponentProps } from 'react';
+import { useRef } from 'react';
 
 export const MasterPart = () => {
-  const { history, setSelectedElement } = useAppContext();
-  const { data, setUnhistoricisedData } = useData();
-  const keyHandler: ComponentProps<'div'>['onKeyDown'] = e => {
-    if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
-      e.stopPropagation();
-      if (e.shiftKey) {
-        history.redo(setUnhistoricisedData);
-      } else {
-        history.undo(setUnhistoricisedData);
-      }
-    }
-  };
+  const { setSelectedElement } = useAppContext();
+  const { data } = useData();
   const toolbarDiv = useRef<HTMLDivElement>(null);
 
   return (
@@ -35,7 +25,7 @@ export const MasterPart = () => {
         }
       }}
     >
-      <Flex direction='column' className='canvas-panel' tabIndex={1} onKeyDown={keyHandler}>
+      <Flex direction='column' className='canvas-panel'>
         <FormToolbar ref={toolbarDiv} />
         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[data]}>
           <Canvas />
