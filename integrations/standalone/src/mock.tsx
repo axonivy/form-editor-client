@@ -4,6 +4,7 @@ import { ThemeProvider } from '@axonivy/ui-components';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
+import { HotkeysProvider } from 'react-hotkeys-hook';
 
 export async function start(): Promise<void> {
   const formClient = new FormClientMock();
@@ -14,7 +15,9 @@ export async function start(): Promise<void> {
       <ThemeProvider defaultTheme='light'>
         <ClientContextProvider client={formClient}>
           <QueryProvider client={queryClient}>
-            <App context={{ app: '', pmv: '', file: '' }} />
+            <HotkeysProvider initiallyActiveScopes={['global']}>
+              <App context={{ app: '', pmv: '', file: '' }} />
+            </HotkeysProvider>
           </QueryProvider>
         </ClientContextProvider>
       </ThemeProvider>

@@ -8,7 +8,7 @@ test('change device mode', async ({ page }) => {
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'tablet');
   await toolbar.toggleChangeMode();
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'mobile');
-  await toolbar.toggleChangeMode();
+  await page.keyboard.press('s');
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'desktop');
 });
 
@@ -30,7 +30,14 @@ test('undo/redo', async ({ page }) => {
   await toolbar.redoButton.click();
   await expect(toolbar.undoButton).toBeEnabled();
   await expect(toolbar.redoButton).toBeDisabled();
-  await toolbar.undoButton.click();
+
+  await page.keyboard.press('ControlOrMeta+z');
+  await expect(toolbar.undoButton).toBeDisabled();
+  await expect(toolbar.redoButton).toBeEnabled();
+
+  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await expect(toolbar.undoButton).toBeEnabled();
+  await expect(toolbar.redoButton).toBeDisabled();
 });
 
 test('palette', async ({ page }) => {
@@ -44,6 +51,8 @@ test('help paddings', async ({ page }) => {
   await editor.canvas.expectHelpPaddings(true);
   await toolbar.helpPaddings.click();
   await editor.canvas.expectHelpPaddings(false);
+  await page.keyboard.press('e');
+  await editor.canvas.expectHelpPaddings(true);
 });
 
 test('theme', async ({ page }) => {
@@ -82,4 +91,39 @@ test('responsive', async ({ page }) => {
   await expect(paletteBtn).toBeHidden();
   await expect(undoButton).toBeHidden();
   await expect(redoButton).toBeHidden();
+});
+
+test('open process', async ({ page }) => {
+  const editor = await FormEditor.openMock(page);
+  const msg1 = page.waitForEvent('console');
+  await editor.toolbar.locator.getByRole('button', { name: 'Open Process' }).click();
+  expect((await msg1).text()).toContain('actionId: openProcess');
+
+  const msg2 = page.waitForEvent('console');
+  await page.keyboard.press('p');
+  expect((await msg2).text()).toContain('actionId: openProcess');
+});
+
+test('open data class', async ({ page }) => {
+  const editor = await FormEditor.openMock(page);
+  const msg1 = page.waitForEvent('console');
+  await editor.toolbar.locator.getByRole('button', { name: 'Open Data Class' }).click();
+  expect((await msg1).text()).toContain('actionId: openDataClass');
+
+  const msg2 = page.waitForEvent('console');
+  await page.keyboard.press('d');
+  expect((await msg2).text()).toContain('actionId: openDataClass');
+});
+
+test('help', async ({ page }) => {
+  const editor = await FormEditor.openMock(page);
+  const msg1 = page.waitForEvent('console');
+  await editor.toolbar.toggleProperties();
+  await editor.inscription.header.getByRole('button', { name: 'Open Help' }).click();
+  expect((await msg1).text()).toContain('actionId: openUrl');
+
+  const msg2 = page.waitForEvent('console');
+  await page.keyboard.press('F1');
+  expect((await msg2).text()).toContain('actionId: openUrl');
+  expect((await msg2).text()).toContain('payload: https://dev.axonivy.com');
 });

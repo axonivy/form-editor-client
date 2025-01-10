@@ -6,6 +6,7 @@ import { webSocketConnection, type Connection } from '@axonivy/jsonrpc';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { URLParams } from './url-helper';
+import { HotkeysProvider } from 'react-hotkeys-hook';
 
 export async function start(): Promise<void> {
   const server = URLParams.webSocketBase();
@@ -37,7 +38,9 @@ export async function start(): Promise<void> {
           <ClientContextProvider client={client}>
             <QueryProvider client={queryClient}>
               <ReadonlyProvider readonly={readonly}>
-                <App context={{ app, pmv, file }} directSave={directSave} />
+                <HotkeysProvider initiallyActiveScopes={['global']}>
+                  <App context={{ app, pmv, file }} directSave={directSave} />
+                </HotkeysProvider>
               </ReadonlyProvider>
             </QueryProvider>
           </ClientContextProvider>
