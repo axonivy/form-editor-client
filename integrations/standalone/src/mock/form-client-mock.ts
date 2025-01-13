@@ -57,6 +57,6 @@ export class FormClientMock implements FormClient {
   }
 
   action(action: FormActionArgs): void {
-    console.log('action', action);
+    console.log('action', JSON.stringify(action));
   }
 }
