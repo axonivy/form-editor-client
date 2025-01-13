@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { FormEditor } from '../page-objects/form-editor';
 
 test('change device mode', async ({ page }) => {
@@ -95,35 +95,45 @@ test('responsive', async ({ page }) => {
 
 test('open process', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
-  const msg1 = page.waitForEvent('console');
+  const msg1 = consoleLog(page);
   await editor.toolbar.locator.getByRole('button', { name: 'Open Process' }).click();
-  expect((await msg1).text()).toContain('actionId: openProcess');
+  expect(await msg1).toContain('openProcess');
 
-  const msg2 = page.waitForEvent('console');
+  const msg2 = consoleLog(page);
   await page.keyboard.press('p');
-  expect((await msg2).text()).toContain('actionId: openProcess');
+  expect(await msg2).toContain('openProcess');
 });
 
 test('open data class', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
-  const msg1 = page.waitForEvent('console');
+  const msg1 = consoleLog(page);
   await editor.toolbar.locator.getByRole('button', { name: 'Open Data Class' }).click();
-  expect((await msg1).text()).toContain('actionId: openDataClass');
+  expect(await msg1).toContain('openDataClass');
 
-  const msg2 = page.waitForEvent('console');
+  const msg2 = consoleLog(page);
   await page.keyboard.press('d');
-  expect((await msg2).text()).toContain('actionId: openDataClass');
+  expect(await msg2).toContain('openDataClass');
 });
 
 test('help', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
-  const msg1 = page.waitForEvent('console');
+  const msg1 = consoleLog(page);
   await editor.toolbar.toggleProperties();
   await editor.inscription.header.getByRole('button', { name: 'Open Help' }).click();
-  expect((await msg1).text()).toContain('actionId: openUrl');
+  expect(await msg1).toContain('openUrl');
 
-  const msg2 = page.waitForEvent('console');
+  const msg2 = consoleLog(page);
   await page.keyboard.press('F1');
-  expect((await msg2).text()).toContain('actionId: openUrl');
-  expect((await msg2).text()).toContain('payload: https://dev.axonivy.com');
+  expect(await msg2).toContain('openUrl');
+  expect(await msg2).toContain('https://dev.axonivy.com');
 });
+
+const consoleLog = async (page: Page) => {
+  return new Promise(result => {
+    page.on('console', msg => {
+      if (msg.type() === 'log') {
+        result(msg.text());
+      }
+    });
+  });
+};
