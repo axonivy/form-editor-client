@@ -24,26 +24,31 @@ import type { Variable } from '@axonivy/form-editor-protocol';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
 import { createInitForm, creationTargetId } from '../../../data/data';
 import { variableTreeData, rowToCreateData } from './variable-tree-data';
+import { useHotkeys } from 'react-hotkeys-hook';
 
-export const DataClassDialog = ({
-  children,
-  worfkflowButtonsInit = true,
-  creationTarget
-}: {
+export const CREATE_FROM_DATA_HOTKEY = 'A';
+
+type DataClassDialogProps = {
   children: ReactNode;
   worfkflowButtonsInit?: boolean;
   creationTarget?: string;
-}) => (
-  <Dialog>
-    <DialogTrigger asChild>{children}</DialogTrigger>
-    <DialogContent onClick={e => e.stopPropagation()}>
-      <DialogHeader>
-        <DialogTitle>Create from data</DialogTitle>
-      </DialogHeader>
-      <DataClassSelect worfkflowButtonsInit={worfkflowButtonsInit} creationTarget={creationTarget} />
-    </DialogContent>
-  </Dialog>
-);
+};
+
+export const DataClassDialog = ({ children, worfkflowButtonsInit = true, creationTarget }: DataClassDialogProps) => {
+  const [open, setOpen] = useState(false);
+  useHotkeys(CREATE_FROM_DATA_HOTKEY, () => setOpen(true), { scopes: ['global'] });
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent onClick={e => e.stopPropagation()}>
+        <DialogHeader>
+          <DialogTitle>Create from data</DialogTitle>
+        </DialogHeader>
+        <DataClassSelect worfkflowButtonsInit={worfkflowButtonsInit} creationTarget={creationTarget} />
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worfkflowButtonsInit: boolean; creationTarget?: string }) => {
   const { context, setData } = useAppContext();

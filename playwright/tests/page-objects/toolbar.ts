@@ -3,35 +3,35 @@ import { Palette } from './palette';
 
 export class Toolbar {
   protected readonly page: Page;
-  protected readonly toolbar: Locator;
+  readonly locator: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.toolbar = page.locator('.toolbar');
+    this.locator = page.locator('.toolbar');
   }
 
   get undoButton() {
-    return this.toolbar.getByRole('button', { name: 'Undo' });
+    return this.locator.getByRole('button', { name: 'Undo' });
   }
 
   get redoButton() {
-    return this.toolbar.getByRole('button', { name: 'Redo' });
+    return this.locator.getByRole('button', { name: 'Redo' });
   }
 
   get helpPaddings() {
-    return this.toolbar.getByRole('button', { name: 'Help Paddings' });
+    return this.locator.getByRole('button', { name: 'View Mode' });
   }
 
   get palette() {
-    return this.toolbar.locator('.palette-section');
+    return this.locator.locator('.palette-section');
   }
 
   get dataButton() {
-    return this.toolbar.getByRole('button', { name: 'Create from data' });
+    return this.locator.getByRole('button', { name: 'Create from data' });
   }
 
   async toggleChangeMode() {
-    await this.toolbar.getByRole('button', { name: 'Device mode' }).click();
+    await this.locator.getByRole('button', { name: 'Device mode' }).click();
   }
 
   async openPalette(name: 'All Components' | 'Structures' | 'Elements' | 'Actions' | 'Composites') {
@@ -50,13 +50,13 @@ export class Toolbar {
   }
 
   async toggleProperties() {
-    await this.toolbar.getByRole('button', { name: 'Toggle Property View' }).click();
+    await this.locator.getByRole('button', { name: 'Toggle Property View' }).click();
   }
 
   private async openOptionsMenu() {
     const dialog = this.page.getByRole('dialog');
     await expect(dialog).toBeHidden();
-    await this.toolbar.getByRole('button', { name: 'Options' }).click();
+    await this.locator.getByRole('button', { name: 'Options' }).click();
     await expect(dialog).toBeVisible();
     return dialog;
   }

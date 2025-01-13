@@ -2,6 +2,7 @@ import {
   Button,
   Field,
   Flex,
+  hotkeyText,
   IvyIcon,
   Label,
   Popover,
@@ -25,13 +26,31 @@ import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
 import { useAction } from '../context/useAction';
-import { DataClassDialog } from './browser/data-class/DataClassDialog';
+import { CREATE_FROM_DATA_HOTKEY, DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
+const UNDO_HOTKEY = 'mod+Z';
+const UNDO_TEXT = `Undo (${hotkeyText(UNDO_HOTKEY)})`;
+const REDO_HOTKEY = 'mod+shift+Z';
+const REDO_TEXT = `Redo (${hotkeyText(REDO_HOTKEY)})`;
+
+const OPEN_DATACLASS_HOTKEY = 'D';
+const OPEN_DATACLASS_TEXT = `Open Data Class (${hotkeyText(OPEN_DATACLASS_HOTKEY)})`;
+const OPEN_PROCESS_HOTKEY = 'P';
+const OPEN_PROCESS_TEXT = `Open Process (${hotkeyText(OPEN_PROCESS_HOTKEY)})`;
+const OPEN_HELP_HOTKEY = 'F1';
+export const OPEN_HELP_TEXT = `Open Help (${hotkeyText(OPEN_HELP_HOTKEY)})`;
+
+const VIEW_MODE_HOTKEY = 'E';
+const VIEW_MODE_TEXT = `View Mode (${hotkeyText(VIEW_MODE_HOTKEY)})`;
+const DEVICE_MODE_HOTKEY = 'S';
+const CREATE_FROM_DATA_TEXT = `Create from data (${hotkeyText(CREATE_FROM_DATA_HOTKEY)})`;
+
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
-  const { ui, setUi, selectedElement, history } = useAppContext();
+  const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
   const { setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();
   const editable = !useReadonly();
@@ -42,15 +61,28 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   }, [selectedElement, setUi]);
   const openDataClass = useAction('openDataClass');
   const openProcess = useAction('openProcess');
+  const openUrl = useAction('openUrl');
+  const undo = () => history.undo(setUnhistoricisedData);
+  const redo = () => history.redo(setUnhistoricisedData);
+  const changeViewMode = () => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }));
+  useHotkeys(UNDO_HOTKEY, undo, { scopes: ['global'] });
+  useHotkeys(REDO_HOTKEY, redo, { scopes: ['global'] });
+
+  useHotkeys(OPEN_DATACLASS_HOTKEY, () => openDataClass(), { scopes: ['global'] });
+  useHotkeys(OPEN_PROCESS_HOTKEY, () => openProcess(), { scopes: ['global'] });
+  useHotkeys(OPEN_HELP_HOTKEY, () => openUrl(helpUrl), { scopes: ['global'] });
+
+  useHotkeys(VIEW_MODE_HOTKEY, changeViewMode, { scopes: ['global'] });
 
   const deviceModeProps = useMemo(() => {
     const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
-    const title = `Device mode ${ui.deviceMode}`;
+    const title = `Device mode ${ui.deviceMode} (${hotkeyText(DEVICE_MODE_HOTKEY)})`;
     const icon =
       ui.deviceMode === 'mobile' ? IvyIcons.DeviceMobile : ui.deviceMode === 'tablet' ? IvyIcons.DeviceTablet : IvyIcons.EventStart;
     const nextDevice = ui.deviceMode === 'mobile' ? 'desktop' : ui.deviceMode === 'desktop' ? 'tablet' : 'mobile';
     return { icon, title, 'aria-label': title, size: 'large', onClick: () => changeDeviceMode(nextDevice) } as const;
   }, [setUi, ui.deviceMode]);
+  useHotkeys(DEVICE_MODE_HOTKEY, deviceModeProps.onClick, { scopes: ['global'] });
 
   return (
     <Toolbar ref={ref} className='toolbar'>
@@ -60,29 +92,29 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           <>
             <Button
               icon={ui.helpPaddings ? IvyIcons.Edit : IvyIcons.Eye}
-              onClick={() => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }))}
+              onClick={changeViewMode}
               size='large'
-              aria-label='Help Paddings'
-              title={ui.helpPaddings ? 'Edit' : 'Preview'}
+              aria-label={VIEW_MODE_TEXT}
+              title={VIEW_MODE_TEXT}
             />
             <ToolbarContainer maxWidth={450}>
               <Flex>
                 <Separator orientation='vertical' style={{ height: '26px', marginInline: 'var(--size-2)' }} />
                 <Flex gap={1}>
                   <Button
-                    title='Undo'
-                    aria-label='Undo'
+                    title={UNDO_TEXT}
+                    aria-label={UNDO_TEXT}
                     icon={IvyIcons.Undo}
                     size='large'
-                    onClick={() => history.undo(setUnhistoricisedData)}
+                    onClick={undo}
                     disabled={!history.canUndo}
                   />
                   <Button
-                    title='Redo'
-                    aria-label='Redo'
+                    title={REDO_TEXT}
+                    aria-label={REDO_TEXT}
                     icon={IvyIcons.Redo}
                     size='large'
-                    onClick={() => history.redo(setUnhistoricisedData)}
+                    onClick={redo}
                     disabled={!history.canRedo}
                   />
                 </Flex>
@@ -108,7 +140,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           </PalettePopover>
           <PaletteButton text='Data'>
             <DataClassDialog worfkflowButtonsInit={false}>
-              <Button icon={IvyIcons.DatabaseLink} size='large' aria-label='Create from data' />
+              <Button icon={IvyIcons.DatabaseLink} size='large' aria-label={CREATE_FROM_DATA_TEXT} title={CREATE_FROM_DATA_TEXT} />
             </DataClassDialog>
           </PaletteButton>
         </Flex>
@@ -116,13 +148,19 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
 
       <Flex gap={1} alignItems='center'>
         <Button
-          title='Open Data Class'
-          aria-label='Open Data Class'
+          title={OPEN_DATACLASS_TEXT}
+          aria-label={OPEN_DATACLASS_TEXT}
           icon={IvyIcons.DatabaseLink}
           size='large'
           onClick={() => openDataClass()}
         />
-        <Button title='Open Process' aria-label='Open Process' icon={IvyIcons.Process} size='large' onClick={() => openProcess()} />
+        <Button
+          title={OPEN_PROCESS_TEXT}
+          aria-label={OPEN_PROCESS_TEXT}
+          icon={IvyIcons.Process}
+          size='large'
+          onClick={() => openProcess()}
+        />
         {!disabled && (
           <Popover>
             <PopoverTrigger asChild>
