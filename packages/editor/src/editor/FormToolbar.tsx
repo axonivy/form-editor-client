@@ -33,21 +33,25 @@ import { useHotkeys } from 'react-hotkeys-hook';
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 const UNDO_HOTKEY = 'mod+Z';
-const UNDO_TEXT = `Undo (${hotkeyText(UNDO_HOTKEY)})`;
 const REDO_HOTKEY = 'mod+shift+Z';
-const REDO_TEXT = `Redo (${hotkeyText(REDO_HOTKEY)})`;
 
 const OPEN_DATACLASS_HOTKEY = 'D';
-const OPEN_DATACLASS_TEXT = `Open Data Class (${hotkeyText(OPEN_DATACLASS_HOTKEY)})`;
 const OPEN_PROCESS_HOTKEY = 'P';
-const OPEN_PROCESS_TEXT = `Open Process (${hotkeyText(OPEN_PROCESS_HOTKEY)})`;
 const OPEN_HELP_HOTKEY = 'F1';
-export const OPEN_HELP_TEXT = `Open Help (${hotkeyText(OPEN_HELP_HOTKEY)})`;
 
 const VIEW_MODE_HOTKEY = 'E';
-const VIEW_MODE_TEXT = `View Mode (${hotkeyText(VIEW_MODE_HOTKEY)})`;
 const DEVICE_MODE_HOTKEY = 'S';
-const CREATE_FROM_DATA_TEXT = `Create from data (${hotkeyText(CREATE_FROM_DATA_HOTKEY)})`;
+
+export const useHotkeyTexts = () => {
+  const undo = useMemo(() => `Undo (${hotkeyText(UNDO_HOTKEY)})`, []);
+  const redo = useMemo(() => `Redo (${hotkeyText(REDO_HOTKEY)})`, []);
+  const openDataClass = useMemo(() => `Open Data Class (${hotkeyText(OPEN_DATACLASS_HOTKEY)})`, []);
+  const openProcess = useMemo(() => `Open Process (${hotkeyText(OPEN_PROCESS_HOTKEY)})`, []);
+  const openHelp = useMemo(() => `Open Help (${hotkeyText(OPEN_HELP_HOTKEY)})`, []);
+  const viewMode = useMemo(() => `View Mode (${hotkeyText(VIEW_MODE_HOTKEY)})`, []);
+  const createFromData = useMemo(() => `Create from data (${hotkeyText(CREATE_FROM_DATA_HOTKEY)})`, []);
+  return { undo, redo, openDataClass, openProcess, openHelp, viewMode, createFromData };
+};
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
@@ -73,6 +77,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   useHotkeys(OPEN_HELP_HOTKEY, () => openUrl(helpUrl), { scopes: ['global'] });
 
   useHotkeys(VIEW_MODE_HOTKEY, changeViewMode, { scopes: ['global'] });
+  const texts = useHotkeyTexts();
 
   const deviceModeProps = useMemo(() => {
     const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
@@ -94,24 +99,24 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
               icon={ui.helpPaddings ? IvyIcons.Edit : IvyIcons.Eye}
               onClick={changeViewMode}
               size='large'
-              aria-label={VIEW_MODE_TEXT}
-              title={VIEW_MODE_TEXT}
+              aria-label={texts.viewMode}
+              title={texts.viewMode}
             />
             <ToolbarContainer maxWidth={450}>
               <Flex>
                 <Separator orientation='vertical' style={{ height: '26px', marginInline: 'var(--size-2)' }} />
                 <Flex gap={1}>
                   <Button
-                    title={UNDO_TEXT}
-                    aria-label={UNDO_TEXT}
+                    title={texts.undo}
+                    aria-label={texts.undo}
                     icon={IvyIcons.Undo}
                     size='large'
                     onClick={undo}
                     disabled={!history.canUndo}
                   />
                   <Button
-                    title={REDO_TEXT}
-                    aria-label={REDO_TEXT}
+                    title={texts.redo}
+                    aria-label={texts.redo}
                     icon={IvyIcons.Redo}
                     size='large'
                     onClick={redo}
@@ -140,7 +145,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           </PalettePopover>
           <PaletteButton text='Data'>
             <DataClassDialog worfkflowButtonsInit={false}>
-              <Button icon={IvyIcons.DatabaseLink} size='large' aria-label={CREATE_FROM_DATA_TEXT} title={CREATE_FROM_DATA_TEXT} />
+              <Button icon={IvyIcons.DatabaseLink} size='large' aria-label={texts.createFromData} title={texts.createFromData} />
             </DataClassDialog>
           </PaletteButton>
         </Flex>
@@ -148,15 +153,15 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
 
       <Flex gap={1} alignItems='center'>
         <Button
-          title={OPEN_DATACLASS_TEXT}
-          aria-label={OPEN_DATACLASS_TEXT}
+          title={texts.openDataClass}
+          aria-label={texts.openDataClass}
           icon={IvyIcons.DatabaseLink}
           size='large'
           onClick={() => openDataClass()}
         />
         <Button
-          title={OPEN_PROCESS_TEXT}
-          aria-label={OPEN_PROCESS_TEXT}
+          title={texts.openProcess}
+          aria-label={texts.openProcess}
           icon={IvyIcons.Process}
           size='large'
           onClick={() => openProcess()}
