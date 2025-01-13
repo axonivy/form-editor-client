@@ -18,7 +18,7 @@ test('preview mode', async ({ page }) => {
 test('mobile mode', async ({ page }) => {
   const editor = await FormEditor.openForm(page, 'src_hd/form/test/project/free/free');
   await expect(editor.canvas.blockByNth(0).block).toBeVisible();
-  await editor.toolbar.toggleChangeMode();
-  await editor.toolbar.toggleChangeMode();
+  await editor.toolbar.deviceModeButton.click();
+  await editor.toolbar.deviceModeButton.click();
   await screenshot(page, 'editor-mobile', { height: 550, width: 1000 });
 });

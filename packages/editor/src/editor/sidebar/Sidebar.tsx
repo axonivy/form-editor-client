@@ -7,7 +7,7 @@ import { Properties } from './Properties';
 import { useValidations } from '../../context/useValidation';
 import { useAction } from '../../context/useAction';
 import { useAppContext } from '../../context/AppContext';
-import { useHotkeyTexts } from '../FormToolbar';
+import { useHotkeyTexts } from '../../utils/hotkeys';
 
 export const Sidebar = () => {
   const { helpUrl } = useAppContext();
@@ -20,7 +20,14 @@ export const Sidebar = () => {
   return (
     <Flex direction='column' className='properties' style={{ height: '100%' }}>
       <SidebarHeader icon={IvyIcons.PenEdit} title={elementType} className='sidebar-header'>
-        <Switch size='large' icon={{ icon: IvyIcons.List }} checked={outline} onCheckedChange={setOutline} />
+        <Switch
+          size='large'
+          icon={{ icon: IvyIcons.List }}
+          checked={outline}
+          onCheckedChange={setOutline}
+          title='Outline'
+          aria-label='Outline'
+        />
         <Button icon={IvyIcons.Help} onClick={() => openUrl(helpUrl)} aria-label={texts.openHelp} title={texts.openHelp} />
       </SidebarHeader>
       {messages.length > 0 && (

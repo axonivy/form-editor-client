@@ -30,8 +30,8 @@ export class Toolbar {
     return this.locator.getByRole('button', { name: 'Create from data' });
   }
 
-  async toggleChangeMode() {
-    await this.locator.getByRole('button', { name: 'Device mode' }).click();
+  get deviceModeButton() {
+    return this.locator.getByRole('button', { name: 'Device mode' });
   }
 
   async openPalette(name: 'All Components' | 'Structures' | 'Elements' | 'Actions' | 'Composites') {

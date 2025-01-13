@@ -25,8 +25,7 @@ import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type C
 import { createInitForm, creationTargetId } from '../../../data/data';
 import { variableTreeData, rowToCreateData } from './variable-tree-data';
 import { useHotkeys } from 'react-hotkeys-hook';
-
-export const CREATE_FROM_DATA_HOTKEY = 'A';
+import { HOTKEYS } from '../../../utils/hotkeys';
 
 type DataClassDialogProps = {
   children: ReactNode;
@@ -36,7 +35,7 @@ type DataClassDialogProps = {
 
 export const DataClassDialog = ({ children, worfkflowButtonsInit = true, creationTarget }: DataClassDialogProps) => {
   const [open, setOpen] = useState(false);
-  useHotkeys(CREATE_FROM_DATA_HOTKEY, () => setOpen(true), { scopes: ['global'] });
+  useHotkeys(HOTKEYS.CREATE_FROM_DATA, () => setOpen(true), { scopes: ['global'] });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
