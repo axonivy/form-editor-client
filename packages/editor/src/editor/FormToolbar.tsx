@@ -20,38 +20,18 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
-import { forwardRef, useEffect, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo, useRef } from 'react';
 import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
 import { useAction } from '../context/useAction';
-import { CREATE_FROM_DATA_HOTKEY, DataClassDialog } from './browser/data-class/DataClassDialog';
+import { DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { HOTKEYS, useHotkeyTexts } from '../utils/hotkeys';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
-
-const UNDO_HOTKEY = 'mod+Z';
-const REDO_HOTKEY = 'mod+shift+Z';
-
-const OPEN_DATACLASS_HOTKEY = 'D';
-const OPEN_PROCESS_HOTKEY = 'P';
-const OPEN_HELP_HOTKEY = 'F1';
-
-const VIEW_MODE_HOTKEY = 'E';
-const DEVICE_MODE_HOTKEY = 'S';
-
-export const useHotkeyTexts = () => {
-  const undo = useMemo(() => `Undo (${hotkeyText(UNDO_HOTKEY)})`, []);
-  const redo = useMemo(() => `Redo (${hotkeyText(REDO_HOTKEY)})`, []);
-  const openDataClass = useMemo(() => `Open Data Class (${hotkeyText(OPEN_DATACLASS_HOTKEY)})`, []);
-  const openProcess = useMemo(() => `Open Process (${hotkeyText(OPEN_PROCESS_HOTKEY)})`, []);
-  const openHelp = useMemo(() => `Open Help (${hotkeyText(OPEN_HELP_HOTKEY)})`, []);
-  const viewMode = useMemo(() => `View Mode (${hotkeyText(VIEW_MODE_HOTKEY)})`, []);
-  const createFromData = useMemo(() => `Create from data (${hotkeyText(CREATE_FROM_DATA_HOTKEY)})`, []);
-  return { undo, redo, openDataClass, openProcess, openHelp, viewMode, createFromData };
-};
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
@@ -69,30 +49,44 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const undo = () => history.undo(setUnhistoricisedData);
   const redo = () => history.redo(setUnhistoricisedData);
   const changeViewMode = () => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }));
-  useHotkeys(UNDO_HOTKEY, undo, { scopes: ['global'] });
-  useHotkeys(REDO_HOTKEY, redo, { scopes: ['global'] });
+  useHotkeys(HOTKEYS.UNDO, undo, { scopes: ['global'] });
+  useHotkeys(HOTKEYS.REDO, redo, { scopes: ['global'] });
 
-  useHotkeys(OPEN_DATACLASS_HOTKEY, () => openDataClass(), { scopes: ['global'] });
-  useHotkeys(OPEN_PROCESS_HOTKEY, () => openProcess(), { scopes: ['global'] });
-  useHotkeys(OPEN_HELP_HOTKEY, () => openUrl(helpUrl), { scopes: ['global'] });
+  useHotkeys(HOTKEYS.OPEN_DATACLASS, () => openDataClass(), { scopes: ['global'] });
+  useHotkeys(HOTKEYS.OPEN_PROCESS, () => openProcess(), { scopes: ['global'] });
+  useHotkeys(HOTKEYS.OPEN_HELP, () => openUrl(helpUrl), { scopes: ['global'] });
 
-  useHotkeys(VIEW_MODE_HOTKEY, changeViewMode, { scopes: ['global'] });
+  useHotkeys(HOTKEYS.VIEW_MODE, changeViewMode, { scopes: ['global'] });
   const texts = useHotkeyTexts();
 
   const deviceModeProps = useMemo(() => {
     const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
-    const title = `Device mode ${ui.deviceMode} (${hotkeyText(DEVICE_MODE_HOTKEY)})`;
+    const title = `Device mode ${ui.deviceMode} (${hotkeyText(HOTKEYS.DEVICE_MODE)})`;
     const icon =
       ui.deviceMode === 'mobile' ? IvyIcons.DeviceMobile : ui.deviceMode === 'tablet' ? IvyIcons.DeviceTablet : IvyIcons.EventStart;
     const nextDevice = ui.deviceMode === 'mobile' ? 'desktop' : ui.deviceMode === 'desktop' ? 'tablet' : 'mobile';
     return { icon, title, 'aria-label': title, size: 'large', onClick: () => changeDeviceMode(nextDevice) } as const;
   }, [setUi, ui.deviceMode]);
-  useHotkeys(DEVICE_MODE_HOTKEY, deviceModeProps.onClick, { scopes: ['global'] });
+  useHotkeys(HOTKEYS.DEVICE_MODE, deviceModeProps.onClick, { scopes: ['global'] });
+
+  const firstElement = useRef<HTMLButtonElement>(null);
+  useHotkeys(HOTKEYS.FOCUS_TOOLBAR, () => firstElement.current?.focus(), { scopes: ['global'] });
+  useHotkeys(HOTKEYS.FOCUS_CANVAS, () => document.querySelector<HTMLElement>('.draggable')?.focus(), { scopes: ['global'] });
+  useHotkeys(
+    HOTKEYS.FOCUS_INSCRIPTION,
+    () => {
+      setUi(old => ({ ...old, properties: true }));
+      document.querySelector<HTMLElement>('.ui-accordion-trigger')?.focus();
+    },
+    {
+      scopes: ['global']
+    }
+  );
 
   return (
     <Toolbar ref={ref} className='toolbar'>
       <Flex gap={1}>
-        <Button {...deviceModeProps} />
+        <Button ref={firstElement} {...deviceModeProps} />
         {editable && (
           <>
             <Button
