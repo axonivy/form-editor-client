@@ -27,4 +27,21 @@ test('readonly true', async ({ page }) => {
   await expect(editor.toolbar.undoButton).toBeHidden();
   await expect(editor.toolbar.helpPaddings).toBeHidden();
   await expect(editor.toolbar.palette).toBeHidden();
+
+  await page.keyboard.press('e');
+  await editor.canvas.expectHelpPaddings(false);
+  await page.keyboard.press('a');
+  await expect(page.getByRole('dialog')).toBeHidden();
+
+  const allBlocks = editor.canvas.locator.locator('.draggable');
+  await expect(allBlocks).toHaveCount(12);
+  // eslint-disable-next-line playwright/no-force-option
+  await allBlocks.first().click({ force: true });
+  await expect(allBlocks.first()).toHaveClass(/selected/);
+  await expect(page.locator('.quickbar')).toBeHidden();
+  await page.keyboard.press('m');
+  await expect(allBlocks).toHaveCount(12);
+  await page.keyboard.press('ControlOrMeta+c');
+  await page.keyboard.press('ControlOrMeta+v');
+  await expect(allBlocks).toHaveCount(12);
 });
