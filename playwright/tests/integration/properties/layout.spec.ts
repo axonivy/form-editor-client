@@ -57,7 +57,7 @@ test('children in free layout', async ({ page }) => {
   await properties.toggle();
   await columns.choose('4 Columns');
   await inputBlock.select();
-  expect(layoutAccordion.item).toBeHidden();
+  await expect(layoutAccordion.item).toBeHidden();
 });
 
 const layout = async (page: Page) => {
