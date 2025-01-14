@@ -4,9 +4,9 @@ import { FormEditor } from '../page-objects/form-editor';
 test('change device mode', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const toolbar = editor.toolbar;
-  await toolbar.toggleChangeMode();
+  await toolbar.deviceModeButton.click();
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'tablet');
-  await toolbar.toggleChangeMode();
+  await toolbar.deviceModeButton.click();
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'mobile');
   await page.keyboard.press('s');
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'desktop');
@@ -126,6 +126,20 @@ test('help', async ({ page }) => {
   await page.keyboard.press('F1');
   expect(await msg2).toContain('openUrl');
   expect(await msg2).toContain('https://dev.axonivy.com');
+});
+
+test('focus jumps', async ({ page }) => {
+  const editor = await FormEditor.openMock(page);
+  await page.keyboard.press('Alt+1');
+  await expect(editor.toolbar.deviceModeButton).toBeFocused();
+  await page.keyboard.press('Alt+2');
+  const firstElement = editor.canvas.blockByNth(0, { layout: true });
+  await expect(firstElement.block).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(editor.inscription.view).toBeVisible();
+  await expect(editor.inscription.section('Properties').trigger).not.toBeFocused();
+  await page.keyboard.press('Alt+3');
+  await expect(editor.inscription.section('Properties').trigger).toBeFocused();
 });
 
 const consoleLog = async (page: Page) => {
