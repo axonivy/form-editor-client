@@ -20,6 +20,15 @@ test.describe('empty', () => {
     const dialog = await canvas.openInitCreateDialog();
     await expect(dialog.getByRole('row')).toHaveCount(5);
   });
+
+  test('keyboard', async ({ page }) => {
+    await FormEditor.openMock(page);
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeHidden();
+    await page.keyboard.press('a');
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('row')).toHaveCount(2);
+  });
 });
 
 test.describe('dnd', () => {
@@ -93,9 +102,9 @@ test.describe('keyboard', () => {
     const { canvas } = await FormEditor.openMock(page);
     await canvas.expectFormOrder(['Firstname', 'Lastname']);
     await canvas.blockByText('Firstname').select();
-    await page.keyboard.press(`ControlOrMeta+c`);
+    await page.keyboard.press('ControlOrMeta+c');
     await canvas.blockByText('Address').select();
-    await page.keyboard.press(`ControlOrMeta+v`);
+    await page.keyboard.press('ControlOrMeta+v');
     await canvas.expectFormOrder(['Firstname', 'Lastname', 'Firstname']);
   });
 });

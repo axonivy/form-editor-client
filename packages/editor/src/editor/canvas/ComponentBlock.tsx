@@ -43,7 +43,9 @@ const Draggable = ({ config, data }: DraggableProps) => {
     setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.cid } }).newData);
     setSelectedElement(undefined);
   };
-  const duplicateElement = () => setData(oldData => modifyData(oldData, { type: 'paste', data: { id: data.cid } }).newData);
+  const duplicateElement = () => {
+    setData(oldData => modifyData(oldData, { type: 'paste', data: { id: data.cid } }).newData);
+  };
   const createColumn = () => {
     setData(
       oldData =>
@@ -53,18 +55,20 @@ const Draggable = ({ config, data }: DraggableProps) => {
         }).newData
     );
   };
-  const createElement = (name: ComponentType) =>
+  const createElement = (name: ComponentType) => {
     setData(
       oldData =>
         modifyData(oldData, { type: 'add', data: { componentName: name, targetId: creationTargetId(oldData.components, data.cid) } })
           .newData
     );
+  };
   const validations = useValidations(data.cid);
   const { clipboardProps } = useClipboard({
     getItems() {
       return [{ 'text/plain': data.cid }];
     },
     async onPaste(items) {
+      if (readonly) return;
       const item = items.filter(item => item.kind === 'text' && item.types.has('text/plain'))[0] as TextDropItem;
       const cid = await item.getText('text/plain');
       setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }).newData);
@@ -87,6 +91,9 @@ const Draggable = ({ config, data }: DraggableProps) => {
               e.stopPropagation();
               setSelectedElement(data.cid);
               setUi(old => ({ ...old, properties: true }));
+            }
+            if (readonly) {
+              return;
             }
             if (e.key === 'Delete') {
               e.stopPropagation();
@@ -145,6 +152,10 @@ type QuickbarProps = {
 
 const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAction, createFromDataAction }: QuickbarProps) => {
   const [menu, setMenu] = useState(false);
+  const readonly = useReadonly();
+  if (readonly) {
+    return null;
+  }
   return (
     <PopoverContent className='quickbar' sideOffset={8} onOpenAutoFocus={e => e.preventDefault()} hideWhenDetached={true}>
       <Popover open={menu} onOpenChange={change => setMenu(change)}>
