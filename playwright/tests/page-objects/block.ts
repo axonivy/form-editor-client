@@ -33,7 +33,6 @@ export class Block {
 
   async quickAction(name: string) {
     await this.select();
-    this.page.getByRole('button', { name });
     await this.page.locator('.quickbar').getByRole('button', { name }).click();
   }
 
