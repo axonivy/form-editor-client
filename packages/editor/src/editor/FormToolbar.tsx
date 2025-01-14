@@ -56,7 +56,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   useHotkeys(HOTKEYS.OPEN_PROCESS, () => openProcess(), { scopes: ['global'] });
   useHotkeys(HOTKEYS.OPEN_HELP, () => openUrl(helpUrl), { scopes: ['global'] });
 
-  useHotkeys(HOTKEYS.VIEW_MODE, changeViewMode, { scopes: ['global'] });
+  useHotkeys(HOTKEYS.VIEW_MODE, changeViewMode, { scopes: ['global'], enabled: editable });
   const texts = useHotkeyTexts();
 
   const deviceModeProps = useMemo(() => {
