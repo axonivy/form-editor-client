@@ -100,6 +100,10 @@ const Draggable = ({ config, data }: DraggableProps) => {
               e.stopPropagation();
               setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
             }
+            if (e.code === 'KeyM') {
+              e.stopPropagation();
+              duplicateElement();
+            }
           }}
           className={cn(
             'draggable',

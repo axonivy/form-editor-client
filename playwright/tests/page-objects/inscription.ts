@@ -42,7 +42,7 @@ export class Inscription {
 class Accordion {
   protected readonly page: Page;
   readonly item: Locator;
-  protected readonly trigger: Locator;
+  readonly trigger: Locator;
   protected readonly content: Locator;
 
   constructor(page: Page, parent: Locator, title: string) {

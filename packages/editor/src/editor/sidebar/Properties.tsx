@@ -15,6 +15,7 @@ import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFi
 import { componentByElement } from '../../components/components';
 import type { ConfigData } from '@axonivy/form-editor-protocol';
 import { PropertySubSectionControl } from './PropertySubSectionControl';
+
 export const Properties = () => {
   const { element, data, parent } = useData();
   if (element === undefined) {
