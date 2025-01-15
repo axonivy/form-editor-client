@@ -130,15 +130,15 @@ test('help', async ({ page }) => {
 
 test('focus jumps', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
-  await page.keyboard.press('Alt+1');
+  await page.keyboard.press('1');
   await expect(editor.toolbar.deviceModeButton).toBeFocused();
-  await page.keyboard.press('Alt+2');
+  await page.keyboard.press('2');
   const firstElement = editor.canvas.blockByNth(0, { layout: true });
   await expect(firstElement.block).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(editor.inscription.view).toBeVisible();
   await expect(editor.inscription.section('Properties').trigger).not.toBeFocused();
-  await page.keyboard.press('Alt+3');
+  await page.keyboard.press('3');
   await expect(editor.inscription.section('Properties').trigger).toBeFocused();
 });
 
