@@ -13,9 +13,9 @@ export const HOTKEYS = {
   DEVICE_MODE: 'S',
   CREATE_FROM_DATA: 'A',
 
-  FOCUS_TOOLBAR: 'alt+1',
-  FOCUS_CANVAS: 'alt+2',
-  FOCUS_INSCRIPTION: 'alt+3'
+  FOCUS_TOOLBAR: '1',
+  FOCUS_CANVAS: '2',
+  FOCUS_INSCRIPTION: '3'
 } as const;
 
 export const useHotkeyTexts = () => {
