@@ -13,6 +13,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  useHotkeys,
   useTableExpand,
   useTableSelect,
   type BrowserNode
@@ -24,7 +25,6 @@ import type { Variable } from '@axonivy/form-editor-protocol';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
 import { createInitForm, creationTargetId } from '../../../data/data';
 import { variableTreeData, rowToCreateData } from './variable-tree-data';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { HOTKEYS } from '../../../utils/hotkeys';
 
 type DataClassDialogProps = {
