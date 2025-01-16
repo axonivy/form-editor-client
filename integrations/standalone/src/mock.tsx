@@ -1,10 +1,9 @@
 import './index.css';
 import { App, ClientContextProvider, QueryProvider, initQueryClient } from '@axonivy/form-editor';
-import { ReadonlyProvider, ThemeProvider } from '@axonivy/ui-components';
+import { HotkeysProvider, ReadonlyProvider, ThemeProvider } from '@axonivy/ui-components';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
-import { HotkeysProvider } from 'react-hotkeys-hook';
 import { readonlyParam } from './url-helper';
 
 export function start() {

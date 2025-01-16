@@ -14,6 +14,7 @@ import {
   Switch,
   Toolbar,
   ToolbarContainer,
+  useHotkeys,
   useReadonly,
   useTheme
 } from '@axonivy/ui-components';
@@ -28,7 +29,6 @@ import { CompositePalette } from './palette/composite/CompositePalette';
 import { useAction } from '../context/useAction';
 import { DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { HOTKEYS, useHotkeyTexts } from '../utils/hotkeys';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
