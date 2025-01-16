@@ -1,12 +1,11 @@
 import './index.css';
 import { App, ClientContextProvider, QueryProvider, initQueryClient } from '@axonivy/form-editor';
 import { FormClientJsonRpc } from '@axonivy/form-editor-core';
-import { ThemeProvider, ReadonlyProvider, toast, Toaster, Spinner, Flex } from '@axonivy/ui-components';
+import { ThemeProvider, ReadonlyProvider, toast, Toaster, Spinner, Flex, HotkeysProvider } from '@axonivy/ui-components';
 import { webSocketConnection, type Connection } from '@axonivy/jsonrpc';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { URLParams } from './url-helper';
-import { HotkeysProvider } from 'react-hotkeys-hook';
 
 export async function start(): Promise<void> {
   const server = URLParams.webSocketBase();
