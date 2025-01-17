@@ -1,8 +1,7 @@
 import { EMPTY_FORM, type FormContext, type FormData, type ValidationResult } from '@axonivy/form-editor-protocol';
 import { createContext, useContext, type SetStateAction, type Dispatch, useState, useEffect } from 'react';
 import type { UpdateConsumer } from '../types/types';
-import { useReadonly } from '@axonivy/ui-components';
-import type { useHistoryData } from '../data/useHistoryData';
+import { useReadonly, type useHistoryData } from '@axonivy/ui-components';
 
 type UI = {
   properties: boolean;
@@ -31,7 +30,7 @@ export type AppContext = {
   ui: UI;
   setUi: Dispatch<SetStateAction<UI>>;
   context: FormContext;
-  history: ReturnType<typeof useHistoryData>;
+  history: ReturnType<typeof useHistoryData<FormData>>;
   validations: Array<ValidationResult>;
   helpUrl: string;
 };
@@ -43,7 +42,7 @@ export const appContext = createContext<AppContext>({
   ui: DEFAULT_UI,
   setUi: () => {},
   context: { app: '', pmv: '', file: '' },
-  history: { pushHistory: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
+  history: { push: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
   validations: [],
   helpUrl: ''
 });
