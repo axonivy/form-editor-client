@@ -298,7 +298,7 @@ export const useData = () => {
   const setHistoricisedData: UpdateConsumer<FormData> = updateData => {
     setData(old => {
       const newData = updateData(old);
-      history.pushHistory(newData);
+      history.push(newData);
       return newData;
     });
   };
