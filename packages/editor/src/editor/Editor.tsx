@@ -1,7 +1,7 @@
 import './Editor.css';
 import { useEffect, useMemo, useState } from 'react';
 import { AppProvider, useUiState } from '../context/AppContext';
-import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGroup, Spinner } from '@axonivy/ui-components';
+import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGroup, Spinner, useHistoryData } from '@axonivy/ui-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../context/ClientContext';
 import type { Unary } from '../types/types';
@@ -9,7 +9,6 @@ import type { FormData, FormEditor, FormEditorProps } from '@axonivy/form-editor
 import { DndContext } from '../context/DndContext';
 import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useHistoryData } from '../data/useHistoryData';
 import { MasterPart } from './MasterPart';
 import { Sidebar } from './sidebar/Sidebar';
 
@@ -23,7 +22,7 @@ export const Editor = (props: FormEditorProps) => {
   const { ui, setUi } = useUiState();
   const [selectedElement, setSelectedElement] = useState<string>();
   const [initialData, setInitalData] = useState<FormData | undefined>(undefined);
-  const history = useHistoryData();
+  const history = useHistoryData<FormData>();
 
   const client = useClient();
   const queryClient = useQueryClient();
@@ -61,7 +60,7 @@ export const Editor = (props: FormEditorProps) => {
   useEffect(() => {
     if (data?.data !== undefined && initialData === undefined) {
       setInitalData(data.data);
-      history.pushHistory(data.data);
+      history.push(data.data);
     }
   }, [data?.data, history, initialData]);
 
