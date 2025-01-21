@@ -1,6 +1,7 @@
 import { isStructure, isTable, type Component, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
 import type { Active } from '@dnd-kit/core';
 import { STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
+import type { AutoCompleteWithString } from '../../types/types';
 
 export type DragData = {
   componentType: ComponentType;
@@ -42,16 +43,16 @@ export const isDropZoneDisabled = (dropId: string, dropType?: ComponentType, act
   }
 
   const data = active.data.current;
+  if (disableDataTableColumnDropZone(dropType, (data as Partial<DragData>)?.componentType ?? '')) {
+    return true;
+  }
   if (isDragData(data)) {
-    if (disableDataTableColumnDropZone(dropType, data.componentType)) {
-      return true;
-    }
     return data.disabledIds.includes(dropId);
   }
   return false;
 };
 
-const disableDataTableColumnDropZone = (dropType: ComponentType | undefined, dragType: ComponentType) => {
+const disableDataTableColumnDropZone = (dropType: ComponentType | undefined, dragType: AutoCompleteWithString<ComponentType>) => {
   const isColumn = dragType === 'DataTableColumn';
   const isColumnTarget = dropType === 'DataTableColumn';
   if (isColumn) {

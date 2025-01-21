@@ -144,6 +144,7 @@ export const data: FormData = {
         components: [
           {
             cid: 'DataTableColumn-2392d412-47a3-4d25-af6f-1f9e08b83861',
+            type: 'DataTableColumn',
             config: {
               header: 'birthday',
               value: 'birthday'
@@ -151,6 +152,7 @@ export const data: FormData = {
           },
           {
             cid: 'DataTableColumn-d5105b17-3059-4e8e-bb42-610b9f4257fa',
+            type: 'DataTableColumn',
             config: {
               header: 'age',
               value: 'age'
@@ -158,6 +160,7 @@ export const data: FormData = {
           },
           {
             cid: 'DataTableColumn-ad2ee959-6d68-4f14-8680-93e4cb85f236',
+            type: 'DataTableColumn',
             config: {
               header: 'first name',
               value: 'first name'
