@@ -132,14 +132,36 @@ describe('modifyData', () => {
     });
   });
 
-  test('add', () => {
-    const data = modifyData(emptyData(), {
-      type: 'add',
-      data: { componentName: 'Input', create: { label: 'Age', value: 'age' } }
-    }).newData;
-    expect(data).not.toEqual(emptyData());
-    expect(data.components).toHaveLength(1);
-    expect(data.components[0].type).to.equals('Input');
+  describe('add', () => {
+    test('normal', () => {
+      const data = modifyData(emptyData(), {
+        type: 'add',
+        data: { componentName: 'Input', create: { label: 'Age', value: 'age' } }
+      }).newData;
+      expect(data).not.toEqual(emptyData());
+      expect(data.components).toHaveLength(1);
+      expect(data.components[0].type).to.equals('Input');
+    });
+
+    test('add to structure', () => {
+      const data = modifyData(filledData(), {
+        type: 'add',
+        data: { componentName: 'Input', create: { label: 'Age', value: 'age' }, targetId: '31' }
+      }).newData;
+      expect(data).not.toEqual(filledData());
+      expectOrder(data, ['1', '2', '3', '4', '5']);
+      expectOrderDeep(data, '3', ['input54', '31', '32', '33']);
+    });
+
+    test('add to datatable is not possible', () => {
+      const data = modifyData(tableData(), {
+        type: 'add',
+        data: { componentName: 'Input', create: { label: 'Age', value: 'age' }, targetId: '11' }
+      }).newData;
+      expect(data).toEqual(tableData());
+      expectOrder(data, ['1']);
+      expectOrderDeep(data, '1', ['11', '12', '13']);
+    });
   });
 
   describe('paste', () => {
@@ -165,6 +187,16 @@ describe('modifyData', () => {
       const component = data.components.find(c => c.cid === '1') as TableConfig;
       expect(component.config.components).toHaveLength(4);
       expect(component.config.components[0].cid).toEqual('datatablecolumn14');
+    });
+
+    test('paste other things into datatable', () => {
+      // paste other things than columns into a datatable is not possible
+      const originalData = tableData();
+      originalData.components.push({ type: 'Button', cid: '2', config: {} });
+      const data = modifyData(originalData, { type: 'paste', data: { id: '2', targetId: '11' } }).newData;
+      expect(data).toEqual(originalData);
+      expectOrder(data, ['1', '2']);
+      expectOrderDeep(data, '1', ['11', '12', '13']);
     });
 
     test('duplicate deep', () => {
@@ -196,6 +228,12 @@ describe('modifyData', () => {
       expect(component.config.components[0].config.value).toEqual('Hello');
       expect(component.config.components[1].cid).toEqual('datatablecolumn16');
       expect(component.config.components[2].cid).toEqual('datatablecolumn17');
+    });
+
+    test('duplicate table column', () => {
+      const data = modifyData(tableData(), { type: 'paste', data: { id: '11' } }).newData;
+      expectOrder(data, ['1']);
+      expectOrderDeep(data, '1', ['datatablecolumn14', '11', '12', '13']);
     });
   });
 
