@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export type Selection = { start: number; end: number };
-export type InputTextAreaRef = React.RefObject<HTMLInputElement> | React.RefObject<HTMLTextAreaElement>;
+export type InputTextAreaRef = React.RefObject<HTMLInputElement | null> | React.RefObject<HTMLTextAreaElement | null>;
 
 const useTextSelection = (ref: InputTextAreaRef) => {
   const [selection, setSelection] = useState<Selection | undefined>();

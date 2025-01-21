@@ -8,7 +8,7 @@ export type UiComponentProps<Props extends DefaultComponentProps = DefaultCompon
 
 export type DefaultComponentProps = ConfigData;
 
-type UiComponent<Props extends DefaultComponentProps = DefaultComponentProps> = (props: UiComponentProps<Props>) => JSX.Element;
+type UiComponent<Props extends DefaultComponentProps = DefaultComponentProps> = (props: UiComponentProps<Props>) => React.JSX.Element;
 
 export type FieldOptionValues<TOptions extends Readonly<FieldOption[]>> = TOptions[number]['value'];
 
