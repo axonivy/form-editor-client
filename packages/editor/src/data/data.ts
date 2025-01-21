@@ -84,6 +84,10 @@ export const findParentTableComponent = (data: Array<ComponentData>, element: Co
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {
   const find = findComponent(data, id);
   if (find) {
+    if (isTable(find.parent) && component.type !== 'DataTableColumn') {
+      console.warn('It is not possible to add something else than columns to a data table');
+      return;
+    }
     add(find.data, component, find.index);
     return component.cid;
   }

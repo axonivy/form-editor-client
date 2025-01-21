@@ -60,9 +60,14 @@ describe('isDropZoneDisabled', () => {
   });
 
   test('disable columns', () => {
-    let active: Partial<Active> = { id: '0', data: { current: { componentType: 'Input', disabledIds: [] } } };
+    let active: Partial<Active> = { id: '0', data: { current: undefined } };
     expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeFalsy();
     expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeTruthy();
+
+    active = { id: '0', data: { current: { componentType: 'Input', disabledIds: [] } } };
+    expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeTruthy();
+
     active = { id: '0', data: { current: { componentType: 'DataTableColumn', disabledIds: [] } } };
     expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeTruthy();
     expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeFalsy();
