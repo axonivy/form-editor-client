@@ -1,30 +1,75 @@
-import { hotkeyText } from '@axonivy/ui-components';
+import { hotkeyText, isWindows } from '@axonivy/ui-components';
 import { useMemo } from 'react';
 
-export const HOTKEYS = {
-  UNDO: 'mod+Z',
-  REDO: 'mod+shift+Z',
+type KnownHotkey = { hotkey: string; label: string };
 
-  OPEN_DATACLASS: 'D',
-  OPEN_PROCESS: 'P',
-  OPEN_HELP: 'F1',
+export const useKnownHotkeys = () => {
+  const undo = useMemo<KnownHotkey>(() => {
+    const hotkey = 'mod+Z';
+    return { hotkey, label: `Undo (${hotkeyText(hotkey)})` };
+  }, []);
 
-  VIEW_MODE: 'E',
-  DEVICE_MODE: 'S',
-  CREATE_FROM_DATA: 'A',
+  const redo = useMemo<KnownHotkey>(() => {
+    const hotkey = isWindows() ? 'mod+Y' : 'mod+shift+Z';
+    return { hotkey, label: `Redo (${hotkeyText(hotkey)})` };
+  }, []);
 
-  FOCUS_TOOLBAR: '1',
-  FOCUS_CANVAS: '2',
-  FOCUS_INSCRIPTION: '3'
-} as const;
+  const openDataClass = useMemo<KnownHotkey>(() => {
+    const hotkey = 'D';
+    return { hotkey, label: `Open Data Class (${hotkeyText(hotkey)})` };
+  }, []);
 
-export const useHotkeyTexts = () => {
-  const undo = useMemo(() => `Undo (${hotkeyText(HOTKEYS.UNDO)})`, []);
-  const redo = useMemo(() => `Redo (${hotkeyText(HOTKEYS.REDO)})`, []);
-  const openDataClass = useMemo(() => `Open Data Class (${hotkeyText(HOTKEYS.OPEN_DATACLASS)})`, []);
-  const openProcess = useMemo(() => `Open Process (${hotkeyText(HOTKEYS.OPEN_PROCESS)})`, []);
-  const openHelp = useMemo(() => `Open Help (${hotkeyText(HOTKEYS.OPEN_HELP)})`, []);
-  const viewMode = useMemo(() => `View Mode (${hotkeyText(HOTKEYS.VIEW_MODE)})`, []);
-  const createFromData = useMemo(() => `Create from data (${hotkeyText(HOTKEYS.CREATE_FROM_DATA)})`, []);
-  return { undo, redo, openDataClass, openProcess, openHelp, viewMode, createFromData };
+  const openProcess = useMemo<KnownHotkey>(() => {
+    const hotkey = 'P';
+    return { hotkey, label: `Open Process (${hotkeyText(hotkey)})` };
+  }, []);
+
+  const openHelp = useMemo<KnownHotkey>(() => {
+    const hotkey = 'F1';
+    return { hotkey, label: `Open Help (${hotkeyText(hotkey)})` };
+  }, []);
+
+  const viewMode = useMemo<KnownHotkey>(() => {
+    const hotkey = 'E';
+    return { hotkey, label: `View Mode (${hotkeyText(hotkey)})` };
+  }, []);
+
+  const deviceMode = useMemo<KnownHotkey>(() => {
+    const hotkey = 'S';
+    return { hotkey, label: `Change device mode (${hotkeyText(hotkey)})` };
+  }, []);
+
+  const createFromData = useMemo<KnownHotkey>(() => {
+    const hotkey = 'A';
+    return { hotkey, label: `Create from data (${hotkeyText(hotkey)})` };
+  }, []);
+
+  const focusToolbar = useMemo<KnownHotkey>(() => {
+    const hotkey = '1';
+    return { hotkey, label: `Focus Toolbar (${hotkeyText(hotkey)})` };
+  }, []);
+
+  const focusMain = useMemo<KnownHotkey>(() => {
+    const hotkey = '2';
+    return { hotkey, label: `Focus Main (${hotkeyText(hotkey)})` };
+  }, []);
+
+  const focusInscription = useMemo<KnownHotkey>(() => {
+    const hotkey = '3';
+    return { hotkey, label: `Focus Inscription (${hotkeyText(hotkey)})` };
+  }, []);
+
+  return {
+    undo,
+    redo,
+    openDataClass,
+    openProcess,
+    openHelp,
+    viewMode,
+    deviceMode,
+    createFromData,
+    focusToolbar,
+    focusMain,
+    focusInscription
+  };
 };

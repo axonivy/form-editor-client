@@ -93,7 +93,7 @@ test.describe('keyboard', () => {
 
     await page.keyboard.press('ControlOrMeta+z');
     await canvas.expectFormOrder(['Firstname', 'Lastname', 'Address']);
-    await page.keyboard.press('ControlOrMeta+Shift+z');
+    await page.keyboard.press('ControlOrMeta+y');
     await canvas.expectFormOrder(['Lastname', 'Firstname', 'Address']);
   });
 
