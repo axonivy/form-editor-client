@@ -12,7 +12,7 @@ test('change device mode', async ({ page }) => {
   await expect(editor.canvas.locator).toHaveAttribute('data-responsive-mode', 'desktop');
 });
 
-test('undo/redo', async ({ page }) => {
+test('undo/redo', async ({ page, browserName }) => {
   const editor = await FormEditor.openMock(page);
   const toolbar = editor.toolbar;
   await expect(toolbar.undoButton).toBeDisabled();
@@ -35,7 +35,7 @@ test('undo/redo', async ({ page }) => {
   await expect(toolbar.undoButton).toBeDisabled();
   await expect(toolbar.redoButton).toBeEnabled();
 
-  await page.keyboard.press('ControlOrMeta+Y');
+  await page.keyboard.press(browserName === 'webkit' ? 'ControlOrMeta+Shift+z' : 'ControlOrMeta+Y');
   await expect(toolbar.undoButton).toBeEnabled();
   await expect(toolbar.redoButton).toBeDisabled();
 });
