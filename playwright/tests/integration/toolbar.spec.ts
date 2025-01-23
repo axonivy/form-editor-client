@@ -35,7 +35,7 @@ test('undo/redo', async ({ page }) => {
   await expect(toolbar.undoButton).toBeDisabled();
   await expect(toolbar.redoButton).toBeEnabled();
 
-  await page.keyboard.press('ControlOrMeta+Shift+z');
+  await page.keyboard.press('ControlOrMeta+Y');
   await expect(toolbar.undoButton).toBeEnabled();
   await expect(toolbar.redoButton).toBeDisabled();
 });

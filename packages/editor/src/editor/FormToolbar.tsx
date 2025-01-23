@@ -2,7 +2,9 @@ import {
   Button,
   Field,
   Flex,
+  hotkeyRedoFix,
   hotkeyText,
+  hotkeyUndoFix,
   IvyIcon,
   Label,
   Popover,
@@ -29,7 +31,7 @@ import { CompositePalette } from './palette/composite/CompositePalette';
 import { useAction } from '../context/useAction';
 import { DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
-import { HOTKEYS, useHotkeyTexts } from '../utils/hotkeys';
+import { useKnownHotkeys } from '../utils/hotkeys';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
@@ -49,31 +51,31 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const undo = () => history.undo(setUnhistoricisedData);
   const redo = () => history.redo(setUnhistoricisedData);
   const changeViewMode = () => setUi(old => ({ ...old, helpPaddings: !old.helpPaddings }));
-  useHotkeys(HOTKEYS.UNDO, undo, { scopes: ['global'] });
-  useHotkeys(HOTKEYS.REDO, redo, { scopes: ['global'] });
+  const hotkeys = useKnownHotkeys();
+  useHotkeys(hotkeys.undo.hotkey, e => hotkeyUndoFix(e, undo), { scopes: ['global'] });
+  useHotkeys(hotkeys.redo.hotkey, e => hotkeyRedoFix(e, redo), { scopes: ['global'] });
 
-  useHotkeys(HOTKEYS.OPEN_DATACLASS, () => openDataClass(), { scopes: ['global'] });
-  useHotkeys(HOTKEYS.OPEN_PROCESS, () => openProcess(), { scopes: ['global'] });
-  useHotkeys(HOTKEYS.OPEN_HELP, () => openUrl(helpUrl), { scopes: ['global'] });
+  useHotkeys(hotkeys.openDataClass.hotkey, () => openDataClass(), { scopes: ['global'] });
+  useHotkeys(hotkeys.openProcess.hotkey, () => openProcess(), { scopes: ['global'] });
+  useHotkeys(hotkeys.openHelp.hotkey, () => openUrl(helpUrl), { scopes: ['global'] });
 
-  useHotkeys(HOTKEYS.VIEW_MODE, changeViewMode, { scopes: ['global'], enabled: editable });
-  const texts = useHotkeyTexts();
+  useHotkeys(hotkeys.viewMode.hotkey, changeViewMode, { scopes: ['global'], enabled: editable });
 
   const deviceModeProps = useMemo(() => {
     const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
-    const title = `Device mode ${ui.deviceMode} (${hotkeyText(HOTKEYS.DEVICE_MODE)})`;
+    const title = `Device mode ${ui.deviceMode} (${hotkeyText(hotkeys.deviceMode.hotkey)})`;
     const icon =
       ui.deviceMode === 'mobile' ? IvyIcons.DeviceMobile : ui.deviceMode === 'tablet' ? IvyIcons.DeviceTablet : IvyIcons.EventStart;
     const nextDevice = ui.deviceMode === 'mobile' ? 'desktop' : ui.deviceMode === 'desktop' ? 'tablet' : 'mobile';
     return { icon, title, 'aria-label': title, size: 'large', onClick: () => changeDeviceMode(nextDevice) } as const;
-  }, [setUi, ui.deviceMode]);
-  useHotkeys(HOTKEYS.DEVICE_MODE, deviceModeProps.onClick, { scopes: ['global'] });
+  }, [hotkeys.deviceMode.hotkey, setUi, ui.deviceMode]);
+  useHotkeys(hotkeys.deviceMode.hotkey, deviceModeProps.onClick, { scopes: ['global'] });
 
   const firstElement = useRef<HTMLButtonElement>(null);
-  useHotkeys(HOTKEYS.FOCUS_TOOLBAR, () => firstElement.current?.focus(), { scopes: ['global'] });
-  useHotkeys(HOTKEYS.FOCUS_CANVAS, () => document.querySelector<HTMLElement>('.draggable')?.focus(), { scopes: ['global'] });
+  useHotkeys(hotkeys.focusToolbar.hotkey, () => firstElement.current?.focus(), { scopes: ['global'] });
+  useHotkeys(hotkeys.focusMain.hotkey, () => document.querySelector<HTMLElement>('.draggable')?.focus(), { scopes: ['global'] });
   useHotkeys(
-    HOTKEYS.FOCUS_INSCRIPTION,
+    hotkeys.focusInscription.hotkey,
     () => {
       setUi(old => ({ ...old, properties: true }));
       document.querySelector<HTMLElement>('.ui-accordion-trigger')?.focus();
@@ -93,24 +95,24 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
               icon={ui.helpPaddings ? IvyIcons.Edit : IvyIcons.Eye}
               onClick={changeViewMode}
               size='large'
-              aria-label={texts.viewMode}
-              title={texts.viewMode}
+              aria-label={hotkeys.viewMode.label}
+              title={hotkeys.viewMode.label}
             />
             <ToolbarContainer maxWidth={450}>
               <Flex>
                 <Separator orientation='vertical' style={{ height: '26px', marginInline: 'var(--size-2)' }} />
                 <Flex gap={1}>
                   <Button
-                    title={texts.undo}
-                    aria-label={texts.undo}
+                    title={hotkeys.undo.label}
+                    aria-label={hotkeys.undo.label}
                     icon={IvyIcons.Undo}
                     size='large'
                     onClick={undo}
                     disabled={!history.canUndo}
                   />
                   <Button
-                    title={texts.redo}
-                    aria-label={texts.redo}
+                    title={hotkeys.redo.label}
+                    aria-label={hotkeys.redo.label}
                     icon={IvyIcons.Redo}
                     size='large'
                     onClick={redo}
@@ -139,7 +141,12 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           </PalettePopover>
           <PaletteButton text='Data'>
             <DataClassDialog worfkflowButtonsInit={false}>
-              <Button icon={IvyIcons.DatabaseLink} size='large' aria-label={texts.createFromData} title={texts.createFromData} />
+              <Button
+                icon={IvyIcons.DatabaseLink}
+                size='large'
+                aria-label={hotkeys.createFromData.label}
+                title={hotkeys.createFromData.label}
+              />
             </DataClassDialog>
           </PaletteButton>
         </Flex>
@@ -147,15 +154,15 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
 
       <Flex gap={1} alignItems='center'>
         <Button
-          title={texts.openDataClass}
-          aria-label={texts.openDataClass}
+          title={hotkeys.openDataClass.label}
+          aria-label={hotkeys.openDataClass.label}
           icon={IvyIcons.DatabaseLink}
           size='large'
           onClick={() => openDataClass()}
         />
         <Button
-          title={texts.openProcess}
-          aria-label={texts.openProcess}
+          title={hotkeys.openProcess.label}
+          aria-label={hotkeys.openProcess.label}
           icon={IvyIcons.Process}
           size='large'
           onClick={() => openProcess()}

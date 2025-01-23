@@ -25,7 +25,7 @@ import type { Variable } from '@axonivy/form-editor-protocol';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
 import { createInitForm, creationTargetId } from '../../../data/data';
 import { variableTreeData, rowToCreateData } from './variable-tree-data';
-import { HOTKEYS } from '../../../utils/hotkeys';
+import { useKnownHotkeys } from '../../../utils/hotkeys';
 
 type DataClassDialogProps = {
   children: ReactNode;
@@ -35,7 +35,8 @@ type DataClassDialogProps = {
 
 export const DataClassDialog = ({ children, worfkflowButtonsInit = true, creationTarget }: DataClassDialogProps) => {
   const [open, setOpen] = useState(false);
-  useHotkeys(HOTKEYS.CREATE_FROM_DATA, () => setOpen(true), { scopes: ['global'] });
+  const { createFromData: shortcut } = useKnownHotkeys();
+  useHotkeys(shortcut.hotkey, () => setOpen(true), { scopes: ['global'] });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
