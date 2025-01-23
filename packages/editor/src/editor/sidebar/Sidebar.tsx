@@ -7,7 +7,7 @@ import { Properties } from './Properties';
 import { useValidations } from '../../context/useValidation';
 import { useAction } from '../../context/useAction';
 import { useAppContext } from '../../context/AppContext';
-import { useHotkeyTexts } from '../../utils/hotkeys';
+import { useKnownHotkeys } from '../../utils/hotkeys';
 
 export const Sidebar = () => {
   const { helpUrl } = useAppContext();
@@ -16,7 +16,7 @@ export const Sidebar = () => {
   const elementType = element ? (element.type ? element.type : 'DataTableColumn') : 'Properties';
   const messages = useValidations(element?.cid ?? '', { exact: true });
   const openUrl = useAction('openUrl');
-  const texts = useHotkeyTexts();
+  const { openHelp: shortcut } = useKnownHotkeys();
   return (
     <Flex direction='column' className='properties' style={{ height: '100%' }}>
       <SidebarHeader icon={IvyIcons.PenEdit} title={elementType} className='sidebar-header'>
@@ -28,7 +28,7 @@ export const Sidebar = () => {
           title='Outline'
           aria-label='Outline'
         />
-        <Button icon={IvyIcons.Help} onClick={() => openUrl(helpUrl)} aria-label={texts.openHelp} title={texts.openHelp} />
+        <Button icon={IvyIcons.Help} onClick={() => openUrl(helpUrl)} aria-label={shortcut.label} title={shortcut.label} />
       </SidebarHeader>
       {messages.length > 0 && (
         <SidebarMessages>
