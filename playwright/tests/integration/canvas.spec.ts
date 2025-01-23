@@ -84,7 +84,7 @@ test.describe('keyboard', () => {
     await inscription.expectHeader('Input');
   });
 
-  test('undo/redo', async ({ page }) => {
+  test('undo/redo', async ({ page, browserName }) => {
     const { canvas } = await FormEditor.openMock(page);
     await canvas.expectFormOrder(['Firstname', 'Lastname', 'Address']);
     await canvas.blockByText('Firstname').select();
@@ -93,7 +93,7 @@ test.describe('keyboard', () => {
 
     await page.keyboard.press('ControlOrMeta+z');
     await canvas.expectFormOrder(['Firstname', 'Lastname', 'Address']);
-    await page.keyboard.press('ControlOrMeta+y');
+    await page.keyboard.press(browserName === 'webkit' ? 'ControlOrMeta+Shift+z' : 'ControlOrMeta+y');
     await canvas.expectFormOrder(['Lastname', 'Firstname', 'Address']);
   });
 
