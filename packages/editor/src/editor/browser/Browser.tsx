@@ -2,7 +2,7 @@ import { BrowsersView, useConditionBuilder } from '@axonivy/ui-components';
 import { useAttributeBrowser } from './data-class/useAttributeBrowser';
 import { useCmsBrowser, CMS_BROWSER_ID } from './cms/useCmsBrowser';
 import { useLogicBrowser } from './logic/useLogicBrowser';
-import { generateConditionString, logicalOperatorOptions, typeOptions } from './condition-builder/condition-builder-data';
+import { generateConditionString, logicOperators, operators } from './condition-builder/condition-builder-data';
 import { InputFieldWithBrowser } from '../sidebar/fields/InputFieldWithBrowser';
 
 type OnlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
@@ -29,8 +29,8 @@ export const Browser = ({ value, onChange, activeBrowsers, close, options }: Bro
   const cmsBrowser = useCmsBrowser();
   const conditionBuilder = useConditionBuilder({
     generateConditionString,
-    typeOptions,
-    logicalOperatorOptions,
+    operators,
+    logicOperators,
     argumentInput: (value, onChange) => (
       <InputFieldWithBrowser value={value} onChange={onChange} browsers={['ATTRIBUTE']} options={{ directApply: true }} />
     )
