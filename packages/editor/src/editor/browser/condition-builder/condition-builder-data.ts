@@ -1,6 +1,6 @@
 import type { ConditionData, ConditionGroupData, ConditionMode, LogicOperator, LogicOperators, Operators } from '@axonivy/ui-components';
 
-export const typeOptions: Operators = {
+export const operators: Operators = {
   'equal to': 'eq',
   'not equal to': 'ne',
   'is true': 'isTrue',
@@ -13,13 +13,13 @@ export const typeOptions: Operators = {
   'greater or equal to': 'ge'
 };
 
-export const logicalOperatorOptions: LogicOperators = {
+export const logicOperators: LogicOperators = {
   and: 'and',
   or: 'or'
 };
 
 const getLogicalOperator = (index: number, totalConditions: number, logicalOperator: LogicOperator) => {
-  return index < totalConditions - 1 ? ` ${logicalOperatorOptions[logicalOperator].toLowerCase()} ` : '';
+  return index < totalConditions - 1 ? ` ${logicOperators[logicalOperator].toLowerCase()} ` : '';
 };
 
 const formatCondition = (con: ConditionData, formattedArg1: string, formattedArg2: string, logicalOp: string) => {
@@ -33,7 +33,7 @@ const formatCondition = (con: ConditionData, formattedArg1: string, formattedArg
     case 'is not empty':
       return `not empty ${formattedArg1}${logicalOp}`;
     default:
-      return `${formattedArg1} ${typeOptions[con.operator]} ${formattedArg2}${logicalOp}`;
+      return `${formattedArg1} ${operators[con.operator]} ${formattedArg2}${logicalOp}`;
   }
 };
 
