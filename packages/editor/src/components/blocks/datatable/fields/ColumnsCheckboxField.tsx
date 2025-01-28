@@ -1,9 +1,9 @@
-import { isTable, type DataTableColumnConfig } from '@axonivy/form-editor-protocol';
+import { isTable, type DataTableColumn } from '@axonivy/form-editor-protocol';
 import { BasicCheckbox, Flex, Message } from '@axonivy/ui-components';
 import { isSameColumn, useDataTableColumns } from './useDataTableColumns';
 import { modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
 
-export type CheckboxColumn = DataTableColumnConfig & { selected: boolean };
+export type CheckboxColumn = DataTableColumn & { selected: boolean };
 
 export const ColumnsCheckboxField = () => {
   const { setData, element } = useData();
@@ -12,7 +12,7 @@ export const ColumnsCheckboxField = () => {
 
   const handleCheckboxChange = (change: boolean, column: CheckboxColumn) => {
     if (change) {
-      const newColumn: DataTableColumnConfig = { ...column };
+      const newColumn: DataTableColumn = { ...column };
       setActiveColumnsHistory(prevArray => [...prevArray, newColumn]);
       setUnboundSelectColumns(unboundSelectColumns.map(col => (isSameColumn(col, column) ? { ...col, selected: true } : col)));
       setData(

@@ -1,14 +1,14 @@
 import './DataTableColumn.css';
-import type { DataTableColumnConfig, Prettify } from '@axonivy/form-editor-protocol';
+import type { DataTableColumn, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import { baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
 import { Flex, IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
 
-type DataTableColumnProps = Prettify<DataTableColumnConfig>;
+type DataTableColumnProps = Prettify<DataTableColumn>;
 
-export const defaultDataTableColumnProps: DataTableColumnConfig = {
+export const defaultDataTableColumnProps: DataTableColumn = {
   header: 'header',
   value: 'value',
   sortable: false,
