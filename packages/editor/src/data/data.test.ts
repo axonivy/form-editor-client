@@ -5,8 +5,8 @@ import {
   type LayoutConfig,
   type DataTable,
   type ConfigData,
-  type DataTableColumnComponent,
-  type TableConfig
+  type TableConfig,
+  type TableComponent
 } from '@axonivy/form-editor-protocol';
 import { createInitForm, creationTargetId, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
 import type { DeepPartial } from '../types/types';
@@ -304,7 +304,7 @@ describe('findParentTableComponent', () => {
   ];
 
   test('return DataTable containing the element', () => {
-    const element: DataTableColumnComponent = {
+    const element: TableComponent = {
       cid: 'column-1',
       type: 'DataTableColumn',
       config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }
@@ -326,7 +326,7 @@ describe('findParentTableComponent', () => {
       { cid: '1', type: 'Input', config: {} },
       { cid: '2', type: 'Button', config: {} }
     ];
-    const element: DataTableColumnComponent = {
+    const element: TableComponent = {
       cid: 'column-1',
       type: 'DataTableColumn',
       config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }

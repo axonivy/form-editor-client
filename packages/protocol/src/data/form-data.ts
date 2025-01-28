@@ -1,5 +1,5 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type { Component, DataTable, DataTableColumn, Fieldset, Form, FormContext, FormEditorData, FormSaveDataArgs, Layout } from './form';
+import type { Component, DataTable, Fieldset, Form, FormContext, FormEditorData, FormSaveDataArgs, Layout, TableComponent } from './form';
 
 export type ComponentType = Component['type'] | 'DataTableColumn';
 
@@ -9,17 +9,13 @@ export type PrimitiveValue = string | boolean | number | any[] | Record<string, 
 
 export type ConfigData = Record<string, PrimitiveValue | Array<ComponentData>>;
 
-export interface DataTableColumnComponent extends DataTableColumn {
-  type: 'DataTableColumn';
-}
-
 export type ComponentData =
   | (Omit<Component, 'config'> & {
       config: ConfigData;
     })
-  | DataTableColumnComponent;
+  | TableComponent;
 
-export type TableConfig = ComponentData & { config: Omit<DataTable, 'components'> & { components: Array<DataTableColumnComponent> } };
+export type TableConfig = ComponentData & { config: Omit<DataTable, 'components'> & { components: Array<TableComponent> } };
 
 export type LayoutConfig = ComponentData & { config: Omit<Layout, 'components'> & { components: Array<ComponentData> } };
 

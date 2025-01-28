@@ -1,4 +1,4 @@
-import type { DataTable, DataTableColumnComponent, Prettify } from '@axonivy/form-editor-protocol';
+import type { DataTable, Prettify, TableComponent } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import './DataTable.css';
 import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } from '../base';
@@ -62,7 +62,7 @@ const UiBlock = ({ id, components, value, paginator, maxRows, visible }: UiCompo
       {components.length > 0 && (
         <Flex direction='row' gap={1} className='block-table__columns'>
           {components.map((column, index) => {
-            const columnComponent: DataTableColumnComponent = { ...column, type: 'DataTableColumn' };
+            const columnComponent: TableComponent = { ...column };
             return <ComponentBlock key={column.cid} component={columnComponent} preId={components[index - 1]?.cid} />;
           })}
         </Flex>
