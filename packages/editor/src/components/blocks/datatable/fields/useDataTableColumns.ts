@@ -1,4 +1,4 @@
-import { isTable, type DataTableColumnConfig, type Variable } from '@axonivy/form-editor-protocol';
+import { isTable, type DataTableColumn, type Variable } from '@axonivy/form-editor-protocol';
 
 import type { BrowserNode } from '@axonivy/ui-components';
 import { useAppContext } from '../../../../context/AppContext';
@@ -18,7 +18,7 @@ export const useDataTableColumns = () => {
   const activeColumns = useMemo(() => (isTable(element) ? element.config.components.map(c => c.config) : []), [element]);
   const boundColumns = convertBrowserNodesToColumns(attributesOfTableType);
 
-  const [activeColumnsHistory, setActiveColumnsHistory] = useState<DataTableColumnConfig[]>(activeColumns);
+  const [activeColumnsHistory, setActiveColumnsHistory] = useState<DataTableColumn[]>(activeColumns);
 
   const boundSelectColumns = boundColumns.map<CheckboxColumn>(column => ({
     ...(activeColumnsHistory.find(col => isSameColumn(col, column)) ?? column),
@@ -66,7 +66,7 @@ export const useDataTableColumns = () => {
   };
 };
 
-const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): DataTableColumnConfig[] => {
+const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): DataTableColumn[] => {
   return nodes.flatMap(node => {
     if (node.children.length === 0) {
       return [DataTableColumnComponent.create({ label: node.data?.attribute ?? '', value: '' })];
@@ -75,4 +75,4 @@ const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): Data
   });
 };
 
-export const isSameColumn = (col1: DataTableColumnConfig, col2: DataTableColumnConfig) => col1.value === col2.value;
+export const isSameColumn = (col1: DataTableColumn, col2: DataTableColumn) => col1.value === col2.value;

@@ -184,7 +184,7 @@ export interface Composite {
   startMethod: string;
 }
 export interface DataTable {
-  components: DataTableColumn[];
+  components: TableComponent[];
   id: string;
   lgSpan: string;
   maxRows: string;
@@ -193,11 +193,12 @@ export interface DataTable {
   value: string;
   visible: string;
 }
-export interface DataTableColumn {
+export interface TableComponent {
   cid: string;
-  config: DataTableColumnConfig;
+  type: "DataTableColumn";
+  config: DataTableColumn;
 }
-export interface DataTableColumnConfig {
+export interface DataTableColumn {
   filterable: boolean;
   header: string;
   sortable: boolean;
