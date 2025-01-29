@@ -84,8 +84,7 @@ export const findParentTableComponent = (data: Array<ComponentData>, element: Co
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {
   const find = findComponent(data, id);
   if (find) {
-    // XIVY-15872 Remove undefined check
-    if (isTable(find.parent) && component.type !== 'DataTableColumn' && component.type !== undefined) {
+    if (isTable(find.parent) && component.type !== 'DataTableColumn') {
       console.warn('It is not possible to add something else than columns to a data table');
       return;
     }
@@ -180,8 +179,7 @@ const pasteComponent = (data: FormData, id: string, targetId?: string) => {
   const newComponent = structuredClone(findComponentElement(data, id));
   if (newComponent) {
     let copyTarget = targetId ?? id;
-    // XIVY-15872 Remove undefined check
-    if (newComponent.element.type === 'DataTableColumn' || newComponent.element.type === undefined) {
+    if (newComponent.element.type === 'DataTableColumn') {
       copyTarget = id;
     }
     const added = addComponent(data.components, newComponent.element, copyTarget);
