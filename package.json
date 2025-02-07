@@ -12,7 +12,6 @@
     "clean": "lerna run clean",
     "build": "tsc --build && tscp --build",
     "package": "lerna run package",
-    "watch": "concurrently 'tsc --build --watch' 'tscp --build --watch'",
     "build:clean": "lerna run build:clean",
     "type": "lerna run type",
     "lint": "eslint",
@@ -28,9 +27,8 @@
     "publish:next": "lerna publish --exact --canary --preid next --tag-version-prefix beta --pre-dist-tag next --no-git-tag-version --no-push --ignore-scripts --yes"
   },
   "devDependencies": {
-    "@axonivy/eslint-config": "~13.1.0-next.514",
+    "@axonivy/eslint-config": "~13.1.0-next.522",
     "@types/node": "^22.10.7",
-    "concurrently": "^9.1.2",
     "lerna": "^8.1.9",
     "rimraf": "^6.0.1",
     "typescript": "~5.7.3",
