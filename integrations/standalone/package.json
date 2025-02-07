@@ -11,16 +11,19 @@
   "dependencies": {
     "@axonivy/form-editor": "*",
     "@axonivy/form-editor-core": "*",
-    "@axonivy/ui-components": "~12.0.4-next.442",
-    "@axonivy/ui-icons": "~12.0.4-next.442",
-    "path-browserify": "^1.0.1"
+    "@axonivy/ui-components": "~12.0.4-next.495",
+    "@axonivy/ui-icons": "~12.0.4-next.495",
+    "@axonivy/jsonrpc": "~12.0.4-next.495",
+    "@tanstack/react-query": "^5.64",
+    "@tanstack/react-query-devtools": "^5.64",
+    "path-browserify": "^1.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "vite": "^5.4.2"
   },
   "scripts": {

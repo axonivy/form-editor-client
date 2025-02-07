@@ -11,6 +11,9 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       fileName: 'core',
       formats: ['es']
+    },
+    rollupOptions: {
+      external: ['@axonivy/jsonrpc']
     }
   }
 });
