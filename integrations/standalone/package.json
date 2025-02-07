@@ -11,8 +11,8 @@
   "dependencies": {
     "@axonivy/form-editor": "*",
     "@axonivy/form-editor-core": "*",
-    "@axonivy/ui-components": "~13.1.0-next.453",
-    "@axonivy/ui-icons": "~13.1.0-next.453",
+    "@axonivy/ui-components": "~13.1.0-next.514",
+    "@axonivy/ui-icons": "~13.1.0-next.514",
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
