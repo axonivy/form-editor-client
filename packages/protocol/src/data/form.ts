@@ -199,11 +199,19 @@ export interface TableComponent {
   config: DataTableColumn;
 }
 export interface DataTableColumn {
+  actionColumnAsMenu: boolean;
+  asActionColumn: boolean;
+  components: ActionColumnComponent[];
   filterable: boolean;
   header: string;
   sortable: boolean;
   value: string;
   visible: string;
+}
+export interface ActionColumnComponent {
+  cid: string;
+  type: "Button";
+  config: Button;
 }
 export interface DatePicker {
   datePattern: string;
