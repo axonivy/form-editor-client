@@ -50,7 +50,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
     ...visibleComponentField
   },
-  quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN'],
+  quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN', 'CREATEACTIONCOLUMN'],
   subSectionControls: (props, subSection) => (subSection === 'Columns' ? <ColumnControl {...props} /> : null)
 };
 

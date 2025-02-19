@@ -3,7 +3,14 @@ import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
 import { useDraggable } from '@dnd-kit/core';
-import { creationTargetId, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../data/data';
+import {
+  COLUMN_DROPZONE_ID_PREFIX,
+  creationTargetId,
+  isActionButtonComponent,
+  modifyData,
+  TABLE_DROPZONE_ID_PREFIX,
+  useData
+} from '../../data/data';
 import { dragData } from './drag-data';
 import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -14,14 +21,16 @@ import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 import { useClipboard, type TextDropItem } from 'react-aria';
+import { defaultDataTableColumnProps } from '../../components/blocks/datatablecolumn/DataTableColumn';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
   preId?: string;
+  parentId?: string;
 };
 
-export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => (
-  <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
+export const ComponentBlock = ({ component, preId, parentId, ...props }: ComponentBlockProps) => (
+  <DropZone id={component.cid} type={component.type} preId={preId} parentId={parentId} {...props}>
     <Draggable config={componentByName(component.type)} data={component} />
   </DropZone>
 );
@@ -33,7 +42,7 @@ type DraggableProps = {
 
 const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
-  const { setData } = useData();
+  const { data: formData, setData } = useData();
   const readonly = useReadonly();
   const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ disabled: readonly, id: data.cid, data: dragData(data) });
   const { selectedElement, setSelectedElement } = useAppContext();
@@ -51,10 +60,46 @@ const Draggable = ({ config, data }: DraggableProps) => {
       oldData =>
         modifyData(oldData, {
           type: 'add',
-          data: { componentName: 'DataTableColumn', targetId: TABLE_DROPZONE_ID_PREFIX + data.cid }
+          data: {
+            componentName: 'DataTableColumn',
+            targetId: TABLE_DROPZONE_ID_PREFIX + data.cid
+          }
         }).newData
     );
   };
+
+  const createActionColumn = () => {
+    setData(
+      oldData =>
+        modifyData(oldData, {
+          type: 'add',
+          data: {
+            componentName: 'DataTableColumn',
+            targetId: TABLE_DROPZONE_ID_PREFIX + data.cid,
+            create: {
+              label: '',
+              value: '',
+              defaultProps: {
+                ...defaultDataTableColumnProps,
+                header: 'Actions',
+                asActionColumn: true
+              }
+            }
+          }
+        }).newData
+    );
+  };
+
+  const createActionButton = () => {
+    setData(
+      oldData =>
+        modifyData(oldData, {
+          type: 'add',
+          data: { componentName: 'Button', targetId: COLUMN_DROPZONE_ID_PREFIX + data.cid }
+        }).newData
+    );
+  };
+
   const createElement = (name: ComponentType) => {
     setData(
       oldData =>
@@ -74,6 +119,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
       setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }).newData);
     }
   });
+
   return (
     <Popover open={isSelected && !isDragging}>
       <PopoverAnchor asChild>
@@ -129,9 +175,19 @@ const Draggable = ({ config, data }: DraggableProps) => {
       <Quickbar
         deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
         duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
-        createAction={config.quickActions.includes('CREATE') ? createElement : undefined}
-        createFromDataAction={config.quickActions.includes('CREATEFROMDATA') ? data.cid : undefined}
+        createAction={
+          !isActionButtonComponent(formData.components, data.cid) && config.quickActions.includes('CREATE') ? createElement : undefined
+        }
+        createFromDataAction={
+          !isActionButtonComponent(formData.components, data.cid) && config.quickActions.includes('CREATEFROMDATA') ? data.cid : undefined
+        }
         createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
+        createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
+        createActionColumnButtonAction={
+          config.quickActions.includes('CREATEACTIONCOLUMNBUTTON') && data.type === 'DataTableColumn' && data.config.asActionColumn
+            ? createActionButton
+            : undefined
+        }
       />
     </Popover>
   );
@@ -147,10 +203,20 @@ type QuickbarProps = {
   duplicateAction?: () => void;
   createAction?: (name: ComponentType) => void;
   createColumnAction?: () => void;
+  createActionColumnAction?: () => void;
+  createActionColumnButtonAction?: () => void;
   createFromDataAction?: string;
 };
 
-const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAction, createFromDataAction }: QuickbarProps) => {
+const Quickbar = ({
+  deleteAction,
+  duplicateAction,
+  createAction,
+  createColumnAction,
+  createActionColumnAction,
+  createFromDataAction,
+  createActionColumnButtonAction
+}: QuickbarProps) => {
   const [menu, setMenu] = useState(false);
   const readonly = useReadonly();
   if (readonly) {
@@ -163,7 +229,7 @@ const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAct
           <Flex gap={1}>
             {deleteAction && <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />}
             {duplicateAction && <Button icon={IvyIcons.Duplicate} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />}
-            {(createColumnAction || createAction || createFromDataAction) && (
+            {(createColumnAction || createActionColumnButtonAction || createAction || createFromDataAction) && (
               <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
             )}
             {createColumnAction && (
@@ -173,6 +239,22 @@ const Quickbar = ({ deleteAction, duplicateAction, createAction, createColumnAct
                 aria-label='Create Column'
                 title='Create Column'
                 onClick={createColumnAction}
+              />
+            )}
+            {createActionColumnAction && (
+              <Button
+                icon={IvyIcons.Play}
+                aria-label='Create Action Column'
+                title='Create Action Column'
+                onClick={createActionColumnAction}
+              />
+            )}
+            {createActionColumnButtonAction && (
+              <Button
+                icon={IvyIcons.Play}
+                aria-label='Create Action Column Button'
+                title='Create Action Column Button'
+                onClick={createActionColumnButtonAction}
               />
             )}
             {/* <Button icon={IvyIcons.ChangeType} title='Change Type' /> */}

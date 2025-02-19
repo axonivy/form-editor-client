@@ -9,11 +9,13 @@ export type DropZoneProps = ComponentProps<'div'> & {
   id: string;
   type?: ComponentType;
   preId?: string;
+  parentId?: string;
 };
 
-export const DropZone = ({ id, type, preId, className, children }: DropZoneProps) => {
+export const DropZone = ({ id, type, preId, className, parentId, children }: DropZoneProps) => {
   const dnd = useDndContext();
-  const { isOver, setNodeRef } = useDroppable({ id, disabled: isDropZoneDisabled(id, type, dnd.active, preId) });
+  const { isOver, setNodeRef } = useDroppable({ id, disabled: isDropZoneDisabled(id, type, dnd.active, preId, parentId) });
+
   return (
     <div ref={setNodeRef} className={cn('drop-zone', isOver && 'is-drop-target', className)}>
       <div className='drop-zone-block' />

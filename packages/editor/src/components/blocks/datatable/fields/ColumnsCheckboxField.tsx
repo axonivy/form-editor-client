@@ -1,65 +1,29 @@
-import { isTable, type DataTableColumn } from '@axonivy/form-editor-protocol';
-import { BasicCheckbox, Flex, Message } from '@axonivy/ui-components';
-import { isSameColumn, useDataTableColumns } from './useDataTableColumns';
-import { modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
+import { type DataTableColumn } from '@axonivy/form-editor-protocol';
+import { Flex, Message } from '@axonivy/ui-components';
+import { useDataTableColumns } from './useDataTableColumns';
+import { ListItemWithActions } from './ListItemWithActions';
 
-export type CheckboxColumn = DataTableColumn & { selected: boolean };
+export type CheckboxColumn = DataTableColumn & { columnCid: string };
 
 export const ColumnsCheckboxField = () => {
-  const { setData, element } = useData();
-  const { boundColumns, boundSelectColumns, unboundSelectColumns, setUnboundSelectColumns, setActiveColumnsHistory } =
-    useDataTableColumns();
-
-  const handleCheckboxChange = (change: boolean, column: CheckboxColumn) => {
-    if (change) {
-      const newColumn: DataTableColumn = { ...column };
-      setActiveColumnsHistory(prevArray => [...prevArray, newColumn]);
-      setUnboundSelectColumns(unboundSelectColumns.map(col => (isSameColumn(col, column) ? { ...col, selected: true } : col)));
-      setData(
-        oldData =>
-          modifyData(oldData, {
-            type: 'add',
-            data: {
-              componentName: 'DataTableColumn',
-              targetId: `${TABLE_DROPZONE_ID_PREFIX}${element?.cid}`,
-              create: { value: newColumn.value, label: newColumn.header, defaultProps: { ...newColumn } }
-            }
-          }).newData
-      );
-    } else {
-      setUnboundSelectColumns(unboundSelectColumns.map(col => (isSameColumn(col, column) ? { ...col, selected: false } : col)));
-      const columnId = isTable(element) ? element.config.components.find(c => isSameColumn(c.config, column))?.cid : undefined;
-      if (columnId) {
-        setData(oldData => modifyData(oldData, { type: 'remove', data: { id: columnId } }).newData);
-      }
-    }
-  };
+  const { boundColumns, activeColumns } = useDataTableColumns();
 
   return (
     <Flex direction='column' gap={1}>
       {boundColumns.length === 0 ? (
         <Message variant='warning' message='Defined Object is not valid' />
       ) : (
-        boundSelectColumns.map(column => (
-          <BasicCheckbox
-            key={column.value}
+        activeColumns.map((column, index) => (
+          <ListItemWithActions
+            key={column.columnCid}
+            componentCid={column.columnCid}
             label={column.header}
-            checked={column.selected}
-            onCheckedChange={change => handleCheckboxChange(change as boolean, column)}
+            index={index}
+            allItemsCount={activeColumns.length}
+            isBound={boundColumns.some(active => active.value === column.value)}
           />
         ))
       )}
-      {unboundSelectColumns.map(column => {
-        const isStartingWithBound = boundSelectColumns.some(boundCol => column.value.startsWith(`${boundCol.value}.`));
-        return (
-          <BasicCheckbox
-            key={column.value}
-            label={column.header + (isStartingWithBound ? '' : ' (unbound)')}
-            checked={column.selected}
-            onCheckedChange={change => handleCheckboxChange(change as boolean, column)}
-          />
-        );
-      })}
     </Flex>
   );
 };
