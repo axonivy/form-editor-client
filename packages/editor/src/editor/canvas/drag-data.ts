@@ -1,6 +1,11 @@
-import { isStructure, isTable, type Component, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
+import { isColumn, isStructure, isTable, type Component, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
 import type { Active } from '@dnd-kit/core';
-import { STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
+import {
+  COLUMN_DROPZONE_ID_PREFIX,
+  isActionButtonComponent,
+  STRUCTURE_DROPZONE_ID_PREFIX,
+  TABLE_DROPZONE_ID_PREFIX
+} from '../../data/data';
 import type { AutoCompleteWithString } from '../../types/types';
 
 export type DragData = {
@@ -9,7 +14,7 @@ export type DragData = {
 };
 
 const disabledIds = (data: Component | ComponentData): Array<string> => {
-  if (isStructure(data) || isTable(data)) {
+  if (isStructure(data) || isTable(data) || isColumn(data)) {
     const ids: Array<string> = [];
     for (const component of data.config.components) {
       ids.push(...disabledIds(component));
@@ -28,7 +33,13 @@ export const isDragData = (data: unknown): data is DragData => {
   return typeof data === 'object' && data !== null && 'componentType' in data && 'disabledIds' in data;
 };
 
-export const isDropZoneDisabled = (dropId: string, dropType?: ComponentType, active?: Active | null, preDropId?: string) => {
+export const isDropZoneDisabled = (
+  dropId: string,
+  components?: Array<ComponentData>,
+  dropType?: ComponentType,
+  active?: Active | null,
+  preDropId?: string
+) => {
   if (active === undefined || active === null) {
     return false;
   }
@@ -37,12 +48,21 @@ export const isDropZoneDisabled = (dropId: string, dropType?: ComponentType, act
     dragId === dropId ||
     `${STRUCTURE_DROPZONE_ID_PREFIX}${dragId}` === dropId ||
     `${TABLE_DROPZONE_ID_PREFIX}${dragId}` === dropId ||
+    `${COLUMN_DROPZONE_ID_PREFIX}${dragId}` === dropId ||
     dragId === preDropId
   ) {
     return true;
   }
 
   const data = active.data.current;
+
+  if (
+    (dropId.startsWith(COLUMN_DROPZONE_ID_PREFIX) || (components && isActionButtonComponent(components, dropId))) &&
+    data?.componentType !== 'Button' &&
+    active.id !== 'Button'
+  ) {
+    return true;
+  }
   if (disableDataTableColumnDropZone(dropType, (data as Partial<DragData>)?.componentType ?? '')) {
     return true;
   }

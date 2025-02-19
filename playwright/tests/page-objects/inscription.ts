@@ -103,11 +103,20 @@ export class Collapsible {
     return new Checkbox(this.page, this.content, options);
   }
 
+  async expectListItems(count: number) {
+    const listItems = this.content.locator('.list-item-with-actions');
+    await expect(listItems).toHaveCount(count);
+  }
+
+  listItem(options?: { label?: string; nth?: number }) {
+    return new ListItem(this.page, this.content, options);
+  }
+
   table(columns: ColumnType[]) {
     return new Table(this.page, this.content, columns);
   }
-  async toggleControl() {
-    await this.control.click();
+  async toggleControl(nth?: number) {
+    await this.control.nth(nth ? nth : 0).click();
   }
 }
 
@@ -248,6 +257,48 @@ export class Input {
 
     await globalButton.click();
     await expect(popover).not.toBeVisible();
+  }
+}
+
+export class ListItem {
+  public readonly locator: Locator;
+
+  constructor(
+    readonly page: Page,
+    readonly parentLocator: Locator,
+    options?: { nth?: number; label?: string }
+  ) {
+    if (options?.label) {
+      this.locator = parentLocator
+        .locator('.list-item-with-actions')
+        .filter({ hasText: options.label }) // Selects only the div that contains the text
+        .first(); // Use first() to ensure a single match
+    } else {
+      this.locator = parentLocator.locator('.list-item-with-actions').nth(options?.nth ?? 0);
+    }
+  }
+
+  async expectLabel(value: string) {
+    await expect(this.locator).toHaveText(value);
+  }
+
+  async expectBound(bound: boolean) {
+    const iconLocator = this.locator.locator('i.ivy.ivy-connector');
+
+    if (bound) {
+      await expect(iconLocator).toBeVisible();
+    } else {
+      await expect(iconLocator).toBeHidden();
+    }
+  }
+
+  async expectButtonsCount(count: number) {
+    await expect(this.locator.getByRole('button')).toHaveCount(count);
+  }
+
+  async pressButton(index: number) {
+    const buttons = this.locator.getByRole('button');
+    await buttons.nth(index).click();
   }
 }
 

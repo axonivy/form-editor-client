@@ -307,7 +307,16 @@ describe('findParentTableComponent', () => {
     const element: TableComponent = {
       cid: 'column-1',
       type: 'DataTableColumn',
-      config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }
+      config: {
+        header: '',
+        value: '',
+        actionColumnAsMenu: false,
+        asActionColumn: false,
+        components: [],
+        filterable: false,
+        sortable: false,
+        visible: 'true'
+      }
     };
     expect(findParentTableComponent(data, element)).toEqual(dataTable);
   });
@@ -329,7 +338,16 @@ describe('findParentTableComponent', () => {
     const element: TableComponent = {
       cid: 'column-1',
       type: 'DataTableColumn',
-      config: { header: '', value: '', filterable: false, sortable: false, visible: 'true' }
+      config: {
+        header: '',
+        value: '',
+        actionColumnAsMenu: false,
+        asActionColumn: false,
+        components: [],
+        filterable: false,
+        sortable: false,
+        visible: 'true'
+      }
     };
     expect(findParentTableComponent(noTableData, element)).toBeUndefined();
   });
