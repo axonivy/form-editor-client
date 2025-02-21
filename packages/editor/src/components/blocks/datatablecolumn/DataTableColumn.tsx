@@ -1,5 +1,5 @@
 import './DataTableColumn.css';
-import type { ColumnComponent, DataTableColumn, Prettify } from '@axonivy/form-editor-protocol';
+import type { ActionColumnComponent, DataTableColumn, Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import { baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
 import { Flex, IvyIcon, PanelMessage } from '@axonivy/ui-components';
@@ -93,13 +93,12 @@ const UiBlock = ({
         components.length > 0 ? (
           <Flex direction='column' gap={1} className='block-table__columns'>
             {components.map((button, index) => {
-              const actionButton: ColumnComponent = { ...button };
+              const actionButton: ActionColumnComponent = { ...button };
               return (
                 <ComponentBlock
                   key={`${COLUMN_DROPZONE_ID_PREFIX}${actionButton.cid}`}
                   component={{ ...actionButton, cid: `${actionButton.cid}` }}
                   preId={components[index - 1]?.cid}
-                  parentId={id}
                 />
               );
             })}
@@ -114,7 +113,15 @@ const UiBlock = ({
   </div>
 );
 
-export const EmptyActionColumnBlock = ({ id, components, type }: { id: string; components: Array<ColumnComponent>; type: string }) => (
+export const EmptyActionColumnBlock = ({
+  id,
+  components,
+  type
+}: {
+  id: string;
+  components: Array<ActionColumnComponent>;
+  type: string;
+}) => (
   <DropZone id={`${COLUMN_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
     {components.length === 0 ? (
       <PanelMessage message={`Drag first button inside the ${type}`} mode='row' className='drag-hint row' />

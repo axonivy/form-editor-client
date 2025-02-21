@@ -2,19 +2,15 @@ import { Button, Flex, IvyIcon, Label } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { modifyData, useData } from '../../../../data/data';
 
-export const ListItemWithActions = ({
-  componentCid,
-  label,
-  index,
-  allItemsCount,
-  isBound
-}: {
+type ListItemWithActionsProps = {
   componentCid: string;
   label: string;
   index: number;
   allItemsCount: number;
   isBound?: boolean;
-}) => {
+};
+
+export const ListItemWithActions = ({ componentCid, label, index, allItemsCount, isBound }: ListItemWithActionsProps) => {
   const { setData, setSelectedElement } = useData();
   return (
     <Flex
@@ -33,13 +29,6 @@ export const ListItemWithActions = ({
         <Label>{label}</Label>
       </Flex>
       <Flex direction='row' alignItems='center' gap={1}>
-        <Button
-          onClick={() => setData(oldData => modifyData(oldData, { type: 'remove', data: { id: componentCid } }).newData)}
-          icon={IvyIcons.Plus}
-          rotate={45}
-          variant='outline'
-        />
-        <Button onClick={() => setSelectedElement(componentCid)} icon={IvyIcons.Edit} variant='outline' />
         {index < allItemsCount - 1 && (
           <Button
             onClick={() => setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: componentCid } }).newData)}
@@ -56,6 +45,12 @@ export const ListItemWithActions = ({
             variant='outline'
           />
         )}
+        <Button
+          onClick={() => setData(oldData => modifyData(oldData, { type: 'remove', data: { id: componentCid } }).newData)}
+          icon={IvyIcons.Trash}
+          variant='outline'
+        />
+        <Button onClick={() => setSelectedElement(componentCid)} icon={IvyIcons.Edit} variant='outline' />
       </Flex>
     </Flex>
   );

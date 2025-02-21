@@ -1,6 +1,11 @@
 import { isColumn, isStructure, isTable, type Component, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
 import type { Active } from '@dnd-kit/core';
-import { COLUMN_DROPZONE_ID_PREFIX, STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
+import {
+  COLUMN_DROPZONE_ID_PREFIX,
+  isActionButtonComponent,
+  STRUCTURE_DROPZONE_ID_PREFIX,
+  TABLE_DROPZONE_ID_PREFIX
+} from '../../data/data';
 import type { AutoCompleteWithString } from '../../types/types';
 
 export type DragData = {
@@ -30,10 +35,10 @@ export const isDragData = (data: unknown): data is DragData => {
 
 export const isDropZoneDisabled = (
   dropId: string,
+  components: Array<ComponentData>,
   dropType?: ComponentType,
   active?: Active | null,
-  preDropId?: string,
-  parentDropId?: string
+  preDropId?: string
 ) => {
   if (active === undefined || active === null) {
     return false;
@@ -52,7 +57,7 @@ export const isDropZoneDisabled = (
   const data = active.data.current;
 
   if (
-    (dropId.startsWith(COLUMN_DROPZONE_ID_PREFIX) || parentDropId?.startsWith('datatablecolumn')) &&
+    (dropId.startsWith(COLUMN_DROPZONE_ID_PREFIX) || isActionButtonComponent(components, dropId)) &&
     data?.componentType !== 'Button' &&
     active.id !== 'Button'
   ) {

@@ -3,9 +3,9 @@ import { Flex, Message } from '@axonivy/ui-components';
 import { useDataTableColumns } from './useDataTableColumns';
 import { ListItemWithActions } from './ListItemWithActions';
 
-export type CheckboxColumn = DataTableColumn & { columnCid: string };
+export type ColumnItem = DataTableColumn & { columnCid: string };
 
-export const ColumnsCheckboxField = () => {
+export const ColumnsField = () => {
   const { boundColumns, activeColumns } = useDataTableColumns();
 
   return (

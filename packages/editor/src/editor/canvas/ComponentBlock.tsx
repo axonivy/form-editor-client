@@ -26,11 +26,10 @@ import { defaultDataTableColumnProps } from '../../components/blocks/datatableco
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
   preId?: string;
-  parentId?: string;
 };
 
-export const ComponentBlock = ({ component, preId, parentId, ...props }: ComponentBlockProps) => (
-  <DropZone id={component.cid} type={component.type} preId={preId} parentId={parentId} {...props}>
+export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => (
+  <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
     <Draggable config={componentByName(component.type)} data={component} />
   </DropZone>
 );

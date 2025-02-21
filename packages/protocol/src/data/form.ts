@@ -201,14 +201,14 @@ export interface TableComponent {
 export interface DataTableColumn {
   actionColumnAsMenu: boolean;
   asActionColumn: boolean;
-  components: ColumnComponent[];
+  components: ActionColumnComponent[];
   filterable: boolean;
   header: string;
   sortable: boolean;
   value: string;
   visible: string;
 }
-export interface ColumnComponent {
+export interface ActionColumnComponent {
   cid: string;
   type: "Button";
   config: Button;

@@ -1,6 +1,6 @@
 import type { KeysOfUnion } from '../utils/type-helper';
 import type {
-  ColumnComponent,
+  ActionColumnComponent,
   Component,
   DataTable,
   DataTableColumn,
@@ -27,11 +27,11 @@ export type ComponentData =
       config: ConfigData;
     })
   | TableComponent
-  | ColumnComponent;
+  | ActionColumnComponent;
 
 export type TableConfig = ComponentData & { config: Omit<DataTable, 'components'> & { components: Array<TableComponent> } };
 
-export type ColumnConfig = ComponentData & { config: Omit<DataTableColumn, 'components'> & { components: Array<ColumnComponent> } };
+export type ColumnConfig = ComponentData & { config: Omit<DataTableColumn, 'components'> & { components: Array<ActionColumnComponent> } };
 
 export type LayoutConfig = ComponentData & { config: Omit<Layout, 'components'> & { components: Array<ComponentData> } };
 

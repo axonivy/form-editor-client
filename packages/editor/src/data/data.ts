@@ -94,10 +94,7 @@ const findDataTableColumnComponent = (data: Array<ComponentData>, id: string) =>
 
 export const isActionButtonComponent = (data: Array<ComponentData>, elementCid: string) => {
   const find = findComponentDeep(data, elementCid);
-  if (find?.parent?.type === 'DataTableColumn') {
-    return true;
-  }
-  return false;
+  return find?.parent?.type === 'DataTableColumn';
 };
 
 export const findParentTableComponent = (data: Array<ComponentData>, element: ComponentData | undefined): DataTable | undefined => {

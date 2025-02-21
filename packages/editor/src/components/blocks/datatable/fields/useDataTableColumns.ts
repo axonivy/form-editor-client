@@ -4,10 +4,10 @@ import type { BrowserNode } from '@axonivy/ui-components';
 import { useAppContext } from '../../../../context/AppContext';
 import { useData } from '../../../../data/data';
 import { useMeta } from '../../../../context/useMeta';
-import type { CheckboxColumn } from './ColumnsCheckboxField';
 import { useMemo } from 'react';
 import { DataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
 import { findAttributesOfType } from '../../../../editor/browser/data-class/variable-tree-data';
+import type { ColumnItem } from './ColumnsField';
 
 export const useDataTableColumns = () => {
   const { context } = useAppContext();
@@ -18,7 +18,7 @@ export const useDataTableColumns = () => {
   const activeColumns = useMemo(
     () =>
       isTable(element)
-        ? element.config.components.map<CheckboxColumn>(c => ({
+        ? element.config.components.map<ColumnItem>(c => ({
             ...c.config,
             columnCid: c.cid
           }))
@@ -46,5 +46,3 @@ const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): Data
     return node.children.map(childNode => DataTableColumnComponent.create({ label: childNode.value, value: childNode.value }));
   });
 };
-
-export const isSameColumn = (col1: CheckboxColumn, col2: CheckboxColumn) => col1.columnCid === col2.columnCid;
