@@ -35,7 +35,7 @@ export const isDragData = (data: unknown): data is DragData => {
 
 export const isDropZoneDisabled = (
   dropId: string,
-  components: Array<ComponentData>,
+  components?: Array<ComponentData>,
   dropType?: ComponentType,
   active?: Active | null,
   preDropId?: string
@@ -57,7 +57,7 @@ export const isDropZoneDisabled = (
   const data = active.data.current;
 
   if (
-    (dropId.startsWith(COLUMN_DROPZONE_ID_PREFIX) || isActionButtonComponent(components, dropId)) &&
+    (dropId.startsWith(COLUMN_DROPZONE_ID_PREFIX) || (components && isActionButtonComponent(components, dropId))) &&
     data?.componentType !== 'Button' &&
     active.id !== 'Button'
   ) {

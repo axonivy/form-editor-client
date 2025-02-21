@@ -4,7 +4,6 @@ import { useDataTableColumns } from '../fields/useDataTableColumns';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { CreateComponentData } from '../../../../types/config';
 import { isTable } from '@axonivy/form-editor-protocol';
-import { defaultDataTableColumnProps } from '../../datatablecolumn/DataTableColumn';
 
 export const ColumnControl = (props: CollapsibleControlProps) => {
   const { element, setData } = useData();
@@ -33,11 +32,9 @@ export const ColumnControl = (props: CollapsibleControlProps) => {
             componentName: 'DataTableColumn',
             targetId: TABLE_DROPZONE_ID_PREFIX + element?.cid,
             create: {
-              label: '',
+              label: 'Actions',
               value: '',
               defaultProps: {
-                ...defaultDataTableColumnProps,
-                header: 'Actions',
                 asActionColumn: true
               }
             }

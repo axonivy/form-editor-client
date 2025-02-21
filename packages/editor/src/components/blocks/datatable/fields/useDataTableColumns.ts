@@ -15,6 +15,7 @@ export const useDataTableColumns = () => {
 
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   const attributesOfTableType = findAttributesOfType(variableInfo, isTable(element) ? element.config.value : '');
+
   const activeColumns = useMemo(
     () =>
       isTable(element)
@@ -25,6 +26,7 @@ export const useDataTableColumns = () => {
         : [],
     [element]
   );
+
   const boundColumns = convertBrowserNodesToColumns(attributesOfTableType);
 
   const boundInactiveColumns = useMemo(() => {

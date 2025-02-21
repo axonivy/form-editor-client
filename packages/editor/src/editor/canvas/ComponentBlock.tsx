@@ -21,7 +21,6 @@ import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 import { useClipboard, type TextDropItem } from 'react-aria';
-import { defaultDataTableColumnProps } from '../../components/blocks/datatablecolumn/DataTableColumn';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -76,11 +75,9 @@ const Draggable = ({ config, data }: DraggableProps) => {
             componentName: 'DataTableColumn',
             targetId: TABLE_DROPZONE_ID_PREFIX + data.cid,
             create: {
-              label: '',
+              label: 'Actions',
               value: '',
               defaultProps: {
-                ...defaultDataTableColumnProps,
-                header: 'Actions',
                 asActionColumn: true
               }
             }

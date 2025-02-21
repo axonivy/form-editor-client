@@ -23,6 +23,7 @@ export const ListItemWithActions = ({ componentCid, label, index, allItemsCount,
         borderRadius: 'var(--border-r1)',
         padding: 'var(--size-1)'
       }}
+      className='list-item-with-actions'
     >
       <Flex direction='row' alignItems='center' gap={1}>
         {isBound && <IvyIcon icon={IvyIcons.Connector} title='Column is bound to an object attribute' />}
