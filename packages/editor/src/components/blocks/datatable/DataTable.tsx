@@ -13,7 +13,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
 import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
 import { ColumnControl } from './controls/ColumnControl';
-import { ColumnsCheckboxField } from './fields/ColumnsCheckboxField';
+import { ColumnsField } from './fields/ColumnsField';
 
 type DataTableProps = Prettify<DataTable>;
 
@@ -45,12 +45,12 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
       browsers: ['ATTRIBUTE'],
       options: { typeHint: 'List' }
     },
-    components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsCheckboxField /> },
+    components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsField /> },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
     ...visibleComponentField
   },
-  quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN'],
+  quickActions: ['DELETE', 'DUPLICATE', 'CREATECOLUMN', 'CREATEACTIONCOLUMN'],
   subSectionControls: (props, subSection) => (subSection === 'Columns' ? <ColumnControl {...props} /> : null)
 };
 
