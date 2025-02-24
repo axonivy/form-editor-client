@@ -2,7 +2,7 @@ import { isColumn, isStructure, isTable, type Component, type ComponentData, typ
 import type { Active } from '@dnd-kit/core';
 import {
   COLUMN_DROPZONE_ID_PREFIX,
-  isActionButtonComponent,
+  getParentColumnComponent,
   STRUCTURE_DROPZONE_ID_PREFIX,
   TABLE_DROPZONE_ID_PREFIX
 } from '../../data/data';
@@ -57,7 +57,8 @@ export const isDropZoneDisabled = (
   const data = active.data.current;
 
   if (
-    (dropId.startsWith(COLUMN_DROPZONE_ID_PREFIX) || (components && isActionButtonComponent(components, dropId))) &&
+    (dropId.startsWith(COLUMN_DROPZONE_ID_PREFIX) ||
+      (components && getParentColumnComponent(components, dropId).isDataTableColumnComponent)) &&
     data?.componentType !== 'Button' &&
     active.id !== 'Button'
   ) {

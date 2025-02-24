@@ -5,7 +5,7 @@
 }
 
 .block-table__columns {
-  width: 100%;
+  overflow-x: auto;
   > div {
     flex: 1 1 auto;
   }

@@ -186,7 +186,18 @@ describe('modifyData', () => {
       expect(data.components).toHaveLength(1);
       const component = data.components.find(c => c.cid === '1') as TableConfig;
       expect(component.config.components).toHaveLength(4);
-      expect(component.config.components[0].cid).toEqual('datatablecolumn14');
+      expect(component.config.components[0].cid).toEqual('datatablecolumn15');
+    });
+
+    test('paste datatable action column', () => {
+      // paste a datatable column acts always as duplicate
+      const data = modifyData(tableData(), { type: 'paste', data: { id: '13', targetId: '1' } }).newData;
+      expect(data).not.toEqual(tableData());
+      expect(data.components).toHaveLength(1);
+      const component = data.components.find(c => c.cid === '1') as TableConfig;
+      expect(component.config.components).toHaveLength(4);
+      expect(component.config.components[2].config.components).toHaveLength(1);
+      expect(component.config.components[2].config.components[0].cid).toEqual('button16');
     });
 
     test('paste other things into datatable', () => {
@@ -222,18 +233,18 @@ describe('modifyData', () => {
     test('duplicate table', () => {
       const data = modifyData(tableData(), { type: 'paste', data: { id: '1' } }).newData;
       expect(data.components).toHaveLength(2);
-      const component = data.components.find(c => c.cid === 'datatable14') as TableConfig;
+      const component = data.components.find(c => c.cid === 'datatable15') as TableConfig;
       expect(component.config.components).toHaveLength(3);
-      expect(component.config.components[0].cid).toEqual('datatablecolumn15');
+      expect(component.config.components[0].cid).toEqual('datatablecolumn16');
       expect(component.config.components[0].config.value).toEqual('Hello');
-      expect(component.config.components[1].cid).toEqual('datatablecolumn16');
-      expect(component.config.components[2].cid).toEqual('datatablecolumn17');
+      expect(component.config.components[1].cid).toEqual('datatablecolumn17');
+      expect(component.config.components[2].cid).toEqual('datatablecolumn18');
     });
 
     test('duplicate table column', () => {
       const data = modifyData(tableData(), { type: 'paste', data: { id: '11' } }).newData;
       expectOrder(data, ['1']);
-      expectOrderDeep(data, '1', ['datatablecolumn14', '11', '12', '13']);
+      expectOrderDeep(data, '1', ['datatablecolumn15', '11', '12', '13']);
     });
   });
 
@@ -433,7 +444,7 @@ const tableData = () => {
           components: [
             { cid: '11', type: 'DataTableColumn', config: { value: 'Hello' } },
             { cid: '12', type: 'DataTableColumn', config: {} },
-            { cid: '13', type: 'DataTableColumn', config: {} }
+            { cid: '13', type: 'DataTableColumn', config: { components: [{ cid: '14', type: 'Button', config: {} }] } }
           ]
         }
       }

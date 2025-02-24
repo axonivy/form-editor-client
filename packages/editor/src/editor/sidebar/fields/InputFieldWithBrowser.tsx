@@ -20,6 +20,7 @@ export const InputFieldWithBrowser = ({
   options
 }: InputFieldProps & { browsers: Array<BrowserType>; options?: TextBrowserFieldOptions }) => {
   const [open, setOpen] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(inputRef);
@@ -60,7 +61,14 @@ export const InputFieldWithBrowser = ({
         style={{ height: '80vh' }}
         onCloseAutoFocus={browsers.includes('LOGIC') ? e => focusBracketContent(e, value, inputRef.current) : undefined}
       >
-        <Browser activeBrowsers={browsers} close={() => setOpen(false)} value={value} onChange={onChange} options={options} />
+        <Browser
+          activeBrowsers={browsers}
+          close={() => setOpen(false)}
+          value={value}
+          onChange={onChange}
+          options={options}
+          selection={selection}
+        />
       </DialogContent>
     </Dialog>
   );
