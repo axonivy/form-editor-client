@@ -1,5 +1,17 @@
 import type { KeysOfUnion } from '../utils/type-helper';
-import type { Component, DataTable, Fieldset, Form, FormContext, FormEditorData, FormSaveDataArgs, Layout, TableComponent } from './form';
+import type {
+  ActionColumnComponent,
+  Component,
+  DataTable,
+  DataTableColumn,
+  Fieldset,
+  Form,
+  FormContext,
+  FormEditorData,
+  FormSaveDataArgs,
+  Layout,
+  TableComponent
+} from './form';
 
 export type ComponentType = Component['type'] | 'DataTableColumn';
 
@@ -14,9 +26,12 @@ export type ComponentData =
   | (Omit<Component, 'config'> & {
       config: ConfigData;
     })
-  | TableComponent;
+  | TableComponent
+  | ActionColumnComponent;
 
 export type TableConfig = ComponentData & { config: Omit<DataTable, 'components'> & { components: Array<TableComponent> } };
+
+export type ColumnConfig = ComponentData & { config: Omit<DataTableColumn, 'components'> & { components: Array<ActionColumnComponent> } };
 
 export type LayoutConfig = ComponentData & { config: Omit<Layout, 'components'> & { components: Array<ComponentData> } };
 
@@ -36,6 +51,10 @@ export const isStructure = (component?: Component | ComponentData): component is
 
 export const isTable = (component?: Component | ComponentData): component is TableConfig => {
   return component !== undefined && component.type === 'DataTable' && 'components' in component.config;
+};
+
+export const isColumn = (component?: Component | ComponentData): component is ColumnConfig => {
+  return component !== undefined && component.type === 'DataTableColumn' && 'components' in component.config;
 };
 
 const isLayout = (component?: Component | ComponentData): component is LayoutConfig => {
