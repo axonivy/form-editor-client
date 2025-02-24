@@ -1,4 +1,5 @@
 import type {
+  EditorFileContent,
   FormActionArgs,
   FormClient,
   FormEditor,
@@ -29,9 +30,9 @@ export class FormClientMock implements FormClient {
     return Promise.resolve(this.formData);
   }
 
-  saveData(saveData: FormSaveData): Promise<void> {
+  saveData(saveData: FormSaveData): Promise<EditorFileContent> {
     this.formData.data = saveData.data;
-    return Promise.resolve();
+    return Promise.resolve({ content: '' });
   }
 
   validate(): Promise<ValidationResult[]> {

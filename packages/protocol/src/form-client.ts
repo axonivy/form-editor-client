@@ -1,4 +1,4 @@
-import type { FormContext, ValidationResult, FormActionArgs } from './data/form';
+import type { FormContext, ValidationResult, FormActionArgs, EditorFileContent } from './data/form';
 import type { FormEditor, FormSaveData } from './data/form-data';
 import type { FormMetaRequestTypes } from './form-protocol';
 
@@ -13,7 +13,7 @@ export interface Disposable {
 
 export interface FormClient {
   data(context: FormContext): Promise<FormEditor>;
-  saveData(saveData: FormSaveData): Promise<void>;
+  saveData(saveData: FormSaveData): Promise<EditorFileContent>;
 
   validate(context: FormContext): Promise<ValidationResult[]>;
 

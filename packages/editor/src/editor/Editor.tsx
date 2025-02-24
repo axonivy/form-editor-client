@@ -66,7 +66,7 @@ export const Editor = (props: FormEditorProps) => {
 
   const mutation = useMutation({
     mutationKey: queryKeys.saveData(context),
-    mutationFn: (updateData: Unary<FormData>) => {
+    mutationFn: async (updateData: Unary<FormData>) => {
       const saveData = queryClient.setQueryData<FormEditor>(queryKeys.data(context), prevData => {
         if (prevData) {
           return { ...prevData, data: updateData(prevData.data) };

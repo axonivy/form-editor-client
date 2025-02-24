@@ -8,7 +8,8 @@ import type {
   FormSaveData,
   FormOnNotificationTypes,
   ValidationResult,
-  FormActionArgs
+  FormActionArgs,
+  EditorFileContent
 } from '@axonivy/form-editor-protocol';
 import {
   BaseRpcClient,
@@ -41,7 +42,7 @@ export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
     return this.sendRequest('data', { ...context });
   }
 
-  saveData(saveData: FormSaveData): Promise<void> {
+  saveData(saveData: FormSaveData): Promise<EditorFileContent> {
     return this.sendRequest('saveData', { ...saveData });
   }
 

@@ -26,11 +26,11 @@ export interface Forms {
   compositeContext: CompositeContext;
   compositeInfo: CompositeInfo[];
   contentObject: ContentObject[];
+  editorFileContent: EditorFileContent;
   executeCmsQuickActionRequest: ExecuteCmsQuickActionRequest;
   form: Form;
   formActionArgs: FormActionArgs;
   formContext: FormContext;
-  formEditorContent: FormEditorContent;
   formEditorData: FormEditorData;
   formSaveDataArgs: FormSaveDataArgs;
   logicInfo: LogicInfo;
@@ -87,6 +87,9 @@ export interface ContentObject {
 }
 export interface MapStringString {
   [k: string]: string;
+}
+export interface EditorFileContent {
+  content: string;
 }
 export interface ExecuteCmsQuickActionRequest {
   cmsQuickAction: CmsQuickAction;
@@ -347,9 +350,6 @@ export interface FormActionArgs {
   actionId: "openDataClass" | "openProcess" | "openUrl";
   context: FormContext;
   payload: string;
-}
-export interface FormEditorContent {
-  content: string;
 }
 export interface FormEditorData {
   context: FormContext;
