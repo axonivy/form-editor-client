@@ -131,7 +131,7 @@ describe('variableTreeData', () => {
 test('findAttributesOfType of List<demo.Endless>', () => {
   const list = findAttributesOfType(endlessParamInfo, 'param.Endless.endlessList');
   expect(list.length).toEqual(1);
-  expect(list[0].value).toEqual('Use entire Object');
+  expect(list[0].value).toEqual('variable');
   expect(list[0].info).toEqual('demo.Endless');
   expect(list[0].children[0].value).toEqual('endless');
   expect(list[0].children[0].info).toEqual('demo.Endless');
