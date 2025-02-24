@@ -12,7 +12,8 @@ import type {
   FormActionArgs,
   CmsQuickActionRequest,
   CmsQuickAction,
-  ExecuteCmsQuickActionRequest
+  ExecuteCmsQuickActionRequest,
+  EditorFileContent
 } from './data/form';
 import type { FormEditor, FormSaveData } from './data/form-data';
 
@@ -28,7 +29,7 @@ export interface FormMetaRequestTypes {
 
 export interface FormRequestTypes extends FormMetaRequestTypes {
   data: [FormContext, FormEditor];
-  saveData: [FormSaveData, void];
+  saveData: [FormSaveData, EditorFileContent];
 
   validate: [FormContext, ValidationResult[]];
 }
