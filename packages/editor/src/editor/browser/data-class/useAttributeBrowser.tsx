@@ -19,17 +19,17 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
 
   useEffect(() => {
     if (options?.onlyAttributes === 'DYNAMICLIST') {
-      setTree(findAttributesOfType(variableInfo, dynamicList, 10, 'Dynamic Object'));
+      setTree(findAttributesOfType(variableInfo, dynamicList));
     } else if (options?.onlyAttributes === 'COLUMN') {
       const parentTableComponent = findParentTableComponent(data.components, element);
-      setTree(findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : '', 10, 'Row-Object'));
+      setTree(findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''));
     } else if (element && getParentColumnComponent(data.components, element.cid).isDataTableColumnComponent) {
       const parentTableComponent = findParentTableComponent(
         data.components,
         getParentColumnComponent(data.components, element.cid).component
       );
       setTree([
-        ...findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : '', 10, 'Row-Object'),
+        ...findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''),
         ...variableTreeData().of(variableInfo)
       ]);
     } else {
