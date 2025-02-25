@@ -18,7 +18,7 @@ export const ContentControls = (props: CollapsibleControlProps) => {
   return (
     element?.type === 'DataTableColumn' &&
     element.config.asActionColumn && (
-      <Button icon={IvyIcons.Play} onClick={createActionButton} size='small' title='Add new Action Column Button' {...props} />
+      <Button icon={IvyIcons.Plus} onClick={createActionButton} size='small' title='Add new Action Column Button' {...props} />
     )
   );
 };

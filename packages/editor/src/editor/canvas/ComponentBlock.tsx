@@ -244,7 +244,7 @@ const Quickbar = ({
             )}
             {createActionColumnAction && (
               <Button
-                icon={IvyIcons.Play}
+                icon={IvyIcons.MultiSelection}
                 aria-label='Create Action Column'
                 title='Create Action Column'
                 onClick={createActionColumnAction}
@@ -252,7 +252,7 @@ const Quickbar = ({
             )}
             {createActionColumnButtonAction && (
               <Button
-                icon={IvyIcons.Play}
+                icon={IvyIcons.MultiSelection}
                 aria-label='Create Action Column Button'
                 title='Create Action Column Button'
                 onClick={createActionColumnButtonAction}

@@ -42,7 +42,7 @@ test('dataTableColumn', async ({ page }) => {
   const behaviour = properties.behaviour();
 
   await header.expectValue('header');
-  await value.expectValue('value');
+  await value.expectValue('');
   await header.fill('new header');
   await value.fill('title');
 
@@ -67,7 +67,7 @@ test('edit column and update table', async ({ page }) => {
   const value = contentSection.input({ label: 'Value' });
 
   await header.expectValue('header');
-  await value.expectValue('value');
+  await value.expectValue('');
   await header.fill('new header');
   await value.fill('title');
 
@@ -113,7 +113,7 @@ test('columns from attribute', async ({ page }) => {
   await columnAgeNew.expectBound(false);
   await columnFirstNameNew.expectBound(true);
 
-  await columnsSection.toggleControl(1);
+  await columnsSection.toggleControl();
   await columnsSection.expectListItems(5);
 
   await listOfObjects.fill('#{data.data.strings}');
@@ -138,7 +138,7 @@ test('dataTableAction', async ({ page }) => {
   const section = properties.collapsible('General');
   const header = section.input({ label: 'Header' });
   await header.expectValue('Action');
-  const asActionColumn = section.checkbox({ label: 'Column as Action Column' });
+  const asActionColumn = section.checkbox({ label: 'Action Column' });
   await asActionColumn.expectValue(true);
 
   const contentSection = properties.collapsible('Content');

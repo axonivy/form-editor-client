@@ -283,12 +283,12 @@ export class ListItem {
   }
 
   async expectBound(bound: boolean) {
-    const iconLocator = this.locator.locator('i.ivy.ivy-connector');
+    const labelLocator = this.locator.locator('label[title="Column is bound to an object attribute"]');
 
     if (bound) {
-      await expect(iconLocator).toBeVisible();
+      await expect(labelLocator).toBeVisible();
     } else {
-      await expect(iconLocator).toBeHidden();
+      await expect(labelLocator).toBeHidden();
     }
   }
 
