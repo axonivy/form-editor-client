@@ -36,7 +36,13 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   fields: {
     ...baseComponentFields,
     name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: ['CMS'] },
-    action: { subsection: 'General', label: 'Action', type: 'textBrowser', browsers: ['LOGIC'] },
+    action: {
+      subsection: 'General',
+      label: 'Action',
+      type: 'textBrowser',
+      browsers: ['LOGIC', 'ATTRIBUTE'],
+      options: { overrideSelection: true }
+    },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
     icon: { subsection: 'General', label: 'Icon', type: 'hidden' },
     processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },

@@ -1,7 +1,15 @@
 import type { ComponentConfig, CreateComponentData, CreateData } from '../types/config';
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
-import { isStructure, isTable, type ComponentData, type ComponentType, type DataTable, type FormData } from '@axonivy/form-editor-protocol';
+import {
+  isColumn,
+  isStructure,
+  isTable,
+  type ComponentData,
+  type ComponentType,
+  type DataTable,
+  type FormData
+} from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
 import type { UpdateConsumer } from '../types/types';
 
@@ -9,6 +17,7 @@ export const CANVAS_DROPZONE_ID = 'canvas';
 export const DELETE_DROPZONE_ID = 'delete';
 export const STRUCTURE_DROPZONE_ID_PREFIX = 'layout-';
 export const TABLE_DROPZONE_ID_PREFIX = 'table-';
+export const COLUMN_DROPZONE_ID_PREFIX = 'column-';
 
 const findComponent = (
   data: Array<ComponentData>,
@@ -24,6 +33,9 @@ const findComponent = (
   if (id.startsWith(TABLE_DROPZONE_ID_PREFIX)) {
     return findTableComponent(data, id.replace(TABLE_DROPZONE_ID_PREFIX, ''));
   }
+  if (id.startsWith(COLUMN_DROPZONE_ID_PREFIX)) {
+    return findDataTableColumnComponent(data, id.replace(COLUMN_DROPZONE_ID_PREFIX, ''));
+  }
   return findComponentDeep(data, id, parent);
 };
 
@@ -31,7 +43,7 @@ const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: Comp
   const index = data.findIndex(obj => obj.cid === id);
   if (index < 0) {
     for (const element of data) {
-      if (isTable(element) || isStructure(element)) {
+      if (isTable(element) || isStructure(element) || isColumn(element)) {
         const find = findComponent(element.config.components, id, element);
         if (find) {
           return find;
@@ -67,6 +79,24 @@ const findTableComponent = (data: Array<ComponentData>, id: string) => {
   return;
 };
 
+const findDataTableColumnComponent = (data: Array<ComponentData>, id: string) => {
+  for (const table of data) {
+    if (isTable(table)) {
+      const column = table.config.components.find(col => col.cid === id);
+      if (column) {
+        const columnData = column.config.components;
+        return { data: columnData, index: columnData.length };
+      }
+    }
+  }
+  return undefined;
+};
+
+export const getParentColumnComponent = (data: Array<ComponentData>, elementCid: string) => {
+  const find = findComponentDeep(data, elementCid);
+  return { isDataTableColumnComponent: find?.parent?.type === 'DataTableColumn', component: find?.parent };
+};
+
 export const findParentTableComponent = (data: Array<ComponentData>, element: ComponentData | undefined): DataTable | undefined => {
   for (const component of data) {
     if (component.type === 'DataTable') {
@@ -86,6 +116,10 @@ const addComponent = (data: Array<ComponentData>, component: ComponentData, id: 
   if (find) {
     if (isTable(find.parent) && component.type !== 'DataTableColumn') {
       console.warn('It is not possible to add something else than columns to a data table');
+      return;
+    }
+    if (isColumn(find.parent) && component.type !== 'Button') {
+      console.warn('It is not possible to add something else than buttons to a action column');
       return;
     }
     add(find.data, component, find.index);
@@ -191,7 +225,7 @@ const pasteComponent = (data: FormData, id: string, targetId?: string) => {
 
 const defineNewCid = (components: Array<ComponentData>, component: ComponentData) => {
   component.cid = createId(components, component.type);
-  if (isStructure(component) || isTable(component)) {
+  if (isStructure(component) || isTable(component) || isColumn(component)) {
     for (const child of component.config.components) {
       defineNewCid(components, child);
     }

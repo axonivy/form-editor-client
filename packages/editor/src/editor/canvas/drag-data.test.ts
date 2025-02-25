@@ -2,7 +2,7 @@ import type { FormData } from '@axonivy/form-editor-protocol';
 import { dragData, isDropZoneDisabled, type DragData } from './drag-data';
 import type { Active } from '@dnd-kit/core';
 import type { DeepPartial } from '../../types/types';
-import { STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
+import { COLUMN_DROPZONE_ID_PREFIX, STRUCTURE_DROPZONE_ID_PREFIX, TABLE_DROPZONE_ID_PREFIX } from '../../data/data';
 
 describe('dragData', () => {
   test('normal', () => {
@@ -28,49 +28,54 @@ describe('dragData', () => {
 
 describe('isDropZoneDisabled', () => {
   test('inactive draggable', () => {
-    expect(isDropZoneDisabled('1', undefined, null)).toBeFalsy();
+    expect(isDropZoneDisabled('1', undefined, undefined, null)).toBeFalsy();
     expect(isDropZoneDisabled('1', undefined, undefined)).toBeFalsy();
   });
 
   test('drop zone from draggable', () => {
     const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled('1', undefined, active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('1', undefined, undefined, active as Active)).toBeTruthy();
   });
 
   test('drop zone from pre element', () => {
     const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled('2', undefined, active as Active, '1')).toBeTruthy();
+    expect(isDropZoneDisabled('2', undefined, undefined, active as Active, '1')).toBeTruthy();
   });
 
   test('empty drop zone from structure element', () => {
     const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled(`${STRUCTURE_DROPZONE_ID_PREFIX}1`, undefined, active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled(`${STRUCTURE_DROPZONE_ID_PREFIX}1`, undefined, undefined, active as Active)).toBeTruthy();
   });
 
   test('empty drop zone from table element', () => {
     const active: Partial<Active> = { id: '1', data: { current: undefined } };
-    expect(isDropZoneDisabled(`${TABLE_DROPZONE_ID_PREFIX}1`, undefined, active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled(`${TABLE_DROPZONE_ID_PREFIX}1`, undefined, undefined, active as Active)).toBeTruthy();
+  });
+
+  test('empty drop zone from table element', () => {
+    const active: Partial<Active> = { id: '1', data: { current: undefined } };
+    expect(isDropZoneDisabled(`${COLUMN_DROPZONE_ID_PREFIX}1`, undefined, undefined, active as Active)).toBeTruthy();
   });
 
   test('disable all children for structure', () => {
     const active: Partial<Active> = { id: '0', data: { current: { componentType: 'Layout', disabledIds: ['2', '3'] } } };
-    expect(isDropZoneDisabled('1', undefined, active as Active)).toBeFalsy();
-    expect(isDropZoneDisabled('2', undefined, active as Active)).toBeTruthy();
-    expect(isDropZoneDisabled('3', undefined, active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('1', undefined, undefined, active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('2', undefined, undefined, active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('3', undefined, undefined, active as Active)).toBeTruthy();
   });
 
   test('disable columns', () => {
     let active: Partial<Active> = { id: '0', data: { current: undefined } };
-    expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeFalsy();
-    expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('1', undefined, 'Input', active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('2', undefined, 'DataTableColumn', active as Active)).toBeTruthy();
 
     active = { id: '0', data: { current: { componentType: 'Input', disabledIds: [] } } };
-    expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeFalsy();
-    expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('1', undefined, 'Input', active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('2', undefined, 'DataTableColumn', active as Active)).toBeTruthy();
 
     active = { id: '0', data: { current: { componentType: 'DataTableColumn', disabledIds: [] } } };
-    expect(isDropZoneDisabled('1', 'Input', active as Active)).toBeTruthy();
-    expect(isDropZoneDisabled('2', 'DataTableColumn', active as Active)).toBeFalsy();
+    expect(isDropZoneDisabled('1', undefined, 'Input', active as Active)).toBeTruthy();
+    expect(isDropZoneDisabled('2', undefined, 'DataTableColumn', active as Active)).toBeFalsy();
   });
 });
 

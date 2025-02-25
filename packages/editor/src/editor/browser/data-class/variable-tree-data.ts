@@ -65,6 +65,7 @@ export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | un
   if (component === undefined) {
     return undefined;
   }
+
   return {
     componentName: component.component.name,
     label: labelText(node.value),
@@ -84,8 +85,8 @@ export function findAttributesOfType(data: VariableInfo, variableName: string, m
 
       return [
         {
-          value: 'Use entire Object',
-          info: extractedType,
+          value: 'variable',
+          info: `${extractedType}`,
           icon: IvyIcons.Attribute,
           data: { attribute: nameToSearch, description: '', simpleType: extractedType, type: extractedType },
           children,

@@ -4,7 +4,7 @@ import { useMeta } from '../../../context/useMeta';
 import { useCallback, useEffect, useState } from 'react';
 import type { ConfigData, Variable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
-import { findParentTableComponent, useData } from '../../../data/data';
+import { findParentTableComponent, getParentColumnComponent, useData } from '../../../data/data';
 import type { BrowserOptions } from '../Browser';
 import { findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
 
@@ -23,6 +23,15 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
     } else if (options?.onlyAttributes === 'COLUMN') {
       const parentTableComponent = findParentTableComponent(data.components, element);
       setTree(findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''));
+    } else if (element && getParentColumnComponent(data.components, element.cid).isDataTableColumnComponent) {
+      const parentTableComponent = findParentTableComponent(
+        data.components,
+        getParentColumnComponent(data.components, element.cid).component
+      );
+      setTree([
+        ...findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''),
+        ...variableTreeData().of(variableInfo)
+      ]);
     } else {
       setTree(variableTreeData().of(variableInfo));
     }
