@@ -92,9 +92,9 @@ const findDataTableColumnComponent = (data: Array<ComponentData>, id: string) =>
   return undefined;
 };
 
-export const isActionButtonComponent = (data: Array<ComponentData>, elementCid: string) => {
+export const getParentColumnComponent = (data: Array<ComponentData>, elementCid: string) => {
   const find = findComponentDeep(data, elementCid);
-  return find?.parent?.type === 'DataTableColumn';
+  return { isDataTableColumnComponent: find?.parent?.type === 'DataTableColumn', component: find?.parent };
 };
 
 export const findParentTableComponent = (data: Array<ComponentData>, element: ComponentData | undefined): DataTable | undefined => {
@@ -225,7 +225,7 @@ const pasteComponent = (data: FormData, id: string, targetId?: string) => {
 
 const defineNewCid = (components: Array<ComponentData>, component: ComponentData) => {
   component.cid = createId(components, component.type);
-  if (isStructure(component) || isTable(component)) {
+  if (isStructure(component) || isTable(component) || isColumn(component)) {
     for (const child of component.config.components) {
       defineNewCid(components, child);
     }

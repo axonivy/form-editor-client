@@ -1,5 +1,6 @@
 .block-layout {
   gap: var(--size-4);
+  overflow-x: auto;
 }
 .block-layout.grid {
   display: grid;

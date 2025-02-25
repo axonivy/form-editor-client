@@ -73,7 +73,12 @@ export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | un
   };
 };
 
-export function findAttributesOfType(data: VariableInfo, variableName: string, maxDepth: number = 10): Array<BrowserNode<Variable>> {
+export function findAttributesOfType(
+  data: VariableInfo,
+  variableName: string,
+  maxDepth: number = 10,
+  additionalInfo?: string
+): Array<BrowserNode<Variable>> {
   const nameToSearch = extractVariableName(variableName);
 
   for (const attributes of Object.values(data.types)) {
@@ -84,8 +89,8 @@ export function findAttributesOfType(data: VariableInfo, variableName: string, m
 
       return [
         {
-          value: 'Use entire Object',
-          info: extractedType,
+          value: 'variable',
+          info: `${additionalInfo ? additionalInfo + ' - ' : ''}${extractedType}`,
           icon: IvyIcons.Attribute,
           data: { attribute: nameToSearch, description: '', simpleType: extractedType, type: extractedType },
           children,

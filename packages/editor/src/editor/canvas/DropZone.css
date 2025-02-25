@@ -1,7 +1,7 @@
 .drop-zone {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  min-width: auto;
   &.is-drop-target {
     &:has(.drag-hint) .drop-zone-block {
       height: 0;
