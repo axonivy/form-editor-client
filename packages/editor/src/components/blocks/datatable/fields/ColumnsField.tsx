@@ -11,13 +11,11 @@ export const ColumnsField = () => {
   return (
     <Flex direction='column' gap={1}>
       {boundColumns.length === 0 && <Message variant='warning' message='Defined Object is not valid' />}
-      {activeColumns.map((column, index) => (
+      {activeColumns.map(column => (
         <ListItemWithActions
           key={column.columnCid}
           componentCid={column.columnCid}
           label={column.header}
-          index={index}
-          allItemsCount={activeColumns.length}
           isBound={boundColumns.some(active => active.value === column.value)}
         />
       ))}

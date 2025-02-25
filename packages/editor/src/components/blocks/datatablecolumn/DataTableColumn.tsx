@@ -10,12 +10,13 @@ import { COLUMN_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { DropZone } from '../../../editor/canvas/DropZone';
 import { ActionButtonsField } from './ActionButtonsField';
 import { ContentControls } from './controls/ContentControls';
+import { useAppContext } from '../../../context/AppContext';
 
 type DataTableColumnProps = Prettify<DataTableColumn>;
 
 export const defaultDataTableColumnProps: DataTableColumn = {
   header: 'header',
-  value: 'value',
+  value: '',
   components: [],
   asActionColumn: false,
   actionColumnAsMenu: true,
@@ -37,8 +38,8 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
   fields: {
     ...baseComponentFields,
     header: { subsection: 'General', label: 'Header', type: 'textBrowser', browsers: ['CMS'] },
-    actionColumnAsMenu: { subsection: 'Content', label: 'Actions as Menu', type: 'checkbox', hide: data => !data.asActionColumn },
-    asActionColumn: { subsection: 'General', label: 'Column as Action Column', type: 'checkbox' },
+    asActionColumn: { subsection: 'General', label: 'Action Column', type: 'checkbox' },
+    actionColumnAsMenu: { subsection: 'Content', label: 'Actions in Menu Button', type: 'checkbox', hide: () => true },
     components: {
       subsection: 'Content',
       label: 'Actions',
@@ -72,46 +73,57 @@ const UiBlock = ({
   visible,
   components,
   asActionColumn
-}: UiComponentProps<DataTableColumnProps>) => (
-  <div className='block-column'>
-    <div className='block-column__head'>
-      <Flex justifyContent='space-between' direction='column' gap={2}>
-        <Flex direction='row' alignItems='center' gap={2} justifyContent='space-between'>
-          <Flex alignItems='center' gap={2}>
-            {header}
-            {sortable && !asActionColumn && <IvyIcon icon={IvyIcons.Selector} />}
+}: UiComponentProps<DataTableColumnProps>) => {
+  const { ui } = useAppContext();
+
+  return (
+    <div className='block-column'>
+      <div className='block-column__head'>
+        <Flex justifyContent='space-between' direction='column' gap={2}>
+          <Flex direction='row' alignItems='center' gap={2} justifyContent='space-between'>
+            <Flex alignItems='center' gap={2}>
+              {header}
+              {sortable && !asActionColumn && <IvyIcon icon={IvyIcons.Selector} />}
+            </Flex>
+            <UiBlockHeaderVisiblePart visible={visible} />
           </Flex>
-          <UiBlockHeaderVisiblePart visible={visible} />
+          <span className='block-column__filter' data-active={filterable && !asActionColumn}>
+            Filter By {header}
+          </span>
         </Flex>
-        <span className='block-column__filter' data-active={filterable && !asActionColumn}>
-          Filter By {header}
-        </span>
-      </Flex>
-    </div>
-    <div className='block-column__body'>
-      {asActionColumn ? (
-        components.length > 0 ? (
-          <Flex direction='column' gap={1} className='block-table__columns'>
-            {components.map((button, index) => {
-              const actionButton: ActionColumnComponent = { ...button };
-              return (
-                <ComponentBlock
-                  key={`${COLUMN_DROPZONE_ID_PREFIX}${actionButton.cid}`}
-                  component={{ ...actionButton, cid: `${actionButton.cid}` }}
-                  preId={components[index - 1]?.cid}
-                />
-              );
-            })}
-          </Flex>
+      </div>
+      <div className='block-column__body'>
+        {asActionColumn ? (
+          components.length > 0 ? (
+            <Flex direction='column' gap={1} className='block-table__columns'>
+              {ui.helpPaddings ? (
+                components.map((button, index) => {
+                  const actionButton: ActionColumnComponent = { ...button };
+                  return (
+                    <ComponentBlock
+                      key={`${COLUMN_DROPZONE_ID_PREFIX}${actionButton.cid}`}
+                      component={{ ...actionButton, cid: `${actionButton.cid}` }}
+                      preId={components[index - 1]?.cid}
+                    />
+                  );
+                })
+              ) : (
+                <div className='block-button' data-variant='primary' style={{ justifyContent: 'start' }}>
+                  <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
+                  <div>{header}</div>
+                </div>
+              )}
+            </Flex>
+          ) : (
+            <EmptyActionColumnBlock components={components} id={id} type='Action Column' />
+          )
         ) : (
-          <EmptyActionColumnBlock components={components} id={id} type='Action Column' />
-        )
-      ) : (
-        <span>{value?.length === 0 ? 'Use entire Object' : value}</span>
-      )}
+          <span>{value?.length === 0 || value === 'variable' ? 'Use entire Object' : value}</span>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const EmptyActionColumnBlock = ({
   id,

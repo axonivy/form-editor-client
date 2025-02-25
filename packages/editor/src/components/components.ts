@@ -66,6 +66,10 @@ export const allComponentsByCategory = () => {
 };
 
 export const componentForType = (type: AutoCompleteWithString<ComponentType>) => {
+  if (type.startsWith('List<') && type.endsWith('>')) {
+    return { component: config.components.DataTable };
+  }
+
   switch (type) {
     case 'String':
       return { component: config.components.Input };

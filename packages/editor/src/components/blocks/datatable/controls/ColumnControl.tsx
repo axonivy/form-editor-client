@@ -1,5 +1,5 @@
 import { Button, Flex, type CollapsibleControlProps } from '@axonivy/ui-components';
-import { createInitTableColumns, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
+import { createInitTableColumns, useData } from '../../../../data/data';
 import { useDataTableColumns } from '../fields/useDataTableColumns';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { CreateComponentData } from '../../../../types/config';
@@ -23,30 +23,10 @@ export const ColumnControl = (props: CollapsibleControlProps) => {
       });
     }
   };
-  const createActionColumn = () => {
-    setData(
-      oldData =>
-        modifyData(oldData, {
-          type: 'add',
-          data: {
-            componentName: 'DataTableColumn',
-            targetId: TABLE_DROPZONE_ID_PREFIX + element?.cid,
-            create: {
-              label: 'Actions',
-              value: '',
-              defaultProps: {
-                asActionColumn: true
-              }
-            }
-          }
-        }).newData
-    );
-  };
 
   return (
     <Flex gap={1}>
-      <Button icon={IvyIcons.Play} size={'small'} onClick={createActionColumn} title='Create new Action Column' {...props} />
-      <Button icon={IvyIcons.Connector} size={'small'} onClick={bindAllColumns} title='Set default Columns' {...props} />
+      <Button icon={IvyIcons.Plus} size={'small'} onClick={bindAllColumns} title='Set default Columns' {...props} />
     </Flex>
   );
 };
