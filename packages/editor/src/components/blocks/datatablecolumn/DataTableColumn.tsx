@@ -39,7 +39,7 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
     ...baseComponentFields,
     header: { subsection: 'General', label: 'Header', type: 'textBrowser', browsers: ['CMS'] },
     asActionColumn: { subsection: 'General', label: 'Action Column', type: 'checkbox' },
-    actionColumnAsMenu: { subsection: 'Content', label: 'Actions in Menu Button', type: 'checkbox', hide: () => true },
+    actionColumnAsMenu: { subsection: 'Content', label: 'Actions in Menu Button', type: 'checkbox', hide: data => !data.asActionColumn },
     components: {
       subsection: 'Content',
       label: 'Actions',
@@ -72,7 +72,8 @@ const UiBlock = ({
   filterable,
   visible,
   components,
-  asActionColumn
+  asActionColumn,
+  actionColumnAsMenu
 }: UiComponentProps<DataTableColumnProps>) => {
   const { ui } = useAppContext();
 
@@ -95,8 +96,8 @@ const UiBlock = ({
       <div className='block-column__body'>
         {asActionColumn ? (
           components.length > 0 ? (
-            <Flex direction='column' gap={1} className='block-table__columns'>
-              {ui.helpPaddings ? (
+            <Flex direction={actionColumnAsMenu ? 'column' : 'row'} gap={1} className='block-table__columns'>
+              {ui.helpPaddings || (!ui.helpPaddings && !actionColumnAsMenu) ? (
                 components.map((button, index) => {
                   const actionButton: ActionColumnComponent = { ...button };
                   return (
