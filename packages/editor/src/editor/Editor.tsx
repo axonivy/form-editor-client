@@ -110,6 +110,9 @@ export const Editor = (props: FormEditorProps) => {
         helpUrl: data.helpUrl
       }}
     >
+      <link rel='stylesheet' href='/dev-workflow-ui/webjars/font-awesome/6.1.0/css/all.min.css' />
+      <link rel='stylesheet' href='/dev-workflow-ui/webjars/streamline-icons/11.4.0/StreamlineIcons.css' />
+      <link rel='stylesheet' href='/dev-workflow-ui/faces/javax.faces.resource/primeicons/primeicons.css?ln=primefaces&v=13.0.14-LTS' />
       <DndContext>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
           <MasterPart />
