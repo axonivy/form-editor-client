@@ -23,7 +23,7 @@ export const ActionButtonsField = () => {
   return (
     <Flex direction='column' gap={1}>
       {activeButtons.map(button => (
-        <ListItemWithActions key={button.buttonCid} componentCid={button.buttonCid} label={button.name} />
+        <ListItemWithActions key={button.buttonCid} componentCid={button.buttonCid} label={button.name} icon={button.icon} />
       ))}
     </Flex>
   );

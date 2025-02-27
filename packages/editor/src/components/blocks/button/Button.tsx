@@ -4,6 +4,7 @@ import './Button.css';
 import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
 import IconSvg from './Button.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
+import { renderIconField } from './IconField';
 
 type ButtonProps = Prettify<Button>;
 
@@ -44,7 +45,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
       options: { overrideSelection: true }
     },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
-    icon: { subsection: 'General', label: 'Icon', type: 'hidden' },
+    icon: { subsection: 'General', label: 'Icon', type: 'generic', render: renderIconField },
     processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
     ...disabledComponentFields
   },
@@ -56,7 +57,7 @@ const UiBlock = ({ name, icon, variant, visible, disabled }: UiComponentProps<Bu
     <UiBlockHeader visible={visible} disabled={disabled} />
     <div className='block-button' data-variant={variant.toLocaleLowerCase()}>
       {icon && <i className={icon} />}
-      <UiBadge value={name} />
+      {(name.length > 0 || icon.length === 0) && <UiBadge value={name} />}
     </div>
   </>
 );
