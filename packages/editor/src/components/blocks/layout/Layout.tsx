@@ -23,7 +23,7 @@ const typeOptions: FieldOption<LayoutType>[] = [
 ] as const;
 
 const gridVariantOptions: FieldOption<LayoutGridVariant>[] = [
-  { label: '1 Columns', value: 'GRID1' },
+  { label: '1 Column', value: 'GRID1' },
   { label: '2 Columns', value: 'GRID2' },
   { label: '4 Columns', value: 'GRID4' },
   { label: 'Free', value: 'FREE' }
@@ -71,18 +71,20 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
       options: justifyContentOptions,
       hide: data => data.type !== 'FLEX'
     },
-    alignItems: {
-      subsection: 'General',
-      type: 'select',
-      label: 'Align items',
-      options: alignItemsOptions
-    },
+
     gridVariant: {
       subsection: 'General',
       type: 'select',
       label: 'Columns',
       options: gridVariantOptions,
       hide: data => data.type !== 'GRID'
+    },
+    alignItems: {
+      subsection: 'General',
+      type: 'select',
+      label: 'Align items',
+      options: alignItemsOptions,
+      hide: data => data.type === 'GRID' && data.gridVariant === 'GRID1'
     },
     ...visibleComponentField
   },
