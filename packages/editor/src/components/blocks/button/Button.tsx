@@ -18,6 +18,7 @@ export const defaultButtonProps: Button = {
   name: 'Action',
   action: '',
   variant: 'PRIMARY',
+  type: 'BUTTON',
   icon: '',
   processOnlySelf: false,
   ...defaultDisabledComponent,
@@ -45,6 +46,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
       options: { overrideSelection: true }
     },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
+    type: { subsection: 'General', label: 'Type', type: 'hidden' },
     icon: { subsection: 'General', label: 'Icon', type: 'generic', render: renderIconField },
     processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
     ...disabledComponentFields
