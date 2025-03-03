@@ -8,10 +8,12 @@
 
 export type CmsQuickactionCategory = ("global" | "local")
 export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
+export type ButtonType = "SUBMIT" | "BUTTON" | "RESET";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type SymbolPosition = "p" | "s";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
-export type LayoutGridVariant = "GRID2" | "GRID4" | "FREE";
+export type LayoutAlignItems = "START" | "CENTER" | "END";
+export type LayoutGridVariant = "GRID1" | "GRID2" | "GRID4" | "FREE";
 export type LayoutJustifyContent = "NORMAL" | "END";
 export type LayoutType = "GRID" | "FLEX";
 export type OrientationType = "horizontal" | "vertical";
@@ -146,6 +148,7 @@ export interface Button {
   mdSpan: string;
   name: string;
   processOnlySelf: boolean;
+  type: ButtonType;
   variant: ButtonVariant;
   visible: string;
 }
@@ -255,6 +258,7 @@ export interface Input {
   visible: string;
 }
 export interface Layout {
+  alignItems: LayoutAlignItems;
   components: Component[];
   gridVariant: LayoutGridVariant;
   id: string;
