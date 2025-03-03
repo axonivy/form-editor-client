@@ -7,7 +7,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import './Panel.css';
-import { UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
 
 type PanelProps = Prettify<Panel>;
 
@@ -44,7 +44,7 @@ export const PanelComponent: ComponentConfig<PanelProps> = {
 const UiBlock = ({ id, components, title, collapsible, collapsed, visible }: UiComponentProps<PanelProps>) => (
   <div className={`i-panel ${collapsible && collapsed ? 'default-collapsed' : ''}`}>
     <div className='i-panel-header'>
-      {title}
+      <UiBadge value={title} />
       <Flex gap={1} alignItems='center'>
         <UiBlockHeaderVisiblePart visible={visible} />
         {collapsible ? (
