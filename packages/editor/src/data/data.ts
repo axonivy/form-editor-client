@@ -311,7 +311,7 @@ export const createInitForm = (
       type: 'add',
       data: {
         componentName: 'Button',
-        create: { label: 'Proceed', value: '#{logic.close}', defaultProps: { variant: 'PRIMARY' } },
+        create: { label: 'Proceed', value: '#{logic.close}', defaultProps: { variant: 'PRIMARY', type: 'SUBMIT' } },
         targetId: layoutId
       }
     }).newData;

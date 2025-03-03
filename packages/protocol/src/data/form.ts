@@ -8,6 +8,7 @@
 
 export type CmsQuickactionCategory = ("global" | "local")
 export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
+export type ButtonType = "SUBMIT" | "BUTTON" | "RESET";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type SymbolPosition = "p" | "s";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
@@ -149,6 +150,7 @@ export interface Button {
   mdSpan: string;
   name: string;
   processOnlySelf: boolean;
+  type: ButtonType;
   variant: ButtonVariant;
   visible: string;
 }

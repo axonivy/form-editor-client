@@ -292,7 +292,9 @@ describe('createInitForm', () => {
     expect(layout.type).toEqual('Layout');
     expect(layout.config.components).toHaveLength(2);
     expect((layout.config.components[0].config as ConfigData).action).toEqual('#{ivyWorkflowView.cancel()}');
+    expect((layout.config.components[0].config as ConfigData).type).toEqual('BUTTON');
     expect((layout.config.components[1].config as ConfigData).action).toEqual('#{logic.close}');
+    expect((layout.config.components[1].config as ConfigData).type).toEqual('SUBMIT');
   });
 });
 
