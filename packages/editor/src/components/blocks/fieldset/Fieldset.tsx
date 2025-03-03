@@ -5,7 +5,8 @@ import IconSvg from './Fieldset.svg?react';
 import { defaultBaseComponent, baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
 import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import './Fieldset.css';
-import { UiBlockHeader } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
+import { Flex } from '@axonivy/ui-components';
 
 type FieldsetProps = Prettify<Fieldset>;
 
@@ -44,8 +45,10 @@ const UiBlock = ({ id, components, legend, collapsible, collapsed, visible }: Ui
     <UiBlockHeader visible={visible} />
     <fieldset className={`${collapsible ? (collapsed ? 'collapsible default-collapsed' : 'collapsible') : ''}`}>
       <legend>
-        {collapsible ? (collapsed ? '+ ' : '- ') : ''}
-        {legend}
+        <Flex direction='row' alignItems='center' gap={1}>
+          {collapsible ? (collapsed ? '+' : '-') : ''}
+          <UiBadge value={legend} />
+        </Flex>
       </legend>
       {components.map((component, index) => (
         <ComponentBlock key={component.cid} component={component} preId={components[index - 1]?.cid} />
