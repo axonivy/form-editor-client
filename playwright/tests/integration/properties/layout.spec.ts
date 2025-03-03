@@ -63,6 +63,16 @@ test('children in free layout', async ({ page }) => {
   await expect(layoutAccordion.item).toBeHidden();
 });
 
+test('1 col grid', async ({ page }) => {
+  const { type, columns, align } = await layout(page);
+  await type.expectValue('Grid');
+  await columns.expectValue('2 Columns');
+  await expect(align.locator).toBeVisible();
+  await align.expectValue('Start');
+  await columns.choose('1 Column');
+  await expect(align.locator).toBeHidden();
+});
+
 const layout = async (page: Page) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Layout' });
   const layoutBlock = editor.canvas.blockByNth(0, { layout: true });
