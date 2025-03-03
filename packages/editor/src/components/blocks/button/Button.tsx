@@ -1,4 +1,4 @@
-import type { Button, ButtonVariant, ButtonType, Prettify } from '@axonivy/form-editor-protocol';
+import type { Button, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
 import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
@@ -12,12 +12,6 @@ const variantOptions: FieldOption<ButtonVariant>[] = [
   { label: 'Primary', value: 'PRIMARY' },
   { label: 'Secondary', value: 'SECONDARY' },
   { label: 'Danger', value: 'DANGER' }
-] as const;
-
-const typeOptions: FieldOption<ButtonType>[] = [
-  { label: 'Button', value: 'BUTTON' },
-  { label: 'Submit', value: 'SUBMIT' },
-  { label: 'Reset', value: 'RESET' }
 ] as const;
 
 export const defaultButtonProps: Button = {
@@ -52,7 +46,7 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
       options: { overrideSelection: true }
     },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
-    type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
+    type: { subsection: 'General', label: 'Type', type: 'hidden' },
     icon: { subsection: 'General', label: 'Icon', type: 'generic', render: renderIconField },
     processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
     ...disabledComponentFields
