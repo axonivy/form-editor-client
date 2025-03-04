@@ -37,13 +37,12 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   outlineInfo: component => component.name,
   fields: {
     ...baseComponentFields,
-    name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: ['CMS'] },
+    name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: [{ type: 'CMS', options: { overrideSelection: true } }] },
     action: {
       subsection: 'General',
       label: 'Action',
       type: 'textBrowser',
-      browsers: ['LOGIC', 'ATTRIBUTE'],
-      options: { overrideSelection: true }
+      browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }]
     },
     variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
     type: { subsection: 'General', label: 'Type', type: 'hidden' },

@@ -28,8 +28,13 @@ export const TextareaComponent: ComponentConfig<TextareaProps> = {
   outlineInfo: component => component.label,
   fields: {
     ...baseComponentFields,
-    label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+    label: {
+      subsection: 'General',
+      label: 'Label',
+      type: 'textBrowser',
+      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
     rows: { subsection: 'General', label: 'Visible Rows', type: 'number' },
     autoResize: { subsection: 'General', label: 'Auto Resize', type: 'checkbox' },
     ...behaviourComponentFields

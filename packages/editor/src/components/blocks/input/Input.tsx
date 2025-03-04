@@ -48,8 +48,13 @@ export const InputComponent: ComponentConfig<InputProps> = {
   outlineInfo: component => component.label,
   fields: {
     ...baseComponentFields,
-    label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+    label: {
+      subsection: 'General',
+      label: 'Label',
+      type: 'textBrowser',
+      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     decimalPlaces: { subsection: 'Formatting', label: 'Decimal Places', type: 'number', hide: data => data.type !== 'NUMBER' },
     symbol: { subsection: 'Formatting', label: 'Symbol', type: 'text', hide: data => data.type !== 'NUMBER' },
