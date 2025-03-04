@@ -29,8 +29,13 @@ export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
   outlineInfo: component => component.label,
   fields: {
     ...baseComponentFields,
-    label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
-    selected: { subsection: 'General', label: 'Selected', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+    label: {
+      subsection: 'General',
+      label: 'Label',
+      type: 'textBrowser',
+      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    },
+    selected: { subsection: 'General', label: 'Selected', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
     ...disabledComponentFields,
     updateOnChange: { subsection: 'Behaviour', label: 'Update Form on Change', type: 'checkbox' }
   },

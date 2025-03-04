@@ -37,7 +37,12 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
   outlineInfo: component => component.header,
   fields: {
     ...baseComponentFields,
-    header: { subsection: 'General', label: 'Header', type: 'textBrowser', browsers: ['CMS'] },
+    header: {
+      subsection: 'General',
+      label: 'Header',
+      type: 'textBrowser',
+      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    },
     asActionColumn: { subsection: 'General', label: 'Action Column', type: 'checkbox' },
     actionColumnAsMenu: { subsection: 'Content', label: 'Group Actions', type: 'checkbox', hide: data => !data.asActionColumn },
     components: {
@@ -51,8 +56,7 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
       subsection: 'Content',
       label: 'Value',
       type: 'textBrowser',
-      browsers: ['ATTRIBUTE'],
-      options: { onlyAttributes: 'COLUMN' },
+      browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'COLUMN', withoutEl: true } }],
       hide: data => data.asActionColumn
     },
     sortable: { subsection: 'General', label: 'Enable Sorting', type: 'checkbox', hide: data => data.asActionColumn },

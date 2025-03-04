@@ -34,7 +34,7 @@ export const AddCmsQuickFixPopover = ({ value, onChange, selection, inputRef }: 
         queryClient.invalidateQueries({
           queryKey: genQueryKey('meta/cms/cmsQuickActions', { context, text: value })
         });
-        if (inputRef.current && selection) {
+        if (inputRef.current && selection && selection.start !== selection.end) {
           const currentValue = inputRef.current.value;
           const newValue = currentValue.slice(0, selection.start) + data + currentValue.slice(selection.end);
           inputRef.current.setSelectionRange(selection.start + data.length, selection.start + data.length);
