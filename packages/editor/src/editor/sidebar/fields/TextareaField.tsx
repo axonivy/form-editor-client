@@ -73,7 +73,16 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
         )}
       </BasicField>
       <DialogContent style={{ height: '80vh' }}>
-        <Browser activeBrowsers={['CMS']} close={() => setOpen(false)} value={value} onChange={onChange} />
+        <Browser
+          activeBrowsers={[
+            { type: 'CMS', options: { overrideSelection: true } },
+            { type: 'ATTRIBUTE', options: { overrideSelection: true } }
+          ]}
+          close={() => setOpen(false)}
+          value={value}
+          onChange={onChange}
+          selection={selection}
+        />
       </DialogContent>
     </Dialog>
   );
