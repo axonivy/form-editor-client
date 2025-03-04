@@ -1,6 +1,6 @@
-import { BrowsersView, useConditionBuilder } from '@axonivy/ui-components';
+import { BrowsersView, useConditionBuilder, type BrowserResult } from '@axonivy/ui-components';
 import { useAttributeBrowser } from './data-class/useAttributeBrowser';
-import { useCmsBrowser, CMS_BROWSER_ID } from './cms/useCmsBrowser';
+import { useCmsBrowser } from './cms/useCmsBrowser';
 import { useLogicBrowser } from './logic/useLogicBrowser';
 import { generateConditionString, logicOperators, operators } from './condition-builder/condition-builder-data';
 import { InputFieldWithBrowser } from '../sidebar/fields/InputFieldWithBrowser';
@@ -13,21 +13,23 @@ export type BrowserType = 'ATTRIBUTE' | 'LOGIC' | 'CMS' | 'CONDITION';
 export type BrowserOptions = {
   typeHint?: string;
   onlyAttributes?: OnlyAttributeSelection;
-  directApply?: boolean;
+  withoutEl?: boolean;
   overrideSelection?: boolean;
+  mergeResult?: boolean;
 };
+
+export type FormBrowser = { type: BrowserType; options?: BrowserOptions };
 
 type BrowserProps = {
   value: string;
   onChange: (value: string) => void;
-  activeBrowsers: Array<BrowserType>;
+  activeBrowsers: Array<FormBrowser>;
   close: () => void;
-  options?: BrowserOptions;
   selection?: Selection;
 };
 
-export const Browser = ({ value, onChange, activeBrowsers, close, options, selection }: BrowserProps) => {
-  const attrBrowser = useAttributeBrowser(options);
+export const Browser = ({ value, onChange, activeBrowsers, close, selection }: BrowserProps) => {
+  const attrBrowser = useAttributeBrowser(activeBrowsers.find(browser => browser.type === 'ATTRIBUTE')?.options);
   const logicBrowser = useLogicBrowser();
   const cmsBrowser = useCmsBrowser();
   const conditionBuilder = useConditionBuilder({
@@ -35,32 +37,54 @@ export const Browser = ({ value, onChange, activeBrowsers, close, options, selec
     operators,
     logicOperators,
     argumentInput: (value, onChange) => (
-      <InputFieldWithBrowser value={value} onChange={onChange} browsers={['ATTRIBUTE']} options={{ directApply: true }} />
+      <InputFieldWithBrowser value={value} onChange={onChange} browsers={[{ type: 'ATTRIBUTE', options: { withoutEl: true } }]} />
     )
   });
-  const browsers = [
-    ...(activeBrowsers.includes('LOGIC') ? [logicBrowser] : []),
-    ...(activeBrowsers.includes('ATTRIBUTE') ? [attrBrowser] : []),
-    ...(activeBrowsers.includes('CMS') ? [cmsBrowser] : []),
-    ...(activeBrowsers.includes('CONDITION') ? [conditionBuilder] : [])
-  ];
+  const browsers = activeBrowsers
+    .map(browser => {
+      switch (browser.type) {
+        case 'LOGIC':
+          return logicBrowser;
+        case 'ATTRIBUTE':
+          return attrBrowser;
+        case 'CMS':
+          return cmsBrowser;
+        case 'CONDITION':
+          return conditionBuilder;
+        default:
+          return null;
+      }
+    })
+    .filter(browser => browser !== null);
 
   return (
     <BrowsersView
       browsers={browsers}
       apply={(browserName, result) => {
-        if (result && options?.overrideSelection && selection) {
-          const newValue = value.substring(0, selection.start) + result.value + value.substring(selection.end);
+        const newValue = getApplyLogicValue(value, result, browserName, activeBrowsers, selection);
+        if (newValue !== null) {
           onChange(newValue);
-          close();
-          return;
-        } else if (result && browserName === CMS_BROWSER_ID) {
-          onChange(`${value}#{${result.value}}`);
-        } else if (result) {
-          onChange(options?.onlyAttributes || options?.directApply ? result.value : `#{${result.value}}`);
         }
         close();
       }}
     />
   );
+};
+
+export const getApplyLogicValue = (
+  value: string,
+  result: BrowserResult<unknown> | undefined,
+  browserName: string,
+  activeBrowsers: Array<FormBrowser>,
+  selection?: Selection
+): string | null => {
+  if (!result) return null;
+  const options = activeBrowsers.find(browser => browser.type.toLocaleLowerCase() === browserName.toLocaleLowerCase())?.options;
+  const newResult = options?.withoutEl ? result.value : `#{${result.value}}`;
+
+  if (options?.overrideSelection) {
+    const newValue = selection ? value.substring(0, selection.start) + newResult + value.substring(selection.end) : value + newResult;
+    return newValue;
+  }
+  return newResult;
 };
