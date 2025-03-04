@@ -26,7 +26,7 @@ export const LinkComponent: ComponentConfig<LinkProps> = {
   outlineInfo: component => component.name,
   fields: {
     ...baseComponentFields,
-    name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: ['CMS'] },
+    name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: [{ type: 'CMS', options: { overrideSelection: true } }] },
     href: { subsection: 'General', label: 'Href', type: 'text' },
     ...visibleComponentField
   },
