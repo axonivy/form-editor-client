@@ -55,45 +55,44 @@ export const baseComponentFields: Fields<BaseComponentProps> = {
 };
 
 export const visibleComponentField: Fields<VisibleItemProps> = {
-  visible: { subsection: 'Behaviour', label: 'Visible', type: 'textBrowser', browsers: ['CONDITION'] }
+  visible: { subsection: 'Behaviour', label: 'Visible', type: 'textBrowser', browsers: [{ type: 'CONDITION' }] }
 };
 
 export const disabledComponentFields: Fields<DisabledItemProps> = {
   ...visibleComponentField,
-  disabled: { subsection: 'Behaviour', label: 'Disable', type: 'textBrowser', browsers: ['CONDITION'] }
+  disabled: { subsection: 'Behaviour', label: 'Disable', type: 'textBrowser', browsers: [{ type: 'CONDITION' }] }
 };
 
 export const behaviourComponentFields: Fields<BehaviourItemProps> = {
   ...disabledComponentFields,
-  required: { subsection: 'Behaviour', label: 'Required', type: 'textBrowser', browsers: ['CONDITION'] },
+  required: { subsection: 'Behaviour', label: 'Required', type: 'textBrowser', browsers: [{ type: 'CONDITION' }] },
   requiredMessage: {
     subsection: 'Behaviour',
     label: 'Required Message',
     type: 'textBrowser',
-    browsers: ['CMS'],
+    browsers: [{ type: 'CMS', options: { overrideSelection: true } }],
     hide: data => data.required.length === 0
   },
   updateOnChange: { subsection: 'Behaviour', label: 'Update Form on Change', type: 'checkbox' }
 };
 
 export const selectItemsComponentFields: Fields<SelectItemsProps> = {
-  label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
-  value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'] },
+  label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: [{ type: 'CMS', options: { overrideSelection: true } }] },
+  value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
   staticItems: { subsection: 'Static Options', label: 'Options', type: 'selectTable' },
   dynamicItemsList: {
     subsection: 'Dynamic Options',
     label: 'List of Objects',
     type: 'textBrowser',
-    browsers: ['ATTRIBUTE'],
-    options: { typeHint: 'List', placeholder: 'e.g. #{data.dynamicList}' }
+    browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }],
+    options: { placeholder: 'e.g. #{data.dynamicList}' }
   },
   dynamicItemsLabel: {
     subsection: 'Dynamic Options',
     label: 'Object Label',
     type: 'textBrowser',
-    browsers: ['ATTRIBUTE'],
+    browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'DYNAMICLIST', withoutEl: true } }],
     options: {
-      onlyAttributes: 'DYNAMICLIST',
       placeholder: 'Enter attribute (or leave blank to select entire object)'
     },
     hide: data => data.dynamicItemsList.length == 0
@@ -102,9 +101,8 @@ export const selectItemsComponentFields: Fields<SelectItemsProps> = {
     subsection: 'Dynamic Options',
     label: 'Object Value',
     type: 'textBrowser',
-    browsers: ['ATTRIBUTE'],
+    browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'DYNAMICLIST', withoutEl: true } }],
     options: {
-      onlyAttributes: 'DYNAMICLIST',
       placeholder: 'Enter attribute (or leave blank to select entire object)'
     },
     hide: data => data.dynamicItemsList.length == 0

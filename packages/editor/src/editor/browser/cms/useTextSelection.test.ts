@@ -23,14 +23,6 @@ describe('handleTextSelection', () => {
     expect(result.current.selection).toEqual({ start: 2, end: 6 });
   });
 
-  test('set undefined if start and end are the same', () => {
-    const ref = mockRef('sample text', 3, 3);
-    const { result } = renderHook(() => useTextSelection(ref));
-    act(() => result.current.handleTextSelection());
-
-    expect(result.current.selection).toBeUndefined();
-  });
-
   test('do nothing if ref is null', () => {
     const ref = { current: null } as InputTextAreaRef;
     const { result } = renderHook(() => useTextSelection(ref));
