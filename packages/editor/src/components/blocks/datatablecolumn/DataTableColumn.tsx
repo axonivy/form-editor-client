@@ -19,7 +19,7 @@ export const defaultDataTableColumnProps: DataTableColumn = {
   value: '',
   components: [],
   asActionColumn: false,
-  actionColumnAsMenu: true,
+  actionColumnAsMenu: false,
   sortable: false,
   filterable: false,
   ...defaultVisibleComponent
@@ -39,7 +39,7 @@ export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
     ...baseComponentFields,
     header: { subsection: 'General', label: 'Header', type: 'textBrowser', browsers: ['CMS'] },
     asActionColumn: { subsection: 'General', label: 'Action Column', type: 'checkbox' },
-    actionColumnAsMenu: { subsection: 'Content', label: 'Actions in Menu Button', type: 'checkbox', hide: data => !data.asActionColumn },
+    actionColumnAsMenu: { subsection: 'Content', label: 'Group Actions', type: 'checkbox', hide: data => !data.asActionColumn },
     components: {
       subsection: 'Content',
       label: 'Actions',
@@ -74,57 +74,45 @@ const UiBlock = ({
   components,
   asActionColumn,
   actionColumnAsMenu
-}: UiComponentProps<DataTableColumnProps>) => {
-  const { ui } = useAppContext();
-
-  return (
-    <div className='block-column'>
-      <div className='block-column__head'>
-        <Flex justifyContent='space-between' direction='column' gap={2}>
-          <Flex direction='row' alignItems='center' gap={2} justifyContent='space-between'>
-            <Flex alignItems='center' gap={2}>
-              {header}
-              {sortable && !asActionColumn && <IvyIcon icon={IvyIcons.Selector} />}
-            </Flex>
-            <UiBlockHeaderVisiblePart visible={visible} />
+}: UiComponentProps<DataTableColumnProps>) => (
+  <div className='block-column'>
+    <div className='block-column__head'>
+      <Flex justifyContent='space-between' direction='column' gap={2}>
+        <Flex direction='row' alignItems='center' gap={2} justifyContent='space-between'>
+          <Flex alignItems='center' gap={2}>
+            {header}
+            {sortable && !asActionColumn && <IvyIcon icon={IvyIcons.Selector} />}
           </Flex>
-          <span className='block-column__filter' data-active={filterable && !asActionColumn}>
-            Filter By {header}
-          </span>
+          <UiBlockHeaderVisiblePart visible={visible} />
         </Flex>
-      </div>
-      <div className='block-column__body'>
-        {asActionColumn ? (
-          components.length > 0 ? (
-            <Flex direction={actionColumnAsMenu ? 'column' : 'row'} gap={1} className='block-table__columns'>
-              {ui.helpPaddings || (!ui.helpPaddings && !actionColumnAsMenu) ? (
-                components.map((button, index) => {
-                  const actionButton: ActionColumnComponent = { ...button };
-                  return (
-                    <ComponentBlock
-                      key={`${COLUMN_DROPZONE_ID_PREFIX}${actionButton.cid}`}
-                      component={{ ...actionButton, cid: `${actionButton.cid}` }}
-                      preId={components[index - 1]?.cid}
-                    />
-                  );
-                })
-              ) : (
-                <div className='block-button' data-variant='primary' style={{ justifyContent: 'start' }}>
-                  <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
-                  <div>{header}</div>
-                </div>
-              )}
-            </Flex>
+        <span className='block-column__filter' data-active={filterable && !asActionColumn}>
+          Filter By {header}
+        </span>
+      </Flex>
+    </div>
+    <div className='block-column__body'>
+      {asActionColumn ? (
+        components.length > 0 ? (
+          actionColumnAsMenu ? (
+            <ButtonMenu>
+              <Flex direction={'column'} gap={1} className='block-table__columns' style={{ border: 'var(--basic-border)' }}>
+                {renderActionButtons(components)}
+              </Flex>
+            </ButtonMenu>
           ) : (
-            <EmptyActionColumnBlock components={components} id={id} type='Action Column' />
+            <Flex direction={'row'} gap={1} className='block-table__columns'>
+              {renderActionButtons(components)}
+            </Flex>
           )
         ) : (
-          <span>{value?.length === 0 || value === 'variable' ? 'Use entire Object' : value}</span>
-        )}
-      </div>
+          <EmptyActionColumnBlock components={components} id={id} type='Action Column' />
+        )
+      ) : (
+        <span>{value?.length === 0 || value === 'variable' ? 'Use entire Object' : value}</span>
+      )}
     </div>
-  );
-};
+  </div>
+);
 
 export const EmptyActionColumnBlock = ({
   id,
@@ -143,3 +131,33 @@ export const EmptyActionColumnBlock = ({
     )}
   </DropZone>
 );
+
+const ButtonMenu = ({ children }: { children: React.ReactNode }) => {
+  const { ui } = useAppContext();
+  return ui.helpPaddings ? (
+    <>
+      <div className='block-button button-menu-header' style={{ borderRadius: '5px 5px 0px 0px' }} data-variant='primary'>
+        <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
+        Actions
+      </div>
+      {children}
+    </>
+  ) : (
+    <div className='block-button button-menu-header' data-variant='primary'>
+      <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
+      <div>Actions</div>
+    </div>
+  );
+};
+
+const renderActionButtons = (components: ActionColumnComponent[]) =>
+  components.map((button, index) => {
+    const actionButton: ActionColumnComponent = { ...button };
+    return (
+      <ComponentBlock
+        key={`${COLUMN_DROPZONE_ID_PREFIX}${actionButton.cid}`}
+        component={{ ...actionButton, cid: `${actionButton.cid}` }}
+        preId={components[index - 1]?.cid}
+      />
+    );
+  });
