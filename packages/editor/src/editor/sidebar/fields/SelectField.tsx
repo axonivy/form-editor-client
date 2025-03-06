@@ -1,4 +1,14 @@
-import { BasicField, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, type MessageData } from '@axonivy/ui-components';
+import {
+  BasicField,
+  Flex,
+  IvyIcon,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  type MessageData
+} from '@axonivy/ui-components';
 import type { FieldOption } from '../../../types/config';
 
 type SelectFieldProps = {
@@ -18,8 +28,11 @@ export const SelectField = ({ options, label, value, onChange, width, message }:
       </SelectTrigger>
       <SelectContent style={{ width: width }}>
         {options.map(option => (
-          <SelectItem key={`${option.value}`} value={option.value as string}>
-            {option.label}
+          <SelectItem key={option.value.toString()} value={option.value as string}>
+            <Flex direction='row' gap={2} alignItems='center'>
+              {option.icon && <IvyIcon icon={option.icon.icon} rotate={option.icon.rotate} spin={option.icon.spin} />}
+              {option.label}
+            </Flex>
           </SelectItem>
         ))}
       </SelectContent>
