@@ -5,7 +5,7 @@ import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGrou
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../context/ClientContext';
 import type { Unary } from '../types/types';
-import type { FormData, FormEditor, FormEditorProps } from '@axonivy/form-editor-protocol';
+import type { FormContext, FormData, FormEditor, FormEditorProps } from '@axonivy/form-editor-protocol';
 import { DndContext } from '../context/DndContext';
 import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -29,28 +29,28 @@ export const Editor = (props: FormEditorProps) => {
 
   const queryKeys = useMemo(() => {
     return {
-      data: () => genQueryKey('data', context),
-      saveData: () => genQueryKey('saveData', context),
-      validation: () => genQueryKey('validations', context)
+      data: (context: FormContext) => genQueryKey('data', context),
+      saveData: (context: FormContext) => genQueryKey('saveData', context),
+      validation: (context: FormContext) => genQueryKey('validations', context)
     };
-  }, [context]);
+  }, []);
 
   const { data, isPending, isError, isSuccess, error } = useQuery({
-    queryKey: queryKeys.data(),
+    queryKey: queryKeys.data(context),
     queryFn: () => client.data(context),
     structuralSharing: false
   });
 
   const { data: validations } = useQuery({
-    queryKey: queryKeys.validation(),
+    queryKey: queryKeys.validation(context),
     queryFn: () => client.validate(context),
     initialData: [],
     enabled: isSuccess
   });
 
   useEffect(() => {
-    const validationDispose = client.onValidationChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.validation() }));
-    const dataDispose = client.onDataChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.data() }));
+    const validationDispose = client.onValidationChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.validation(context) }));
+    const dataDispose = client.onDataChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.data(context) }));
     return () => {
       validationDispose.dispose();
       dataDispose.dispose();
@@ -65,9 +65,9 @@ export const Editor = (props: FormEditorProps) => {
   }, [data?.data, history, initialData]);
 
   const mutation = useMutation({
-    mutationKey: queryKeys.saveData(),
+    mutationKey: queryKeys.saveData(context),
     mutationFn: (updateData: Unary<FormData>) => {
-      const saveData = queryClient.setQueryData<FormEditor>(queryKeys.data(), prevData => {
+      const saveData = queryClient.setQueryData<FormEditor>(queryKeys.data(context), prevData => {
         if (prevData) {
           return { ...prevData, data: updateData(prevData.data) };
         }
@@ -78,7 +78,7 @@ export const Editor = (props: FormEditorProps) => {
       }
       return Promise.resolve();
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.validation() })
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.validation(context) })
   });
 
   if (isPending) {

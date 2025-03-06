@@ -33,7 +33,7 @@ export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: Pr
     onChange(newValue);
   };
   const inputFor = (field: Field) => {
-    const label = field.label!;
+    const label = field.label ?? fieldKey;
     switch (field.type) {
       case 'text':
         return <InputField label={label} value={toString(value)} onChange={updateValue} options={field.options} message={message} />;

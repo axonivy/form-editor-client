@@ -19,6 +19,7 @@ export class Palette {
     await this.page.mouse.down();
     await this.page.mouse.move(10, 10);
     await expect(this.palette).toBeHidden();
+    // eslint-disable-next-line playwright/no-force-option
     await target.hover({ force: true });
     await this.page.mouse.up();
   }

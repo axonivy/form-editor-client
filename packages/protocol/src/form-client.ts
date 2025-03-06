@@ -3,6 +3,7 @@ import type { FormEditor, FormSaveData } from './data/form-data';
 import type { FormMetaRequestTypes } from './form-protocol';
 
 export interface Event<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (listener: (e: T) => any, thisArgs?: any, disposables?: Disposable[]): Disposable;
 }
 

@@ -5,18 +5,22 @@ import { ThemeProvider, ReadonlyProvider, toast, Toaster, Spinner, Flex, Hotkeys
 import { webSocketConnection, type Connection } from '@axonivy/jsonrpc';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { URLParams } from './url-helper';
+import { webSocketBase, appParam, pmvParam, fileParam, directSaveParam, themeParam, readonlyParam } from './url-helper';
 
 export async function start(): Promise<void> {
-  const server = URLParams.webSocketBase();
-  const app = URLParams.app();
-  const pmv = URLParams.pmv();
-  const file = URLParams.file();
-  const directSave = URLParams.directSave();
-  const theme = URLParams.theme();
-  const readonly = URLParams.readonly();
+  const server = webSocketBase();
+  const app = appParam();
+  const pmv = pmvParam();
+  const file = fileParam();
+  const directSave = directSaveParam();
+  const theme = themeParam();
+  const readonly = readonlyParam();
   const queryClient = initQueryClient();
-  const root = createRoot(document.getElementById('root')!);
+  const rootElement = document.getElementById('root');
+  if (rootElement === null) {
+    throw new Error('Root element not found');
+  }
+  const root = createRoot(rootElement);
 
   root.render(
     <React.StrictMode>
