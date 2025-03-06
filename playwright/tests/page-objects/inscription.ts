@@ -103,6 +103,10 @@ export class Collapsible {
     return new Checkbox(this.page, this.content, options);
   }
 
+  toggleGroup(options?: { label?: string; nth?: number }) {
+    return new ToggleGroup(this.page, this.content, options);
+  }
+
   async expectListItems(count: number) {
     const listItems = this.content.locator('.list-item-with-actions');
     await expect(listItems).toHaveCount(count);
@@ -117,6 +121,33 @@ export class Collapsible {
   }
   async toggleControl(nth?: number) {
     await this.control.nth(nth ? nth : 0).click();
+  }
+}
+
+export class ToggleGroup {
+  readonly locator: Locator;
+
+  constructor(
+    readonly page: Page,
+    readonly parentLocator: Locator,
+    options?: { label?: string; nth?: number }
+  ) {
+    if (options?.label) {
+      this.locator = parentLocator.getByRole('group', { name: options.label }).first();
+    } else {
+      this.locator = parentLocator.getByRole('group').nth(options?.nth ?? 0);
+    }
+  }
+
+  async choose(value: string | RegExp) {
+    const option = this.locator.getByRole('radio', { name: value });
+    await expect(option).toBeVisible();
+    await option.click();
+  }
+
+  async expectSelected(value: string | RegExp) {
+    const selectedOption = this.locator.getByRole('radio', { name: value, checked: true });
+    await expect(selectedOption).toBeVisible();
   }
 }
 
