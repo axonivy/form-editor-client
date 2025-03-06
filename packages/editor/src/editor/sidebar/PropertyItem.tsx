@@ -10,6 +10,7 @@ import { InputFieldWithBrowser } from './fields/InputFieldWithBrowser';
 import { SelectTableField } from './fields/table-field/SelectTableField';
 import { useValidation } from '../../context/useValidation';
 import { useData } from '../../data/data';
+import { ToggleGroupField } from './fields/ToggleGroupField';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
@@ -58,6 +59,8 @@ export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: Pr
         return <TextareaField label={label} value={toString(value)} onChange={updateValue} message={message} />;
       case 'select':
         return <SelectField label={label} value={toString(value)} onChange={updateValue} options={field.options} message={message} />;
+      case 'toggleGroup':
+        return <ToggleGroupField label={label} value={toString(value)} onChange={updateValue} options={field.options} message={message} />;
       case 'generic':
         return field.render({ label, value: value, onChange: updateValue, validationPath });
       default:
