@@ -4,7 +4,7 @@ import type { ComponentConfig, UiComponentProps } from '../../../types/config';
 import { baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
 import { Flex, IvyIcon, PanelMessage } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
+import { UiBadge, UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { COLUMN_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { DropZone } from '../../../editor/canvas/DropZone';
@@ -80,14 +80,14 @@ const UiBlock = ({
       <Flex justifyContent='space-between' direction='column' gap={2}>
         <Flex direction='row' alignItems='center' gap={2} justifyContent='space-between'>
           <Flex alignItems='center' gap={2}>
-            {header}
+            <UiBadge value={header} />
             {sortable && !asActionColumn && <IvyIcon icon={IvyIcons.Selector} />}
           </Flex>
           <UiBlockHeaderVisiblePart visible={visible} />
         </Flex>
-        <span className='block-column__filter' data-active={filterable && !asActionColumn}>
-          Filter By {header}
-        </span>
+        <Flex className='block-column__filter' data-active={filterable && !asActionColumn} gap={1}>
+          Filter By <UiBadge value={header} />
+        </Flex>
       </Flex>
     </div>
     <div className='block-column__body'>
