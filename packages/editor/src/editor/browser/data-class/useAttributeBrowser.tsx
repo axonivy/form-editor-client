@@ -29,7 +29,7 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
         getParentColumnComponent(data.components, element.cid).component
       );
       setTree([
-        ...findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : ''),
+        ...findAttributesOfType(variableInfo, parentTableComponent ? parentTableComponent.value : '', 10, 'row'),
         ...variableTreeData().of(variableInfo)
       ]);
     } else {
