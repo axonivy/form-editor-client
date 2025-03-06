@@ -9,11 +9,7 @@ const useTextSelection = (ref: InputTextAreaRef) => {
     if (ref.current) {
       const selectionStart = ref.current.selectionStart ?? 0;
       const selectionEnd = ref.current.selectionEnd ?? 0;
-      if (selectionStart !== selectionEnd) {
-        setSelection({ start: selectionStart, end: selectionEnd });
-      } else {
-        setSelection(undefined);
-      }
+      setSelection({ start: selectionStart, end: selectionEnd });
     }
   };
 

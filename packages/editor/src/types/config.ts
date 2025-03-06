@@ -1,7 +1,7 @@
 import type { ComponentType, ConfigData, PrimitiveValue } from '@axonivy/form-editor-protocol';
 import type React from 'react';
 import type { ReactNode } from 'react';
-import type { BrowserOptions, BrowserType } from '../editor/browser/Browser';
+import type { FormBrowser } from '../editor/browser/Browser';
 import type { CollapsibleControlProps, IvyIconProps } from '@axonivy/ui-components';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
@@ -38,8 +38,6 @@ export type TextFieldOptions = {
   disabled?: boolean;
 };
 
-export type TextBrowserFieldOptions = TextFieldOptions & BrowserOptions;
-
 export type TextField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'text' | 'number' | 'textarea' | 'checkbox';
   options?: TextFieldOptions;
@@ -47,8 +45,8 @@ export type TextField<ComponentProps extends DefaultComponentProps = DefaultComp
 
 export type TextBrowserField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
   type: 'textBrowser';
-  browsers: Array<BrowserType>;
-  options?: TextBrowserFieldOptions;
+  browsers: Array<FormBrowser>;
+  options?: TextFieldOptions;
 };
 
 export type TableField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
