@@ -5,18 +5,18 @@ test('default', async ({ page }) => {
   const { editor, type, columns, justify, align, behaviour } = await layout(page);
   await type.expectValue('Grid');
   await columns.expectValue('2 Columns');
-  await align.expectValue('Start');
+  await align.expectValue('Top');
   await expect(justify.locator).toBeHidden();
   await type.choose('Flex');
   await expect(columns.locator).toBeHidden();
   await expect(justify.locator).toBeVisible();
-  await justify.choose('End');
+  await justify.choose('Right');
   await behaviour.fillVisible();
 
   await reload(editor);
   await type.expectValue('Flex');
   await expect(columns.locator).toBeHidden();
-  await justify.expectValue('End');
+  await justify.expectValue('Right');
   await type.choose('Grid');
   await columns.choose('Free');
   await align.choose('Center');
@@ -68,7 +68,7 @@ test('1 col grid', async ({ page }) => {
   await type.expectValue('Grid');
   await columns.expectValue('2 Columns');
   await expect(align.locator).toBeVisible();
-  await align.expectValue('Start');
+  await align.expectValue('Top');
   await columns.choose('1 Column');
   await expect(align.locator).toBeHidden();
 });
