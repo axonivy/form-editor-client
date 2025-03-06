@@ -56,7 +56,7 @@ export type TableField<ComponentProps extends DefaultComponentProps = DefaultCom
 };
 
 export type SelectField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = BaseField<ComponentProps> & {
-  type: 'select' | 'radio';
+  type: 'select' | 'radio' | 'toggleGroup';
   options: readonly FieldOption[];
 };
 

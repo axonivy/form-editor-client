@@ -67,7 +67,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     justifyContent: {
       subsection: 'General',
-      type: 'select',
+      type: 'toggleGroup',
       label: 'Horizontal Alignment',
       options: justifyContentOptions,
       hide: data => data.type !== 'FLEX'
@@ -82,7 +82,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
     },
     alignItems: {
       subsection: 'General',
-      type: 'select',
+      type: 'toggleGroup',
       label: 'Vertical Alignment',
       options: alignItemsOptions,
       hide: data => data.type === 'GRID' && data.gridVariant === 'GRID1'
