@@ -14,6 +14,7 @@ import IconSvg from './Layout.svg?react';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import { UiBlockHeader } from '../../UiBlockHeader';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 type LayoutProps = Prettify<Layout>;
 
@@ -30,14 +31,14 @@ const gridVariantOptions: FieldOption<LayoutGridVariant>[] = [
 ] as const;
 
 const justifyContentOptions: FieldOption<LayoutJustifyContent>[] = [
-  { label: 'Normal', value: 'NORMAL' },
-  { label: 'End', value: 'END' }
+  { label: 'Left', value: 'NORMAL', icon: { icon: IvyIcons.AlignLeft } },
+  { label: 'Right', value: 'END', icon: { icon: IvyIcons.AlignRight } }
 ] as const;
 
 const alignItemsOptions: FieldOption<LayoutAlignItems>[] = [
-  { label: 'Start', value: 'START' },
-  { label: 'Center', value: 'CENTER' },
-  { label: 'End', value: 'END' }
+  { label: 'Top', value: 'START', icon: { icon: IvyIcons.AlignRight, rotate: 270 } },
+  { label: 'Center', value: 'CENTER', icon: { icon: IvyIcons.AlignHorizontal, rotate: 180 } },
+  { label: 'Bottom', value: 'END', icon: { icon: IvyIcons.AlignLeft, rotate: 270 } }
 ] as const;
 
 export const defaultLayoutProps: LayoutProps = {
@@ -66,8 +67,8 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
     type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
     justifyContent: {
       subsection: 'General',
-      type: 'select',
-      label: 'Justify content',
+      type: 'toggleGroup',
+      label: 'Horizontal Alignment',
       options: justifyContentOptions,
       hide: data => data.type !== 'FLEX'
     },
@@ -81,8 +82,8 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
     },
     alignItems: {
       subsection: 'General',
-      type: 'select',
-      label: 'Align items',
+      type: 'toggleGroup',
+      label: 'Vertical Alignment',
       options: alignItemsOptions,
       hide: data => data.type === 'GRID' && data.gridVariant === 'GRID1'
     },

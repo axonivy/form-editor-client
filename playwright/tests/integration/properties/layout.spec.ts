@@ -5,18 +5,18 @@ test('default', async ({ page }) => {
   const { editor, type, columns, justify, align, behaviour } = await layout(page);
   await type.expectValue('Grid');
   await columns.expectValue('2 Columns');
-  await align.expectValue('Start');
+  await align.expectSelected('Top');
   await expect(justify.locator).toBeHidden();
   await type.choose('Flex');
   await expect(columns.locator).toBeHidden();
   await expect(justify.locator).toBeVisible();
-  await justify.choose('End');
+  await justify.choose('Right');
   await behaviour.fillVisible();
 
   await reload(editor);
   await type.expectValue('Flex');
   await expect(columns.locator).toBeHidden();
-  await justify.expectValue('End');
+  await justify.expectSelected('Right');
   await type.choose('Grid');
   await columns.choose('Free');
   await align.choose('Center');
@@ -24,7 +24,7 @@ test('default', async ({ page }) => {
   await reload(editor);
   await type.expectValue('Grid');
   await columns.expectValue('Free');
-  await align.expectValue('Center');
+  await align.expectSelected('Center');
   await expect(justify.locator).toBeHidden();
   await behaviour.expectVisible();
 });
@@ -68,7 +68,7 @@ test('1 col grid', async ({ page }) => {
   await type.expectValue('Grid');
   await columns.expectValue('2 Columns');
   await expect(align.locator).toBeVisible();
-  await align.expectValue('Start');
+  await align.expectSelected('Top');
   await columns.choose('1 Column');
   await expect(align.locator).toBeHidden();
 });
@@ -82,8 +82,8 @@ const layout = async (page: Page) => {
   const section = properties.collapsible('General');
   const type = section.select({ label: 'Type' });
   const columns = section.select({ label: 'Columns' });
-  const justify = section.select({ label: 'Justify content' });
-  const align = section.select({ label: 'Align items' });
+  const justify = section.toggleGroup({ label: 'Horizontal Alignment' });
+  const align = section.toggleGroup({ label: 'Vertical Alignment' });
   const behaviour = properties.behaviour();
   return { editor, layoutBlock, properties, type, columns, justify, align, behaviour };
 };
