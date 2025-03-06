@@ -2,7 +2,7 @@ import type { ComponentType, ConfigData, PrimitiveValue } from '@axonivy/form-ed
 import type React from 'react';
 import type { ReactNode } from 'react';
 import type { BrowserOptions, BrowserType } from '../editor/browser/Browser';
-import type { CollapsibleControlProps } from '@axonivy/ui-components';
+import type { CollapsibleControlProps, IvyIconProps } from '@axonivy/ui-components';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
 
@@ -15,6 +15,7 @@ export type FieldOptionValues<TOptions extends Readonly<FieldOption[]>> = TOptio
 export type FieldOption<TValue = PrimitiveValue> = {
   label: string;
   value: TValue;
+  icon?: IvyIconProps;
 };
 
 export type CreateData = { label: string; value: string; defaultProps?: Record<string, unknown> };
