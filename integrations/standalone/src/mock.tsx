@@ -4,14 +4,18 @@ import { HotkeysProvider, ReadonlyProvider, ThemeProvider } from '@axonivy/ui-co
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
-import { URLParams } from './url-helper';
+import { readonlyParam } from './url-helper';
 
 export async function start(): Promise<void> {
   const formClient = new FormClientMock();
   const queryClient = initQueryClient();
-  const readonly = URLParams.readonly();
+  const readonly = readonlyParam();
 
-  createRoot(document.getElementById('root')!).render(
+  const root = document.getElementById('root');
+  if (root === null) {
+    throw new Error('Root element not found');
+  }
+  createRoot(root).render(
     <React.StrictMode>
       <ThemeProvider defaultTheme='light'>
         <ClientContextProvider client={formClient}>

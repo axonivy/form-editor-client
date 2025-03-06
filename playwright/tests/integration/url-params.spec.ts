@@ -35,6 +35,7 @@ test('readonly true', async ({ page }) => {
 
   const allBlocks = editor.canvas.locator.locator('.draggable');
   await expect(allBlocks).toHaveCount(12);
+  // eslint-disable-next-line playwright/no-force-option
   await allBlocks.first().click({ force: true });
   await expect(allBlocks.first()).toHaveClass(/selected/);
   await expect(page.locator('.quickbar')).toBeHidden();

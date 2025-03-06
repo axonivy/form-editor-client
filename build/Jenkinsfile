@@ -24,7 +24,7 @@ pipeline {
             "<a href=${BUILD_URL}artifact/integrations/standalone/build/mock.html>&raquo; Form Editor Mock</a>"
 
           withChecks('ESLint') {
-            recordIssues enabledForFailure: true, publishAllIssues: true, aggregatingResults: true, tools: [esLint(pattern: 'packages/**/eslint.xml,integrations/**/eslint.xml')], qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]]
+            recordIssues enabledForFailure: true, publishAllIssues: true, aggregatingResults: true, tools: [esLint(pattern: 'eslint.xml')], qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true]]
           }
           withChecks('Test') {
             junit testDataPublishers: [[$class: 'StabilityTestDataPublisher']], testResults: 'packages/**/report.xml'
