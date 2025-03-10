@@ -9,11 +9,11 @@
     "url": "https://github.com/axonivy/form-editor-client"
   },
   "dependencies": {
-    "@axonivy/form-editor": "*",
-    "@axonivy/form-editor-core": "*",
-    "@axonivy/jsonrpc": "~12.0.4-next.537",
-    "@axonivy/ui-components": "~12.0.4-next.537",
-    "@axonivy/ui-icons": "~12.0.4-next.537",
+    "@axonivy/form-editor": "~12.0.5-next",
+    "@axonivy/form-editor-core": "~12.0.5-next",
+    "@axonivy/jsonrpc": "~12.0.5-next.541",
+    "@axonivy/ui-components": "~12.0.5-next.541",
+    "@axonivy/ui-icons": "~12.0.5-next.541",
     "@tanstack/react-query": "^5.64",
     "@tanstack/react-query-devtools": "^5.64",
     "path-browserify": "^1.0.1",
