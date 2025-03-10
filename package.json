@@ -18,7 +18,7 @@
     "lint:ci": "eslint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix",
     "lint:inspect": "eslint --inspect-config",
-    "protocol": "npm run --workspace=@axonivy/form-editor-protocol",
+    "protocol": "npm run -w @axonivy/form-editor-protocol",
     "dev": "npm --prefix integrations/standalone run dev",
     "test": "npm --prefix packages/editor run test",
     "test:ci": "lerna run test:ci",
@@ -29,7 +29,10 @@
   "devDependencies": {
     "@axonivy/eslint-config": "~13.1.0-next.594",
     "@types/node": "^22.10.7",
-    "lerna": "^8.1.9",
+    "@lerna-lite/cli": "^3.12.1",
+    "@lerna-lite/publish": "^3.12.1",
+    "@lerna-lite/run": "^3.12.1",
+    "@lerna-lite/version": "^3.12.1",
     "rimraf": "^6.0.1",
     "typescript": "~5.8.0",
     "typescript-cp": "^0.1.9"
