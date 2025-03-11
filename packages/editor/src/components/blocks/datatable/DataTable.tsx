@@ -42,8 +42,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
       subsection: 'General',
       label: 'List of Objects',
       type: 'textBrowser',
-      browsers: ['ATTRIBUTE'],
-      options: { typeHint: 'List' }
+      browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }]
     },
     components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsField /> },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
