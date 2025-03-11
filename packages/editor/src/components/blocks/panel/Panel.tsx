@@ -34,7 +34,15 @@ export const PanelComponent: ComponentConfig<PanelProps> = {
   fields: {
     ...baseComponentFields,
     components: { subsection: 'General', type: 'hidden' },
-    title: { subsection: 'General', label: 'Title', type: 'textBrowser', browsers: ['ATTRIBUTE', 'CMS'] },
+    title: {
+      subsection: 'General',
+      label: 'Title',
+      type: 'textBrowser',
+      browsers: [
+        { type: 'ATTRIBUTE', options: { overrideSelection: true } },
+        { type: 'CMS', options: { overrideSelection: true } }
+      ]
+    },
     collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
     collapsed: { subsection: 'Behaviour', label: 'Collapsed by default', type: 'checkbox', options: {}, hide: data => !data.collapsible },
     ...visibleComponentField

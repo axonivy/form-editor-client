@@ -2,9 +2,9 @@ import { BasicField, BasicInput, Button, Dialog, DialogContent, DialogTrigger, I
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useRef, useState } from 'react';
 import type { InputFieldProps } from './InputField';
-import type { TextBrowserFieldOptions } from '../../../types/config';
+import type { TextFieldOptions } from '../../../types/config';
 import { focusBracketContent } from '../../../utils/focus';
-import { Browser, type BrowserType } from '../../browser/Browser';
+import { Browser, type FormBrowser } from '../../browser/Browser';
 import { AddCmsQuickFixPopover } from '../../browser/cms/AddCmsQuickFix';
 import useTextSelection from '../../browser/cms/useTextSelection';
 import { badgeProps } from '../../../utils/badge-properties';
@@ -18,7 +18,7 @@ export const InputFieldWithBrowser = ({
   onBlur,
   message,
   options
-}: InputFieldProps & { browsers: Array<BrowserType>; options?: TextBrowserFieldOptions }) => {
+}: InputFieldProps & { browsers: Array<FormBrowser>; options?: TextFieldOptions }) => {
   const [open, setOpen] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,8 +37,9 @@ export const InputFieldWithBrowser = ({
               onSelect={() => handleTextSelection()}
               onBlur={onBlur}
               placeholder={options?.placeholder}
+              disabled={options?.disabled}
             />
-            {showQuickFix() && browsers.some(b => b === 'CMS') && (
+            {showQuickFix() && browsers.some(b => b.type === 'CMS') && (
               <AddCmsQuickFixPopover
                 value={getSelectedText()}
                 selection={selection}
@@ -59,16 +60,9 @@ export const InputFieldWithBrowser = ({
       </BasicField>
       <DialogContent
         style={{ height: '80vh' }}
-        onCloseAutoFocus={browsers.includes('LOGIC') ? e => focusBracketContent(e, value, inputRef.current) : undefined}
+        onCloseAutoFocus={browsers.find(b => b.type === 'LOGIC') ? e => focusBracketContent(e, value, inputRef.current) : undefined}
       >
-        <Browser
-          activeBrowsers={browsers}
-          close={() => setOpen(false)}
-          value={value}
-          onChange={onChange}
-          options={options}
-          selection={selection}
-        />
+        <Browser activeBrowsers={browsers} close={() => setOpen(false)} value={value} onChange={onChange} selection={selection} />
       </DialogContent>
     </Dialog>
   );

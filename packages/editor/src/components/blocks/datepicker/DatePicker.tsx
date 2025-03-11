@@ -29,8 +29,13 @@ export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
   outlineInfo: component => component.label,
   fields: {
     ...baseComponentFields,
-    label: { subsection: 'General', label: 'Label', type: 'textBrowser', browsers: ['CMS'] },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: ['ATTRIBUTE'], options: { typeHint: 'Date' } },
+    label: {
+      subsection: 'General',
+      label: 'Label',
+      type: 'textBrowser',
+      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    },
+    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'Date' } }] },
     datePattern: { subsection: 'General', label: 'Date Pattern', type: 'text', options: { placeholder: 'e.g. dd.MM.yyyy' } },
     showTime: { subsection: 'General', label: 'Show Time', type: 'checkbox' },
     timePattern: {
