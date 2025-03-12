@@ -86,17 +86,9 @@ describe('variableTreeData', () => {
     expect(tree[0].children[0].value).equals('accepted');
     expect(tree[0].children[1].value).equals('amount');
     expect(tree[0].children[2].value).equals('requester');
-  });
-
-  test('of with lazy loading', () => {
-    const tree = variableTreeData().of(variableInfo);
-    expect(tree[0].children[0].isLoaded).toBeTruthy();
-    expect(tree[0].children[1].isLoaded).toBeTruthy();
-    expect(tree[0].children[2].isLoaded).toBeFalsy();
-
-    variableTreeData().loadChildrenFor(variableInfo, 'workflow.humantask.User', tree);
     expect(tree[0].children[2].isLoaded).toBeTruthy();
     expect(tree[0].children[2].children).toHaveLength(1);
+    expect(tree[0].children[2].children[0].value).equals('email');
   });
 
   test('of endless', () => {
