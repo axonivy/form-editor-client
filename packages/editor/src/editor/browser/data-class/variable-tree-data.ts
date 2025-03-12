@@ -12,7 +12,7 @@ export const variableTreeData = () => {
       info: param.type,
       icon: IvyIcons.Attribute,
       data: param,
-      children: typesOfParam(paramInfo, param.type),
+      children: typesOfParam(paramInfo, param.type, [param.type]),
       isLoaded: true
     }));
   };
@@ -24,7 +24,7 @@ export const variableTreeData = () => {
   ): Array<BrowserNode<Variable>> => {
     return tree.map(node => {
       if (node.isLoaded === false && node.info === paramType) {
-        node.children = typesOfParam(paramInfo, paramType);
+        node.children = typesOfParam(paramInfo, paramType, [paramType]);
         node.isLoaded = true;
       } else {
         loadChildrenFor(paramInfo, paramType, node.children);
@@ -33,15 +33,22 @@ export const variableTreeData = () => {
     });
   };
 
-  const typesOfParam = (paramInfo: VariableInfo, paramType: string): Array<BrowserNode<Variable>> =>
-    paramInfo.types[paramType]?.map(type => ({
-      value: type.attribute,
-      info: type.type,
-      icon: IvyIcons.Attribute,
-      data: type,
-      children: [],
-      isLoaded: paramInfo.types[type.type] === undefined
-    })) ?? [];
+  const typesOfParam = (paramInfo: VariableInfo, paramType: string, checkParamTypes: Array<string> = []): Array<BrowserNode<Variable>> =>
+    paramInfo.types[paramType]?.map(type => {
+      const data = {
+        value: type.attribute,
+        info: type.type,
+        icon: IvyIcons.Attribute,
+        data: type,
+        children: [] as Array<BrowserNode<Variable>>,
+        isLoaded: paramInfo.types[type.type] === undefined
+      };
+      if (data.isLoaded === false && !checkParamTypes.includes(type.type)) {
+        data.children = typesOfParam(paramInfo, type.type, [...checkParamTypes, type.type]);
+        data.isLoaded = true;
+      }
+      return data;
+    }) ?? [];
 
   return { of, loadChildrenFor, typesOfParam };
 };
