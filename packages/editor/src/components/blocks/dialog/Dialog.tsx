@@ -65,7 +65,7 @@ export const DialogUiBlock = ({ id, components, header, onApply, linkedComponent
         return {
           componentName: component.component.name,
           label: labelText(node.value),
-          value: `#{genericRowManager.selectedRow.${node.value}}`,
+          value: `#{genericRowManager.selectedRow${node.value.length === 0 || node.value === 'variable' ? '' : `.${node.value}`}}`,
           ...component.defaultProps
         };
       })

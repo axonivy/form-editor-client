@@ -93,9 +93,9 @@ const findDataTableColumnComponent = (data: Array<ComponentData>, id: string) =>
   return undefined;
 };
 
-export const getParentColumnComponent = (data: Array<ComponentData>, elementCid: string) => {
+export const getParentComponent = (data: Array<ComponentData>, elementCid: string) => {
   const find = findComponentDeep(data, elementCid);
-  return { isDataTableColumnComponent: find?.parent?.type === 'DataTableColumn', component: find?.parent };
+  return find?.parent;
 };
 
 export const findParentTableComponent = (data: Array<ComponentData>, element: ComponentData | undefined): DataTable | undefined => {

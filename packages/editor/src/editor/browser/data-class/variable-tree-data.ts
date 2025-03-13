@@ -53,7 +53,7 @@ export const fullVariablePath = (row: Row<BrowserNode>, dontShowRootNode: boolea
 
   const parentPath = relevantParents.map(parent => parent.original.value).join('.');
 
-  if (row.original.value === 'Use entire Object' && dontShowRootNode) {
+  if (row.original.value === 'variable' && dontShowRootNode) {
     return '';
   }
   return parentPath ? `${parentPath}.${row.original.value}` : row.original.value;
@@ -124,8 +124,12 @@ function processType(data: VariableInfo, type: string, currentDepth: number): Ar
   }));
 }
 
+export function stripELExpression(expr: string): string {
+  return expr.replace(/^#\{|\}$/g, '').trim();
+}
+
 function extractVariableName(variableName: string): string {
-  const cleanedName = variableName.replace(/^#\{|\}$/g, '').trim();
+  const cleanedName = stripELExpression(variableName);
 
   const lastDotIndex = cleanedName.lastIndexOf('.');
   if (lastDotIndex !== -1) {

@@ -48,9 +48,9 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
       type: 'textBrowser',
       browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }]
     },
-    rowType: { subsection: 'General', label: 'Row Type', type: 'text' },
+    rowType: { subsection: 'General', label: 'Row Type', type: 'hidden' },
     isEditable: { subsection: 'General', label: 'Editable', type: 'generic', render: renderEditableDataTableField },
-    editDialogId: { subsection: 'General', label: 'Edit Dialog', type: 'text' },
+    editDialogId: { subsection: 'General', label: 'Edit Dialog', type: 'hidden' },
     components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsField /> },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
@@ -98,7 +98,11 @@ const UiBlock = ({ id, components, value, paginator, maxRows, visible, isEditabl
           </div>
         </div>
       )}
-      {dialog && componentByName('Dialog').render({ ...data.components[dialog.index].config, id: editDialogId })}
+      {dialog && (
+        <div className='block-table__dialog'>
+          {componentByName('Dialog').render({ ...data.components[dialog.index].config, id: editDialogId })}
+        </div>
+      )}
     </Flex>
   );
 };

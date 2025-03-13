@@ -11,6 +11,12 @@
   }
 }
 
+.block-table__dialog {
+  border: var(--basic-border);
+  border-radius: var(--border-r2);
+  padding: var(--size-2);
+}
+
 .block-table__paginator {
   padding-top: var(--size-2);
   > div {

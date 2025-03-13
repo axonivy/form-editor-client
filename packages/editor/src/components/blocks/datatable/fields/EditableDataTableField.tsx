@@ -1,10 +1,11 @@
 import { Checkbox, Field, Label } from '@axonivy/ui-components';
-import type { GenericFieldProps } from '../../../../types/config';
+import type { CreateComponentData, GenericFieldProps } from '../../../../types/config';
 import { COLUMN_DROPZONE_ID_PREFIX, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
-import { isTable, type ActionButtonType, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
+import { isTable, type ActionButtonType, type ComponentData, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
 import { getRowType } from '../../../../editor/sidebar/Properties';
 import { useAppContext } from '../../../../context/AppContext';
 import { useMeta } from '../../../../context/useMeta';
+import { stripELExpression } from '../../../../editor/browser/data-class/variable-tree-data';
 
 export const renderEditableDataTableField = (props: GenericFieldProps) => {
   return <EditableDataTableField {...props} />;
@@ -15,123 +16,66 @@ const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) =
   const { context } = useAppContext();
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
 
-  const stripELExpression = (expr: string) => {
-    return expr.replace(/^#\{|\}$/g, ''); // Remove #{ and }
-  };
-
-  const createEditDialog = () => {
+  const createEditComponents = () => {
     if (isTable(element)) {
-      setData(oldData => {
-        const dialog = modifyData(oldData, {
-          type: 'add',
-          data: {
-            componentName: 'Dialog',
-            targetId: element.cid,
-            create: {
-              label: 'Edit Row',
-              value: stripELExpression(element.config.value),
-              defaultProps: {
-                linkedComponent: element.cid
-              }
-            }
-          }
-        });
-        setElement(element => {
-          if (isTable(element) && dialog.newComponentId) {
-            element.config.editDialogId = dialog.newComponentId;
-            element.config.rowType = getRowType(element.config.value, variableInfo);
-          }
-          return element;
-        });
+      const existingActionColumn = element.config.components.find(col => col.config.asActionColumn);
+      let actionColumnId = existingActionColumn ? existingActionColumn.cid : '';
+      let dialogId = '';
 
-        const existingActionColumn = element.config.components.find(col => col.config.asActionColumn);
-        let editActionColumn = existingActionColumn?.cid;
-        let actionColumn = dialog;
-        if (existingActionColumn === undefined) {
-          actionColumn = modifyData(dialog.newData, {
+      setData(data => {
+        return createComponentData(element).reduce((updatedData, create) => {
+          if (existingActionColumn !== undefined && create.componentName === 'DataTableColumn') {
+            return updatedData;
+          }
+          const data = modifyData(updatedData, {
             type: 'add',
             data: {
-              componentName: 'DataTableColumn',
-              targetId: TABLE_DROPZONE_ID_PREFIX + element.cid,
-              create: {
-                label: 'Actions',
-                value: '',
-                defaultProps: {
-                  asActionColumn: true
-                }
-              }
+              componentName: create.componentName,
+              create,
+              targetId: create.componentName === 'Button' ? COLUMN_DROPZONE_ID_PREFIX + actionColumnId : create.targetId
             }
           });
-          editActionColumn = actionColumn.newComponentId;
+          if (create.componentName === 'Dialog' && data.newComponentId) {
+            dialogId = data.newComponentId;
+          }
+          if (create.componentName === 'DataTableColumn' && data.newComponentId && existingActionColumn === undefined) {
+            actionColumnId = data.newComponentId;
+          }
+          return data.newData;
+        }, data);
+      });
+
+      setElement(element => {
+        if (isTable(element) && dialogId) {
+          element.config.editDialogId = dialogId;
+          element.config.rowType = getRowType(element.config.value, variableInfo);
         }
-
-        const actionEditButton = modifyData(actionColumn.newData, {
-          type: 'add',
-          data: {
-            componentName: 'Button',
-            targetId: COLUMN_DROPZONE_ID_PREFIX + editActionColumn,
-            create: {
-              label: '',
-              value: '#{genericRowManager.setSelectedRow(row)}',
-              defaultProps: { actionType: 'EDIT', icon: 'pi pi-pencil' }
-            }
-          }
-        });
-
-        const actionDeletetButton = modifyData(actionEditButton.newData, {
-          type: 'add',
-          data: {
-            componentName: 'Button',
-            targetId: COLUMN_DROPZONE_ID_PREFIX + editActionColumn,
-            create: {
-              label: '',
-              value: `#{genericRowManager.deleteRow(${stripELExpression(element.config.value)}, row)}`,
-              defaultProps: { actionType: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
-            }
-          }
-        });
-
-        return actionDeletetButton.newData;
+        return element;
       });
     }
   };
 
-  const deleteEditDialog = () => {
+  const deleteEditComponents = () => {
     if (isTable(element)) {
-      setData(oldData => {
-        const noDialog = modifyData(oldData, {
-          type: 'remove',
-          data: {
-            id: element.config.editDialogId
-          }
-        }).newData;
-        setElement(element => {
-          if (isTable(element)) {
-            element.config.editDialogId = '';
-          }
-          return element;
-        });
-        const editButton = findActionButtonId(element.config, 'EDIT');
-        let noEdit = noDialog;
-        if (editButton) {
-          noEdit = modifyData(noDialog, {
+      const editButton = findActionButtonId(element.config, 'EDIT');
+      const deleteButton = findActionButtonId(element.config, 'DELETE');
+      const deleteIds: string[] = [element.config.editDialogId, editButton?.buttonId, deleteButton?.buttonId].filter(
+        (id): id is string => id !== undefined
+      );
+      setData(data => {
+        return deleteIds.reduce((updatedData, id) => {
+          return modifyData(updatedData, {
             type: 'remove',
-            data: {
-              id: editButton.buttonId
-            }
+            data: { id: id }
           }).newData;
+        }, data);
+      });
+
+      setElement(element => {
+        if (isTable(element)) {
+          element.config.editDialogId = '';
         }
-        const deleteButton = findActionButtonId(element.config, 'DELETE');
-        let noDelete = noEdit;
-        if (deleteButton) {
-          noDelete = modifyData(noDelete, {
-            type: 'remove',
-            data: {
-              id: deleteButton.buttonId
-            }
-          }).newData;
-        }
-        return noDelete;
+        return element;
       });
     }
   };
@@ -154,9 +98,9 @@ const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) =
         checked={value as boolean}
         onCheckedChange={e => {
           if (e === true) {
-            createEditDialog();
+            createEditComponents();
           } else {
-            deleteEditDialog();
+            deleteEditComponents();
           }
           onChange(Boolean(e));
         }}
@@ -165,3 +109,36 @@ const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) =
     </Field>
   );
 };
+
+const createComponentData: (element: ComponentData) => CreateComponentData[] = element => [
+  {
+    componentName: 'Dialog',
+    targetId: element.cid,
+    label: 'Edit Row',
+    value: stripELExpression(isTable(element) ? element.config.value : ''),
+    defaultProps: {
+      linkedComponent: element.cid
+    }
+  },
+  {
+    componentName: 'DataTableColumn',
+    targetId: TABLE_DROPZONE_ID_PREFIX + element.cid,
+    label: 'Actions',
+    value: '',
+    defaultProps: {
+      asActionColumn: true
+    }
+  },
+  {
+    componentName: 'Button',
+    label: '',
+    value: '#{genericRowManager.setSelectedRow(row)}',
+    defaultProps: { actionType: 'EDIT', icon: 'pi pi-pencil' }
+  },
+  {
+    componentName: 'Button',
+    label: '',
+    value: `#{genericRowManager.deleteRow(${stripELExpression(isTable(element) ? element.config.value : '')}, row)}`,
+    defaultProps: { actionType: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
+  }
+];

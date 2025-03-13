@@ -6,7 +6,7 @@ import { useDraggable } from '@dnd-kit/core';
 import {
   COLUMN_DROPZONE_ID_PREFIX,
   creationTargetId,
-  getParentColumnComponent,
+  getParentComponent,
   modifyData,
   TABLE_DROPZONE_ID_PREFIX,
   useData
@@ -154,7 +154,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
               if (readonly) {
                 return;
               }
-              if (e.key === 'Delete' && !isDataTableEditableButtons) {
+              if (e.key === 'Delete') {
                 e.stopPropagation();
                 deleteElement();
               }
@@ -190,12 +190,12 @@ const Draggable = ({ config, data }: DraggableProps) => {
             deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
             duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
             createAction={
-              !getParentColumnComponent(formData.components, data.cid).isDataTableColumnComponent && config.quickActions.includes('CREATE')
+              getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' && config.quickActions.includes('CREATE')
                 ? createElement
                 : undefined
             }
             createFromDataAction={
-              !getParentColumnComponent(formData.components, data.cid).isDataTableColumnComponent &&
+              getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' &&
               config.quickActions.includes('CREATEFROMDATA')
                 ? data.cid
                 : undefined
