@@ -1,4 +1,4 @@
-import type { Button as ButtonType, Component, ComponentData, ComponentType } from '@axonivy/form-editor-protocol';
+import type { Button as ButtonType, Component, ComponentData, ComponentType, DataTable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
@@ -53,6 +53,17 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const elementConfig = { ...config.defaultProps, ...data.config };
   const deleteElement = () => {
     setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.cid } }).newData);
+    if (data.type === 'DataTable' && (data.config as DataTable).editDialogId.length > 0) {
+      setData(
+        oldData =>
+          modifyData(oldData, {
+            type: 'remove',
+            data: {
+              id: (data.config as DataTable).editDialogId
+            }
+          }).newData
+      );
+    }
     setSelectedElement(undefined);
   };
   const duplicateElement = () => {
