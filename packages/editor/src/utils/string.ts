@@ -21,3 +21,7 @@ export const simpleType = (type: string): string => {
 export const typesString = (parameters: Array<{ type: string }>): string => {
   return parameters.map(param => simpleType(param.type)).join(', ');
 };
+
+export function stripELExpression(expr: string): string {
+  return expr.replace(/^#\{|\}$/g, '').trim();
+}

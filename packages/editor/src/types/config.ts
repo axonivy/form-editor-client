@@ -1,8 +1,9 @@
-import type { ComponentType, ConfigData, PrimitiveValue } from '@axonivy/form-editor-protocol';
+import type { ComponentType, ConfigData, FormData, PrimitiveValue } from '@axonivy/form-editor-protocol';
 import type React from 'react';
 import type { ReactNode } from 'react';
 import type { FormBrowser } from '../editor/browser/Browser';
 import type { CollapsibleControlProps, IvyIconProps } from '@axonivy/ui-components';
+import type { UpdateConsumer } from './types';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
 
@@ -19,7 +20,7 @@ export type FieldOption<TValue = PrimitiveValue> = {
 };
 
 export type CreateData = { label: string; value: string; defaultProps?: Record<string, unknown> };
-export type CreateComponentData = { componentName: ComponentType } & CreateData;
+export type CreateComponentData = { componentName: ComponentType; targetId?: string } & CreateData;
 
 export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
   typeof data === 'object' && data !== null && 'componentName' in data;
@@ -97,6 +98,7 @@ export type ComponentConfig<ComponentProps extends DefaultComponentProps = Defau
   fields: Fields<ComponentProps>;
   quickActions: QuickAction[];
   subSectionControls?: (props: CollapsibleControlProps, subSection: Subsection) => ReactNode;
+  onDelete?: (component: ComponentProps, setData: UpdateConsumer<FormData>) => void;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
