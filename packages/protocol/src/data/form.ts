@@ -8,6 +8,7 @@
 
 export type CmsQuickactionCategory = ("global" | "local")
 export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
+export type ActionButtonType = "GENERIC" | "EDIT" | "DELETE" | "ADD";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type SymbolPosition = "p" | "s";
@@ -116,6 +117,7 @@ export interface Component {
     | "Composite"
     | "DataTable"
     | "DatePicker"
+    | "Dialog"
     | "Fieldset"
     | "Input"
     | "Layout"
@@ -132,6 +134,7 @@ export interface Component {
     | Composite
     | DataTable
     | DatePicker
+    | Dialog
     | Fieldset
     | Input
     | Layout
@@ -144,6 +147,7 @@ export interface Component {
 }
 export interface Button {
   action: string;
+  actionType: ActionButtonType;
   disabled: string;
   icon: string;
   id: string;
@@ -191,11 +195,14 @@ export interface Composite {
 }
 export interface DataTable {
   components: TableComponent[];
+  editDialogId: string;
   id: string;
+  isEditable: boolean;
   lgSpan: string;
   maxRows: string;
   mdSpan: string;
   paginator: boolean;
+  rowType: string;
   value: string;
   visible: string;
 }
@@ -233,6 +240,15 @@ export interface DatePicker {
   updateOnChange: boolean;
   value: string;
   visible: string;
+}
+export interface Dialog {
+  components: Component[];
+  header: string;
+  id: string;
+  lgSpan: string;
+  linkedComponent: string;
+  mdSpan: string;
+  onApply: string;
 }
 export interface Fieldset {
   collapsed: boolean;

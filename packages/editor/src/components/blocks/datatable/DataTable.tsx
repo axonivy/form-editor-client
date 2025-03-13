@@ -8,18 +8,23 @@ import { useAppContext } from '../../../context/AppContext';
 import { Button, Flex, Message } from '@axonivy/ui-components';
 import { useMeta } from '../../../context/useMeta';
 import { componentByName } from '../../components';
-import { createInitTableColumns } from '../../../data/data';
+import { createInitTableColumns, DIALOG_DROPZONE_ID_PREFIX } from '../../../data/data';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
 import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
 import { ColumnControl } from './controls/ColumnControl';
 import { ColumnsField } from './fields/ColumnsField';
+import { renderEditableDataTableField } from './fields/EditableDataTableField';
+import { DropZone } from '../../../editor/canvas/DropZone';
 
 type DataTableProps = Prettify<DataTable>;
 
 export const defaultDataTableProps: DataTable = {
   components: [],
   value: '',
+  rowType: '',
+  isEditable: false,
+  editDialogId: '',
   paginator: false,
   maxRows: '10',
   ...defaultVisibleComponent,
@@ -44,6 +49,9 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
       type: 'textBrowser',
       browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }]
     },
+    rowType: { subsection: 'General', label: 'Row Type', type: 'text' },
+    isEditable: { subsection: 'General', label: 'Editable', type: 'generic', render: renderEditableDataTableField },
+    editDialogId: { subsection: 'General', label: 'Edit Dialog', type: 'hidden' },
     components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsField /> },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
@@ -53,8 +61,8 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
   subSectionControls: (props, subSection) => (subSection === 'Columns' ? <ColumnControl {...props} /> : null)
 };
 
-const UiBlock = ({ id, components, value, paginator, maxRows, visible }: UiComponentProps<DataTableProps>) => (
-  <>
+const UiBlock = ({ id, components, value, paginator, maxRows, visible, isEditable }: UiComponentProps<DataTableProps>) => (
+  <Flex direction='column' gap={2}>
     <Flex direction='column' gap={4} className='block-table'>
       <UiBlockHeader visible={visible} additionalInfo={paginator ? `Rows per Page: ${maxRows}` : ''} />
 
@@ -81,7 +89,17 @@ const UiBlock = ({ id, components, value, paginator, maxRows, visible }: UiCompo
         </Flex>
       </Flex>
     )}
-  </>
+    {isEditable && (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+        <div className='block-button' data-variant={'primary'}>
+          <i className='pi pi-plus' />
+        </div>
+      </div>
+    )}
+    <DropZone id={`${DIALOG_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
+      <div className='empty-block for-layout' />
+    </DropZone>
+  </Flex>
 );
 
 const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string }) => {

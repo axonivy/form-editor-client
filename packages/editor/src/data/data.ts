@@ -18,6 +18,7 @@ export const DELETE_DROPZONE_ID = 'delete';
 export const STRUCTURE_DROPZONE_ID_PREFIX = 'layout-';
 export const TABLE_DROPZONE_ID_PREFIX = 'table-';
 export const COLUMN_DROPZONE_ID_PREFIX = 'column-';
+export const DIALOG_DROPZONE_ID_PREFIX = 'dialog-';
 
 const findComponent = (
   data: Array<ComponentData>,

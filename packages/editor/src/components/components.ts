@@ -19,6 +19,7 @@ import { FieldsetComponent } from './blocks/fieldset/Fieldset';
 import { PanelComponent } from './blocks/panel/Panel';
 import { findParentTableComponent } from '../data/data';
 import { CompositeComponent } from './blocks/composite/Composite';
+import { DialogComponent } from './blocks/dialog/Dialog';
 
 const config: Config = {
   components: {
@@ -37,6 +38,7 @@ const config: Config = {
     DataTableColumn: DataTableColumnComponent,
     Fieldset: FieldsetComponent,
     Panel: PanelComponent,
+    Dialog: DialogComponent,
     Composite: CompositeComponent
   }
 } as const;
