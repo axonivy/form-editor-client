@@ -2,7 +2,7 @@ import { Message, useBrowser, type Browser, type BrowserNode } from '@axonivy/ui
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../context/useMeta';
 import { useCallback, useEffect, useState } from 'react';
-import type { ConfigData, Variable } from '@axonivy/form-editor-protocol';
+import { type ConfigData, type Variable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
 import { findParentTableComponent, getParentColumnComponent, useData } from '../../../data/data';
 import type { BrowserOptions } from '../Browser';

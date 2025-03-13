@@ -30,7 +30,7 @@ export const DialogComponent: ComponentConfig<DialogProps> = {
   icon: <IconSvg />,
   description: 'A flexable layout',
   defaultProps: defaultDialogProps,
-  render: props => <UiBlock {...props} />,
+  render: props => <DialogUiBlock {...props} />,
   create: ({ label, value, defaultProps }) => ({ ...defaultDialogProps, header: label, onApply: value, ...defaultProps }),
   outlineInfo: component => component.header,
   fields: {
@@ -48,7 +48,7 @@ export const DialogComponent: ComponentConfig<DialogProps> = {
   quickActions: DEFAULT_QUICK_ACTIONS
 };
 
-const UiBlock = ({ id, components, header, onApply, linkedComponent }: UiComponentProps<DialogProps>) => {
+export const DialogUiBlock = ({ id, components, header, onApply, linkedComponent }: UiComponentProps<DialogProps>) => {
   const { context, setData } = useAppContext();
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
 

@@ -8,14 +8,13 @@ import { useAppContext } from '../../../context/AppContext';
 import { Button, Flex, Message } from '@axonivy/ui-components';
 import { useMeta } from '../../../context/useMeta';
 import { componentByName } from '../../components';
-import { createInitTableColumns, DIALOG_DROPZONE_ID_PREFIX } from '../../../data/data';
+import { createInitTableColumns, findComponentDeep } from '../../../data/data';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
 import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
 import { ColumnControl } from './controls/ColumnControl';
 import { ColumnsField } from './fields/ColumnsField';
 import { renderEditableDataTableField } from './fields/EditableDataTableField';
-import { DropZone } from '../../../editor/canvas/DropZone';
 
 type DataTableProps = Prettify<DataTable>;
 
@@ -51,7 +50,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
     },
     rowType: { subsection: 'General', label: 'Row Type', type: 'text' },
     isEditable: { subsection: 'General', label: 'Editable', type: 'generic', render: renderEditableDataTableField },
-    editDialogId: { subsection: 'General', label: 'Edit Dialog', type: 'hidden' },
+    editDialogId: { subsection: 'General', label: 'Edit Dialog', type: 'text' },
     components: { subsection: 'Columns', label: 'Object-Bound Columns', type: 'generic', render: () => <ColumnsField /> },
     paginator: { subsection: 'Paginator', label: 'Enable Paginator', type: 'checkbox' },
     maxRows: { subsection: 'Paginator', label: 'Rows per Page', type: 'number', hide: data => !data.paginator },
@@ -61,46 +60,48 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
   subSectionControls: (props, subSection) => (subSection === 'Columns' ? <ColumnControl {...props} /> : null)
 };
 
-const UiBlock = ({ id, components, value, paginator, maxRows, visible, isEditable }: UiComponentProps<DataTableProps>) => (
-  <Flex direction='column' gap={2}>
-    <Flex direction='column' gap={4} className='block-table'>
-      <UiBlockHeader visible={visible} additionalInfo={paginator ? `Rows per Page: ${maxRows}` : ''} />
+const UiBlock = ({ id, components, value, paginator, maxRows, visible, isEditable, editDialogId }: UiComponentProps<DataTableProps>) => {
+  const { data } = useAppContext();
+  const dialog = findComponentDeep(data.components, editDialogId);
+  return (
+    <Flex direction='column' gap={2}>
+      <Flex direction='column' gap={4} className='block-table'>
+        <UiBlockHeader visible={visible} additionalInfo={paginator ? `Rows per Page: ${maxRows}` : ''} />
 
-      {components.length > 0 && (
-        <Flex direction='row' gap={1} className='block-table__columns'>
-          {components.map((column, index) => {
-            const columnComponent: TableComponent = { ...column };
-            return <ComponentBlock key={column.cid} component={columnComponent} preId={components[index - 1]?.cid} />;
-          })}
+        {components.length > 0 && (
+          <Flex direction='row' gap={1} className='block-table__columns'>
+            {components.map((column, index) => {
+              const columnComponent: TableComponent = { ...column };
+              return <ComponentBlock key={column.cid} component={columnComponent} preId={components[index - 1]?.cid} />;
+            })}
+          </Flex>
+        )}
+        {components.length === 0 && <EmptyDataTableColumn id={id} initValue={value} />}
+      </Flex>
+      {paginator && (
+        <Flex direction='column' alignItems='center'>
+          <Flex className='block-table__paginator' direction='row' alignItems='center' gap={2}>
+            <div className='arrow'>«</div>
+            <div className='arrow'>‹</div>
+            <div className='page-item-active'>1</div>
+            <div className='page-item'>2</div>
+            <div className='page-item'>3</div>
+            <div className='arrow'>›</div>
+            <div className='arrow'>»</div>
+          </Flex>
         </Flex>
       )}
-      {components.length === 0 && <EmptyDataTableColumn id={id} initValue={value} />}
-    </Flex>
-    {paginator && (
-      <Flex direction='column' alignItems='center'>
-        <Flex className='block-table__paginator' direction='row' alignItems='center' gap={2}>
-          <div className='arrow'>«</div>
-          <div className='arrow'>‹</div>
-          <div className='page-item-active'>1</div>
-          <div className='page-item'>2</div>
-          <div className='page-item'>3</div>
-          <div className='arrow'>›</div>
-          <div className='arrow'>»</div>
-        </Flex>
-      </Flex>
-    )}
-    {isEditable && (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
-        <div className='block-button' data-variant={'primary'}>
-          <i className='pi pi-plus' />
+      {isEditable && (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+          <div className='block-button' data-variant={'primary'}>
+            <i className='pi pi-plus' />
+          </div>
         </div>
-      </div>
-    )}
-    <DropZone id={`${DIALOG_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
-      <div className='empty-block for-layout' />
-    </DropZone>
-  </Flex>
-);
+      )}
+      {dialog && componentByName('Dialog').render({ ...data.components[dialog.index].config, id: editDialogId })}
+    </Flex>
+  );
+};
 
 const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string }) => {
   const { context, setData } = useAppContext();

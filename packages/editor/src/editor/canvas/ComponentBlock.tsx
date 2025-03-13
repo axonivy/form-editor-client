@@ -1,4 +1,4 @@
-import type { Component, ComponentData, ComponentType } from '@axonivy/form-editor-protocol';
+import type { Button as ButtonType, Component, ComponentData, ComponentType } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
@@ -42,7 +42,12 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
   const { data: formData, setData } = useData();
   const readonly = useReadonly();
-  const { isDragging, attributes, listeners, setNodeRef } = useDraggable({ disabled: readonly, id: data.cid, data: dragData(data) });
+  const isDataTableEditableButtons = data.type === 'Button' && (data.config as ButtonType).actionType !== 'GENERIC';
+  const { isDragging, attributes, listeners, setNodeRef } = useDraggable({
+    disabled: readonly || isDataTableEditableButtons,
+    id: data.cid,
+    data: dragData(data)
+  });
   const { selectedElement, setSelectedElement } = useAppContext();
   const isSelected = selectedElement === data.cid;
   const elementConfig = { ...config.defaultProps, ...data.config };
@@ -117,80 +122,84 @@ const Draggable = ({ config, data }: DraggableProps) => {
   });
 
   return (
-    <Popover open={isSelected && !isDragging}>
-      <PopoverAnchor asChild>
-        <div
-          onClick={e => {
-            e.stopPropagation();
-            setSelectedElement(data.cid);
-          }}
-          onDoubleClick={e => {
-            e.stopPropagation();
-            setUi(old => ({ ...old, properties: true }));
-          }}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
+    data.type !== 'Dialog' && (
+      <Popover open={isSelected && !isDragging}>
+        <PopoverAnchor asChild>
+          <div
+            onClick={e => {
               e.stopPropagation();
               setSelectedElement(data.cid);
+            }}
+            onDoubleClick={e => {
+              e.stopPropagation();
               setUi(old => ({ ...old, properties: true }));
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                e.stopPropagation();
+                setSelectedElement(data.cid);
+                setUi(old => ({ ...old, properties: true }));
+              }
+              if (readonly) {
+                return;
+              }
+              if (e.key === 'Delete' && !isDataTableEditableButtons) {
+                e.stopPropagation();
+                deleteElement();
+              }
+              if (e.key === 'ArrowUp' && !isDataTableEditableButtons) {
+                e.stopPropagation();
+                setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
+              }
+              if (e.key === 'ArrowDown' && !isDataTableEditableButtons) {
+                e.stopPropagation();
+                setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
+              }
+              if (e.code === 'KeyM' && !isDataTableEditableButtons) {
+                e.stopPropagation();
+                duplicateElement();
+              }
+            }}
+            className={cn(
+              'draggable',
+              isSelected && 'selected',
+              isDragging && 'dragging',
+              validations.length > 0 && `validation ${evalDotState(validations, undefined)}`
+            )}
+            ref={setNodeRef}
+            {...listeners}
+            {...attributes}
+            {...clipboardProps}
+          >
+            {config.render({ ...elementConfig, id: data.cid })}
+          </div>
+        </PopoverAnchor>
+        {!isDataTableEditableButtons && (
+          <Quickbar
+            deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
+            duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
+            createAction={
+              !getParentColumnComponent(formData.components, data.cid).isDataTableColumnComponent && config.quickActions.includes('CREATE')
+                ? createElement
+                : undefined
             }
-            if (readonly) {
-              return;
+            createFromDataAction={
+              !getParentColumnComponent(formData.components, data.cid).isDataTableColumnComponent &&
+              config.quickActions.includes('CREATEFROMDATA')
+                ? data.cid
+                : undefined
             }
-            if (e.key === 'Delete') {
-              e.stopPropagation();
-              deleteElement();
+            createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
+            createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
+            createActionColumnButtonAction={
+              config.quickActions.includes('CREATEACTIONCOLUMNBUTTON') && data.type === 'DataTableColumn' && data.config.asActionColumn
+                ? createActionButton
+                : undefined
             }
-            if (e.key === 'ArrowUp') {
-              e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
-            }
-            if (e.key === 'ArrowDown') {
-              e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
-            }
-            if (e.code === 'KeyM') {
-              e.stopPropagation();
-              duplicateElement();
-            }
-          }}
-          className={cn(
-            'draggable',
-            isSelected && 'selected',
-            isDragging && 'dragging',
-            validations.length > 0 && `validation ${evalDotState(validations, undefined)}`
-          )}
-          ref={setNodeRef}
-          {...listeners}
-          {...attributes}
-          {...clipboardProps}
-        >
-          {config.render({ ...elementConfig, id: data.cid })}
-        </div>
-      </PopoverAnchor>
-      <Quickbar
-        deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
-        duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
-        createAction={
-          !getParentColumnComponent(formData.components, data.cid).isDataTableColumnComponent && config.quickActions.includes('CREATE')
-            ? createElement
-            : undefined
-        }
-        createFromDataAction={
-          !getParentColumnComponent(formData.components, data.cid).isDataTableColumnComponent &&
-          config.quickActions.includes('CREATEFROMDATA')
-            ? data.cid
-            : undefined
-        }
-        createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
-        createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
-        createActionColumnButtonAction={
-          config.quickActions.includes('CREATEACTIONCOLUMNBUTTON') && data.type === 'DataTableColumn' && data.config.asActionColumn
-            ? createActionButton
-            : undefined
-        }
-      />
-    </Popover>
+          />
+        )}
+      </Popover>
+    )
   );
 };
 

@@ -2,6 +2,9 @@ import { Checkbox, Field, Label } from '@axonivy/ui-components';
 import type { GenericFieldProps } from '../../../../types/config';
 import { COLUMN_DROPZONE_ID_PREFIX, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
 import { isTable, type ActionButtonType, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
+import { getRowType } from '../../../../editor/sidebar/Properties';
+import { useAppContext } from '../../../../context/AppContext';
+import { useMeta } from '../../../../context/useMeta';
 
 export const renderEditableDataTableField = (props: GenericFieldProps) => {
   return <EditableDataTableField {...props} />;
@@ -9,6 +12,9 @@ export const renderEditableDataTableField = (props: GenericFieldProps) => {
 
 const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) => {
   const { element, setData, setElement } = useData();
+  const { context } = useAppContext();
+  const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
+
   const stripELExpression = (expr: string) => {
     return expr.replace(/^#\{|\}$/g, ''); // Remove #{ and }
   };
@@ -22,7 +28,7 @@ const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) =
             componentName: 'Dialog',
             targetId: element.cid,
             create: {
-              label: label,
+              label: 'Edit Row',
               value: stripELExpression(element.config.value),
               defaultProps: {
                 linkedComponent: element.cid
@@ -33,6 +39,7 @@ const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) =
         setElement(element => {
           if (isTable(element) && dialog.newComponentId) {
             element.config.editDialogId = dialog.newComponentId;
+            element.config.rowType = getRowType(element.config.value, variableInfo);
           }
           return element;
         });

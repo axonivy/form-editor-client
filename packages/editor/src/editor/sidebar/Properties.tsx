@@ -13,8 +13,11 @@ import {
 import { useData } from '../../data/data';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 import { componentByElement } from '../../components/components';
-import type { ConfigData } from '@axonivy/form-editor-protocol';
+import type { ConfigData, VariableInfo } from '@axonivy/form-editor-protocol';
 import { PropertySubSectionControl } from './PropertySubSectionControl';
+import { useMeta } from '../../context/useMeta';
+import { useAppContext } from '../../context/AppContext';
+import { findAttributesOfType } from '../browser/data-class/variable-tree-data';
 
 export const Properties = () => {
   const { element, data, parent } = useData();
@@ -51,6 +54,8 @@ const PropertySection = ({ section, fields }: { section: string; fields: Visible
 
 const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleFields }) => {
   const { element, setElement } = useData();
+  const { context } = useAppContext();
+  const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   if (element === undefined) {
     return null;
   }
@@ -65,10 +70,18 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
               key={`${element.cid}-${key}`}
               value={value}
               onChange={change => {
-                setElement(element => {
-                  (element.config as ConfigData)[key] = change;
-                  return element;
-                });
+                if (element.type === 'DataTable' && key === 'value') {
+                  setElement(element => {
+                    (element.config as ConfigData)['value'] = change;
+                    (element.config as ConfigData)['rowType'] = getRowType(change as string, variableInfo);
+                    return element;
+                  });
+                } else {
+                  setElement(element => {
+                    (element.config as ConfigData)[key] = change;
+                    return element;
+                  });
+                }
               }}
               fieldKey={key}
               field={field}
@@ -78,4 +91,12 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
       </CollapsibleContent>
     </Collapsible>
   );
+};
+
+export const getRowType = (value: string, variableInfo: VariableInfo) => {
+  const tree = findAttributesOfType(variableInfo, value);
+  if (tree.length > 0) {
+    return tree[0].info;
+  }
+  return '';
 };

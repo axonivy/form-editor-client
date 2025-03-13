@@ -40,7 +40,7 @@ const findComponent = (
   return findComponentDeep(data, id, parent);
 };
 
-const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: ComponentData) => {
+export const findComponentDeep = (data: Array<ComponentData>, id: string, parent?: ComponentData) => {
   const index = data.findIndex(obj => obj.cid === id);
   if (index < 0) {
     for (const element of data) {

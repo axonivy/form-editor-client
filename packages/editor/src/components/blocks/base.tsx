@@ -1,8 +1,9 @@
-import type { SelectItem } from '@axonivy/form-editor-protocol';
+import type { Button, SelectItem } from '@axonivy/form-editor-protocol';
 import type { FieldOption, Fields, GenericFieldProps } from '../../types/config';
 import { BasicField, Input } from '@axonivy/ui-components';
 import { useAppContext } from '../../context/AppContext';
 import { useValidation } from '../../context/useValidation';
+import { hideButtonField } from './button/Button';
 
 type BaseComponentProps = { id: string; lgSpan: string; mdSpan: string };
 type SelectItemsProps = {
@@ -55,12 +56,24 @@ export const baseComponentFields: Fields<BaseComponentProps> = {
 };
 
 export const visibleComponentField: Fields<VisibleItemProps> = {
-  visible: { subsection: 'Behaviour', label: 'Visible', type: 'textBrowser', browsers: [{ type: 'CONDITION' }] }
+  visible: {
+    subsection: 'Behaviour',
+    label: 'Visible',
+    type: 'textBrowser',
+    browsers: [{ type: 'CONDITION' }],
+    hide: data => hideButtonField((data as Button).actionType)
+  }
 };
 
 export const disabledComponentFields: Fields<DisabledItemProps> = {
   ...visibleComponentField,
-  disabled: { subsection: 'Behaviour', label: 'Disable', type: 'textBrowser', browsers: [{ type: 'CONDITION' }] }
+  disabled: {
+    subsection: 'Behaviour',
+    label: 'Disable',
+    type: 'textBrowser',
+    browsers: [{ type: 'CONDITION' }],
+    hide: data => hideButtonField((data as Button).actionType)
+  }
 };
 
 export const behaviourComponentFields: Fields<BehaviourItemProps> = {
