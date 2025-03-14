@@ -1,15 +1,7 @@
 import type { ComponentConfig, CreateComponentData, CreateData } from '../types/config';
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
-import {
-  isColumn,
-  isStructure,
-  isTable,
-  type ComponentData,
-  type ComponentType,
-  type DataTable,
-  type FormData
-} from '@axonivy/form-editor-protocol';
+import { isColumn, isStructure, isTable, type ComponentData, type ComponentType, type FormData } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
 import type { UpdateConsumer } from '../types/types';
 
@@ -68,7 +60,7 @@ const findStructureComponent = (data: Array<ComponentData>, id: string) => {
   return;
 };
 
-const findTableComponent = (data: Array<ComponentData>, id: string) => {
+export const findTableComponent = (data: Array<ComponentData>, id: string) => {
   const find = findComponentDeep(data, id);
   if (find) {
     const table = find.data[find.index];
@@ -81,35 +73,21 @@ const findTableComponent = (data: Array<ComponentData>, id: string) => {
 };
 
 const findDataTableColumnComponent = (data: Array<ComponentData>, id: string) => {
-  for (const table of data) {
-    if (isTable(table)) {
-      const column = table.config.components.find(col => col.cid === id);
-      if (column) {
-        const columnData = column.config.components;
-        return { data: columnData, index: columnData.length };
-      }
+  const parentTableComponent = getParentComponent(data, id);
+  if (isTable(parentTableComponent)) {
+    const column = parentTableComponent.config.components.find(col => col.cid === id);
+    if (column) {
+      const columnData = column.config.components;
+      return { data: columnData, index: columnData.length };
     }
   }
+
   return undefined;
 };
 
 export const getParentComponent = (data: Array<ComponentData>, elementCid: string) => {
   const find = findComponentDeep(data, elementCid);
   return find?.parent;
-};
-
-export const findParentTableComponent = (data: Array<ComponentData>, element: ComponentData | undefined): DataTable | undefined => {
-  for (const component of data) {
-    if (component.type === 'DataTable') {
-      const hasMatchingColumn = (component.config as unknown as DataTable).components.some(
-        childComponent => childComponent.cid === element?.cid
-      );
-      if (hasMatchingColumn) {
-        return component.config as unknown as DataTable;
-      }
-    }
-  }
-  return undefined;
 };
 
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {

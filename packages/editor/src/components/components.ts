@@ -7,7 +7,7 @@ import { LinkComponent } from './blocks/link/Link';
 import { TextComponent } from './blocks/text/Text';
 import { CheckboxComponent } from './blocks/checkbox/Checkbox';
 import { SelectComponent } from './blocks/select/Select';
-import type { ComponentData, ComponentType } from '@axonivy/form-editor-protocol';
+import { isTable, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
 import type { AutoCompleteWithString } from '../types/types';
 import { ComboboxComponent } from './blocks/combobox/Combobox';
 import { RadioComponent } from './blocks/radio/Radio';
@@ -17,7 +17,7 @@ import { DataTableComponent } from './blocks/datatable/DataTable';
 import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
 import { FieldsetComponent } from './blocks/fieldset/Fieldset';
 import { PanelComponent } from './blocks/panel/Panel';
-import { findParentTableComponent } from '../data/data';
+import { getParentComponent } from '../data/data';
 import { CompositeComponent } from './blocks/composite/Composite';
 import { DialogComponent } from './blocks/dialog/Dialog';
 
@@ -45,7 +45,7 @@ const config: Config = {
 
 export const componentByElement = (element: ComponentData, data: Array<ComponentData>) => {
   const component = componentByName(element.type);
-  if (component === undefined && findParentTableComponent(data, element)) {
+  if (component === undefined && isTable(getParentComponent(data, element.cid))) {
     return componentByName('DataTableColumn');
   }
   return component;

@@ -5,7 +5,7 @@ import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, vis
 import IconSvg from './DataTable.svg?react';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { useAppContext } from '../../../context/AppContext';
-import { Button, Flex, Message } from '@axonivy/ui-components';
+import { Button, cn, Flex, Message } from '@axonivy/ui-components';
 import { useMeta } from '../../../context/useMeta';
 import { componentByName } from '../../components';
 import { createInitTableColumns, findComponentDeep } from '../../../data/data';
@@ -61,7 +61,7 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
 };
 
 const UiBlock = ({ id, components, value, paginator, maxRows, visible, isEditable, editDialogId }: UiComponentProps<DataTableProps>) => {
-  const { data } = useAppContext();
+  const { data, setSelectedElement, selectedElement } = useAppContext();
   const dialog = findComponentDeep(data.components, editDialogId);
   return (
     <Flex direction='column' gap={2}>
@@ -99,8 +99,15 @@ const UiBlock = ({ id, components, value, paginator, maxRows, visible, isEditabl
         </div>
       )}
       {dialog && (
-        <div className='block-table__dialog'>
-          {componentByName('Dialog').render({ ...data.components[dialog.index].config, id: editDialogId })}
+        <div
+          className={cn('draggable', 'block-table__dialog', selectedElement === editDialogId && 'selected')}
+          style={{ boxShadow: 'var(--editor-shadow)' }}
+          onClick={e => {
+            e.stopPropagation();
+            setSelectedElement(editDialogId);
+          }}
+        >
+          {componentByName('Dialog').render({ ...dialog.data[dialog.index].config, id: editDialogId })}
         </div>
       )}
     </Flex>

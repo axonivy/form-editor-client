@@ -155,7 +155,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
               if (readonly) {
                 return;
               }
-              if (e.key === 'Delete') {
+              if (e.key === 'Delete' && !isDataTableEditableButtons) {
                 e.stopPropagation();
                 deleteElement();
               }

@@ -2,11 +2,11 @@ import { Message, useBrowser, type Browser, type BrowserNode } from '@axonivy/ui
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useMeta } from '../../../context/useMeta';
 import { useCallback, useEffect, useState } from 'react';
-import { type ConfigData, type Dialog, type Variable } from '@axonivy/form-editor-protocol';
+import { isTable, type ConfigData, type Dialog, type Variable } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
-import { findParentTableComponent, getParentComponent, useData } from '../../../data/data';
+import { findComponentDeep, getParentComponent, useData } from '../../../data/data';
 import type { BrowserOptions } from '../Browser';
-import { findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
+import { findAttributesOfType, variableTreeData, fullVariablePath, stripELExpression } from './variable-tree-data';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute';
 
@@ -25,28 +25,30 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
     }
 
     const parentComponent = getParentComponent(data.components, element.cid);
-    const parentTableComponent = findParentTableComponent(data.components, element);
-
     switch (options?.onlyAttributes) {
       case 'DYNAMICLIST':
         setTree(findAttributesOfType(variableInfo, dynamicList));
         break;
       case 'COLUMN':
-        setTree(findAttributesOfType(variableInfo, parentTableComponent?.value || ''));
+        if (parentComponent && isTable(parentComponent)) setTree(findAttributesOfType(variableInfo, parentComponent.config.value || ''));
         break;
       default:
-        if (!parentComponent) {
-          setTree(variableTreeData().of(variableInfo));
-          return;
-        }
-        if (parentComponent.type === 'DataTableColumn') {
+        if (parentComponent && parentComponent.type === 'DataTableColumn') {
+          const parentTableComponent = getParentComponent(data.components, parentComponent.cid);
           setTree([
-            ...findAttributesOfType(variableInfo, parentTableComponent?.value || '', 10, 'row'),
+            ...findAttributesOfType(variableInfo, isTable(parentTableComponent) ? parentComponent.config.value : '', 10, 'row'),
             ...variableTreeData().of(variableInfo)
           ]);
-        } else if (parentComponent.type === 'Dialog') {
+        } else if (parentComponent && parentComponent.type === 'Dialog') {
           setComponentInDialog(true);
-          setTree(findAttributesOfType(variableInfo, (parentComponent.config as unknown as Dialog)?.onApply));
+          const dataTable = findComponentDeep(data.components, (parentComponent.config as unknown as Dialog)?.linkedComponent);
+          const table = dataTable ? dataTable.data[dataTable.index] : undefined;
+          if (table && isTable(table)) {
+            setTree(findAttributesOfType(variableInfo, stripELExpression(table.config.value)));
+          }
+        } else {
+          setTree(variableTreeData().of(variableInfo));
+          return;
         }
         break;
     }

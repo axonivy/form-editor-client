@@ -113,7 +113,7 @@ const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) =
 const createComponentData: (element: ComponentData) => CreateComponentData[] = element => [
   {
     componentName: 'Dialog',
-    targetId: element.cid,
+    targetId: 'canvas',
     label: 'Edit Row',
     value: stripELExpression(isTable(element) ? element.config.value : ''),
     defaultProps: {
