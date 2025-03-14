@@ -1,4 +1,4 @@
-import type { ActionButtonType, Button, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
+import type { Button, ButtonType, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
 import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
@@ -14,19 +14,24 @@ const variantOptions: FieldOption<ButtonVariant>[] = [
   { label: 'Danger', value: 'DANGER' }
 ] as const;
 
+const typeOptions: FieldOption<ButtonType>[] = [
+  { label: 'Edit', value: 'EDIT' },
+  { label: 'Delete', value: 'DELETE' },
+  { label: 'Normal', value: 'BUTTON' }
+] as const;
+
 export const defaultButtonProps: Button = {
   name: 'Action',
   action: '',
   variant: 'PRIMARY',
   type: 'BUTTON',
-  actionType: 'GENERIC',
   icon: '',
   processOnlySelf: false,
   ...defaultDisabledComponent,
   ...defaultBaseComponent
 } as const;
-export const hideButtonField = (buttonType: ActionButtonType) => {
-  if (buttonType === 'ADD' || buttonType === 'DELETE' || buttonType === 'EDIT') {
+export const hideButtonField = (buttonType: ButtonType) => {
+  if (buttonType === 'DELETE' || buttonType === 'EDIT') {
     return true;
   }
   return false;
@@ -43,35 +48,37 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   outlineInfo: component => component.name,
   fields: {
     ...baseComponentFields,
+    type: {
+      subsection: 'General',
+      label: 'Type',
+      type: 'select',
+      options: typeOptions,
+      hide: data => data.type !== 'EDIT' && data.type !== 'DELETE'
+    },
     name: {
       subsection: 'General',
       label: 'Name',
       type: 'textBrowser',
-      browsers: [{ type: 'CMS', options: { overrideSelection: true } }],
-      hide: data => hideButtonField(data.actionType)
+      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
     },
     action: {
       subsection: 'General',
       label: 'Action',
       type: 'textBrowser',
       browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }],
-      hide: data => hideButtonField(data.actionType)
+      hide: data => hideButtonField(data.type)
     },
     variant: {
       subsection: 'General',
       label: 'Variant',
       type: 'select',
-      options: variantOptions,
-      hide: data => hideButtonField(data.actionType)
+      options: variantOptions
     },
-    type: { subsection: 'General', label: 'Type', type: 'hidden' },
-    actionType: { subsection: 'General', label: 'Action Type', type: 'hidden' },
     icon: {
       subsection: 'General',
       label: 'Icon',
       type: 'generic',
-      render: renderIconField,
-      hide: data => hideButtonField(data.actionType)
+      render: renderIconField
     },
     processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
     ...disabledComponentFields

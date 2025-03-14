@@ -61,7 +61,7 @@ export const visibleComponentField: Fields<VisibleItemProps> = {
     label: 'Visible',
     type: 'textBrowser',
     browsers: [{ type: 'CONDITION' }],
-    hide: data => hideButtonField((data as Button).actionType)
+    hide: data => hideButtonField((data as Button).type)
   }
 };
 
@@ -72,7 +72,7 @@ export const disabledComponentFields: Fields<DisabledItemProps> = {
     label: 'Disable',
     type: 'textBrowser',
     browsers: [{ type: 'CONDITION' }],
-    hide: data => hideButtonField((data as Button).actionType)
+    hide: data => hideButtonField((data as Button).type)
   }
 };
 

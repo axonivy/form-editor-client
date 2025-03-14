@@ -1,7 +1,7 @@
 import { Checkbox, Field, Label } from '@axonivy/ui-components';
 import type { CreateComponentData, GenericFieldProps } from '../../../../types/config';
 import { COLUMN_DROPZONE_ID_PREFIX, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
-import { isTable, type ActionButtonType, type ComponentData, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
+import { isTable, type ButtonType, type ComponentData, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
 import { getRowType } from '../../../../editor/sidebar/Properties';
 import { useAppContext } from '../../../../context/AppContext';
 import { useMeta } from '../../../../context/useMeta';
@@ -80,11 +80,11 @@ const EditableDataTableField = ({ label, value, onChange }: GenericFieldProps) =
     }
   };
 
-  const findActionButtonId = (table: DataTable, type: ActionButtonType): { buttonId: string; column: TableComponent } | undefined => {
+  const findActionButtonId = (table: DataTable, type: ButtonType): { buttonId: string; column: TableComponent } | undefined => {
     for (const column of table.components) {
       if (column.config.asActionColumn) {
         for (const button of column.config.components) {
-          if (button.config.actionType === type) {
+          if (button.config.type === type) {
             return { buttonId: button.cid, column: column };
           }
         }
@@ -133,12 +133,12 @@ const createComponentData: (element: ComponentData) => CreateComponentData[] = e
     componentName: 'Button',
     label: '',
     value: '#{genericRowManager.setSelectedRow(row)}',
-    defaultProps: { actionType: 'EDIT', icon: 'pi pi-pencil' }
+    defaultProps: { type: 'EDIT', icon: 'pi pi-pencil', variant: 'PRIMARY' }
   },
   {
     componentName: 'Button',
     label: '',
     value: `#{genericRowManager.deleteRow(${stripELExpression(isTable(element) ? element.config.value : '')}, row)}`,
-    defaultProps: { actionType: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
+    defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
   }
 ];

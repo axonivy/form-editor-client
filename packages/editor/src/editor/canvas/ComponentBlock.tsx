@@ -42,7 +42,8 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
   const { data: formData, setData } = useData();
   const readonly = useReadonly();
-  const isDataTableEditableButtons = data.type === 'Button' && (data.config as ButtonType).actionType !== 'GENERIC';
+  const isDataTableEditableButtons =
+    data.type === 'Button' && ((data.config as ButtonType).type === 'EDIT' || (data.config as ButtonType).type === 'DELETE');
   const { isDragging, attributes, listeners, setNodeRef } = useDraggable({
     disabled: readonly || isDataTableEditableButtons,
     id: data.cid,

@@ -7,20 +7,20 @@
  */
 
 export type CmsQuickactionCategory = ("global" | "local")
-export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
-export type ActionButtonType = "GENERIC" | "EDIT" | "DELETE" | "ADD";
-export type ButtonType = "SUBMIT" | "BUTTON" | "RESET";
-export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
-export type SymbolPosition = "p" | "s";
-export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
-export type LayoutAlignItems = "START" | "CENTER" | "END";
-export type LayoutGridVariant = "GRID1" | "GRID2" | "GRID4" | "FREE";
-export type LayoutJustifyContent = "NORMAL" | "END";
-export type LayoutType = "GRID" | "FLEX";
-export type OrientationType = "horizontal" | "vertical";
-export type TextIconStyle = "INLINE" | "BLOCK";
-export type TextType = "RAW" | "MARKDOWN";
-export type Severity = "INFO" | "WARNING" | "ERROR";
+export type ContentObjectType = 'STRING' | 'FILE' | 'FOLDER';
+// export type ActionButtonType = "GENERIC" | "EDIT" | "DELETE" | "ADD";
+export type ButtonType = 'SUBMIT' | 'BUTTON' | 'RESET' | 'EDIT' | 'DELETE';
+export type ButtonVariant = 'PRIMARY' | 'SECONDARY' | 'DANGER';
+export type SymbolPosition = 'p' | 's';
+export type InputType = 'TEXT' | 'EMAIL' | 'PASSWORD' | 'NUMBER';
+export type LayoutAlignItems = 'START' | 'CENTER' | 'END';
+export type LayoutGridVariant = 'GRID1' | 'GRID2' | 'GRID4' | 'FREE';
+export type LayoutJustifyContent = 'NORMAL' | 'END';
+export type LayoutType = 'GRID' | 'FLEX';
+export type OrientationType = 'horizontal' | 'vertical';
+export type TextIconStyle = 'INLINE' | 'BLOCK';
+export type TextType = 'RAW' | 'MARKDOWN';
+export type Severity = 'INFO' | 'WARNING' | 'ERROR';
 
 export interface Forms {
   cmsMetaRequest: CmsMetaRequest;
@@ -105,28 +105,28 @@ export interface Form {
   components: Component[];
 }
 export interface FormConfig {
-  renderer: "JSF";
+  renderer: 'JSF';
   theme: string;
 }
 export interface Component {
   cid: string;
   type:
-    | "Button"
-    | "Checkbox"
-    | "Combobox"
-    | "Composite"
-    | "DataTable"
-    | "DatePicker"
-    | "Dialog"
-    | "Fieldset"
-    | "Input"
-    | "Layout"
-    | "Link"
-    | "Panel"
-    | "Radio"
-    | "Select"
-    | "Text"
-    | "Textarea";
+    | 'Button'
+    | 'Checkbox'
+    | 'Combobox'
+    | 'Composite'
+    | 'DataTable'
+    | 'DatePicker'
+    | 'Dialog'
+    | 'Fieldset'
+    | 'Input'
+    | 'Layout'
+    | 'Link'
+    | 'Panel'
+    | 'Radio'
+    | 'Select'
+    | 'Text'
+    | 'Textarea';
   config:
     | Button
     | Checkbox
@@ -147,7 +147,6 @@ export interface Component {
 }
 export interface Button {
   action: string;
-  actionType: ActionButtonType;
   disabled: string;
   icon: string;
   id: string;
@@ -208,7 +207,7 @@ export interface DataTable {
 }
 export interface TableComponent {
   cid: string;
-  type: "DataTableColumn";
+  type: 'DataTableColumn';
   config: DataTableColumn;
 }
 export interface DataTableColumn {
@@ -223,7 +222,7 @@ export interface DataTableColumn {
 }
 export interface ActionColumnComponent {
   cid: string;
-  type: "Button";
+  type: 'Button';
   config: Button;
 }
 export interface DatePicker {
@@ -367,7 +366,7 @@ export interface Textarea {
   visible: string;
 }
 export interface FormActionArgs {
-  actionId: "openDataClass" | "openProcess" | "openUrl";
+  actionId: 'openDataClass' | 'openProcess' | 'openUrl';
   context: FormContext;
   payload: string;
 }
