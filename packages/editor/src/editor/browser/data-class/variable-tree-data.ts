@@ -59,17 +59,21 @@ export const fullVariablePath = (row: Row<BrowserNode>, dontShowRootNode: boolea
   return parentPath ? `${parentPath}.${row.original.value}` : row.original.value;
 };
 
-export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | undefined => {
+export const rowToCreateData = (
+  row: Row<BrowserNode>,
+  dontShowRootNode: boolean = false,
+  prefix?: string
+): CreateComponentData | undefined => {
   const node = row.original;
   const component = componentForType(node.info);
   if (component === undefined) {
     return undefined;
   }
-
+  const variablePath = fullVariablePath(row, dontShowRootNode);
   return {
     componentName: component.component.name,
     label: labelText(node.value),
-    value: `#{${fullVariablePath(row)}}`,
+    value: `#{${prefix ? prefix : ''}${prefix && variablePath.length > 0 ? '.' : ''}${variablePath}}`,
     ...component.defaultProps
   };
 };
