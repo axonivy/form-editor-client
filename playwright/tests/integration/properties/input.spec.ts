@@ -81,11 +81,7 @@ test('cmsToolTip', async ({ page }) => {
   await expect(badge).toContainText('greetings');
 
   await badge.hover();
-  const tooltip = label.outputLocator
-    .locator('div', { has: page.locator('.ui-tooltip-content') })
-    .first()
-    .locator('.ui-tooltip-content')
-    .first();
+  const tooltip = page.getByRole('tooltip');
   await expect(tooltip).toBeVisible({ timeout: 1500 });
   await expect(tooltip).toContainText('/greetingsen: Hello World');
 });
