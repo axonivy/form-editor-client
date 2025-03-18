@@ -22,7 +22,6 @@ export type TextType = "RAW" | "MARKDOWN";
 export type Severity = "INFO" | "WARNING" | "ERROR";
 
 export interface Forms {
-  cmsMetaRequest: CmsMetaRequest;
   cmsQuickAction: CmsQuickAction[];
   cmsQuickActionRequest: CmsQuickActionRequest;
   compositeContext: CompositeContext;
@@ -32,6 +31,7 @@ export interface Forms {
   executeCmsQuickActionRequest: ExecuteCmsQuickActionRequest;
   form: Form;
   formActionArgs: FormActionArgs;
+  formCmsMetaRequest: FormCmsMetaRequest;
   formContext: FormContext;
   formEditorData: FormEditorData;
   formSaveDataArgs: FormSaveDataArgs;
@@ -43,15 +43,6 @@ export interface Forms {
   void: Void;
   [k: string]: unknown;
 }
-export interface CmsMetaRequest {
-  context: FormContext;
-  requiredProjects: boolean;
-}
-export interface FormContext {
-  app: string;
-  file: string;
-  pmv: string;
-}
 export interface CmsQuickAction {
   category: CmsQuickactionCategory;
   coContent: string;
@@ -61,6 +52,11 @@ export interface CmsQuickAction {
 export interface CmsQuickActionRequest {
   context: FormContext;
   text: string;
+}
+export interface FormContext {
+  app: string;
+  file: string;
+  pmv: string;
 }
 export interface CompositeContext {
   compositeId: string;
@@ -354,6 +350,10 @@ export interface FormActionArgs {
   actionId: "openDataClass" | "openProcess" | "openUrl";
   context: FormContext;
   payload: string;
+}
+export interface FormCmsMetaRequest {
+  context: FormContext;
+  requiredProjects: boolean;
 }
 export interface FormEditorData {
   context: FormContext;
