@@ -3,7 +3,7 @@ import type {
   FormContext,
   VariableInfo,
   LogicInfo,
-  CmsMetaRequest,
+  FormCmsMetaRequest,
   ContentObject,
   CompositeInfo,
   ParameterInfo,
@@ -20,7 +20,7 @@ import type { FormEditor, FormSaveData } from './data/form-data';
 export interface FormMetaRequestTypes {
   'meta/data/attributes': [FormContext, VariableInfo];
   'meta/data/logic': [FormContext, LogicInfo];
-  'meta/cms/cmsTree': [CmsMetaRequest, Array<ContentObject>];
+  'meta/cms/cmsTree': [FormCmsMetaRequest, Array<ContentObject>];
   'meta/cms/executeCmsQuickAction': [ExecuteCmsQuickActionRequest, string];
   'meta/cms/cmsQuickActions': [CmsQuickActionRequest, Array<CmsQuickAction>];
   'meta/composite/all': [FormContext, Array<CompositeInfo>];
