@@ -16,13 +16,7 @@ export const ATTRIBUTES: VariableInfo = {
         type: 'Number'
       },
       {
-        attribute: 'surname',
-        description: '',
-        simpleType: 'String',
-        type: 'String'
-      },
-      {
-        attribute: 'first name',
+        attribute: 'firstname',
         description: '',
         simpleType: 'String',
         type: 'String'
