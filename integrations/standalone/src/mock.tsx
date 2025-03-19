@@ -6,8 +6,14 @@ import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
 import { readonlyParam } from './url-helper';
 
+function getDatatableFlag(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('datatable') === 'true';
+}
+
 export function start() {
-  const formClient = new FormClientMock();
+  const datatable = getDatatableFlag();
+  const formClient = new FormClientMock(datatable);
   const queryClient = initQueryClient();
   const readonly = readonlyParam();
 

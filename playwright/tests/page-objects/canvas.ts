@@ -14,7 +14,19 @@ export class Canvas {
     return new Block(this.page, this.locator, { text });
   }
 
-  blockByNth(nth: number, options?: { layout?: boolean; datatable?: boolean }) {
+  blockByNth(
+    nth: number,
+    options?: {
+      layout?: boolean;
+      datatable?: boolean;
+      column?: boolean;
+      actionButton?: boolean;
+      dialog?: boolean;
+      dialogContent?: boolean;
+      datatableNth?: number;
+      columnNth?: number;
+    }
+  ) {
     return new Block(this.page, this.locator, { nth, ...options });
   }
 
