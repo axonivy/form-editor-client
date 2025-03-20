@@ -210,7 +210,7 @@ const Quickbar = ({
             )}
             {/* <Button icon={IvyIcons.ChangeType} title='Change Type' /> */}
             {createFromDataAction && (
-              <DataClassDialog worfkflowButtonsInit={false} creationTarget={createFromDataAction}>
+              <DataClassDialog workflowButtonsInit={false} creationTarget={createFromDataAction}>
                 <Button
                   icon={IvyIcons.DatabaseLink}
                   size='small'
