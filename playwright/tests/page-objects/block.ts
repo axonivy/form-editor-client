@@ -7,7 +7,15 @@ export class Block {
   constructor(
     page: Page,
     parent: Locator,
-    by: { text: string } | { nth: number } | { layout: boolean; nth: number } | { datatable: boolean; nth: number }
+    by:
+      | { text: string }
+      | { nth: number }
+      | { layout: boolean; nth: number }
+      | { datatable: boolean; nth: number }
+      | { dialog: boolean; datatableNth: number; nth: number }
+      | { dialogContent: boolean; datatableNth: number; nth: number }
+      | { column: boolean; datatableNth: number; nth: number }
+      | { actionButton: boolean; datatableNth: number; columnNth: number; nth: number }
   ) {
     this.page = page;
     if ('text' in by) {
@@ -16,13 +24,29 @@ export class Block {
       this.block = parent.locator('.draggable:has(>.block-layout)').nth(by.nth);
     } else if ('datatable' in by && by.datatable) {
       this.block = parent.locator('.draggable:has(>.block-table)').nth(by.nth);
+    } else if ('datatableNth' in by && 'dialog' in by && by.dialog) {
+      const datatable = parent.locator('.draggable:has(>.block-table)').nth(by.datatableNth);
+      this.block = datatable.locator('.block-table__dialog');
+    } else if ('datatableNth' in by && 'dialogContent' in by && by.dialogContent) {
+      const datatable = parent.locator('.draggable:has(>.block-table)').nth(by.datatableNth);
+      const dialog = datatable.locator('.block-table__dialog');
+      const input = dialog.locator('.draggable').nth(by.nth ?? 0);
+      this.block = input;
+    } else if ('datatableNth' in by && 'column' in by && by.column) {
+      const datatable = parent.locator('.draggable:has(>.block-table)').nth(by.datatableNth);
+      this.block = datatable.locator('.draggable:has(>.block-column)').nth(by.nth);
+    } else if ('datatableNth' in by && 'columnNth' in by && 'actionButton' in by && by.actionButton) {
+      const datatable = parent.locator('.draggable:has(>.block-table)').nth(by.datatableNth);
+      const column = datatable.locator('.draggable:has(>.block-column)').nth(by.columnNth);
+      const button = column.locator('.draggable:has(>.block-button)').nth(by.nth);
+      this.block = button;
     } else {
       this.block = parent.locator('.draggable:not(:has(>.block-layout))').nth(by.nth);
     }
   }
 
-  async select() {
-    await this.block.click();
+  async select(force: boolean = false) {
+    await this.block.click({ force: force });
     await this.expectSelected();
   }
 

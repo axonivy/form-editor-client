@@ -3,14 +3,7 @@ import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
 import { useDraggable } from '@dnd-kit/core';
-import {
-  COLUMN_DROPZONE_ID_PREFIX,
-  creationTargetId,
-  getParentComponent,
-  modifyData,
-  TABLE_DROPZONE_ID_PREFIX,
-  useData
-} from '../../data/data';
+import { getParentComponent, modifyData, useData } from '../../data/data';
 import { dragData } from './drag-data';
 import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -21,6 +14,7 @@ import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 import { useClipboard, type TextDropItem } from 'react-aria';
+import { useComponentBlockActions } from './useComponentBlockActions';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -33,7 +27,7 @@ export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockPro
   </DropZone>
 );
 
-type DraggableProps = {
+export type DraggableProps = {
   config: ComponentConfig;
   data: Component | ComponentData;
 };
@@ -52,64 +46,10 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { selectedElement, setSelectedElement } = useAppContext();
   const isSelected = selectedElement === data.cid;
   const elementConfig = { ...config.defaultProps, ...data.config };
-  const deleteElement = () => {
-    setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.cid } }).newData);
-    config.onDelete?.(elementConfig, setData);
-    setSelectedElement(undefined);
-  };
-  const duplicateElement = () => {
-    setData(oldData => modifyData(oldData, { type: 'paste', data: { id: data.cid } }).newData);
-  };
-  const createColumn = () => {
-    setData(
-      oldData =>
-        modifyData(oldData, {
-          type: 'add',
-          data: {
-            componentName: 'DataTableColumn',
-            targetId: TABLE_DROPZONE_ID_PREFIX + data.cid
-          }
-        }).newData
-    );
-  };
+  const { createElement, duplicateElement, deleteElement, createActionButton, createActionColumn, createColumn } = useComponentBlockActions(
+    { config, data }
+  );
 
-  const createActionColumn = () => {
-    setData(
-      oldData =>
-        modifyData(oldData, {
-          type: 'add',
-          data: {
-            componentName: 'DataTableColumn',
-            targetId: TABLE_DROPZONE_ID_PREFIX + data.cid,
-            create: {
-              label: 'Actions',
-              value: '',
-              defaultProps: {
-                asActionColumn: true
-              }
-            }
-          }
-        }).newData
-    );
-  };
-
-  const createActionButton = () => {
-    setData(
-      oldData =>
-        modifyData(oldData, {
-          type: 'add',
-          data: { componentName: 'Button', targetId: COLUMN_DROPZONE_ID_PREFIX + data.cid }
-        }).newData
-    );
-  };
-
-  const createElement = (name: ComponentType) => {
-    setData(
-      oldData =>
-        modifyData(oldData, { type: 'add', data: { componentName: name, targetId: creationTargetId(oldData.components, data.cid) } })
-          .newData
-    );
-  };
   const validations = useValidations(data.cid);
   const { clipboardProps } = useClipboard({
     getItems() {
@@ -270,7 +210,7 @@ const Quickbar = ({
             )}
             {/* <Button icon={IvyIcons.ChangeType} title='Change Type' /> */}
             {createFromDataAction && (
-              <DataClassDialog worfkflowButtonsInit={false} creationTarget={createFromDataAction}>
+              <DataClassDialog workflowButtonsInit={false} creationTarget={createFromDataAction}>
                 <Button
                   icon={IvyIcons.DatabaseLink}
                   size='small'

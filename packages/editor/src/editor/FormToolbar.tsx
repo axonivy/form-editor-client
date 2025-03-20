@@ -140,7 +140,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
             <CompositePalette />
           </PalettePopover>
           <PaletteButton text='Data'>
-            <DataClassDialog worfkflowButtonsInit={false}>
+            <DataClassDialog workflowButtonsInit={false}>
               <Button
                 icon={IvyIcons.DatabaseLink}
                 size='large'

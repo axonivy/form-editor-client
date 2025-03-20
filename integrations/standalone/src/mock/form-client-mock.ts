@@ -11,15 +11,19 @@ import { validateMock } from './validation-mock';
 import { Emitter } from '@axonivy/jsonrpc';
 import { data } from './data-mock';
 import { ATTRIBUTES, CMSQUICKACTIONS, COMPOSITE_PARAMS, COMPOSITES } from './meta-mock';
+import { dataDataTable } from './data-mock-datatable';
 
 export class FormClientMock implements FormClient {
-  private formData: FormEditor = {
-    context: { app: 'mock', pmv: 'mock', file: 'mock.f.json' },
-    readonly: false,
-    defaults: {},
-    data: data,
-    helpUrl: 'https://dev.axonivy.com'
-  };
+  private formData: FormEditor;
+  constructor(datatable: boolean = false) {
+    this.formData = {
+      context: { app: 'mock', pmv: 'mock', file: 'mock.f.json' },
+      readonly: false,
+      defaults: {},
+      data: datatable ? dataDataTable : data,
+      helpUrl: 'https://dev.axonivy.com'
+    };
+  }
 
   protected onValidationChangedEmitter = new Emitter<void>();
   onValidationChanged = this.onValidationChangedEmitter.event;
