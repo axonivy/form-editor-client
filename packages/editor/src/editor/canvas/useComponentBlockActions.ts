@@ -7,8 +7,6 @@ export const useComponentBlockActions = ({ config, data }: DraggableProps) => {
   const { setSelectedElement } = useAppContext();
   const { setData } = useData();
   const elementConfig = { ...config.defaultProps, ...data.config };
-  // console.log(config);
-  // console.log(data);
   const deleteElement = () => {
     setData(oldData => modifyData(oldData, { type: 'remove', data: { id: data.cid } }).newData);
     config.onDelete?.(elementConfig, setData);

@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
   ExpandableCell,
+  MessageRow,
   SelectRow,
   Table,
   TableBody,
@@ -29,7 +30,8 @@ import { useKnownHotkeys } from '../../../utils/hotkeys';
 
 type DataClassDialogProps = {
   children: ReactNode;
-  worfkflowButtonsInit?: boolean;
+  showWorkflowButtonsCheckbox?: boolean;
+  workflowButtonsInit?: boolean;
   creationTarget?: string;
   onlyAttributs?: string;
   showRootNode?: boolean;
@@ -38,7 +40,8 @@ type DataClassDialogProps = {
 
 export const DataClassDialog = ({
   children,
-  worfkflowButtonsInit = true,
+  showWorkflowButtonsCheckbox = true,
+  workflowButtonsInit = true,
   creationTarget,
   onlyAttributs,
   showRootNode,
@@ -55,7 +58,8 @@ export const DataClassDialog = ({
           <DialogTitle>Create from data</DialogTitle>
         </DialogHeader>
         <DataClassSelect
-          worfkflowButtonsInit={worfkflowButtonsInit}
+          workflowButtonsInit={workflowButtonsInit}
+          showWorkflowButtonsCheckbox={showWorkflowButtonsCheckbox}
           creationTarget={creationTarget}
           onlyAttributs={onlyAttributs}
           showRootNode={showRootNode}
@@ -67,13 +71,15 @@ export const DataClassDialog = ({
 };
 
 const DataClassSelect = ({
-  worfkflowButtonsInit,
+  showWorkflowButtonsCheckbox,
+  workflowButtonsInit,
   creationTarget,
   onlyAttributs,
   showRootNode,
   prefix
 }: {
-  worfkflowButtonsInit: boolean;
+  workflowButtonsInit: boolean;
+  showWorkflowButtonsCheckbox?: boolean;
   creationTarget?: string;
   onlyAttributs?: string;
   showRootNode?: boolean;
@@ -82,7 +88,7 @@ const DataClassSelect = ({
   const { context, setData } = useAppContext();
 
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
-  const [workflowButtons, setWorkflowButtons] = useState(worfkflowButtonsInit);
+  const [workflowButtons, setWorkflowButtons] = useState(showWorkflowButtonsCheckbox ? workflowButtonsInit : false);
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   useEffect(() => {
     if (onlyAttributs) {
@@ -142,23 +148,29 @@ const DataClassSelect = ({
     <>
       <Table>
         <TableBody>
-          {table.getRowModel().rows.map(row => (
-            <SelectRow key={row.id} row={row}>
-              {row.getVisibleCells().map(cell => (
-                <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-              ))}
-            </SelectRow>
-          ))}
+          {table.getRowModel().flatRows.length ? (
+            table.getRowModel().rows.map(row => (
+              <SelectRow key={row.id} row={row}>
+                {row.getVisibleCells().map(cell => (
+                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                ))}
+              </SelectRow>
+            ))
+          ) : (
+            <MessageRow message={{ message: 'No data', variant: 'info' }} columnCount={1} />
+          )}
         </TableBody>
       </Table>
-      <BasicCheckbox
-        checked={workflowButtons}
-        onCheckedChange={change => setWorkflowButtons(Boolean(change))}
-        label='Create proceed and cancel buttons'
-      />
+      {showWorkflowButtonsCheckbox && (
+        <BasicCheckbox
+          checked={workflowButtons}
+          onCheckedChange={change => setWorkflowButtons(Boolean(change))}
+          label='Create proceed and cancel buttons'
+        />
+      )}
       <DialogFooter>
         <DialogClose asChild>
-          <Button variant='primary' onClick={createForm}>
+          <Button variant='primary' onClick={createForm} disabled={tree.length === 0}>
             Create
           </Button>
         </DialogClose>

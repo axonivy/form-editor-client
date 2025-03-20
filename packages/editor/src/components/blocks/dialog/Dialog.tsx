@@ -55,7 +55,7 @@ export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiCom
       <Flex direction='row' justifyContent='space-between' alignItems='center'>
         <UiBadge value={header} />
         <DataClassDialog
-          worfkflowButtonsInit={false}
+          showWorkflowButtonsCheckbox={false}
           creationTarget={id}
           onlyAttributs={onlyAttributs}
           showRootNode={false}
