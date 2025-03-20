@@ -1,4 +1,4 @@
-import { labelText, typesString, simpleType } from './string';
+import { labelText, typesString, simpleType, stripELExpression } from './string';
 
 test('labelText', () => {
   expect(labelText('')).equals('');
@@ -18,4 +18,14 @@ test('simpleType', () => {
 
 test('typesString', () => {
   expect(typesString([{ type: 'Number' }, { type: 'com.example.Type' }])).toEqual('Number, Type');
+});
+
+test('stripELExpression', () => {
+  expect(stripELExpression('#{some.value}')).toEqual('some.value');
+  expect(stripELExpression('#{ another.value }')).toEqual('another.value');
+  expect(stripELExpression('#{nested.value.deep}')).toEqual('nested.value.deep');
+  expect(stripELExpression('some.value')).toEqual('some.value');
+  expect(stripELExpression('#{}')).toEqual('');
+  expect(stripELExpression('#{   }')).toEqual('');
+  expect(stripELExpression('#{a}')).toEqual('a');
 });

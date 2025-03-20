@@ -87,7 +87,10 @@ const UiBlock = ({
             <UiBadge value={header} />
             {sortable && !asActionColumn && <IvyIcon icon={IvyIcons.Selector} />}
           </Flex>
-          <UiBlockHeaderVisiblePart visible={visible} />
+          <Flex alignItems='center' gap={2}>
+            {asActionColumn && components.find(b => b.config.type === 'EDIT' || b.config.type === 'DELETE') && <i className='pi pi-plus' />}
+            <UiBlockHeaderVisiblePart visible={visible} />
+          </Flex>
         </Flex>
         <Flex className='block-column__filter' data-active={filterable && !asActionColumn} gap={1}>
           Filter By <UiBadge value={header} />

@@ -4,6 +4,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import type { Row } from '@tanstack/react-table';
 import { componentForType } from '../../../components/components';
 import type { CreateComponentData } from '../../../types/config';
+import { stripELExpression } from '../../../utils/string';
 
 export const variableTreeData = () => {
   const of = (paramInfo: VariableInfo): Array<BrowserNode<Variable>> => {
@@ -53,32 +54,42 @@ export const variableTreeData = () => {
   return { of, loadChildrenFor, typesOfParam };
 };
 
-export const fullVariablePath = (row: Row<BrowserNode>, dontShowRootNode: boolean = false): string => {
+export const fullVariablePath = (row: Row<BrowserNode>, showRootNode: boolean = true): string => {
   const parentRows = row.getParentRows();
   const isFlatStructure = parentRows.length === 0;
-  const relevantParents = dontShowRootNode && !isFlatStructure ? parentRows.slice(1) : parentRows;
+  const relevantParents = showRootNode || isFlatStructure ? parentRows : parentRows.slice(1);
 
   const parentPath = relevantParents.map(parent => parent.original.value).join('.');
 
-  if (row.original.value === 'Use entire Object' && dontShowRootNode) {
+  if (row.original.value === 'variable' && !showRootNode) {
     return '';
   }
   return parentPath ? `${parentPath}.${row.original.value}` : row.original.value;
 };
 
-export const rowToCreateData = (row: Row<BrowserNode>): CreateComponentData | undefined => {
+export const rowToCreateData = (row: Row<BrowserNode>, showRootNode: boolean = true, prefix?: string): CreateComponentData | undefined => {
   const node = row.original;
   const component = componentForType(node.info);
   if (component === undefined) {
     return undefined;
   }
+  const variablePath = fullVariablePath(row, showRootNode);
 
+  const value = formatVariableValue(variablePath, prefix);
   return {
     componentName: component.component.name,
     label: labelText(node.value),
-    value: `#{${fullVariablePath(row)}}`,
+    value,
     ...component.defaultProps
   };
+};
+
+export const formatVariableValue = (variablePath: string, prefix?: string): string => {
+  if (!prefix) {
+    return `#{${variablePath}}`;
+  }
+  const separator = variablePath.length > 0 ? '.' : '';
+  return `#{${prefix}${separator}${variablePath}}`;
 };
 
 export function findAttributesOfType(
@@ -132,7 +143,7 @@ function processType(data: VariableInfo, type: string, currentDepth: number): Ar
 }
 
 function extractVariableName(variableName: string): string {
-  const cleanedName = variableName.replace(/^#\{|\}$/g, '').trim();
+  const cleanedName = stripELExpression(variableName);
 
   const lastDotIndex = cleanedName.lastIndexOf('.');
   if (lastDotIndex !== -1) {
