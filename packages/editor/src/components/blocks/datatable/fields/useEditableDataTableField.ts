@@ -1,6 +1,4 @@
 import { isTable, type ButtonType, type ComponentData, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
-// import { useAppContext } from '../../../../context/AppContext';
-// import { useMeta } from '../../../../context/useMeta';
 import { COLUMN_DROPZONE_ID_PREFIX, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
 import { getRowType } from './ListOfObjectsField';
 import type { CreateComponentData } from '../../../../types/config';
