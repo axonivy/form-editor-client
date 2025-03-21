@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Field } from '../../types/config';
 import { CheckboxField } from './fields/CheckboxField';
 import { TextareaField } from './fields/TextareaField';
@@ -33,6 +33,11 @@ export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: Pr
     setValue(newValue);
     onChange(newValue);
   };
+
+  useEffect(() => {
+    setValue(initValue);
+  }, [initValue]);
+
   const inputFor = (field: Field) => {
     const label = field.label ?? fieldKey;
     switch (field.type) {
