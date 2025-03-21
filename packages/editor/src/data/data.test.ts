@@ -10,7 +10,15 @@ import {
   isTable,
   isColumn
 } from '@axonivy/form-editor-protocol';
-import { createInitForm, creationTargetId, DELETE_DROPZONE_ID, findComponentElement, getParentComponent, modifyData } from './data';
+import {
+  createInitForm,
+  creationTargetId,
+  DELETE_DROPZONE_ID,
+  findComponentElement,
+  getParentComponent,
+  isEditableTable,
+  modifyData
+} from './data';
 import type { DeepPartial } from '../types/types';
 
 describe('findComponentElement', () => {
@@ -455,3 +463,27 @@ const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
   const component = data.components.find(c => c.cid === deepId) as LayoutConfig;
   expect(component.config.components.map(c => c.cid)).to.eql(order);
 };
+
+describe('isEditableTable', () => {
+  test('returns true for editable table', () => {
+    const table: ComponentData = {
+      cid: 'table1',
+      type: 'DataTable',
+      config: { isEditable: true, components: [] }
+    };
+    expect(isEditableTable([table], table)).toBe(true);
+  });
+
+  test('returns false for non-editable table', () => {
+    const table: ComponentData = {
+      cid: 'table2',
+      type: 'DataTable',
+      config: { isEditable: false, components: [] }
+    };
+    expect(isEditableTable([table], table)).toBe(false);
+  });
+
+  test('returns false if element is undefined', () => {
+    expect(isEditableTable([], undefined)).toBe(false);
+  });
+});

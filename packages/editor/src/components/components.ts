@@ -56,13 +56,20 @@ export const componentByName = (name: AutoCompleteWithString<ComponentType>) => 
 };
 
 export const componentsByCategory = (category: ItemCategory) => {
-  const filteredComponents = Object.values(config.components).filter(component => component.category === category);
+  // Provisional: Filter out undefined components before checking category
+  const filteredComponents = Object.values(config.components)
+    .filter(component => component !== undefined)
+    .filter(component => component.category === category);
+
   return groupBy(Object.values(filteredComponents), item => item.subcategory);
 };
 
 export const allComponentsByCategory = () => {
+  // Provisional: Filter out undefined components before checking category
   return groupBy(
-    Object.values(config.components).filter(component => component.category !== 'Hidden'),
+    Object.values(config.components)
+      .filter(component => component !== undefined)
+      .filter(component => component.category !== 'Hidden'),
     item => item.category
   );
 };
