@@ -83,22 +83,22 @@ const Draggable = ({ config, data }: DraggableProps) => {
               setSelectedElement(data.cid);
               setUi(old => ({ ...old, properties: true }));
             }
-            if (readonly || isDataTableEditableButtons) {
+            if (readonly) {
               return;
             }
             if (e.key === 'Delete') {
               e.stopPropagation();
               deleteElement();
             }
-            if (e.key === 'ArrowUp') {
+            if (e.key === 'ArrowUp' && !isDataTableEditableButtons) {
               e.stopPropagation();
               setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
             }
-            if (e.key === 'ArrowDown') {
+            if (e.key === 'ArrowDown' && !isDataTableEditableButtons) {
               e.stopPropagation();
               setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
             }
-            if (e.code === 'KeyM') {
+            if (e.code === 'KeyM' && !isDataTableEditableButtons) {
               e.stopPropagation();
               duplicateElement();
             }
@@ -117,29 +117,27 @@ const Draggable = ({ config, data }: DraggableProps) => {
           {config.render({ ...elementConfig, id: data.cid })}
         </div>
       </PopoverAnchor>
-      {!isDataTableEditableButtons && (
-        <Quickbar
-          deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
-          duplicateAction={config.quickActions.includes('DUPLICATE') ? duplicateElement : undefined}
-          createAction={
-            getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' && config.quickActions.includes('CREATE')
-              ? createElement
-              : undefined
-          }
-          createFromDataAction={
-            getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' && config.quickActions.includes('CREATEFROMDATA')
-              ? data.cid
-              : undefined
-          }
-          createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
-          createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
-          createActionColumnButtonAction={
-            config.quickActions.includes('CREATEACTIONCOLUMNBUTTON') && data.type === 'DataTableColumn' && data.config.asActionColumn
-              ? createActionButton
-              : undefined
-          }
-        />
-      )}
+      <Quickbar
+        deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
+        duplicateAction={config.quickActions.includes('DUPLICATE') && !isDataTableEditableButtons ? duplicateElement : undefined}
+        createAction={
+          getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' && config.quickActions.includes('CREATE')
+            ? createElement
+            : undefined
+        }
+        createFromDataAction={
+          getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' && config.quickActions.includes('CREATEFROMDATA')
+            ? data.cid
+            : undefined
+        }
+        createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
+        createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
+        createActionColumnButtonAction={
+          config.quickActions.includes('CREATEACTIONCOLUMNBUTTON') && data.type === 'DataTableColumn' && data.config.asActionColumn
+            ? createActionButton
+            : undefined
+        }
+      />
     </Popover>
   );
 };
