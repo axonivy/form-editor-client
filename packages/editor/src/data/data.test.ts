@@ -10,7 +10,16 @@ import {
   isTable,
   isColumn
 } from '@axonivy/form-editor-protocol';
-import { createInitForm, creationTargetId, DELETE_DROPZONE_ID, findComponentElement, getParentComponent, modifyData } from './data';
+import {
+  createInitForm,
+  creationTargetId,
+  DELETE_DROPZONE_ID,
+  findComponentElement,
+  getParentComponent,
+  hasButtonInTable,
+  isEditableTable,
+  modifyData
+} from './data';
 import type { DeepPartial } from '../types/types';
 
 describe('findComponentElement', () => {
@@ -455,3 +464,85 @@ const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
   const component = data.components.find(c => c.cid === deepId) as LayoutConfig;
   expect(component.config.components.map(c => c.cid)).to.eql(order);
 };
+
+describe('isEditableTable', () => {
+  test('returns true for editable table', () => {
+    const table: ComponentData = {
+      cid: 'table1',
+      type: 'DataTable',
+      config: { isEditable: true, components: [] }
+    };
+    expect(isEditableTable([table], table)).toBe(true);
+  });
+
+  test('returns false for non-editable table', () => {
+    const table: ComponentData = {
+      cid: 'table2',
+      type: 'DataTable',
+      config: { isEditable: false, components: [] }
+    };
+    expect(isEditableTable([table], table)).toBe(false);
+  });
+
+  test('returns false if element is undefined', () => {
+    expect(isEditableTable([], undefined)).toBe(false);
+  });
+});
+
+describe('hasButtonInTable', () => {
+  test('returns true if table has a button of specified type', () => {
+    const button: DeepPartial<ActionColumnComponent> = {
+      cid: 'button1',
+      type: 'Button',
+      config: { type: 'SUBMIT' }
+    };
+    const column: DeepPartial<TableComponent> = {
+      cid: 'col1',
+      type: 'DataTableColumn',
+      config: { asActionColumn: true, components: [button] }
+    };
+    const table: DeepPartial<ComponentData> = {
+      cid: 'table1',
+      type: 'DataTable',
+      config: { components: [column] }
+    };
+    expect(hasButtonInTable([table as ComponentData], table as ComponentData, 'SUBMIT')).toBe(true);
+  });
+
+  test('returns false if table has no button of specified type', () => {
+    const button: DeepPartial<ActionColumnComponent> = {
+      cid: 'button2',
+      type: 'Button',
+      config: { type: 'RESET' }
+    };
+    const column: DeepPartial<TableComponent> = {
+      cid: 'col2',
+      type: 'DataTableColumn',
+      config: { asActionColumn: true, components: [button] }
+    };
+    const table: DeepPartial<ComponentData> = {
+      cid: 'table2',
+      type: 'DataTable',
+      config: { components: [column] }
+    };
+    expect(hasButtonInTable([table as ComponentData], table as ComponentData, 'SUBMIT')).toBe(false);
+  });
+
+  test('returns false if table has no action columns', () => {
+    const column: DeepPartial<TableComponent> = {
+      cid: 'col3',
+      type: 'DataTableColumn',
+      config: { asActionColumn: false, components: [] }
+    };
+    const table: DeepPartial<ComponentData> = {
+      cid: 'table3',
+      type: 'DataTable',
+      config: { components: [column] }
+    };
+    expect(hasButtonInTable([table as ComponentData], table as ComponentData, 'SUBMIT')).toBe(false);
+  });
+
+  test('returns false if element is undefined', () => {
+    expect(hasButtonInTable([], undefined, 'SUBMIT')).toBe(false);
+  });
+});

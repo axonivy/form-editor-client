@@ -57,6 +57,10 @@ export const isColumn = (component?: Component | ComponentData): component is Co
   return component !== undefined && component.type === 'DataTableColumn' && 'components' in component.config;
 };
 
+export const isButton = (component?: Component | ComponentData): component is Component => {
+  return component !== undefined && component.type === 'Button' && 'type' in component.config && 'action' in component.config;
+};
+
 const isLayout = (component?: Component | ComponentData): component is LayoutConfig => {
   return isStructure(component) && component.type === 'Layout';
 };

@@ -1,5 +1,5 @@
 import { BasicField, Combobox, Flex, type ComboboxOption } from '@axonivy/ui-components';
-import type { GenericFieldProps } from '../../../types/config';
+import type { GenericFieldProps } from '../../../../types/config';
 
 export const renderIconField = (props: GenericFieldProps) => {
   return <IconField {...props} />;
