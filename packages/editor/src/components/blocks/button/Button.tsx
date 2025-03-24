@@ -1,10 +1,11 @@
-import type { Button, ButtonType, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
+import type { Button, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
 import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
 import IconSvg from './Button.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
-import { renderIconField } from './IconField';
+import { renderIconField } from './fields/IconField';
+import { renderTypeField } from './fields/TypeField';
 
 type ButtonProps = Prettify<Button>;
 
@@ -12,11 +13,6 @@ const variantOptions: FieldOption<ButtonVariant>[] = [
   { label: 'Primary', value: 'PRIMARY' },
   { label: 'Secondary', value: 'SECONDARY' },
   { label: 'Danger', value: 'DANGER' }
-] as const;
-
-const typeOptions: FieldOption<ButtonType>[] = [
-  { label: 'Edit', value: 'EDIT' },
-  { label: 'Delete', value: 'DELETE' }
 ] as const;
 
 export const defaultButtonProps: Button = {
@@ -56,9 +52,8 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
     type: {
       subsection: 'General',
       label: 'Type',
-      type: 'select',
-      options: typeOptions,
-      hide: data => data.type !== 'EDIT' && data.type !== 'DELETE'
+      type: 'generic',
+      render: renderTypeField
     },
     name: {
       subsection: 'General',

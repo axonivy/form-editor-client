@@ -1,7 +1,16 @@
 import type { ComponentConfig, CreateComponentData, CreateData } from '../types/config';
 import { componentByName } from '../components/components';
 import { add, remove } from '../utils/array';
-import { isColumn, isStructure, isTable, type ComponentData, type ComponentType, type FormData } from '@axonivy/form-editor-protocol';
+import {
+  isButton,
+  isColumn,
+  isStructure,
+  isTable,
+  type ComponentData,
+  type ComponentType,
+  type FormData,
+  type TableConfig
+} from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../context/AppContext';
 import type { UpdateConsumer } from '../types/types';
 
@@ -88,6 +97,21 @@ const findDataTableColumnComponent = (data: Array<ComponentData>, id: string) =>
 export const getParentComponent = (data: Array<ComponentData>, elementCid: string) => {
   const find = findComponentDeep(data, elementCid);
   return find?.parent;
+};
+
+const getParentTable = (data: Array<ComponentData>, element: ComponentData | undefined): ComponentData | undefined => {
+  if (isTable(element)) {
+    return element;
+  }
+  if (isColumn(element) || isButton(element)) {
+    return getParentTable(data, getParentComponent(data, element.cid));
+  }
+  return undefined;
+};
+
+export const isEditableTable = (data: Array<ComponentData>, element: ComponentData | undefined): boolean => {
+  const parentTable = getParentTable(data, element);
+  return parentTable ? (parentTable as TableConfig).config.isEditable : false;
 };
 
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {

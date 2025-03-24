@@ -222,3 +222,42 @@ test('editable datatable', async ({ page }) => {
   await columnsSection.expectListItems(0);
   await expect(table.block.locator('block-table__dialog')).toBeHidden();
 });
+
+test('editable datatable buttons', async ({ page }) => {
+  const editor = await FormEditor.openMock(page, true);
+  const table = editor.canvas.blockByNth(0, { datatable: true });
+  await table.block.getByRole('button').click();
+
+  await table.block.dblclick({ position: { x: 10, y: 10 } });
+  const properties = editor.inscription.section('Properties');
+  const section = properties.collapsible('General');
+  const editable = section.checkbox({ label: 'Editable' });
+  const columnsSection = properties.collapsible('Columns');
+
+  await editable.check();
+  await columnsSection.expectListItems(4);
+  const deleteButton = editor.canvas.blockByNth(1, { datatableNth: 0, columnNth: 3, actionButton: true });
+  await deleteButton.quickAction('Delete', true);
+
+  const contentSection = properties.collapsible('Content');
+  await contentSection.expectListItems(1);
+
+  const editButton = editor.canvas.blockByNth(0, { datatableNth: 0, columnNth: 3, actionButton: true });
+  await editButton.select(true);
+
+  const buttonType = section.select({ label: 'type' });
+  await buttonType.expectValue('Edit');
+
+  await buttonType.choose('Delete');
+  await buttonType.expectValue('Delete');
+
+  await table.quickAction('Create Action Column');
+  const newActionColumn = editor.canvas.blockByNth(4, { datatableNth: 0, column: true });
+  await newActionColumn.quickAction('Create Action Column Button');
+  const newActionColumnButton = editor.canvas.blockByNth(0, { datatableNth: 0, columnNth: 4, actionButton: true });
+  await newActionColumnButton.block.dblclick();
+
+  await buttonType.expectValue('Generic');
+  await buttonType.choose('Edit');
+  await buttonType.expectValue('Edit');
+});

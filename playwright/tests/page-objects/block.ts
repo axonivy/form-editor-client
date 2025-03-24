@@ -55,8 +55,8 @@ export class Block {
     await this.expectSelected();
   }
 
-  async quickAction(name: string) {
-    await this.select();
+  async quickAction(name: string, force: boolean = false) {
+    await this.select(force);
     await this.page.locator('.quickbar').getByRole('button', { name }).click();
   }
 
