@@ -1,14 +1,24 @@
 import {
   EMPTY_FORM,
-  type ComponentData,
   type FormData,
   type LayoutConfig,
-  type DataTable,
   type ConfigData,
   type TableConfig,
-  type TableComponent
+  type ComponentData,
+  type TableComponent,
+  type ActionColumnComponent,
+  isTable,
+  isColumn
 } from '@axonivy/form-editor-protocol';
-import { createInitForm, creationTargetId, DELETE_DROPZONE_ID, findComponentElement, findParentTableComponent, modifyData } from './data';
+import {
+  createInitForm,
+  creationTargetId,
+  DELETE_DROPZONE_ID,
+  findComponentElement,
+  getParentComponent,
+  isEditableTable,
+  modifyData
+} from './data';
 import type { DeepPartial } from '../types/types';
 
 describe('findComponentElement', () => {
@@ -274,6 +284,64 @@ describe('modifyData', () => {
     });
   });
 });
+describe('findParentTableComponent', () => {
+  const but1: DeepPartial<ActionColumnComponent> = {
+    cid: 'but1',
+    config: {},
+    type: 'Button'
+  };
+  const col1: DeepPartial<TableComponent> = {
+    cid: 'col1',
+    config: {
+      components: [but1]
+    },
+    type: 'DataTableColumn'
+  };
+  const col2: DeepPartial<TableComponent> = {
+    cid: 'col2',
+    config: {},
+    type: 'DataTableColumn'
+  };
+
+  const data: ComponentData[] = [
+    {
+      cid: '3',
+      type: 'DataTable',
+      config: { components: [col1, col2] }
+    },
+    {
+      cid: '4',
+      type: 'Layout',
+      config: {
+        components: [{ cid: 'input1', type: 'Input', config: {} }]
+      }
+    }
+  ];
+
+  test('return DataTable containing the element', () => {
+    const parent = getParentComponent(data, 'col1');
+    expect(parent?.cid).toEqual('3');
+    expect(isTable(parent) && parent.config.components[0].cid).toEqual('col1');
+    expect(isColumn(parent)).toEqual(false);
+  });
+
+  test('return Column containing the element', () => {
+    const parent = getParentComponent(data, 'but1');
+    expect(parent?.cid).toEqual('col1');
+    expect(isTable(parent)).toEqual(false);
+    expect(isColumn(parent)).toEqual(true);
+  });
+
+  test('return undefined if is no parent', () => {
+    const parent = getParentComponent(data, '3');
+    expect(parent).toEqual(undefined);
+  });
+
+  test('return undefined if is no component', () => {
+    const parent = getParentComponent(data, 'notexistent');
+    expect(parent).toEqual(undefined);
+  });
+});
 
 describe('createInitForm', () => {
   test('create', () => {
@@ -295,72 +363,6 @@ describe('createInitForm', () => {
     expect((layout.config.components[0].config as ConfigData).type).toEqual('BUTTON');
     expect((layout.config.components[1].config as ConfigData).action).toEqual('#{logic.close}');
     expect((layout.config.components[1].config as ConfigData).type).toEqual('SUBMIT');
-  });
-});
-
-describe('findParentTableComponent', () => {
-  const dataTable: DeepPartial<DataTable> = {
-    components: [
-      { cid: 'column-1', config: {} },
-      { cid: 'column-2', config: {} }
-    ]
-  };
-
-  const data: ComponentData[] = [
-    {
-      cid: '3',
-      type: 'DataTable',
-      config: { components: dataTable.components as ComponentData[] }
-    }
-  ];
-
-  test('return DataTable containing the element', () => {
-    const element: TableComponent = {
-      cid: 'column-1',
-      type: 'DataTableColumn',
-      config: {
-        header: '',
-        value: '',
-        actionColumnAsMenu: false,
-        asActionColumn: false,
-        components: [],
-        filterable: false,
-        sortable: false,
-        visible: 'true'
-      }
-    };
-    expect(findParentTableComponent(data, element)).toEqual(dataTable);
-  });
-
-  test('return undefined if element is no Column', () => {
-    const element: ComponentData = { cid: 'button', type: 'Button', config: {} };
-    expect(findParentTableComponent(data, element)).toBeUndefined();
-  });
-
-  test('return undefined if the element is undefined', () => {
-    expect(findParentTableComponent(data, undefined)).toBeUndefined();
-  });
-
-  test('return undefined if there are no DataTable components', () => {
-    const noTableData: ComponentData[] = [
-      { cid: '1', type: 'Input', config: {} },
-      { cid: '2', type: 'Button', config: {} }
-    ];
-    const element: TableComponent = {
-      cid: 'column-1',
-      type: 'DataTableColumn',
-      config: {
-        header: '',
-        value: '',
-        actionColumnAsMenu: false,
-        asActionColumn: false,
-        components: [],
-        filterable: false,
-        sortable: false,
-        visible: 'true'
-      }
-    };
-    expect(findParentTableComponent(noTableData, element)).toBeUndefined();
   });
 });
 
@@ -461,3 +463,27 @@ const expectOrderDeep = (data: FormData, deepId: string, order: string[]) => {
   const component = data.components.find(c => c.cid === deepId) as LayoutConfig;
   expect(component.config.components.map(c => c.cid)).to.eql(order);
 };
+
+describe('isEditableTable', () => {
+  test('returns true for editable table', () => {
+    const table: ComponentData = {
+      cid: 'table1',
+      type: 'DataTable',
+      config: { isEditable: true, components: [] }
+    };
+    expect(isEditableTable([table], table)).toBe(true);
+  });
+
+  test('returns false for non-editable table', () => {
+    const table: ComponentData = {
+      cid: 'table2',
+      type: 'DataTable',
+      config: { isEditable: false, components: [] }
+    };
+    expect(isEditableTable([table], table)).toBe(false);
+  });
+
+  test('returns false if element is undefined', () => {
+    expect(isEditableTable([], undefined)).toBe(false);
+  });
+});

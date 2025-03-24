@@ -1,7 +1,7 @@
 import type { VariableInfo } from '@axonivy/form-editor-protocol';
 import type { BrowserNode } from '@axonivy/ui-components';
 import type { Row } from '@tanstack/react-table';
-import { findAttributesOfType, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
+import { findAttributesOfType, formatVariableValue, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
 
 const variableInfo: VariableInfo = {
   variables: [
@@ -141,7 +141,7 @@ test('fullVariablePath', () => {
 });
 
 test('fullVariablePath dontShowRootNode', () => {
-  expect(fullVariablePath(row, true)).toEqual('address.location.country');
+  expect(fullVariablePath(row, false)).toEqual('address.location.country');
 });
 
 test('rowToCreateData', () => {
@@ -151,4 +151,20 @@ test('rowToCreateData', () => {
     label: 'Country',
     value: '#{data.address.location.country}'
   });
+});
+
+test('return the variable path wrapped in #{ } when no prefix is provided', () => {
+  expect(formatVariableValue('some.path')).toBe('#{some.path}');
+});
+
+test('prepend prefix when given', () => {
+  expect(formatVariableValue('some.path', 'prefix')).toBe('#{prefix.some.path}');
+});
+
+test('return only the prefix when variablePath is empty', () => {
+  expect(formatVariableValue('', 'prefix')).toBe('#{prefix}');
+});
+
+test('return an empty #{ } when both prefix and variablePath are empty', () => {
+  expect(formatVariableValue('')).toBe('#{}');
 });

@@ -4,7 +4,8 @@ import './Button.css';
 import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
 import IconSvg from './Button.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
-import { renderIconField } from './IconField';
+import { renderIconField } from './fields/IconField';
+import { renderTypeField } from './fields/TypeField';
 
 type ButtonProps = Prettify<Button>;
 
@@ -25,6 +26,17 @@ export const defaultButtonProps: Button = {
   ...defaultBaseComponent
 } as const;
 
+const isButtonProps = (obj: unknown): obj is ButtonProps => {
+  return typeof obj === 'object' && obj !== null && 'type' in obj && typeof (obj as ButtonProps).type === 'string';
+};
+export const hideButtonField = <T,>(obj: T): boolean => {
+  if (isButtonProps(obj)) {
+    if (obj.type === 'DELETE' || obj.type === 'EDIT') {
+      return true;
+    }
+  }
+  return false;
+};
 export const ButtonComponent: ComponentConfig<ButtonProps> = {
   name: 'Button',
   category: 'Actions',
@@ -37,16 +49,37 @@ export const ButtonComponent: ComponentConfig<ButtonProps> = {
   outlineInfo: component => component.name,
   fields: {
     ...baseComponentFields,
-    name: { subsection: 'General', label: 'Name', type: 'textBrowser', browsers: [{ type: 'CMS', options: { overrideSelection: true } }] },
+    type: {
+      subsection: 'General',
+      label: 'Type',
+      type: 'generic',
+      render: renderTypeField
+    },
+    name: {
+      subsection: 'General',
+      label: 'Name',
+      type: 'textBrowser',
+      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    },
     action: {
       subsection: 'General',
       label: 'Action',
       type: 'textBrowser',
-      browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }]
+      browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }],
+      hide: data => hideButtonField(data)
     },
-    variant: { subsection: 'General', label: 'Variant', type: 'select', options: variantOptions },
-    type: { subsection: 'General', label: 'Type', type: 'hidden' },
-    icon: { subsection: 'General', label: 'Icon', type: 'generic', render: renderIconField },
+    variant: {
+      subsection: 'General',
+      label: 'Variant',
+      type: 'select',
+      options: variantOptions
+    },
+    icon: {
+      subsection: 'General',
+      label: 'Icon',
+      type: 'generic',
+      render: renderIconField
+    },
     processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
     ...disabledComponentFields
   },

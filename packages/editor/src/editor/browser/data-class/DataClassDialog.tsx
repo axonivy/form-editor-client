@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
   ExpandableCell,
+  MessageRow,
   SelectRow,
   Table,
   TableBody,
@@ -24,16 +25,28 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
 import { createInitForm, creationTargetId } from '../../../data/data';
-import { variableTreeData, rowToCreateData } from './variable-tree-data';
+import { variableTreeData, rowToCreateData, findAttributesOfType } from './variable-tree-data';
 import { useKnownHotkeys } from '../../../utils/hotkeys';
 
 type DataClassDialogProps = {
   children: ReactNode;
-  worfkflowButtonsInit?: boolean;
+  showWorkflowButtonsCheckbox?: boolean;
+  workflowButtonsInit?: boolean;
   creationTarget?: string;
+  onlyAttributs?: string;
+  showRootNode?: boolean;
+  prefix?: string;
 };
 
-export const DataClassDialog = ({ children, worfkflowButtonsInit = true, creationTarget }: DataClassDialogProps) => {
+export const DataClassDialog = ({
+  children,
+  showWorkflowButtonsCheckbox = true,
+  workflowButtonsInit = true,
+  creationTarget,
+  onlyAttributs,
+  showRootNode,
+  prefix
+}: DataClassDialogProps) => {
   const [open, setOpen] = useState(false);
   const { createFromData: shortcut } = useKnownHotkeys();
   useHotkeys(shortcut.hotkey, () => setOpen(true), { scopes: ['global'] });
@@ -44,19 +57,46 @@ export const DataClassDialog = ({ children, worfkflowButtonsInit = true, creatio
         <DialogHeader>
           <DialogTitle>Create from data</DialogTitle>
         </DialogHeader>
-        <DataClassSelect worfkflowButtonsInit={worfkflowButtonsInit} creationTarget={creationTarget} />
+        <DataClassSelect
+          workflowButtonsInit={workflowButtonsInit}
+          showWorkflowButtonsCheckbox={showWorkflowButtonsCheckbox}
+          creationTarget={creationTarget}
+          onlyAttributs={onlyAttributs}
+          showRootNode={showRootNode}
+          prefix={prefix}
+        />
       </DialogContent>
     </Dialog>
   );
 };
 
-const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worfkflowButtonsInit: boolean; creationTarget?: string }) => {
+const DataClassSelect = ({
+  showWorkflowButtonsCheckbox,
+  workflowButtonsInit,
+  creationTarget,
+  onlyAttributs,
+  showRootNode,
+  prefix
+}: {
+  workflowButtonsInit: boolean;
+  showWorkflowButtonsCheckbox?: boolean;
+  creationTarget?: string;
+  onlyAttributs?: string;
+  showRootNode?: boolean;
+  prefix?: string;
+}) => {
   const { context, setData } = useAppContext();
 
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
-  const [workflowButtons, setWorkflowButtons] = useState(worfkflowButtonsInit);
+  const [workflowButtons, setWorkflowButtons] = useState(showWorkflowButtonsCheckbox ? workflowButtonsInit : false);
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
-  useEffect(() => setTree(variableTreeData().of(dataClass)), [dataClass]);
+  useEffect(() => {
+    if (onlyAttributs) {
+      setTree(findAttributesOfType(dataClass, onlyAttributs));
+    } else {
+      setTree(variableTreeData().of(dataClass));
+    }
+  }, [dataClass, onlyAttributs]);
   const loadChildren = useCallback<(row: Row<BrowserNode>) => void>(
     row => setTree(tree => variableTreeData().loadChildrenFor(dataClass, row.original.info, tree)),
     [dataClass, setTree]
@@ -99,7 +139,7 @@ const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worfkflowBu
     setData(data => {
       const creates = table
         .getSelectedRowModel()
-        .flatRows.map(rowToCreateData)
+        .flatRows.map(r => rowToCreateData(r, showRootNode, prefix))
         .filter(create => create !== undefined);
       return createInitForm(data, creates, workflowButtons, creationTargetId(data.components, creationTarget));
     });
@@ -108,23 +148,29 @@ const DataClassSelect = ({ worfkflowButtonsInit, creationTarget }: { worfkflowBu
     <>
       <Table>
         <TableBody>
-          {table.getRowModel().rows.map(row => (
-            <SelectRow key={row.id} row={row}>
-              {row.getVisibleCells().map(cell => (
-                <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-              ))}
-            </SelectRow>
-          ))}
+          {table.getRowModel().flatRows.length ? (
+            table.getRowModel().rows.map(row => (
+              <SelectRow key={row.id} row={row}>
+                {row.getVisibleCells().map(cell => (
+                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                ))}
+              </SelectRow>
+            ))
+          ) : (
+            <MessageRow message={{ message: 'No data', variant: 'info' }} columnCount={1} />
+          )}
         </TableBody>
       </Table>
-      <BasicCheckbox
-        checked={workflowButtons}
-        onCheckedChange={change => setWorkflowButtons(Boolean(change))}
-        label='Create proceed and cancel buttons'
-      />
+      {showWorkflowButtonsCheckbox && (
+        <BasicCheckbox
+          checked={workflowButtons}
+          onCheckedChange={change => setWorkflowButtons(Boolean(change))}
+          label='Create proceed and cancel buttons'
+        />
+      )}
       <DialogFooter>
         <DialogClose asChild>
-          <Button variant='primary' onClick={createForm}>
+          <Button variant='primary' onClick={createForm} disabled={tree.length === 0}>
             Create
           </Button>
         </DialogClose>

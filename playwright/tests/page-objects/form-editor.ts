@@ -58,8 +58,9 @@ export class FormEditor {
     return editor;
   }
 
-  static async openMock(page: Page) {
-    return await this.open(page, 'mock.html');
+  static async openMock(page: Page, datatable: boolean = false) {
+    const url = `mock.html?datatable=${datatable}`;
+    return await this.open(page, url);
   }
 
   get toolbar() {

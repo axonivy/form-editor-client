@@ -1,9 +1,9 @@
 import { EMPTY_FORM, type FormContext, type FormData, type ValidationResult } from '@axonivy/form-editor-protocol';
-import { createContext, useContext, type SetStateAction, type Dispatch, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, type SetStateAction, type Dispatch } from 'react';
 import type { UpdateConsumer } from '../types/types';
 import { useReadonly, type useHistoryData } from '@axonivy/ui-components';
 
-type UI = {
+export type UI = {
   properties: boolean;
   helpPaddings: boolean;
   deviceMode: 'desktop' | 'tablet' | 'mobile';
@@ -26,7 +26,7 @@ export type AppContext = {
   data: FormData;
   setData: UpdateConsumer<FormData>;
   selectedElement?: string;
-  setSelectedElement: Dispatch<SetStateAction<string | undefined>>;
+  setSelectedElement: (element?: string) => void;
   ui: UI;
   setUi: Dispatch<SetStateAction<UI>>;
   context: FormContext;
