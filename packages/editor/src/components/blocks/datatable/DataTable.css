@@ -2,6 +2,9 @@
   .header-block__label {
     display: none;
   }
+  .block-table__dialog .header-block__label {
+    display: flex;
+  }
 }
 
 .block-table__columns {
@@ -37,6 +40,7 @@
   .block-table__columns {
     gap: 0;
     border-radius: var(--border-r1);
+    background-color: var(--N25);
     border: var(--basic-border);
     .block-column {
       border-radius: 0;
@@ -46,6 +50,7 @@
       border-radius: 0;
     }
   }
+
   .header-block__label {
     display: none;
   }
