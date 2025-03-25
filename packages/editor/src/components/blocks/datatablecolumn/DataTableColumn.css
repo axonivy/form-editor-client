@@ -1,6 +1,7 @@
 .block-column {
   border-radius: var(--border-r1);
   border: var(--basic-border);
+
   background: var(--N25);
   > div {
     padding: var(--size-2);
@@ -11,6 +12,12 @@
   }
   .block-column__body .button-menu-header {
     justify-content: start;
+  }
+  .block-column__buttons {
+    overflow-x: auto;
+    > div {
+      flex: 1 1 auto;
+    }
   }
 }
 .block-column__filter {
