@@ -67,8 +67,9 @@ export const DataTableComponent: ComponentConfig<DataTableProps> = {
 };
 
 const UiBlock = ({ id, components, value, paginator, maxRows, visible, editDialogId }: UiComponentProps<DataTableProps>) => {
-  const { data, setSelectedElement, selectedElement } = useAppContext();
+  const { data, setSelectedElement, selectedElement, ui } = useAppContext();
   const dialog = findComponentDeep(data.components, editDialogId);
+
   return (
     <Flex direction='column' gap={2} className='block-table'>
       <Flex direction='column' gap={4}>
@@ -97,7 +98,7 @@ const UiBlock = ({ id, components, value, paginator, maxRows, visible, editDialo
           </Flex>
         </Flex>
       )}
-      {dialog && (
+      {dialog && ui.helpPaddings && (
         <div
           className={cn('draggable', 'block-table__dialog', selectedElement === editDialogId && 'selected')}
           style={{ boxShadow: 'var(--editor-shadow)' }}

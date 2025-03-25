@@ -107,12 +107,12 @@ const UiBlock = ({
           components.length > 0 ? (
             actionColumnAsMenu ? (
               <ButtonMenu>
-                <Flex direction={'column'} gap={1} className='block-table__columns' style={{ border: 'var(--basic-border)' }}>
+                <Flex direction={'column'} gap={1} className='block-column__buttons' style={{ border: 'var(--basic-border)' }}>
                   {renderActionButtons(components)}
                 </Flex>
               </ButtonMenu>
             ) : (
-              <Flex direction={'row'} gap={1} className='block-table__columns'>
+              <Flex direction={'row'} gap={1} className='block-column__buttons'>
                 {renderActionButtons(components)}
               </Flex>
             )
