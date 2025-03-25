@@ -11,6 +11,9 @@
 .block-layout.grid.grid1 {
   grid-template-columns: repeat(1, 1fr);
 }
+.canvas[data-help-paddings='false'] .block-layout.grid.grid1 {
+  gap: var(--size-1);
+}
 .block-layout.grid.grid2 {
   grid-template-columns: repeat(2, 1fr);
 }
