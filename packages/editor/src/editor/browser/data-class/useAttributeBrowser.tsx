@@ -56,7 +56,7 @@ export const getApplyModifierValue = (
     return { value: '' };
   }
 
-  const prefix = componentInDialog ? 'genericRowManager.selectedRow' : '';
+  const prefix = componentInDialog ? 'ivyFormGenericRow.selectedRow' : '';
   const path = fullVariablePath(row, (componentInDialog || options?.onlyAttributes) && false);
 
   return { value: `${prefix}${componentInDialog && path.length > 0 ? '.' : ''}${path}` };
@@ -94,7 +94,7 @@ const determineTreeData = (
         const dataTable = findComponentDeep(data.components, (parentComponent.config as unknown as Dialog)?.linkedComponent);
         const table = dataTable ? dataTable.data[dataTable.index] : undefined;
         if (table && isTable(table)) {
-          return findAttributesOfType(variableInfo, stripELExpression(table.config.value));
+          return findAttributesOfType(variableInfo, stripELExpression(table.config.value), 10, 'row');
         }
       } else {
         return variableTreeData().of(variableInfo);

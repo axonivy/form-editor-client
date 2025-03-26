@@ -188,6 +188,7 @@ export interface Composite {
   startMethod: string;
 }
 export interface DataTable {
+  addButton: boolean;
   components: TableComponent[];
   editDialogId: string;
   id: string;

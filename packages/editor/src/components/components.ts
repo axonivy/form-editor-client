@@ -83,13 +83,18 @@ export const componentForType = (type: AutoCompleteWithString<ComponentType>) =>
     case 'String':
       return { component: config.components.Input };
     case 'Number':
+    case 'Byte':
+    case 'Short':
+    case 'Integer':
+    case 'Long':
+    case 'Float':
+    case 'Double':
+    case 'BigDecimal':
       return { component: config.components.Input, defaultProps: { type: 'NUMBER' } };
     case 'Boolean':
       return { component: config.components.Checkbox };
     case 'Date':
-      return { component: config.components.DatePicker };
     case 'DateTime':
-      return { component: config.components.DatePicker };
     case 'java.util.Date':
       return { component: config.components.DatePicker };
     default:
