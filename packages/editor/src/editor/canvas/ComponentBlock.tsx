@@ -62,6 +62,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
       setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }).newData);
     }
   });
+  const parentComponent = getParentComponent(formData.components, data.cid);
   if (data.type === 'Dialog') {
     return null;
   }
@@ -120,13 +121,11 @@ const Draggable = ({ config, data }: DraggableProps) => {
       <Quickbar
         deleteAction={config.quickActions.includes('DELETE') ? deleteElement : undefined}
         duplicateAction={config.quickActions.includes('DUPLICATE') && !isDataTableEditableButtons ? duplicateElement : undefined}
-        createAction={
-          getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' && config.quickActions.includes('CREATE')
-            ? createElement
-            : undefined
-        }
+        createAction={parentComponent?.type !== 'DataTableColumn' && config.quickActions.includes('CREATE') ? createElement : undefined}
         createFromDataAction={
-          getParentComponent(formData.components, data.cid)?.type !== 'DataTableColumn' && config.quickActions.includes('CREATEFROMDATA')
+          parentComponent?.type !== 'DataTableColumn' &&
+          parentComponent?.type !== 'Dialog' &&
+          config.quickActions.includes('CREATEFROMDATA')
             ? data.cid
             : undefined
         }
