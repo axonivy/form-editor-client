@@ -59,7 +59,8 @@ export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiCom
           creationTarget={id}
           onlyAttributs={onlyAttributs}
           showRootNode={false}
-          prefix='genericRowManager.selectedRow'
+          prefix='ivyFormGenericRow.selectedRow'
+          parentName='row'
         >
           <Button
             icon={IvyIcons.DatabaseLink}
