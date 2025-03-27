@@ -65,8 +65,12 @@ const isLayout = (component?: Component | ComponentData): component is LayoutCon
   return isStructure(component) && component.type === 'Layout';
 };
 
+export const isAlignSelfLayout = (component?: Component | ComponentData): component is LayoutConfig => {
+  return isLayout(component) && !(component.config.type === 'GRID' && component.config.gridVariant === 'GRID1');
+};
+
 export const isFreeLayout = (component?: Component | ComponentData): component is LayoutConfig => {
-  return isLayout(component) && component.config.gridVariant === 'FREE';
+  return isLayout(component) && component.config.type === 'GRID' && component.config.gridVariant === 'FREE';
 };
 
 export type FormEditorProps = { context: FormContext; directSave?: boolean };

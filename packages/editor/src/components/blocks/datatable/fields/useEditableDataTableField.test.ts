@@ -38,6 +38,7 @@ const variable: DeepPartial<VariableInfo> = {
 const dialog: ComponentData = {
   cid: 'dialog3',
   config: {
+    alignSelf: 'START',
     components: [],
     header: 'Edit Row',
     id: '',
@@ -51,7 +52,8 @@ const dialog: ComponentData = {
 const editButton: ComponentData = {
   cid: 'button5',
   config: {
-    action: '#{genericRowManager.setSelectedRow(row)}',
+    action: '#{ivyFormGenericRow.editRow(row)}',
+    alignSelf: 'START',
     disabled: '',
     icon: 'pi pi-pencil',
     id: '',
@@ -69,7 +71,8 @@ const editButton: ComponentData = {
 const deleteButton: ComponentData = {
   cid: 'button6',
   config: {
-    action: '#{genericRowManager.deleteRow(data.persons, row)}',
+    action: '#{ivyFormGenericRow.deleteRow(data.persons, row)}',
+    alignSelf: 'START',
     disabled: '',
     icon: 'pi pi-trash',
     id: '',

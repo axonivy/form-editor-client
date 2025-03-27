@@ -93,6 +93,7 @@ const UiBlock = ({
             <Flex alignItems='center' gap={2}>
               {isTable(parentTable) &&
                 parentTable.config.isEditable &&
+                parentTable.config.addButton &&
                 parentTable.config.components[parentTable.config.components.length - 1].cid === id && <i className='pi pi-plus' />}
               <UiBlockHeaderVisiblePart visible={visible} />
             </Flex>

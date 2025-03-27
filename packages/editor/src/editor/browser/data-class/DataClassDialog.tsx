@@ -34,6 +34,7 @@ type DataClassDialogProps = {
   workflowButtonsInit?: boolean;
   creationTarget?: string;
   onlyAttributs?: string;
+  parentName?: string;
   showRootNode?: boolean;
   prefix?: string;
 };
@@ -44,6 +45,7 @@ export const DataClassDialog = ({
   workflowButtonsInit = true,
   creationTarget,
   onlyAttributs,
+  parentName,
   showRootNode,
   prefix
 }: DataClassDialogProps) => {
@@ -63,6 +65,7 @@ export const DataClassDialog = ({
           creationTarget={creationTarget}
           onlyAttributs={onlyAttributs}
           showRootNode={showRootNode}
+          parentName={parentName}
           prefix={prefix}
         />
       </DialogContent>
@@ -74,6 +77,7 @@ const DataClassSelect = ({
   showWorkflowButtonsCheckbox,
   workflowButtonsInit,
   creationTarget,
+  parentName,
   onlyAttributs,
   showRootNode,
   prefix
@@ -81,6 +85,7 @@ const DataClassSelect = ({
   workflowButtonsInit: boolean;
   showWorkflowButtonsCheckbox?: boolean;
   creationTarget?: string;
+  parentName?: string;
   onlyAttributs?: string;
   showRootNode?: boolean;
   prefix?: string;
@@ -92,11 +97,11 @@ const DataClassSelect = ({
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   useEffect(() => {
     if (onlyAttributs) {
-      setTree(findAttributesOfType(dataClass, onlyAttributs));
+      setTree(findAttributesOfType(dataClass, onlyAttributs, 10, parentName));
     } else {
       setTree(variableTreeData().of(dataClass));
     }
-  }, [dataClass, onlyAttributs]);
+  }, [dataClass, onlyAttributs, parentName]);
   const loadChildren = useCallback<(row: Row<BrowserNode>) => void>(
     row => setTree(tree => variableTreeData().loadChildrenFor(dataClass, row.original.info, tree)),
     [dataClass, setTree]

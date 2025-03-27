@@ -181,6 +181,9 @@ test('editable datatable', async ({ page }) => {
   const columnsSection = properties.collapsible('Columns');
   await columnsSection.expectListItems(3);
   await editable.check();
+
+  const addButton = section.checkbox({ label: 'Add Button' });
+  await addButton.expectValue(true);
   await columnsSection.expectListItems(4);
   const actionColumn = editor.canvas.blockByNth(3, { datatableNth: 0, column: true });
   await actionColumn.select();
@@ -202,18 +205,18 @@ test('editable datatable', async ({ page }) => {
   await dialog.block.getByRole('button').click();
 
   const createDialog = page.getByRole('dialog');
-  await createDialog.getByRole('row', { name: 'variable' }).click();
+  await createDialog.getByRole('row', { name: 'row' }).first().click();
   await createDialog.getByRole('button', { name: 'Create' }).click();
 
   await expect(dialog.block.locator('.draggable:has(>.block-input)')).toHaveCount(3);
   const addressInput = editor.canvas.blockByNth(0, { datatableNth: 0, dialogContent: true });
   await addressInput.block.dblclick();
   const inputValue = section.input({ label: 'Value' });
-  await inputValue.expectValue('genericRowManager.selectedRow.address.address');
+  await inputValue.expectValue('ivyFormGenericRow.selectedRow.address.address');
 
   const birthdayInput = editor.canvas.blockByNth(1, { datatableNth: 0, dialogContent: true });
   await birthdayInput.block.dblclick({ position: { x: 20, y: 10 } });
-  await inputValue.expectValue('genericRowManager.selectedRow.birthday');
+  await inputValue.expectValue('ivyFormGenericRow.selectedRow.birthday');
 
   await table.block.dblclick({ position: { x: 10, y: 10 } });
   await editable.uncheck();

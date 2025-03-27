@@ -43,6 +43,7 @@ export const useEditableDataTableField = () => {
       setElement(element => {
         if (isTable(element) && dialogId) {
           element.config.editDialogId = dialogId;
+          element.config.addButton = true;
           element.config.rowType = getRowType(element.config.value, variableInfo);
         }
         return element;
@@ -100,13 +101,13 @@ const createComponentData: (element: ComponentData) => CreateComponentData[] = e
   {
     componentName: 'Button',
     label: '',
-    value: '#{genericRowManager.setSelectedRow(row)}',
+    value: '#{ivyFormGenericRow.editRow(row)}',
     defaultProps: { type: 'EDIT', icon: 'pi pi-pencil', variant: 'PRIMARY' }
   },
   {
     componentName: 'Button',
     label: '',
-    value: `#{genericRowManager.deleteRow(${stripELExpression(isTable(element) ? element.config.value : '')}, row)}`,
+    value: `#{ivyFormGenericRow.deleteRow(${stripELExpression(isTable(element) ? element.config.value : '')}, row)}`,
     defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
   }
 ];
