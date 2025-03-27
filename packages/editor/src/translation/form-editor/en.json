@@ -1,4 +1,7 @@
 {
+  "dataTable": {
+    "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
+  },
   "message": {
     "noParam": "No parameters"
   }
