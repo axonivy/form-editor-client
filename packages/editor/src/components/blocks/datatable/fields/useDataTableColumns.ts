@@ -5,13 +5,14 @@ import { useAppContext } from '../../../../context/AppContext';
 import { useData } from '../../../../data/data';
 import { useMeta } from '../../../../context/useMeta';
 import { useMemo } from 'react';
-import { DataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
+import { useDataTableColumnComponent } from '../../../../components/blocks/datatablecolumn/DataTableColumn';
 import { findAttributesOfType } from '../../../../editor/browser/data-class/variable-tree-data';
 import type { ColumnItem } from './ColumnsField';
 
 export const useDataTableColumns = () => {
   const { context } = useAppContext();
   const { element } = useData();
+  const { DataTableColumnComponent } = useDataTableColumnComponent();
 
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   const attributesOfTableType = findAttributesOfType(variableInfo, isTable(element) ? element.config.value : '');
@@ -27,6 +28,15 @@ export const useDataTableColumns = () => {
     [element]
   );
 
+  const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): DataTableColumn[] => {
+    return nodes.flatMap(node => {
+      if (node.children.length === 0) {
+        return [DataTableColumnComponent.create({ label: node.data?.attribute ?? '', value: '' })];
+      }
+      return node.children.map(childNode => DataTableColumnComponent.create({ label: childNode.value, value: childNode.value }));
+    });
+  };
+
   const boundColumns = convertBrowserNodesToColumns(attributesOfTableType);
 
   const boundInactiveColumns = useMemo(() => {
@@ -38,13 +48,4 @@ export const useDataTableColumns = () => {
     activeColumns,
     boundInactiveColumns
   };
-};
-
-const convertBrowserNodesToColumns = (nodes: Array<BrowserNode<Variable>>): DataTableColumn[] => {
-  return nodes.flatMap(node => {
-    if (!node.children || node.children.length === 0) {
-      return [DataTableColumnComponent.create({ label: node.data?.attribute ?? '', value: '' })];
-    }
-    return node.children.map(childNode => DataTableColumnComponent.create({ label: childNode.value, value: childNode.value }));
-  });
 };

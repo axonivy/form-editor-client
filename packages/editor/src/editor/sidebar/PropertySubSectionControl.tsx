@@ -1,15 +1,23 @@
 import { useData } from '../../data/data';
 import { type CollapsibleControlProps } from '@axonivy/ui-components';
-import { componentByName } from '../../components/components';
+import { useComponents } from '../../context/ComponentsContext';
+import type { Subsection } from '../../types/config';
 
-export const PropertySubSectionControl = ({ title, ...props }: CollapsibleControlProps & { title: string }) => {
+export const usePropertySubSectionControl = () => {
+  const { componentByName } = useComponents();
   const { element } = useData();
-  if (element === undefined) {
+  const PropertySubSectionControl = ({ title, ...props }: CollapsibleControlProps & { title: string }) => {
+    if (element === undefined) {
+      return null;
+    }
+    const config = componentByName(element.type);
+    if (config?.subSectionControls) {
+      return config.subSectionControls(props, title as Subsection);
+    }
     return null;
-  }
-  const config = componentByName(element.type);
-  if (config?.subSectionControls) {
-    return config.subSectionControls(props, title);
-  }
-  return null;
+  };
+
+  return {
+    PropertySubSectionControl
+  };
 };

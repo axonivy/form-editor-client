@@ -24,7 +24,6 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
@@ -32,11 +31,15 @@ import { useAction } from '../context/useAction';
 import { DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
 import { useKnownHotkeys } from '../utils/hotkeys';
+import { useTranslation } from 'react-i18next';
+import { useComponents } from '../context/ComponentsContext';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
-  const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
+  const { t } = useTranslation();
+  const { allComponentsByCategory } = useComponents();
+  const { ui, setUi, history, helpUrl, selectedElement } = useAppContext();
   const { setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();
   const editable = !useReadonly();
@@ -63,12 +66,12 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
 
   const deviceModeProps = useMemo(() => {
     const changeDeviceMode = (value: DeviceMode) => setUi(old => ({ ...old, deviceMode: value }));
-    const title = `Device mode ${ui.deviceMode} (${hotkeyText(hotkeys.deviceMode.hotkey)})`;
+    const title = t('label.deviceModeParam', { mode: ui.deviceMode, hotkey: hotkeyText(hotkeys.deviceMode.hotkey) });
     const icon =
       ui.deviceMode === 'mobile' ? IvyIcons.DeviceMobile : ui.deviceMode === 'tablet' ? IvyIcons.DeviceTablet : IvyIcons.EventStart;
     const nextDevice = ui.deviceMode === 'mobile' ? 'desktop' : ui.deviceMode === 'desktop' ? 'tablet' : 'mobile';
     return { icon, title, 'aria-label': title, size: 'large', onClick: () => changeDeviceMode(nextDevice) } as const;
-  }, [hotkeys.deviceMode.hotkey, setUi, ui.deviceMode]);
+  }, [hotkeys.deviceMode.hotkey, setUi, ui.deviceMode, t]);
   useHotkeys(hotkeys.deviceMode.hotkey, deviceModeProps.onClick, { scopes: ['global'] });
 
   const firstElement = useRef<HTMLButtonElement>(null);
@@ -126,20 +129,20 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       </Flex>
       {editable && (
         <Flex gap={3} className='palette-section'>
-          <PalettePopover label='All Components' icon={IvyIcons.Task}>
+          <PalettePopover label={t('label.allComponents')} icon={IvyIcons.Task}>
             <Palette sections={allComponentsByCategory()} />
           </PalettePopover>
           <ToolbarContainer maxWidth={650}>
             <Flex gap={3}>
-              <PaletteCategoryPopover label='Structures' icon={IvyIcons.LaneSwimlanes} />
-              <PaletteCategoryPopover label='Elements' icon={IvyIcons.ChangeType} />
-              <PaletteCategoryPopover label='Actions' icon={IvyIcons.MultiSelection} />
+              <PaletteCategoryPopover category={'Structures'} icon={IvyIcons.LaneSwimlanes} />
+              <PaletteCategoryPopover category={'Elements'} icon={IvyIcons.ChangeType} />
+              <PaletteCategoryPopover category={'Actions'} icon={IvyIcons.MultiSelection} />
             </Flex>
           </ToolbarContainer>
-          <PalettePopover label='Composites' icon={IvyIcons.File}>
+          <PalettePopover label={t('label.composites')} icon={IvyIcons.File}>
             <CompositePalette />
           </PalettePopover>
-          <PaletteButton text='Data'>
+          <PaletteButton text={t('label.data')}>
             <DataClassDialog workflowButtonsInit={false}>
               <Button
                 icon={IvyIcons.DatabaseLink}
@@ -170,7 +173,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
         {!disabled && (
           <Popover>
             <PopoverTrigger asChild>
-              <Button title='Options' aria-label='Options' icon={IvyIcons.Settings} size='large' />
+              <Button title={t('common:label.options')} aria-label={t('common:label.options')} icon={IvyIcons.Settings} size='large' />
             </PopoverTrigger>
             <PopoverContent sideOffset={12} collisionPadding={5}>
               <ReadonlyProvider readonly={false}>
@@ -179,7 +182,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
                     <Label>
                       <Flex alignItems='center' gap={1}>
                         <IvyIcon icon={IvyIcons.DarkMode} />
-                        Theme
+                        {t('common:label.theme')}
                       </Flex>
                     </Label>
                     <Switch defaultChecked={theme === 'dark'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} size='small' />
@@ -192,8 +195,8 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
         )}
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
-          title='Toggle Property View'
-          aria-label='Toggle Property View'
+          title={t('label.togglePropView')}
+          aria-label={t('label.togglePropView')}
           size='large'
           onClick={() => setUi(old => ({ ...old, properties: !old.properties }))}
         />

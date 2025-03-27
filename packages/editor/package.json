@@ -31,6 +31,8 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
+    "i18next": "^24.2.3",
+    "react-i18next": "^15.4.1",
     "@types/react": "^18.3.3",
     "@vanilla-extract/recipes": "^0.5.5",
     "jsdom": "^25.0.1",
@@ -39,7 +41,8 @@
     "rollup-plugin-visualizer": "^5.12.0",
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^3.0.8"
+    "vitest": "^3.0.8",
+    "i18next-parser": "^9.3.0"
   },
   "type": "module",
   "module": "lib/editor.js",
@@ -52,6 +55,8 @@
     "build:clean": "npm run clean && npm run build",
     "type": "tsc --noEmit",
     "test": "vitest",
-    "test:ci": "vitest --watch=false"
+    "test:ci": "vitest --watch=false",
+    "i18n:extract": "i18next",
+    "i18n:ci": "i18next --fail-on-update"
   }
 }

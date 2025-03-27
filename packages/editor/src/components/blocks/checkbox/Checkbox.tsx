@@ -1,45 +1,68 @@
 import type { Checkbox, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Checkbox.css';
-import { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } from '../base';
+import { useBase } from '../base';
 import IconSvg from './Checkbox.svg?react';
 import { Flex, IvyIcon } from '@axonivy/ui-components';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { t } from 'i18next';
+import { useMemo } from 'react';
 
 type CheckboxProps = Prettify<Checkbox>;
 
-export const defaultCheckboxProps: Checkbox = {
-  label: 'Label',
-  selected: 'true',
-  ...defaultDisabledComponent,
-  updateOnChange: false,
-  ...defaultBaseComponent
-} as const;
+export const useCheckboxComponent = () => {
+  const { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } = useBase();
 
-export const CheckboxComponent: ComponentConfig<CheckboxProps> = {
-  name: 'Checkbox',
-  category: 'Elements',
-  subcategory: 'Selection',
-  icon: <IconSvg />,
-  description: 'A selectable boolean checkbox',
-  defaultProps: defaultCheckboxProps,
-  render: props => <UiBlock {...props} />,
-  create: ({ label, value, ...defaultProps }) => ({ ...defaultCheckboxProps, label, selected: value, ...defaultProps }),
-  outlineInfo: component => component.label,
-  fields: {
-    ...baseComponentFields,
-    label: {
-      subsection: 'General',
-      label: 'Label',
-      type: 'textBrowser',
-      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
-    },
-    selected: { subsection: 'General', label: 'Selected', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
-    ...disabledComponentFields,
-    updateOnChange: { subsection: 'Behaviour', label: 'Update Form on Change', type: 'checkbox' }
-  },
-  quickActions: DEFAULT_QUICK_ACTIONS
+  const defaultCheckboxProps: Checkbox = useMemo(() => {
+    return {
+      label: t('property.label'),
+      selected: 'true',
+      ...defaultDisabledComponent,
+      updateOnChange: false,
+      ...defaultBaseComponent
+    } as const;
+  }, [defaultBaseComponent, defaultDisabledComponent]);
+
+  const CheckboxComponent: ComponentConfig<CheckboxProps> = useMemo(() => {
+    const component: ComponentConfig<CheckboxProps> = {
+      name: 'Checkbox',
+      displayName: t('components.checkbox.name'),
+      category: 'Elements',
+      subcategory: 'Selection',
+      icon: <IconSvg />,
+      description: t('components.checkbox.description'),
+      defaultProps: defaultCheckboxProps,
+      render: props => <UiBlock {...props} />,
+      create: ({ label, value, ...defaultProps }) => ({ ...defaultCheckboxProps, label, selected: value, ...defaultProps }),
+      outlineInfo: component => component.label,
+      fields: {
+        ...baseComponentFields,
+        label: {
+          subsection: 'General',
+          label: t('property.label'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+        },
+        selected: {
+          subsection: 'General',
+          label: t('property.selected'),
+          type: 'textBrowser',
+          browsers: [{ type: 'ATTRIBUTE' }]
+        },
+        ...disabledComponentFields,
+        updateOnChange: { subsection: 'Behaviour', label: t('label.updateFormChange'), type: 'checkbox' }
+      },
+      quickActions: DEFAULT_QUICK_ACTIONS
+    };
+
+    return component;
+  }, [baseComponentFields, defaultCheckboxProps, disabledComponentFields]);
+
+  return {
+    defaultCheckboxProps,
+    CheckboxComponent
+  };
 };
 
 const UiBlock = ({ label, selected, visible, disabled, updateOnChange }: UiComponentProps<CheckboxProps>) => (

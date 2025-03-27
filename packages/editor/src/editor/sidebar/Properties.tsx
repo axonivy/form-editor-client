@@ -11,12 +11,14 @@ import {
   PanelMessage
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
-import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
-import { componentByElement } from '../../components/components';
 import type { ConfigData } from '@axonivy/form-editor-protocol';
-import { PropertySubSectionControl } from './PropertySubSectionControl';
+import { usePropertySubSectionControl } from './PropertySubSectionControl';
+import { useBase } from '../../components/blocks/base';
+import { useComponents } from '../../context/ComponentsContext';
+import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 
 export const Properties = () => {
+  const { componentByElement } = useComponents();
   const { element, data, parent } = useData();
   if (element === undefined) {
     return <PanelMessage message='Select an Element to edit its properties.' />;
@@ -36,21 +38,25 @@ export const Properties = () => {
   );
 };
 
-const PropertySection = ({ section, fields }: { section: string; fields: VisibleFields }) => (
-  <AccordionItem key={section} value={section}>
-    <AccordionTrigger>{section}</AccordionTrigger>
-    <AccordionContent>
-      <Flex direction='column' gap={2}>
-        {groupFieldsBySubsection(fields).map(({ title, fields }) => (
-          <PropertySubSection key={title} title={title} fields={fields} />
-        ))}
-      </Flex>
-    </AccordionContent>
-  </AccordionItem>
-);
+const PropertySection = ({ section, fields }: { section: string; fields: VisibleFields }) => {
+  const { categoryTranslations: CategoryTranslations } = useBase();
+  return (
+    <AccordionItem key={section} value={section}>
+      <AccordionTrigger>{section}</AccordionTrigger>
+      <AccordionContent>
+        <Flex direction='column' gap={2}>
+          {groupFieldsBySubsection(fields).map(({ title, fields }) => (
+            <PropertySubSection key={title} title={CategoryTranslations[title]} fields={fields} />
+          ))}
+        </Flex>
+      </AccordionContent>
+    </AccordionItem>
+  );
+};
 
 const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleFields }) => {
   const { element, setElement } = useData();
+  const { PropertySubSectionControl } = usePropertySubSectionControl();
   if (element === undefined) {
     return null;
   }

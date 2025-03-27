@@ -1,6 +1,6 @@
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import { isTable, type Dialog, type Prettify } from '@axonivy/form-editor-protocol';
-import { defaultBaseComponent, baseComponentFields } from '../base';
+import { useBase } from '../base';
 import IconSvg from './Dialog.svg?react';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
@@ -11,44 +11,62 @@ import { useAppContext } from '../../../context/AppContext';
 import { findComponentDeep } from '../../../data/data';
 import { DataClassDialog } from '../../../editor/browser/data-class/DataClassDialog';
 import { stripELExpression } from '../../../utils/string';
+import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
+
 type DialogProps = Prettify<Dialog>;
 
-export const defaultDialogProps: DialogProps = {
-  components: [],
-  header: '',
-  linkedComponent: '',
-  ...defaultBaseComponent
+export const useDialogComponent = () => {
+  const { defaultBaseComponent, baseComponentFields } = useBase();
+  const { t } = useTranslation();
+
+  const DialogComponent: ComponentConfig<DialogProps> = useMemo(() => {
+    const defaultDialogProps: DialogProps = {
+      components: [],
+      header: '',
+      linkedComponent: '',
+      ...defaultBaseComponent
+    };
+
+    const DialogComponent: ComponentConfig<DialogProps> = {
+      name: 'Dialog',
+      displayName: t('components.dialog.name'),
+      category: 'Hidden',
+      subcategory: 'General',
+      icon: <IconSvg />,
+      description: t('components.dialog.description'),
+      defaultProps: defaultDialogProps,
+      render: props => <DialogUiBlock {...props} />,
+      create: ({ label, value, defaultProps }) => ({ ...defaultDialogProps, header: label, onApply: value, ...defaultProps }),
+      outlineInfo: component => component.header,
+      fields: {
+        ...baseComponentFields,
+        components: { subsection: 'General', type: 'hidden' },
+        header: {
+          subsection: 'General',
+          label: t('property.header'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+        },
+        linkedComponent: { subsection: 'General', label: t('property.linkedComponent'), type: 'hidden' }
+      },
+      quickActions: DEFAULT_QUICK_ACTIONS
+    };
+
+    return DialogComponent;
+  }, [baseComponentFields, defaultBaseComponent, t]);
+
+  return {
+    DialogComponent
+  };
 };
 
-export const DialogComponent: ComponentConfig<DialogProps> = {
-  name: 'Dialog',
-  category: 'Hidden',
-  subcategory: 'General',
-  icon: <IconSvg />,
-  description: 'A flexable layout',
-  defaultProps: defaultDialogProps,
-  render: props => <DialogUiBlock {...props} />,
-  create: ({ label, value, defaultProps }) => ({ ...defaultDialogProps, header: label, onApply: value, ...defaultProps }),
-  outlineInfo: component => component.header,
-  fields: {
-    ...baseComponentFields,
-    components: { subsection: 'General', type: 'hidden' },
-    header: {
-      subsection: 'General',
-      label: 'Header',
-      type: 'textBrowser',
-      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
-    },
-    linkedComponent: { subsection: 'General', label: 'Linked Component', type: 'hidden' }
-  },
-  quickActions: DEFAULT_QUICK_ACTIONS
-};
-
-export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiComponentProps<DialogProps>) => {
+const DialogUiBlock = ({ id, components, header, linkedComponent }: UiComponentProps<DialogProps>) => {
   const { data } = useAppContext();
   const dataTable = findComponentDeep(data.components, linkedComponent);
   const table = dataTable ? dataTable.data[dataTable.index] : undefined;
   const onlyAttributs = table && isTable(table) ? stripELExpression(table.config.value) : undefined;
+  const { t } = useTranslation();
 
   return (
     <>
@@ -65,8 +83,8 @@ export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiCom
           <Button
             icon={IvyIcons.DatabaseLink}
             size='small'
-            aria-label={`Create from ${linkedComponent}`}
-            title={`Create from ${linkedComponent}`}
+            aria-label={t('label.createFrom', { component: linkedComponent })}
+            title={t('label.createFrom', { component: linkedComponent })}
             onClick={e => {
               e.stopPropagation();
             }}
@@ -81,11 +99,11 @@ export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiCom
       <Flex direction='row' justifyContent='flex-end' alignItems='center' gap={1}>
         <div className='block-button' data-variant={'secondary'}>
           <i className='pi pi-times' />
-          Cancel
+          {t('common:label.cancel')}
         </div>
         <div className='block-button' data-variant={'primary'}>
           <i className='pi pi-check' />
-          Save
+          {t('common:label.save')}
         </div>
       </Flex>
     </>

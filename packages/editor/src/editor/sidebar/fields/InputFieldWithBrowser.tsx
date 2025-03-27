@@ -9,6 +9,7 @@ import { AddCmsQuickFixPopover } from '../../browser/cms/AddCmsQuickFix';
 import useTextSelection from '../../browser/cms/useTextSelection';
 import { badgeProps } from '../../../utils/badge-properties';
 import { useOnFocus } from '../../../context/useOnFocus';
+import { useTranslation } from 'react-i18next';
 
 export const InputFieldWithBrowser = ({
   label,
@@ -19,6 +20,7 @@ export const InputFieldWithBrowser = ({
   message,
   options
 }: InputFieldProps & { browsers: Array<FormBrowser>; options?: TextFieldOptions }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -51,7 +53,7 @@ export const InputFieldWithBrowser = ({
               />
             )}
             <DialogTrigger asChild>
-              <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
+              <Button icon={IvyIcons.ListSearch} aria-label={t('label.browser')} />
             </DialogTrigger>
           </InputGroup>
         ) : (
