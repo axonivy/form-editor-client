@@ -4,10 +4,14 @@ import { useDataTableColumns } from '../fields/useDataTableColumns';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { CreateComponentData } from '../../../../types/config';
 import { isTable } from '@axonivy/form-editor-protocol';
+import { useTranslation } from 'react-i18next';
+import { useSharedComponents } from '../../../../context/ComponentsContext';
 
 export const ColumnControl = (props: CollapsibleControlProps) => {
   const { element, setData } = useData();
   const { boundInactiveColumns } = useDataTableColumns();
+  const { componentByName } = useSharedComponents();
+  const { t } = useTranslation();
 
   const bindAllColumns = () => {
     if (isTable(element)) {
@@ -19,14 +23,14 @@ export const ColumnControl = (props: CollapsibleControlProps) => {
             value: column.value
           }))
           .filter(create => create !== undefined);
-        return createInitTableColumns(element.cid, data, creates);
+        return createInitTableColumns(element.cid, data, creates, componentByName);
       });
     }
   };
 
   return (
     <Flex gap={1}>
-      <Button icon={IvyIcons.Plus} size={'small'} onClick={bindAllColumns} title='Set default Columns' {...props} />
+      <Button icon={IvyIcons.Plus} size={'small'} onClick={bindAllColumns} title={t('label.setDefaultCol')} {...props} />
     </Flex>
   );
 };

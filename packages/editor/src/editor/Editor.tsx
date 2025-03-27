@@ -11,8 +11,13 @@ import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { MasterPart } from './MasterPart';
 import { Sidebar } from './sidebar/Sidebar';
+import { useTranslation } from 'react-i18next';
+import { ComponentsProvider } from '../context/ComponentsContext';
+import { useComponents } from '../components/components';
 
 export const Editor = (props: FormEditorProps) => {
+  const { t } = useTranslation();
+  const { componentByName } = useComponents();
   const [context, setContext] = useState(props.context);
   const [directSave, setDirectSave] = useState(props.directSave);
   useEffect(() => {
@@ -89,10 +94,10 @@ export const Editor = (props: FormEditorProps) => {
     );
   }
   if (isError) {
-    return <PanelMessage icon={IvyIcons.ErrorXMark} message={`An error has occurred: ${error.message}`} />;
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('message.error', { error: error.message })} />;
   }
   if (data.data.components === undefined) {
-    return <PanelMessage icon={IvyIcons.ErrorXMark} message='Form not found' />;
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('message.formNotFound')} />;
   }
 
   return (
@@ -113,19 +118,21 @@ export const Editor = (props: FormEditorProps) => {
       <link rel='stylesheet' href='/dev-workflow-ui/webjars/font-awesome/6.1.0/css/all.min.css' />
       <link rel='stylesheet' href='/dev-workflow-ui/webjars/streamline-icons/11.4.0/StreamlineIcons.css' />
       <link rel='stylesheet' href='/dev-workflow-ui/faces/javax.faces.resource/primeicons/primeicons.css?ln=primefaces&v=13.0.14-LTS' />
-      <DndContext>
-        <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
-          <MasterPart />
-          {ui.properties && (
-            <>
-              <ResizableHandle />
-              <ResizablePanel id='properties' order={3} defaultSize={25} minSize={10} className='panel'>
-                <Sidebar />
-              </ResizablePanel>
-            </>
-          )}
-        </ResizablePanelGroup>
-      </DndContext>
+      <ComponentsProvider>
+        <DndContext componentByName={componentByName}>
+          <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
+            <MasterPart />
+            {ui.properties && (
+              <>
+                <ResizableHandle />
+                <ResizablePanel id='properties' order={3} defaultSize={25} minSize={10} className='panel'>
+                  <Sidebar />
+                </ResizablePanel>
+              </>
+            )}
+          </ResizablePanelGroup>
+        </DndContext>
+      </ComponentsProvider>
     </AppProvider>
   );
 };

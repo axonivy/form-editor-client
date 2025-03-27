@@ -1,42 +1,57 @@
 import type { Prettify, Text } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Text.css';
-import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } from '../base';
+import { useBase } from '../base';
 import IconSvg from './Text.svg?react';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { IvyIcon } from '@axonivy/ui-components';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type TextProps = Prettify<Text>;
 
-export const defaultTextProps: TextProps = {
-  icon: '',
-  content: 'This is a text',
-  type: 'RAW',
-  iconStyle: 'INLINE',
-  ...defaultVisibleComponent,
-  ...defaultBaseComponent
-} as const;
+export const useTextComponent = () => {
+  const { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } = useBase();
+  const { t } = useTranslation();
 
-export const TextComponent: ComponentConfig<TextProps> = {
-  name: 'Text',
-  category: 'Elements',
-  subcategory: 'Text',
-  icon: <IconSvg />,
-  description: 'Text output',
-  defaultProps: defaultTextProps,
-  render: props => <UiBlock {...props} />,
-  create: ({ value }) => ({ ...defaultTextProps, content: value }),
-  outlineInfo: component => component.content,
-  fields: {
-    ...baseComponentFields,
-    content: { subsection: 'General', label: 'Content', type: 'textarea' },
-    type: { subsection: 'General', label: 'Type', type: 'hidden' },
-    icon: { subsection: 'Icon', label: 'Icon', type: 'hidden' },
-    iconStyle: { subsection: 'Icon', label: 'Icon style', type: 'hidden' },
-    ...visibleComponentField
-  },
-  quickActions: DEFAULT_QUICK_ACTIONS
+  const TextComponent = useMemo(() => {
+    const defaultTextProps: TextProps = {
+      icon: '',
+      content: t('text.placeholder'),
+      type: 'RAW',
+      iconStyle: 'INLINE',
+      ...defaultVisibleComponent,
+      ...defaultBaseComponent
+    } as const;
+
+    const TextComponent: ComponentConfig<TextProps> = {
+      name: 'Text',
+      displayName: t('text.name'),
+      category: 'Elements',
+      subcategory: 'Text',
+      icon: <IconSvg />,
+      description: t('text.description'),
+      defaultProps: defaultTextProps,
+      render: props => <UiBlock {...props} />,
+      create: ({ value }) => ({ ...defaultTextProps, content: value }),
+      outlineInfo: component => component.content,
+      fields: {
+        ...baseComponentFields,
+        content: { subsection: 'General', label: t('property.content'), type: 'textarea' },
+        type: { subsection: 'General', label: t('property.type'), type: 'hidden' },
+        icon: { subsection: 'Icon', label: t('property.icon'), type: 'hidden' },
+        iconStyle: { subsection: 'Icon', label: t('property.iconStyle'), type: 'hidden' },
+        ...visibleComponentField
+      },
+      quickActions: DEFAULT_QUICK_ACTIONS
+    };
+
+    return TextComponent;
+  }, [baseComponentFields, defaultBaseComponent, defaultVisibleComponent, t, visibleComponentField]);
+  return {
+    TextComponent
+  };
 };
 
 const UiBlock = ({ content, icon, iconStyle, visible }: UiComponentProps<TextProps>) => {

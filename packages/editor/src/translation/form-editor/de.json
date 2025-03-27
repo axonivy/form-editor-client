@@ -1,0 +1,249 @@
+{
+  "align": {
+    "bottom": "Unten",
+    "center": "Zentriert",
+    "top": "Oben"
+  },
+  "button": {
+    "description": "Ein Knopf zum Auslösen von Aktionen",
+    "name": "Knopf",
+    "type": {
+      "danger": "Gefahr",
+      "primary": "Primär",
+      "secondary": "Sekundär"
+    }
+  },
+  "category": {
+    "actions": "Aktionen",
+    "behaviour": "Verhalten",
+    "columns": "Spalten",
+    "content": "Inhalt",
+    "dynamicOptions": "Dynamische Optionen",
+    "elements": "Elemente",
+    "formatting": "Formatierung",
+    "general": "Allgemein",
+    "hidden": "Versteckt",
+    "input": "Eingabe",
+    "layout": "Layout",
+    "options": "Optionen",
+    "paginator": "Seitennummerierung",
+    "parameters": "Parameter",
+    "selection": "Auswahl",
+    "staticOptions": "Statische Optionen",
+    "structures": "Strukturen",
+    "styling": "Stil",
+    "text": "Text"
+  },
+  "checkbox": {
+    "description": "Ein auswählbares Kontrollkästchen (Boolean)",
+    "name": "Kontrollkästchen"
+  },
+  "combobox": {
+    "addDropdown": "Dropdown-Knopf zur Kombobox hinzufügen",
+    "description": "Eine Autovervollständigungs-Kombobox mit Beschriftung",
+    "name": "Kombobox"
+  },
+  "composite": {
+    "description": "Ein Knopf zum Auslösen von Aktionen",
+    "name": "Komposit"
+  },
+  "dataTable": {
+    "columnFromValue": "Spalten aus Wert erstellen",
+    "description": "Eine Datentabelle-Komponente",
+    "name": "Datentabelle",
+    "valueEmpty": "Wert der Datentabelle ist leer. Definiere den Wert in den Eigenschaften der Datentabelle"
+  },
+  "dataTableColumn": {
+    "description": "Eine Spalte für die Datentabelle",
+    "name": "Datentabelle-Spalte"
+  },
+  "datePicker": {
+    "description": "Ein Datumswähler mit Beschriftung für Datum oder Datum-Zeit",
+    "label": "Datumswähler",
+    "name": "Datumswähler"
+  },
+  "dialog": {
+    "description": "Ein flexibles Layout",
+    "name": "Dialog"
+  },
+  "fieldset": {
+    "description": "Eine Gruppe von Eingabefeldern",
+    "name": "Feldsatz"
+  },
+  "hint": {
+    "dragFirstItem": "Ziehen Sie das erste Element in die Arbeitsfläche oder",
+    "dragItemInto": "Ziehen Sie das erste Element in den {{type}}"
+  },
+  "hotkey": {
+    "createFormData": "Aus Daten erstellen ({{hotkey}})",
+    "deviceMode": "Gerätemodus ändern ({{hotkey}})",
+    "focusInscription": "Fokus auf Beschriftung ({{hotkey}})",
+    "focusMain": "Fokus auf Hauptbereich ({{hotkey}})",
+    "focusToolbar": "Fokus auf Werkzeugleiste ({{hotkey}})",
+    "openDataClass": "Datenklasse öffnen ({{hotkey}})",
+    "openHelp": "Hilfe öffnen ({{hotkey}})",
+    "openProcess": "Prozess öffnen ({{hotkey}})",
+    "redo": "Wiederholen ({{hotkey}})",
+    "undo": "Rückgängig ({{hotkey}})",
+    "viewMode": "Ansichtsmodus ({{hotkey}})"
+  },
+  "input": {
+    "description": "Eine Eingabe mit Beschriftung",
+    "name": "Eingabe"
+  },
+  "label": {
+    "addNewActionCol": "Neue Aktionsspalte hinzufügen",
+    "allComponents": "Alle Komponenten",
+    "browser": "Browser",
+    "cmsQuickfix": "CMS-Schnellkorrektur",
+    "cmsQuickfixCat": "CMS-Schnellkorrektur-{{cat}}",
+    "colBoundByAttr": "Spalte ist an ein Objektattribut gebunden",
+    "composites": "Komposite",
+    "createActionCol": "Aktionsspalte erstellen",
+    "createActionColBtn": "Aktionsspalten-Knopf erstellen",
+    "createBtns": "Fortfahren- und Abbrechen-Knöpfe erstellen",
+    "createCmsObj": "{{category}} CMS-Objekt erstellen: '{{name}}'",
+    "createCol": "Spalte erstellen",
+    "createContentObj": "Inhaltsobjekt erstellen: '{{parentUri}}{{name}}' Wert: {{value}}-{{category}}",
+    "createFrom": "Erstellen aus {{component}}",
+    "createFromData": "Aus Daten erstellen",
+    "data": "Daten",
+    "delete": "Löschen",
+    "disable": "Deaktivieren",
+    "dragFirstButton": "Ersten Knopf in den {{type}} ziehen",
+    "duplicate": "Duplizieren (M)",
+    "edit": "Bearbeiten",
+    "enableReqProjects": "Erforderliche Projekte aktivieren",
+    "extractComponent": "Als eigene Ivy-Komponente extrahieren (E)",
+    "filterBy": "Filtern nach",
+    "formType": "Formulartyp",
+    "general": "Allgemein",
+    "generic": "Generisch",
+    "id": "ID",
+    "largeSpan": "Grosse Spanne",
+    "listOfObjects": "Objektliste",
+    "mediumSpan": "Mittlere Spanne",
+    "nRowsPerPage": "Zeilen pro Seite: {{rows}}",
+    "objectLabel": "Objektbeschriftung",
+    "objectValue": "Objektwert",
+    "objNotValid": "Definiertes Objekt ist ungültig",
+    "openComponent": "Komponente öffnen (J)",
+    "options": "Optionen",
+    "outline": "Umriss",
+    "properties": "Eigenschaften",
+    "required": "Pflichtfeld",
+    "requiredMessage": "Pflichtmeldung",
+    "setDefaultCol": "Standardspalten setzen",
+    "togglePropView": "Eigenschaftsansicht umschalten",
+    "updateFormChange": "Formular bei Änderungen aktualisieren",
+    "useEntireObj": "Gesamtes Objekt verwenden",
+    "verticalAlign": "Vertikale Ausrichtung",
+    "visible": "Sichtbar"
+  },
+  "layout": {
+    "column_one": "{{count}} Spalte",
+    "column_other": "{{count}} Spalten",
+    "description": "Ein flexibles Layout",
+    "flex": "Flex",
+    "free": "Frei",
+    "grid": "Raster",
+    "left": "Links",
+    "name": "Layout",
+    "right": "Rechts",
+    "spaceBetween": "Platz dazwischen"
+  },
+  "link": {
+    "description": "Verknüpfung zu einem Ziel",
+    "name": "Verknüpfung"
+  },
+  "message": {
+    "error": "Ein Fehler ist aufgetreten: {{error}}",
+    "errorOnly": "Fehler: {{error}}",
+    "fieldTypeUnknown": "Unbekannter Feldtyp",
+    "formNotFound": "Formular nicht gefunden",
+    "noData": "Keine Daten",
+    "noOptionsDefined": "Keine Optionen definiert",
+    "noParam": "Keine Parameter",
+    "typeDefinedBy": "Typ '{{type}}' definiert durch das Eingabefeld"
+  },
+  "panel": {
+    "description": "Eine Gruppe von Komponenten",
+    "name": "Panel"
+  },
+  "placeholder": {
+    "attributeOrBlank": "Attribut eingeben (oder leer lassen für gesamtes Objekt)",
+    "dynamicList": "z.\u202fB. #{data.dynamicList}"
+  },
+  "property": {
+    "action": "Aktion",
+    "actionColumn": "Aktionsspalte",
+    "actions": "Aktionen",
+    "addButton": "Knopf hinzufügen",
+    "autoResize": "Automatisch anpassen",
+    "collapsedDefault": "Standardmässig eingeklappt",
+    "collapsible": "Einklappbar",
+    "columns": "Spalten",
+    "completeMethod": "Vervollständigungs-Methode",
+    "content": "Inhalt",
+    "datePattern": "Datumsformat",
+    "decimalPlaces": "Dezimalstellen",
+    "editable": "Bearbeitbar",
+    "editDialog": "Dialog bearbeiten",
+    "editRow": "Zeile bearbeiten",
+    "email": "E-Mail",
+    "enableFiltering": "Filter aktivieren",
+    "enablePaginator": "Seitennummerierung aktivieren",
+    "enableSorting": "Sortierung aktivieren",
+    "groupActions": "Gruppenaktionen",
+    "header": "Kopfzeile",
+    "horizontal": "Horizontal",
+    "horizontalAlignment": "Horizontale Ausrichtung",
+    "href": "Href",
+    "icon": "Icon",
+    "iconStyle": "Iconstil",
+    "itemLabel": "Elementbeschriftung",
+    "itemValue": "Elementwert",
+    "label": "Beschriftung",
+    "linkedComponent": "Verknüpfte Komponente",
+    "name": "Name",
+    "number": "Zahl",
+    "objectBoundColumns": "Objektgebundene Spalten",
+    "option1": "Option 1",
+    "option2": "Option 2",
+    "orientation": "Ausrichtung",
+    "password": "Passwort",
+    "prefix": "Präfix",
+    "rowsPerPage": "Zeilen pro Seite",
+    "rowType": "Zeilentyp",
+    "selected": "Ausgewählt",
+    "startMethod": "Startmethode",
+    "suffix": "Suffix",
+    "symbol": "Symbol",
+    "symbolPosition": "Symbolposition",
+    "text": "Text",
+    "timePattern": "Zeitformat",
+    "title": "Titel",
+    "type": "Typ",
+    "value": "Wert",
+    "variant": "Variante",
+    "vertical": "Vertikal",
+    "visibleRows": "Sichtbare Zeilen"
+  },
+  "radio": {
+    "description": "Eine Radiogruppe mit Beschriftung zur Auswahl einer Option",
+    "name": "Radio"
+  },
+  "select": {
+    "description": "Ein Dropdown-Menü mit Beschriftung zur Auswahl einer Option",
+    "name": "Auswahl"
+  },
+  "text": {
+    "description": "Textausgabe",
+    "name": "Text",
+    "placeholder": "Dies ist ein Text"
+  },
+  "textarea": {
+    "description": "Eine anpassbare Textbereich-Komponente",
+    "name": "Textbereich"
+  }
+}

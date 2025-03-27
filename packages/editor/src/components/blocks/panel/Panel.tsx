@@ -1,5 +1,5 @@
 import type { Panel, Prettify } from '@axonivy/form-editor-protocol';
-import { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } from '../base';
+import { useBase } from '../base';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import IconSvg from './Panel.svg?react';
 import { Flex, IvyIcon } from '@axonivy/ui-components';
@@ -8,45 +8,67 @@ import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import './Panel.css';
 import { UiBadge, UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
+import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 type PanelProps = Prettify<Panel>;
 
-export const defaultPanelProps: PanelProps = {
-  components: [],
-  title: 'Title',
-  collapsible: false,
-  collapsed: false,
-  ...defaultVisibleComponent,
-  ...defaultBaseComponent
-};
+export const usePanelComponent = () => {
+  const { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } = useBase();
+  const { t } = useTranslation();
 
-export const PanelComponent: ComponentConfig<PanelProps> = {
-  name: 'Panel',
-  category: 'Structures',
-  subcategory: 'General',
-  icon: <IconSvg />,
-  description: 'A group of components',
-  defaultProps: defaultPanelProps,
-  quickActions: DEFAULT_QUICK_ACTIONS,
-  render: props => <UiBlock {...props} />,
-  create: ({ defaultProps }) => ({ ...defaultPanelProps, ...defaultProps }),
-  outlineInfo: component => component.title,
-  fields: {
-    ...baseComponentFields,
-    components: { subsection: 'General', type: 'hidden' },
-    title: {
-      subsection: 'General',
-      label: 'Title',
-      type: 'textBrowser',
-      browsers: [
-        { type: 'ATTRIBUTE', options: { overrideSelection: true } },
-        { type: 'CMS', options: { overrideSelection: true } }
-      ]
-    },
-    collapsible: { subsection: 'Behaviour', label: 'Collapsible', type: 'checkbox' },
-    collapsed: { subsection: 'Behaviour', label: 'Collapsed by default', type: 'checkbox', options: {}, hide: data => !data.collapsible },
-    ...visibleComponentField
-  }
+  const PanelComponent: ComponentConfig<PanelProps> = useMemo(() => {
+    const defaultPanelProps: PanelProps = {
+      components: [],
+      title: t('property.title'),
+      collapsible: false,
+      collapsed: false,
+      ...defaultVisibleComponent,
+      ...defaultBaseComponent
+    };
+
+    const PanelComponent: ComponentConfig<PanelProps> = {
+      name: 'Panel',
+      displayName: t('panel.name'),
+      category: 'Structures',
+      subcategory: 'General',
+      icon: <IconSvg />,
+      description: t('panel.description'),
+      defaultProps: defaultPanelProps,
+      quickActions: DEFAULT_QUICK_ACTIONS,
+      render: props => <UiBlock {...props} />,
+      create: ({ defaultProps }) => ({ ...defaultPanelProps, ...defaultProps }),
+      outlineInfo: component => component.title,
+      fields: {
+        ...baseComponentFields,
+        components: { subsection: 'General', type: 'hidden' },
+        title: {
+          subsection: 'General',
+          label: t('property.title'),
+          type: 'textBrowser',
+          browsers: [
+            { type: 'ATTRIBUTE', options: { overrideSelection: true } },
+            { type: 'CMS', options: { overrideSelection: true } }
+          ]
+        },
+        collapsible: { subsection: 'Behaviour', label: t('property.collapsible'), type: 'checkbox' },
+        collapsed: {
+          subsection: 'Behaviour',
+          label: t('property.collapsedDefault'),
+          type: 'checkbox',
+          options: {},
+          hide: data => !data.collapsible
+        },
+        ...visibleComponentField
+      }
+    };
+
+    return PanelComponent;
+  }, [baseComponentFields, defaultBaseComponent, defaultVisibleComponent, t, visibleComponentField]);
+
+  return {
+    PanelComponent
+  };
 };
 
 const UiBlock = ({ id, components, title, collapsible, collapsed, visible }: UiComponentProps<PanelProps>) => (

@@ -17,6 +17,7 @@ import { AddCmsQuickFixPopover } from '../../browser/cms/AddCmsQuickFix';
 import useTextSelection from '../../browser/cms/useTextSelection';
 import { useOnFocus } from '../../../context/useOnFocus';
 import { badgeProps } from '../../../utils/badge-properties';
+import { useTranslation } from 'react-i18next';
 
 type TextareaFieldProps = {
   label: string;
@@ -31,6 +32,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(textAreaRef);
   const height = useMemo(() => splitNewLine(value).length * 14, [value]);
+  const { t } = useTranslation();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -64,7 +66,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
                 />
               )}
               <DialogTrigger asChild>
-                <Button icon={IvyIcons.ListSearch} aria-label='Browser' />
+                <Button icon={IvyIcons.ListSearch} aria-label={t('label.browser')} />
               </DialogTrigger>
             </Flex>
           </Flex>

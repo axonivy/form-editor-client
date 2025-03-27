@@ -27,11 +27,11 @@ test('add elements', async ({ page }) => {
   await palette.dndTo('Text', layout.block);
   const text = editor.canvas.blockByNth(0);
   await expect(layout.block).not.toContainText('Drag first element inside the layout');
-  await expect(layout.block).toContainText('This is a text');
+  await expect(layout.block).toContainText('This is a Text');
 
   await editor.toolbar.openPalette('Actions');
   await palette.dndTo('Button', text.block);
-  await editor.canvas.expectFormOrder(['Action', 'This is a text']);
+  await editor.canvas.expectFormOrder(['Action', 'This is a Text']);
 });
 
 test('data', async ({ page }) => {

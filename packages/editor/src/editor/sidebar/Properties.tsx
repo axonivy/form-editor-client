@@ -10,10 +10,12 @@ import {
   Flex
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
-import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
-import { componentByElement } from '../../components/components';
 import type { ConfigData, FormType } from '@axonivy/form-editor-protocol';
-import { PropertySubSectionControl } from './PropertySubSectionControl';
+import { usePropertySubSectionControl } from './PropertySubSectionControl';
+import { useTranslation } from 'react-i18next';
+import { useBase } from '../../components/blocks/base';
+import { useSharedComponents } from '../../context/ComponentsContext';
+import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 import type { FieldOption } from '../../types/config';
 import { SelectField } from './fields/SelectField';
 
@@ -23,6 +25,7 @@ const formTypeOptions: FieldOption<FormType>[] = [
 ] as const;
 
 export const Properties = () => {
+  const { componentByElement } = useSharedComponents();
   const { element, data, parent } = useData();
   if (element === undefined) {
     return <FormPropertySection />;
@@ -42,21 +45,25 @@ export const Properties = () => {
   );
 };
 
-const PropertySection = ({ section, fields }: { section: string; fields: VisibleFields }) => (
-  <AccordionItem key={section} value={section}>
-    <AccordionTrigger>{section}</AccordionTrigger>
-    <AccordionContent>
-      <Flex direction='column' gap={2}>
-        {groupFieldsBySubsection(fields).map(({ title, fields }) => (
-          <PropertySubSection key={title} title={title} fields={fields} />
-        ))}
-      </Flex>
-    </AccordionContent>
-  </AccordionItem>
-);
+const PropertySection = ({ section, fields }: { section: string; fields: VisibleFields }) => {
+  const { CategoryTranslations } = useBase();
+  return (
+    <AccordionItem key={section} value={section}>
+      <AccordionTrigger>{section}</AccordionTrigger>
+      <AccordionContent>
+        <Flex direction='column' gap={2}>
+          {groupFieldsBySubsection(fields).map(({ title, fields }) => (
+            <PropertySubSection key={title} title={CategoryTranslations[title]} fields={fields} />
+          ))}
+        </Flex>
+      </AccordionContent>
+    </AccordionItem>
+  );
+};
 
 const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleFields }) => {
   const { element, setElement } = useData();
+  const { PropertySubSectionControl } = usePropertySubSectionControl();
   if (element === undefined) {
     return null;
   }
@@ -88,18 +95,19 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
 
 const FormPropertySection = () => {
   const { data, setData } = useData();
+  const { t } = useTranslation();
   return (
     <Accordion type='single' collapsible defaultValue='Properties'>
-      <AccordionItem key='Properties' value='Properties'>
-        <AccordionTrigger>Properties</AccordionTrigger>
+      <AccordionItem key='Properties' value={t('label.properties')}>
+        <AccordionTrigger>{t('label.properties')}</AccordionTrigger>
         <AccordionContent>
           <Flex direction='column' gap={2}>
             <Collapsible defaultOpen={true}>
-              <CollapsibleTrigger>General</CollapsibleTrigger>
+              <CollapsibleTrigger>{t('label.general')}</CollapsibleTrigger>
               <CollapsibleContent>
                 <Flex direction='column' gap={2}>
                   <SelectField
-                    label='Form Type'
+                    label={t('label.formType')}
                     options={formTypeOptions}
                     value={data.config.type}
                     onChange={value => {

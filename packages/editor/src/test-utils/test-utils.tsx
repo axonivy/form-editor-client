@@ -12,6 +12,11 @@ import { AppProvider, type UI } from '../context/AppContext';
 import { renderHook, type RenderHookOptions } from '@testing-library/react';
 import { ClientContextProvider, type ClientContext } from '../context/ClientContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ComponentsProvider } from '../context/ComponentsContext';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import enMessages from '../translation/form-editor/en.json';
+import enCommonMessages from '../translation/common/en.json';
 
 type ContextHelperProps = {
   appContext?: {
@@ -31,6 +36,19 @@ type ContextHelperProps = {
   };
 };
 
+const initTranslation = () => {
+  if (i18n.isInitializing || i18n.isInitialized) return;
+  i18n.use(initReactI18next).init({
+    supportedLngs: ['en'],
+    fallbackLng: 'en',
+    ns: ['form-editor'],
+    defaultNS: 'form-editor',
+    resources: {
+      en: { 'form-editor': enMessages, common: enCommonMessages }
+    }
+  });
+};
+
 const ContextHelper = ({ appContext, meta, children }: ContextHelperProps & { children: ReactNode }) => {
   const data = appContext?.data ?? ({} as FormData);
   const client: ClientContext = {
@@ -48,6 +66,7 @@ const ContextHelper = ({ appContext, meta, children }: ContextHelperProps & { ch
     }
   };
   const queryClient = new QueryClient();
+  initTranslation();
   return (
     <ClientContextProvider client={client.client}>
       <QueryClientProvider client={queryClient}>
@@ -66,7 +85,7 @@ const ContextHelper = ({ appContext, meta, children }: ContextHelperProps & { ch
             helpUrl: appContext?.helpUrl ?? ''
           }}
         >
-          {children}
+          <ComponentsProvider>{children}</ComponentsProvider>
         </AppProvider>
       </QueryClientProvider>
     </ClientContextProvider>

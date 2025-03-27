@@ -25,8 +25,10 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
 import { createInitForm, creationTargetId } from '../../../data/data';
-import { variableTreeData, rowToCreateData, findAttributesOfType } from './variable-tree-data';
 import { useKnownHotkeys } from '../../../utils/hotkeys';
+import { useTranslation } from 'react-i18next';
+import { findAttributesOfType, variableTreeData, rowToCreateData } from './variable-tree-data';
+import { useSharedComponents } from '../../../context/ComponentsContext';
 
 type DataClassDialogProps = {
   children: ReactNode;
@@ -52,12 +54,13 @@ export const DataClassDialog = ({
   const [open, setOpen] = useState(false);
   const { createFromData: shortcut } = useKnownHotkeys();
   useHotkeys(shortcut.hotkey, () => setOpen(true), { scopes: ['global'] });
+  const { t } = useTranslation();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent onClick={e => e.stopPropagation()}>
         <DialogHeader>
-          <DialogTitle>Create from data</DialogTitle>
+          <DialogTitle>{t('label.createFromData')}</DialogTitle>
         </DialogHeader>
         <DataClassSelect
           workflowButtonsInit={workflowButtonsInit}
@@ -91,10 +94,12 @@ const DataClassSelect = ({
   prefix?: string;
 }) => {
   const { context, setData } = useAppContext();
-
+  const { t } = useTranslation();
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const [workflowButtons, setWorkflowButtons] = useState(showWorkflowButtonsCheckbox ? workflowButtonsInit : false);
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
+  const { componentForType, componentByName } = useSharedComponents();
+
   useEffect(() => {
     if (onlyAttributs) {
       setTree(findAttributesOfType(dataClass, onlyAttributs, 10, parentName));
@@ -144,9 +149,9 @@ const DataClassSelect = ({
     setData(data => {
       const creates = table
         .getSelectedRowModel()
-        .flatRows.map(r => rowToCreateData(r, showRootNode, prefix))
+        .flatRows.map(r => rowToCreateData(r, componentForType, showRootNode, prefix))
         .filter(create => create !== undefined);
-      return createInitForm(data, creates, workflowButtons, creationTargetId(data.components, creationTarget));
+      return createInitForm(data, creates, workflowButtons, componentByName, creationTargetId(data.components, creationTarget));
     });
   };
   return (
@@ -162,7 +167,7 @@ const DataClassSelect = ({
               </SelectRow>
             ))
           ) : (
-            <MessageRow message={{ message: 'No data', variant: 'info' }} columnCount={1} />
+            <MessageRow message={{ message: t('message.noData'), variant: 'info' }} columnCount={1} />
           )}
         </TableBody>
       </Table>
@@ -170,17 +175,17 @@ const DataClassSelect = ({
         <BasicCheckbox
           checked={workflowButtons}
           onCheckedChange={change => setWorkflowButtons(Boolean(change))}
-          label='Create proceed and cancel buttons'
+          label={t('label.createBtns')}
         />
       )}
       <DialogFooter>
         <DialogClose asChild>
           <Button variant='primary' onClick={createForm} disabled={tree.length === 0}>
-            Create
+            {t('common:label.create')}
           </Button>
         </DialogClose>
         <DialogClose asChild>
-          <Button variant='outline'>Cancel</Button>
+          <Button variant='outline'>{t('common:label.cancel')}</Button>
         </DialogClose>
       </DialogFooter>
     </>
