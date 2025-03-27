@@ -1,4 +1,7 @@
 {
+  "dataTable": {
+    "valueEmpty": "__MISSING_TRANSLATION__"
+  },
   "message": {
     "noParam": "__MISSING_TRANSLATION__"
   }

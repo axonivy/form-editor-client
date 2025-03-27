@@ -16,6 +16,7 @@ import { ColumnControl } from './controls/ColumnControl';
 import { ColumnsField } from './fields/ColumnsField';
 import { renderEditableDataTableField } from './fields/EditableDataTableField';
 import { renderListOfObjectsField } from './fields/ListOfObjectsField';
+import { useTranslation } from 'react-i18next';
 
 type DataTableProps = Prettify<DataTable>;
 
@@ -117,11 +118,12 @@ const UiBlock = ({ id, components, value, paginator, maxRows, visible, editDialo
 };
 
 const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string }) => {
+  const { t } = useTranslation();
   const { context, setData } = useAppContext();
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
 
   if (initValue.length === 0) {
-    return <Message variant='warning' message='Value of DataTable is empty. Define value within Properties of DataTable' />;
+    return <Message variant='warning' message={t('dataTable.valueEmpty')} />;
   }
 
   const createColumns = () => {
