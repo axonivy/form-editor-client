@@ -7,6 +7,7 @@ import { isComposite } from '../Composite';
 import { InputFieldWithBrowser } from '../../../../editor/sidebar/fields/InputFieldWithBrowser';
 import type { ParameterInfo, PrimitiveValue } from '@axonivy/form-editor-protocol';
 import { useValidation } from '../../../../context/useValidation';
+import { useTranslation } from 'react-i18next';
 
 export const renderParameters = (props: GenericFieldProps) => {
   return <Parameters {...props} />;
@@ -16,6 +17,7 @@ const isStringRecord = (primitive?: PrimitiveValue): primitive is Record<string,
   primitive !== undefined && typeof primitive === 'object';
 
 const Parameters = ({ value, ...props }: GenericFieldProps) => {
+  const { t } = useTranslation();
   const { context } = useAppContext();
   const { element } = useData();
   const method = useMeta('meta/composite/all', context, [])
@@ -27,7 +29,7 @@ const Parameters = ({ value, ...props }: GenericFieldProps) => {
     return null;
   }
   if (method === undefined || (method.parameters.length === 0 && params.length === 0)) {
-    return <Message variant='info' message='No parameters' />;
+    return <Message variant='info' message={t('message.noParam')} />;
   }
   return (
     <Flex direction='column' gap={2}>
