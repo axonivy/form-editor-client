@@ -1,11 +1,12 @@
-import type { SelectItem } from '@axonivy/form-editor-protocol';
+import type { LayoutAlignItems, SelectItem } from '@axonivy/form-editor-protocol';
 import type { FieldOption, Fields, GenericFieldProps } from '../../types/config';
 import { BasicField, Input } from '@axonivy/ui-components';
 import { useAppContext } from '../../context/AppContext';
 import { useValidation } from '../../context/useValidation';
 import { hideButtonField } from './button/Button';
+import { IvyIcons } from '@axonivy/ui-icons';
 
-type BaseComponentProps = { id: string; lgSpan: string; mdSpan: string };
+type BaseComponentProps = { id: string; alignSelf: LayoutAlignItems; lgSpan: string; mdSpan: string };
 type SelectItemsProps = {
   label: string;
   value: string;
@@ -36,6 +37,7 @@ export const defaultBehaviourComponent: BehaviourItemProps = {
 
 export const defaultBaseComponent: BaseComponentProps = {
   id: '',
+  alignSelf: 'START',
   lgSpan: '6',
   mdSpan: '12'
 } as const;
@@ -49,8 +51,15 @@ const spanOptions: FieldOption<string>[] = [
   { label: '6', value: '12' }
 ] as const;
 
+const alignItemsOptions: FieldOption<LayoutAlignItems>[] = [
+  { label: 'Top', value: 'START', icon: { icon: IvyIcons.AlignRight, rotate: 270 } },
+  { label: 'Center', value: 'CENTER', icon: { icon: IvyIcons.AlignHorizontal, rotate: 180 } },
+  { label: 'Bottom', value: 'END', icon: { icon: IvyIcons.AlignLeft, rotate: 270 } }
+] as const;
+
 export const baseComponentFields: Fields<BaseComponentProps> = {
   id: { subsection: 'General', type: 'generic', label: 'Id', render: props => <IdInput {...props} /> },
+  alignSelf: { section: 'Layout', subsection: 'General', type: 'toggleGroup', label: 'Vertical Alignement', options: alignItemsOptions },
   lgSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Large Span', options: spanOptions },
   mdSpan: { section: 'Layout', subsection: 'General', type: 'select', label: 'Medium Span', options: spanOptions }
 };

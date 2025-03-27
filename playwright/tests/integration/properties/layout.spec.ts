@@ -2,10 +2,9 @@ import { expect, test, type Page } from '@playwright/test';
 import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
-  const { editor, type, columns, justify, align, behaviour } = await layout(page);
+  const { editor, type, columns, justify, behaviour } = await layout(page);
   await type.expectValue('Grid');
   await columns.expectValue('2 Columns');
-  await align.expectSelected('Top');
   await expect(justify.locator).toBeHidden();
   await type.choose('Flex');
   await expect(columns.locator).toBeHidden();
@@ -19,12 +18,10 @@ test('default', async ({ page }) => {
   await justify.expectSelected('Right');
   await type.choose('Grid');
   await columns.choose('Free');
-  await align.choose('Center');
 
   await reload(editor);
   await type.expectValue('Grid');
   await columns.expectValue('Free');
-  await align.expectSelected('Center');
   await expect(justify.locator).toBeHidden();
   await behaviour.expectVisible();
 });
@@ -34,25 +31,29 @@ test('children in free layout', async ({ page }) => {
   await editor.createBlock('Input', layoutBlock.block);
   const inputBlock = editor.canvas.blockByNth(0);
   const layoutAccordion = editor.inscription.section('Layout');
+  const alignSelf = layoutAccordion.collapsible('General').toggleGroup({ label: 'Vertical Alignement' });
   const largeSpan = layoutAccordion.collapsible('General').select({ label: 'Large Span' });
   const mediumSpan = layoutAccordion.collapsible('General').select({ label: 'Medium Span' });
 
   await inputBlock.select();
-  await expect(layoutAccordion.item).toBeHidden();
+  await expect(layoutAccordion.item).toBeVisible();
 
   await layoutBlock.select();
   await columns.choose('Free');
   await inputBlock.select();
   await expect(layoutAccordion.item).toBeVisible();
   await layoutAccordion.toggle();
+  await alignSelf.expectSelected('Top');
   await largeSpan.expectValue('3');
   await mediumSpan.expectValue('6');
+  await alignSelf.choose('Center');
   await largeSpan.choose('1');
   await mediumSpan.choose('2');
 
   await reload(editor);
   await inputBlock.select();
   await layoutAccordion.toggle();
+  await alignSelf.expectSelected('Center');
   await largeSpan.expectValue('1');
   await mediumSpan.expectValue('2');
 
@@ -60,17 +61,23 @@ test('children in free layout', async ({ page }) => {
   await properties.toggle();
   await columns.choose('4 Columns');
   await inputBlock.select();
+  await expect(layoutAccordion.item).toBeVisible();
+  await layoutAccordion.toggle();
+  await expect(alignSelf.locator).toBeVisible();
+  await expect(largeSpan.locator).toBeHidden();
+  await expect(mediumSpan.locator).toBeHidden();
+
+  await layoutBlock.select();
+  await properties.toggle();
+  await columns.choose('1 Column');
   await expect(layoutAccordion.item).toBeHidden();
 });
 
 test('1 col grid', async ({ page }) => {
-  const { type, columns, align } = await layout(page);
+  const { type, columns } = await layout(page);
   await type.expectValue('Grid');
   await columns.expectValue('2 Columns');
-  await expect(align.locator).toBeVisible();
-  await align.expectSelected('Top');
   await columns.choose('1 Column');
-  await expect(align.locator).toBeHidden();
 });
 
 const layout = async (page: Page) => {
@@ -83,9 +90,8 @@ const layout = async (page: Page) => {
   const type = section.select({ label: 'Type' });
   const columns = section.select({ label: 'Columns' });
   const justify = section.toggleGroup({ label: 'Horizontal Alignment' });
-  const align = section.toggleGroup({ label: 'Vertical Alignment' });
   const behaviour = properties.behaviour();
-  return { editor, layoutBlock, properties, type, columns, justify, align, behaviour };
+  return { editor, layoutBlock, properties, type, columns, justify, behaviour };
 };
 
 const reload = async (editor: FormEditor) => {
