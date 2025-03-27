@@ -1,103 +1,144 @@
-import type { Config, ItemCategory } from '../types/config';
+import type { ComponentConfig, Config, ItemCategory } from '../types/config';
 import { groupBy } from '../utils/array';
-import { ButtonComponent } from './blocks/button/Button';
-import { LayoutComponent } from './blocks/layout/Layout';
-import { InputComponent } from './blocks/input/Input';
-import { LinkComponent } from './blocks/link/Link';
-import { TextComponent } from './blocks/text/Text';
-import { CheckboxComponent } from './blocks/checkbox/Checkbox';
-import { SelectComponent } from './blocks/select/Select';
+import { useButtonComponent } from './blocks/button/Button';
+import { useLayoutComponent } from './blocks/layout/Layout';
+import { useInputComponent } from './blocks/input/Input';
+import { useLinkComponent } from './blocks/link/Link';
+import { useTextComponent } from './blocks/text/Text';
+import { useCheckboxComponent } from './blocks/checkbox/Checkbox';
+import { useSelectComponent } from './blocks/select/Select';
 import { isTable, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
 import type { AutoCompleteWithString } from '../types/types';
-import { ComboboxComponent } from './blocks/combobox/Combobox';
-import { RadioComponent } from './blocks/radio/Radio';
-import { DatePickerComponent } from './blocks/datepicker/DatePicker';
-import { TextareaComponent } from './blocks/textarea/Textarea';
-import { DataTableComponent } from './blocks/datatable/DataTable';
-import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
-import { FieldsetComponent } from './blocks/fieldset/Fieldset';
-import { PanelComponent } from './blocks/panel/Panel';
+import { useComboboxComponent } from './blocks/combobox/Combobox';
+import { useRadioComponent } from './blocks/radio/Radio';
+import { useDatePickerComponent } from './blocks/datepicker/DatePicker';
+import { useTextareaComponent } from './blocks/textarea/Textarea';
+import { useDataTableComponent } from './blocks/datatable/DataTable';
+import { useDataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
+import { useFieldsetComponent } from './blocks/fieldset/Fieldset';
+import { usePanelComponent } from './blocks/panel/Panel';
 import { getParentComponent } from '../data/data';
-import { CompositeComponent } from './blocks/composite/Composite';
-import { DialogComponent } from './blocks/dialog/Dialog';
+import { useCompositeComponent } from './blocks/composite/Composite';
+import { useDialogComponent } from './blocks/dialog/Dialog';
 
-const config: Config = {
-  components: {
-    Input: InputComponent,
-    Textarea: TextareaComponent,
-    DatePicker: DatePickerComponent,
-    Combobox: ComboboxComponent,
-    Checkbox: CheckboxComponent,
-    Radio: RadioComponent,
-    Select: SelectComponent,
-    Text: TextComponent,
-    Button: ButtonComponent,
-    Link: LinkComponent,
-    Layout: LayoutComponent,
-    DataTable: DataTableComponent,
-    DataTableColumn: DataTableColumnComponent,
-    Fieldset: FieldsetComponent,
-    Panel: PanelComponent,
-    Dialog: DialogComponent,
-    Composite: CompositeComponent
-  }
-} as const;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ComponentConfigWithoutType = Omit<ComponentConfig<any, any>, 'type'>;
 
-export const componentByElement = (element: ComponentData, data: Array<ComponentData>) => {
-  const component = componentByName(element.type);
-  if (component === undefined && isTable(getParentComponent(data, element.cid))) {
-    return componentByName('DataTableColumn');
-  }
-  return component;
-};
+export type ComponentByName = (name: AutoCompleteWithString<ComponentType>) => ComponentConfigWithoutType;
 
-export const componentByName = (name: AutoCompleteWithString<ComponentType>) => {
-  return config.components[name];
-};
+export type ComponentForType = (type: AutoCompleteWithString<ComponentType>) =>
+  | {
+      component: ComponentConfigWithoutType;
+      defaultProps?: object | undefined;
+    }
+  | undefined;
 
-export const componentsByCategory = (category: ItemCategory) => {
-  // Provisional: Filter out undefined components before checking category
-  const filteredComponents = Object.values(config.components)
-    .filter(component => component !== undefined)
-    .filter(component => component.category === category);
+export const useComponentsInit = () => {
+  const componentByElement = (element: ComponentData, data: Array<ComponentData>) => {
+    const component = componentByName(element.type);
+    if (component === undefined && isTable(getParentComponent(data, element.cid))) {
+      return componentByName('DataTableColumn');
+    }
+    return component;
+  };
 
-  return groupBy(Object.values(filteredComponents), item => item.subcategory);
-};
+  const componentByName: ComponentByName = name => {
+    return config.components[name];
+  };
 
-export const allComponentsByCategory = () => {
-  // Provisional: Filter out undefined components before checking category
-  return groupBy(
-    Object.values(config.components)
+  const componentsByCategory = (category: ItemCategory) => {
+    // Provisional: Filter out undefined components before checking category
+    const filteredComponents = Object.values(config.components)
       .filter(component => component !== undefined)
-      .filter(component => component.category !== 'Hidden'),
-    item => item.category
-  );
-};
+      .filter(component => component.category === category);
 
-export const componentForType = (type: AutoCompleteWithString<ComponentType>) => {
-  if (type.startsWith('List<') && type.endsWith('>')) {
-    return { component: config.components.DataTable };
-  }
+    return groupBy(Object.values(filteredComponents), item => item.subcategory);
+  };
 
-  switch (type) {
-    case 'String':
-      return { component: config.components.Input };
-    case 'Number':
-    case 'Byte':
-    case 'Short':
-    case 'Integer':
-    case 'Long':
-    case 'Float':
-    case 'Double':
-    case 'BigDecimal':
-      return { component: config.components.Input, defaultProps: { type: 'NUMBER' } };
-    case 'Boolean':
-      return { component: config.components.Checkbox };
-    case 'Date':
-    case 'DateTime':
-    case 'java.util.Date':
-      return { component: config.components.DatePicker };
-    default:
-      return undefined;
-  }
+  const allComponentsByCategory = () => {
+    // Provisional: Filter out undefined components before checking category
+    return groupBy(
+      Object.values(config.components)
+        .filter(component => component !== undefined)
+        .filter(component => component.category !== 'Hidden'),
+      item => item.category
+    );
+  };
+
+  const componentForType: ComponentForType = type => {
+    if (type.startsWith('List<') && type.endsWith('>')) {
+      return { component: config.components.DataTable };
+    }
+
+    switch (type) {
+      case 'String':
+        return { component: config.components.Input };
+      case 'Number':
+      case 'Byte':
+      case 'Short':
+      case 'Integer':
+      case 'Long':
+      case 'Float':
+      case 'Double':
+      case 'BigDecimal':
+        return { component: config.components.Input, defaultProps: { type: 'NUMBER' } };
+      case 'Boolean':
+        return { component: config.components.Checkbox };
+      case 'Date':
+      case 'DateTime':
+      case 'java.util.Date':
+        return { component: config.components.DatePicker };
+      default:
+        return undefined;
+    }
+  };
+
+  const { InputComponent } = useInputComponent();
+  const { TextareaComponent } = useTextareaComponent();
+  const { DatePickerComponent } = useDatePickerComponent();
+  const { ComboboxComponent } = useComboboxComponent();
+  const { CheckboxComponent } = useCheckboxComponent();
+  const { RadioComponent } = useRadioComponent();
+  const { SelectComponent } = useSelectComponent();
+  const { TextComponent } = useTextComponent();
+  const { ButtonComponent } = useButtonComponent();
+  const { LinkComponent } = useLinkComponent();
+  const { LayoutComponent } = useLayoutComponent();
+  const { DataTableComponent } = useDataTableComponent(componentByName);
+  const { DataTableColumnComponent } = useDataTableColumnComponent();
+  const { FieldsetComponent } = useFieldsetComponent();
+  const { PanelComponent } = usePanelComponent();
+  const { DialogComponent } = useDialogComponent();
+  const { CompositeComponent } = useCompositeComponent();
+
+  const config: Config = {
+    components: {
+      Input: InputComponent,
+      Textarea: TextareaComponent,
+      DatePicker: DatePickerComponent,
+      Combobox: ComboboxComponent,
+      Checkbox: CheckboxComponent,
+      Radio: RadioComponent,
+      Select: SelectComponent,
+      Text: TextComponent,
+      Button: ButtonComponent,
+      Link: LinkComponent,
+      Layout: LayoutComponent,
+      DataTable: DataTableComponent,
+      DataTableColumn: DataTableColumnComponent,
+      Fieldset: FieldsetComponent,
+      Panel: PanelComponent,
+      Dialog: DialogComponent,
+      Composite: CompositeComponent
+    }
+  } as const;
+
+  return {
+    config,
+    componentByElement,
+    componentByName,
+    componentsByCategory,
+    allComponentsByCategory,
+    componentForType
+  };
 };

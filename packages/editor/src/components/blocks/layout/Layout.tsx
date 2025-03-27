@@ -2,74 +2,90 @@ import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiC
 import './Layout.css';
 import type { Layout, LayoutGridVariant, LayoutJustifyContent, LayoutType, Prettify } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
-import { defaultBaseComponent, baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
+import { useBase } from '../base';
 import IconSvg from './Layout.svg?react';
 import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { EmptyLayoutBlock } from '../../../editor/canvas/EmptyBlock';
 import { UiBlockHeader } from '../../UiBlockHeader';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type LayoutProps = Prettify<Layout>;
 
-const typeOptions: FieldOption<LayoutType>[] = [
-  { label: 'Grid', value: 'GRID' },
-  { label: 'Flex', value: 'FLEX' }
-] as const;
+export const useLayoutComponent = () => {
+  const { defaultBaseComponent, baseComponentFields, defaultVisibleComponent, visibleComponentField } = useBase();
+  const { t } = useTranslation();
 
-const gridVariantOptions: FieldOption<LayoutGridVariant>[] = [
-  { label: '1 Column', value: 'GRID1' },
-  { label: '2 Columns', value: 'GRID2' },
-  { label: '4 Columns', value: 'GRID4' },
-  { label: 'Free', value: 'FREE' }
-] as const;
+  const LayoutComponent = useMemo(() => {
+    const typeOptions: FieldOption<LayoutType>[] = [
+      { label: t('components.layout.grid'), value: 'GRID' },
+      { label: t('components.layout.flex'), value: 'FLEX' }
+    ] as const;
 
-const justifyContentOptions: FieldOption<LayoutJustifyContent>[] = [
-  { label: 'Left', value: 'NORMAL', icon: { icon: IvyIcons.AlignLeft } },
-  { label: 'Space Between', value: 'SPACE_BETWEEN', icon: { icon: IvyIcons.Straighten } },
-  { label: 'Right', value: 'END', icon: { icon: IvyIcons.AlignRight } }
-] as const;
+    const gridVariantOptions: FieldOption<LayoutGridVariant>[] = [
+      { label: t('components.layout.column', { count: 1 }), value: 'GRID1' },
+      { label: t('components.layout.column', { count: 2 }), value: 'GRID2' },
+      { label: t('components.layout.column', { count: 4 }), value: 'GRID4' },
+      { label: t('components.layout.free'), value: 'FREE' }
+    ] as const;
 
-export const defaultLayoutProps: LayoutProps = {
-  components: [],
-  type: 'GRID',
-  justifyContent: 'NORMAL',
-  gridVariant: 'GRID2',
-  ...defaultVisibleComponent,
-  ...defaultBaseComponent
-};
+    const justifyContentOptions: FieldOption<LayoutJustifyContent>[] = [
+      { label: t('components.layout.left'), value: 'NORMAL', icon: { icon: IvyIcons.AlignLeft } },
+      { label: t('components.layout.spaceBetween'), value: 'SPACE_BETWEEN', icon: { icon: IvyIcons.Straighten } },
+      { label: t('components.layout.right'), value: 'END', icon: { icon: IvyIcons.AlignRight } }
+    ] as const;
 
-export const LayoutComponent: ComponentConfig<LayoutProps> = {
-  name: 'Layout',
-  category: 'Structures',
-  subcategory: 'General',
-  icon: <IconSvg />,
-  description: 'A flexable layout',
-  defaultProps: defaultLayoutProps,
-  render: props => <UiBlock {...props} />,
-  create: ({ defaultProps }) => ({ ...defaultLayoutProps, ...defaultProps }),
-  outlineInfo: component => component.type,
-  fields: {
-    ...baseComponentFields,
-    components: { subsection: 'General', type: 'hidden' },
-    type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
-    justifyContent: {
-      subsection: 'General',
-      type: 'toggleGroup',
-      label: 'Horizontal Alignment',
-      options: justifyContentOptions,
-      hide: data => data.type !== 'FLEX'
-    },
+    const defaultLayoutProps: LayoutProps = {
+      components: [],
+      type: 'GRID',
+      justifyContent: 'NORMAL',
+      gridVariant: 'GRID2',
+      ...defaultVisibleComponent,
+      ...defaultBaseComponent
+    };
 
-    gridVariant: {
-      subsection: 'General',
-      type: 'select',
-      label: 'Columns',
-      options: gridVariantOptions,
-      hide: data => data.type !== 'GRID'
-    },
-    ...visibleComponentField
-  },
-  quickActions: [...DEFAULT_QUICK_ACTIONS, 'EXTRACTINTOCOMPONENT']
+    const LayoutComponent: ComponentConfig<LayoutProps> = {
+      name: 'Layout',
+      displayName: t('components.layout.name'),
+      category: 'Structures',
+      subcategory: 'General',
+      icon: <IconSvg />,
+      description: t('components.layout.description'),
+      defaultProps: defaultLayoutProps,
+      render: props => <UiBlock {...props} />,
+      create: ({ defaultProps }) => ({ ...defaultLayoutProps, ...defaultProps }),
+      outlineInfo: component => component.type,
+      fields: {
+        ...baseComponentFields,
+        components: { subsection: 'General', type: 'hidden' },
+        type: { subsection: 'General', label: 'Type', type: 'select', options: typeOptions },
+        justifyContent: {
+          subsection: 'General',
+          type: 'toggleGroup',
+          label: t('property.horizontalAlignment'),
+          options: justifyContentOptions,
+          hide: data => data.type !== 'FLEX'
+        },
+
+        gridVariant: {
+          subsection: 'General',
+          type: 'select',
+          label: t('components.layout.property.columns'),
+          options: gridVariantOptions,
+          hide: data => data.type !== 'GRID'
+        },
+        ...visibleComponentField
+      },
+      quickActions: [...DEFAULT_QUICK_ACTIONS, 'EXTRACTINTOCOMPONENT']
+    };
+
+    return LayoutComponent;
+  }, [baseComponentFields, defaultBaseComponent, defaultVisibleComponent, t, visibleComponentField]);
+
+  return {
+    LayoutComponent
+  };
 };
 
 const UiBlock = ({ id, components, type, justifyContent, gridVariant, visible }: UiComponentProps<LayoutProps>) => {

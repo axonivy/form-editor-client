@@ -11,7 +11,7 @@ test('default', async ({ page }) => {
   const href = general.input({ label: 'Href', type: 'text' });
   const behaviour = properties.behaviour();
 
-  await name.expectValue('link');
+  await name.expectValue('Link');
   await href.expectValue('');
   await name.fill('axon home');
   await href.fill('www.axonivy.com');
