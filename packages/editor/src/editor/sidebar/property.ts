@@ -1,4 +1,4 @@
-import { isFreeLayout, type ComponentData, type ConfigData } from '@axonivy/form-editor-protocol';
+import { isAlignSelfLayout, isFreeLayout, type ComponentData, type ConfigData } from '@axonivy/form-editor-protocol';
 import { type Field, type Fields, type HiddenField } from '../../types/config';
 import { groupBy } from '../../utils/array';
 
@@ -20,10 +20,14 @@ type Entries<T> = {
 }[keyof T][];
 
 export const visibleSections = (fields: VisibleFields, parent?: ComponentData) => {
-  const sections = groupBy(fields, field => field.field.section ?? 'Properties');
-  return new Map(
-    (Object.entries(sections) as Entries<typeof sections>).filter(([section]) => section !== 'Layout' || isFreeLayout(parent))
+  const filteredFields = fields.filter(
+    field =>
+      !((field.key === 'lgSpan' || field.key === 'mdSpan') && !isFreeLayout(parent)) &&
+      !(field.key === 'alignSelf' && !isAlignSelfLayout(parent))
   );
+
+  const sections = groupBy(filteredFields, field => field.field.section ?? 'Properties');
+  return new Map(Object.entries(sections) as Entries<typeof sections>);
 };
 
 export const groupFieldsBySubsection = (fields: VisibleFields) => {
