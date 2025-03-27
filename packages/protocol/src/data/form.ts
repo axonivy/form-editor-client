@@ -8,13 +8,13 @@
 
 export type CmsQuickactionCategory = ("global" | "local")
 export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
+export type LayoutAlignItems = "START" | "CENTER" | "END";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET" | "EDIT" | "DELETE";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type SymbolPosition = "p" | "s";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
-export type LayoutAlignItems = "START" | "CENTER" | "END";
 export type LayoutGridVariant = "GRID1" | "GRID2" | "GRID4" | "FREE";
-export type LayoutJustifyContent = "NORMAL" | "END";
+export type LayoutJustifyContent = "NORMAL" | "SPACE_BETWEEN" | "END";
 export type LayoutType = "GRID" | "FLEX";
 export type OrientationType = "horizontal" | "vertical";
 export type TextIconStyle = "INLINE" | "BLOCK";
@@ -143,6 +143,7 @@ export interface Component {
 }
 export interface Button {
   action: string;
+  alignSelf: LayoutAlignItems;
   disabled: string;
   icon: string;
   id: string;
@@ -155,6 +156,7 @@ export interface Button {
   visible: string;
 }
 export interface Checkbox {
+  alignSelf: LayoutAlignItems;
   disabled: string;
   id: string;
   label: string;
@@ -165,6 +167,7 @@ export interface Checkbox {
   visible: string;
 }
 export interface Combobox {
+  alignSelf: LayoutAlignItems;
   completeMethod: string;
   disabled: string;
   id: string;
@@ -181,6 +184,7 @@ export interface Combobox {
   withDropdown: boolean;
 }
 export interface Composite {
+  alignSelf: LayoutAlignItems;
   id: string;
   lgSpan: string;
   mdSpan: string;
@@ -190,6 +194,7 @@ export interface Composite {
 }
 export interface DataTable {
   addButton: boolean;
+  alignSelf: LayoutAlignItems;
   components: TableComponent[];
   editDialogId: string;
   id: string;
@@ -223,6 +228,7 @@ export interface ActionColumnComponent {
   config: Button;
 }
 export interface DatePicker {
+  alignSelf: LayoutAlignItems;
   datePattern: string;
   disabled: string;
   id: string;
@@ -238,6 +244,7 @@ export interface DatePicker {
   visible: string;
 }
 export interface Dialog {
+  alignSelf: LayoutAlignItems;
   components: Component[];
   header: string;
   id: string;
@@ -246,6 +253,7 @@ export interface Dialog {
   mdSpan: string;
 }
 export interface Fieldset {
+  alignSelf: LayoutAlignItems;
   collapsed: boolean;
   collapsible: boolean;
   components: Component[];
@@ -256,6 +264,7 @@ export interface Fieldset {
   visible: string;
 }
 export interface Input {
+  alignSelf: LayoutAlignItems;
   decimalPlaces: string;
   disabled: string;
   id: string;
@@ -272,7 +281,7 @@ export interface Input {
   visible: string;
 }
 export interface Layout {
-  alignItems: LayoutAlignItems;
+  alignSelf: LayoutAlignItems;
   components: Component[];
   gridVariant: LayoutGridVariant;
   id: string;
@@ -283,6 +292,7 @@ export interface Layout {
   visible: string;
 }
 export interface Link {
+  alignSelf: LayoutAlignItems;
   href: string;
   id: string;
   lgSpan: string;
@@ -291,6 +301,7 @@ export interface Link {
   visible: string;
 }
 export interface Panel {
+  alignSelf: LayoutAlignItems;
   collapsed: boolean;
   collapsible: boolean;
   components: Component[];
@@ -301,6 +312,7 @@ export interface Panel {
   visible: string;
 }
 export interface Radio {
+  alignSelf: LayoutAlignItems;
   disabled: string;
   dynamicItemsLabel: string;
   dynamicItemsList: string;
@@ -322,6 +334,7 @@ export interface SelectItem {
   value: string;
 }
 export interface Select {
+  alignSelf: LayoutAlignItems;
   disabled: string;
   dynamicItemsLabel: string;
   dynamicItemsList: string;
@@ -338,6 +351,7 @@ export interface Select {
   visible: string;
 }
 export interface Text {
+  alignSelf: LayoutAlignItems;
   content: string;
   icon: string;
   iconStyle: TextIconStyle;
@@ -348,6 +362,7 @@ export interface Text {
   visible: string;
 }
 export interface Textarea {
+  alignSelf: LayoutAlignItems;
   autoResize: boolean;
   disabled: string;
   id: string;

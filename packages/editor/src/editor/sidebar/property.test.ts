@@ -24,7 +24,8 @@ describe('visibleSections', () => {
   const visibleFields: VisibleFields = [
     { key: 'a', field: { subsection: 'General', type: 'text' }, value: '' },
     { key: 'b', field: { subsection: 'Behaviour', type: 'number' }, value: '' },
-    { key: 'c', field: { section: 'Layout', subsection: 'General', type: 'text' }, value: '' }
+    { key: 'lgSpan', field: { section: 'Layout', subsection: 'General', type: 'text' }, value: '' },
+    { key: 'alignSelf', field: { section: 'Layout', subsection: 'General', type: 'text' }, value: '' }
   ];
 
   test('no parent', () => {
@@ -32,16 +33,18 @@ describe('visibleSections', () => {
   });
 
   test('parent is grid layout', () => {
-    expect(visibleSections(visibleFields, { cid: 'grid-layout', type: 'Layout', config: { gridVariant: 'GRID', components: [] } })).toEqual(
-      new Map([['Properties', [visibleFields[0], visibleFields[1]]]])
-    );
+    expect(
+      visibleSections(visibleFields, { cid: 'grid-layout', type: 'Layout', config: { gridVariant: 'GRID1', type: 'GRID', components: [] } })
+    ).toEqual(new Map([['Properties', [visibleFields[0], visibleFields[1]]]]));
   });
 
   test('parent is free layout', () => {
-    expect(visibleSections(visibleFields, { cid: 'free-layout', type: 'Layout', config: { gridVariant: 'FREE', components: [] } })).toEqual(
+    expect(
+      visibleSections(visibleFields, { cid: 'free-layout', type: 'Layout', config: { gridVariant: 'FREE', type: 'GRID', components: [] } })
+    ).toEqual(
       new Map([
         ['Properties', [visibleFields[0], visibleFields[1]]],
-        ['Layout', [visibleFields[2]]]
+        ['Layout', [visibleFields[2], visibleFields[3]]]
       ])
     );
   });

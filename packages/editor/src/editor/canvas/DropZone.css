@@ -2,6 +2,12 @@
   display: flex;
   flex-direction: column;
   min-width: auto;
+  .align-self-end {
+    justify-content: flex-end;
+  }
+  .align-self-center {
+    justify-content: center;
+  }
   &.is-drop-target {
     &:has(.drag-hint) .drop-zone-block {
       height: 0;
