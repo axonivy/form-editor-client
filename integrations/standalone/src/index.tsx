@@ -6,6 +6,7 @@ import { webSocketConnection, type Connection } from '@axonivy/jsonrpc';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { webSocketBase, appParam, pmvParam, fileParam, directSaveParam, themeParam, readonlyParam } from './url-helper';
+import { initTranslation } from './i18n';
 
 export async function start() {
   const server = webSocketBase();
@@ -21,7 +22,7 @@ export async function start() {
     throw new Error('Root element not found');
   }
   const root = createRoot(rootElement);
-
+  initTranslation();
   root.render(
     <React.StrictMode>
       <ThemeProvider defaultTheme={theme}>
