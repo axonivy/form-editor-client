@@ -11,8 +11,10 @@ import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { MasterPart } from './MasterPart';
 import { Sidebar } from './sidebar/Sidebar';
+import { useTranslation } from 'react-i18next';
 
 export const Editor = (props: FormEditorProps) => {
+  const { t } = useTranslation();
   const [context, setContext] = useState(props.context);
   const [directSave, setDirectSave] = useState(props.directSave);
   useEffect(() => {
@@ -89,10 +91,10 @@ export const Editor = (props: FormEditorProps) => {
     );
   }
   if (isError) {
-    return <PanelMessage icon={IvyIcons.ErrorXMark} message={`An error has occurred: ${error.message}`} />;
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('message.error', { error: error.message })} />;
   }
   if (data.data.components === undefined) {
-    return <PanelMessage icon={IvyIcons.ErrorXMark} message='Form not found' />;
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('message.formNotFound')} />;
   }
 
   return (

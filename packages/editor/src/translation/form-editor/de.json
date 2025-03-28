@@ -1,8 +1,48 @@
 {
   "dataTable": {
+    "columnFromValue": "__MISSING_TRANSLATION__",
     "valueEmpty": "__MISSING_TRANSLATION__"
   },
+  "error": "__MISSING_TRANSLATION__",
+  "hint": {
+    "dragFirstItem": "__MISSING_TRANSLATION__",
+    "dragItemInto": "__MISSING_TRANSLATION__",
+    "elementPropsEdit": "__MISSING_TRANSLATION__"
+  },
+  "label": {
+    "actions": "__MISSING_TRANSLATION__",
+    "addNewActionCol": "__MISSING_TRANSLATION__",
+    "allComponents": "__MISSING_TRANSLATION__",
+    "browser": "__MISSING_TRANSLATION__",
+    "cmsQuickfix": "__MISSING_TRANSLATION__",
+    "colBoundByAttr": "__MISSING_TRANSLATION__",
+    "composites": "__MISSING_TRANSLATION__",
+    "createActionCol": "__MISSING_TRANSLATION__",
+    "createActionColBtn": "__MISSING_TRANSLATION__",
+    "createBtns": "__MISSING_TRANSLATION__",
+    "createCmsObj": "__MISSING_TRANSLATION__",
+    "createCol": "__MISSING_TRANSLATION__",
+    "createContentObj": "__MISSING_TRANSLATION__",
+    "createFrom": "__MISSING_TRANSLATION__",
+    "createFromData": "__MISSING_TRANSLATION__",
+    "dragFirstButton": "__MISSING_TRANSLATION__",
+    "enableReqProjects": "__MISSING_TRANSLATION__",
+    "filterBy": "__MISSING_TRANSLATION__",
+    "label": "__MISSING_TRANSLATION__",
+    "objNotValid": "__MISSING_TRANSLATION__",
+    "outline": "__MISSING_TRANSLATION__",
+    "setDefaultCol": "__MISSING_TRANSLATION__",
+    "togglePropView": "__MISSING_TRANSLATION__",
+    "useEntireObj": "__MISSING_TRANSLATION__",
+    "value": "__MISSING_TRANSLATION__"
+  },
   "message": {
-    "noParam": "__MISSING_TRANSLATION__"
+    "error": "__MISSING_TRANSLATION__",
+    "fieldTypeUnknown": "__MISSING_TRANSLATION__",
+    "formNotFound": "__MISSING_TRANSLATION__",
+    "noData": "__MISSING_TRANSLATION__",
+    "noOptionsDefined": "__MISSING_TRANSLATION__",
+    "noParam": "__MISSING_TRANSLATION__",
+    "typeDefinedBy": "__MISSING_TRANSLATION__"
   }
 }

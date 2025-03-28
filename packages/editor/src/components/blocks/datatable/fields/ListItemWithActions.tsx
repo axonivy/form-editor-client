@@ -1,6 +1,7 @@
 import { Button, Flex, Label } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { modifyData, useData } from '../../../../data/data';
+import { useTranslation } from 'react-i18next';
 
 type ListItemWithActionsProps = {
   componentCid: string;
@@ -10,6 +11,7 @@ type ListItemWithActionsProps = {
 };
 
 export const ListItemWithActions = ({ componentCid, label, icon, isBound }: ListItemWithActionsProps) => {
+  const { t } = useTranslation();
   const { setData, setSelectedElement } = useData();
   return (
     <Flex
@@ -27,7 +29,7 @@ export const ListItemWithActions = ({ componentCid, label, icon, isBound }: List
     >
       <Flex direction='row' gap={1} alignItems='center'>
         {icon && icon.length > 0 && <i className={icon} />}
-        <Label title={isBound ? 'Column is bound to an object attribute' : ''}>{label}</Label>
+        <Label title={isBound ? t('label.colBoundByAttr') : ''}>{label}</Label>
       </Flex>
 
       <Flex direction='row' alignItems='center' gap={1}>

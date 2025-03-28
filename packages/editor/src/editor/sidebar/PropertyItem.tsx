@@ -11,6 +11,7 @@ import { SelectTableField } from './fields/table-field/SelectTableField';
 import { useValidation } from '../../context/useValidation';
 import { useData } from '../../data/data';
 import { ToggleGroupField } from './fields/ToggleGroupField';
+import { useTranslation } from 'react-i18next';
 
 type PropertyItemProps = {
   value: PrimitiveValue;
@@ -25,6 +26,7 @@ const toBoolean = (primitive?: PrimitiveValue) => Boolean(primitive ?? false);
 const toSelectItems = (primitive?: PrimitiveValue): Array<SelectItem> => (Array.isArray(primitive) ? primitive : []);
 
 export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: PropertyItemProps) => {
+  const { t } = useTranslation();
   const [value, setValue] = useState<PrimitiveValue>(initValue);
   const { element } = useData();
   const validationPath = `${element?.cid}.${fieldKey}`;
@@ -69,7 +71,7 @@ export const PropertyItem = ({ value: initValue, onChange, field, fieldKey }: Pr
       case 'generic':
         return field.render({ label, value: value, onChange: updateValue, validationPath });
       default:
-        return <p>unknown field type</p>;
+        return <p>{t('message.fieldTypeUnknown')}</p>;
     }
   };
   if (field.type === 'hidden') {

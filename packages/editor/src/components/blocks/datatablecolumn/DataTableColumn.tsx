@@ -11,6 +11,7 @@ import { DropZone } from '../../../editor/canvas/DropZone';
 import { ActionButtonsField } from './ActionButtonsField';
 import { ContentControls } from './controls/ContentControls';
 import { useAppContext } from '../../../context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 type DataTableColumnProps = Prettify<DataTableColumn>;
 
@@ -79,6 +80,7 @@ const UiBlock = ({
   asActionColumn,
   actionColumnAsMenu
 }: UiComponentProps<DataTableColumnProps>) => {
+  const { t } = useTranslation();
   const { data } = useData();
   const parentTable = getParentComponent(data.components, id);
   return (
@@ -99,7 +101,7 @@ const UiBlock = ({
             </Flex>
           </Flex>
           <Flex className='block-column__filter' data-active={filterable && !asActionColumn} gap={1}>
-            Filter By <UiBadge value={header} />
+            {t('label.filterBy')} <UiBadge value={header} />
           </Flex>
         </Flex>
       </div>
@@ -121,7 +123,7 @@ const UiBlock = ({
             <EmptyActionColumnBlock components={components} id={id} type='Action Column' />
           )
         ) : (
-          <span>{value?.length === 0 || value === 'variable' ? 'Use entire Object' : value}</span>
+          <span>{value?.length === 0 || value === 'variable' ? t('label.useEntireObj') : value}</span>
         )}
       </div>
     </div>
@@ -136,30 +138,34 @@ export const EmptyActionColumnBlock = ({
   id: string;
   components: Array<ActionColumnComponent>;
   type: string;
-}) => (
-  <DropZone id={`${COLUMN_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
-    {components.length === 0 ? (
-      <PanelMessage message={`Drag first button inside the ${type}`} mode='row' className='drag-hint row' />
-    ) : (
-      <div className='empty-block for-layout' />
-    )}
-  </DropZone>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <DropZone id={`${COLUMN_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
+      {components.length === 0 ? (
+        <PanelMessage message={t('label.dragFirstButton', { type: type })} mode='row' className='drag-hint row' />
+      ) : (
+        <div className='empty-block for-layout' />
+      )}
+    </DropZone>
+  );
+};
 
 const ButtonMenu = ({ children }: { children: React.ReactNode }) => {
   const { ui } = useAppContext();
+  const { t } = useTranslation();
   return ui.helpPaddings ? (
     <>
       <div className='block-button button-menu-header' style={{ borderRadius: '5px 5px 0px 0px' }} data-variant='primary'>
         <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
-        Actions
+        {t('label.actions')}
       </div>
       {children}
     </>
   ) : (
     <div className='block-button button-menu-header' data-variant='primary'>
       <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
-      <div>Actions</div>
+      <div>{t('label.actions')}</div>
     </div>
   );
 };
