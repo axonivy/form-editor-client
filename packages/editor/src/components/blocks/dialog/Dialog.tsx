@@ -11,6 +11,7 @@ import { useAppContext } from '../../../context/AppContext';
 import { findComponentDeep } from '../../../data/data';
 import { DataClassDialog } from '../../../editor/browser/data-class/DataClassDialog';
 import { stripELExpression } from '../../../utils/string';
+import { useTranslation } from 'react-i18next';
 type DialogProps = Prettify<Dialog>;
 
 export const defaultDialogProps: DialogProps = {
@@ -49,6 +50,7 @@ export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiCom
   const dataTable = findComponentDeep(data.components, linkedComponent);
   const table = dataTable ? dataTable.data[dataTable.index] : undefined;
   const onlyAttributs = table && isTable(table) ? stripELExpression(table.config.value) : undefined;
+  const { t } = useTranslation();
 
   return (
     <>
@@ -65,8 +67,8 @@ export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiCom
           <Button
             icon={IvyIcons.DatabaseLink}
             size='small'
-            aria-label={`Create from ${linkedComponent}`}
-            title={`Create from ${linkedComponent}`}
+            aria-label={t('label.createFrom', { component: linkedComponent })}
+            title={t('label.createFrom', { component: linkedComponent })}
             onClick={e => {
               e.stopPropagation();
             }}
@@ -81,11 +83,11 @@ export const DialogUiBlock = ({ id, components, header, linkedComponent }: UiCom
       <Flex direction='row' justifyContent='flex-end' alignItems='center' gap={1}>
         <div className='block-button' data-variant={'secondary'}>
           <i className='pi pi-times' />
-          Cancel
+          {t('common:label.cancel')}
         </div>
         <div className='block-button' data-variant={'primary'}>
           <i className='pi pi-check' />
-          Save
+          {t('common:label.save')}
         </div>
       </Flex>
     </>

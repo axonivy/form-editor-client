@@ -12,14 +12,17 @@ import {
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
-import { componentByElement } from '../../components/components';
+import { useComponents } from '../../components/components';
 import type { ConfigData } from '@axonivy/form-editor-protocol';
 import { PropertySubSectionControl } from './PropertySubSectionControl';
+import { useTranslation } from 'react-i18next';
 
 export const Properties = () => {
+  const { componentByElement } = useComponents();
+  const { t } = useTranslation();
   const { element, data, parent } = useData();
   if (element === undefined) {
-    return <PanelMessage message='Select an Element to edit its properties.' />;
+    return <PanelMessage message={t('hint.elementPropsEdit')} />;
   }
   const propertyConfig = componentByElement(element, data.components);
   const elementConfig = { ...propertyConfig.defaultProps, ...element.config };

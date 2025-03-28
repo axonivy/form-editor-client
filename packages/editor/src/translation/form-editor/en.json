@@ -1,8 +1,48 @@
 {
   "dataTable": {
+    "columnFromValue": "Create columns from value",
     "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
   },
+  "error": "Error: {{error}}",
+  "hint": {
+    "dragFirstItem": "Drag first element inside the canvas or",
+    "dragItemInto": "Drag first element inside the {{type}}",
+    "elementPropsEdit": "Select an Element to edit its properties."
+  },
+  "label": {
+    "actions": "Actions",
+    "addNewActionCol": "Add new Action Column Button",
+    "allComponents": "All Components",
+    "browser": "Browser",
+    "cmsQuickfix": "CMS-Quickfix",
+    "colBoundByAttr": "Column is bound to an object attribute",
+    "composites": "Composites",
+    "createActionCol": "Create Action Column",
+    "createActionColBtn": "Create Action Column Button",
+    "createBtns": "Create proceed and cancel buttons",
+    "createCmsObj": "Create {{category}} CMS-Object: '{{name}}'",
+    "createCol": "Create Column",
+    "createContentObj": "Create content object: '{{parentUri}}{{name}}' value: {{value}}-{{category}}",
+    "createFrom": "Create from {{component}}",
+    "createFromData": "Create from data",
+    "dragFirstButton": "Drag first button inside the {{type}}",
+    "enableReqProjects": "Enable required Projects",
+    "filterBy": "Filter by",
+    "label": "Label",
+    "objNotValid": "Defined Object is not valid",
+    "outline": "Outline",
+    "setDefaultCol": "Set default Columns",
+    "togglePropView": "Toggle Property View",
+    "useEntireObj": "Use entire Object",
+    "value": "Value"
+  },
   "message": {
-    "noParam": "No parameters"
+    "error": "An error has occurred: {{error}}",
+    "fieldTypeUnknown": "unknown field type",
+    "formNotFound": "Form not found",
+    "noData": "No data",
+    "noOptionsDefined": "No Options defined",
+    "noParam": "No parameters",
+    "typeDefinedBy": "Type '{{type}}' defined by the input field"
   }
 }

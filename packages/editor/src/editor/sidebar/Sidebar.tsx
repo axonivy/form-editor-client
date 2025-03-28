@@ -8,8 +8,10 @@ import { useValidations } from '../../context/useValidation';
 import { useAction } from '../../context/useAction';
 import { useAppContext } from '../../context/AppContext';
 import { useKnownHotkeys } from '../../utils/hotkeys';
+import { useTranslation } from 'react-i18next';
 
 export const Sidebar = () => {
+  const { t } = useTranslation();
   const { helpUrl } = useAppContext();
   const { element } = useData();
   const [outline, setOutline] = useState(false);
@@ -25,8 +27,8 @@ export const Sidebar = () => {
           icon={{ icon: IvyIcons.List }}
           checked={outline}
           onCheckedChange={setOutline}
-          title='Outline'
-          aria-label='Outline'
+          title={t('label.outline')}
+          aria-label={t('label.outline')}
         />
         <Button icon={IvyIcons.Help} onClick={() => openUrl(helpUrl)} aria-label={shortcut.label} title={shortcut.label} />
       </SidebarHeader>

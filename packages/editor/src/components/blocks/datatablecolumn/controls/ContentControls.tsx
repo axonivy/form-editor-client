@@ -1,10 +1,11 @@
 import { Button, type CollapsibleControlProps } from '@axonivy/ui-components';
 import { COLUMN_DROPZONE_ID_PREFIX, modifyData, useData } from '../../../../data/data';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { useTranslation } from 'react-i18next';
 
 export const ContentControls = (props: CollapsibleControlProps) => {
   const { element, setData } = useData();
-
+  const { t } = useTranslation();
   const createActionButton = () => {
     setData(
       oldData =>
@@ -18,7 +19,7 @@ export const ContentControls = (props: CollapsibleControlProps) => {
   return (
     element?.type === 'DataTableColumn' &&
     element.config.asActionColumn && (
-      <Button icon={IvyIcons.Plus} onClick={createActionButton} size='small' title='Add new Action Column Button' {...props} />
+      <Button icon={IvyIcons.Plus} onClick={createActionButton} size='small' title={t('label.addNewActionCol')} {...props} />
     )
   );
 };

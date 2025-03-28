@@ -150,7 +150,7 @@ const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string
 
   return (
     <Button icon={IvyIcons.DatabaseLink} variant='outline' onClick={createColumns}>
-      Create columns from value
+      {t('dataTable.columnFromValue')}
     </Button>
   );
 };

@@ -85,6 +85,7 @@ const UiBlock = ({ id, components, type, justifyContent, gridVariant, visible }:
         {components.map((component, index) => {
           let componentCols = '';
           if (gridVariant === 'FREE') {
+            // eslint-disable-next-line i18next/no-literal-string
             componentCols = `col-span-${component.config.lgSpan ?? '6'} col-md-span-${component.config.mdSpan ?? '12'}`;
           }
           let componentAlignSelf = '';
