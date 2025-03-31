@@ -29,10 +29,10 @@
   "devDependencies": {
     "@axonivy/eslint-config": "~13.1.0-next.602",
     "@types/node": "^22.10.7",
-    "@lerna-lite/cli": "^3.12.1",
-    "@lerna-lite/publish": "^3.12.1",
-    "@lerna-lite/run": "^3.12.1",
-    "@lerna-lite/version": "^3.12.1",
+    "@lerna-lite/cli": "^4.0.0",
+    "@lerna-lite/publish": "^4.0.0",
+    "@lerna-lite/run": "^4.0.0",
+    "@lerna-lite/version": "^4.0.0",
     "rimraf": "^6.0.1",
     "typescript": "~5.8.0",
     "typescript-cp": "^0.1.9"
