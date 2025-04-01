@@ -9,6 +9,18 @@ import { renderTypeField } from './fields/TypeField';
 
 type ButtonProps = Prettify<Button>;
 
+const isButtonProps = (obj: unknown): obj is ButtonProps => {
+  return typeof obj === 'object' && obj !== null && 'type' in obj && typeof (obj as ButtonProps).type === 'string';
+};
+export const hideButtonField = <T,>(obj: T): boolean => {
+  if (isButtonProps(obj)) {
+    if (obj.type === 'DELETE' || obj.type === 'EDIT') {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const useButtonComponent = () => {
   const { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } = useBase();
   const variantOptions: FieldOption<ButtonVariant>[] = [
@@ -28,17 +40,6 @@ export const useButtonComponent = () => {
     ...defaultBaseComponent
   } as const;
 
-  const isButtonProps = (obj: unknown): obj is ButtonProps => {
-    return typeof obj === 'object' && obj !== null && 'type' in obj && typeof (obj as ButtonProps).type === 'string';
-  };
-  const hideButtonField = <T,>(obj: T): boolean => {
-    if (isButtonProps(obj)) {
-      if (obj.type === 'DELETE' || obj.type === 'EDIT') {
-        return true;
-      }
-    }
-    return false;
-  };
   const ButtonComponent: ComponentConfig<ButtonProps> = {
     name: 'Button',
     category: 'Actions',
@@ -99,7 +100,6 @@ export const useButtonComponent = () => {
   );
 
   return {
-    hideButtonField,
     ButtonComponent
   };
 };

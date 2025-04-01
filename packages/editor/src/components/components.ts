@@ -1,27 +1,45 @@
 import type { Config, ItemCategory } from '../types/config';
 import { groupBy } from '../utils/array';
 import { useButtonComponent } from './blocks/button/Button';
-import { LayoutComponent } from './blocks/layout/Layout';
-import { InputComponent } from './blocks/input/Input';
-import { LinkComponent } from './blocks/link/Link';
-import { TextComponent } from './blocks/text/Text';
-import { CheckboxComponent } from './blocks/checkbox/Checkbox';
-import { SelectComponent } from './blocks/select/Select';
+import { useLayoutComponent } from './blocks/layout/Layout';
+import { useInputComponent } from './blocks/input/Input';
+import { useLinkComponent } from './blocks/link/Link';
+import { useTextComponent } from './blocks/text/Text';
+import { useCheckboxComponent } from './blocks/checkbox/Checkbox';
+import { useSelectComponent } from './blocks/select/Select';
 import { isTable, type ComponentData, type ComponentType } from '@axonivy/form-editor-protocol';
 import type { AutoCompleteWithString } from '../types/types';
-import { ComboboxComponent } from './blocks/combobox/Combobox';
-import { RadioComponent } from './blocks/radio/Radio';
-import { DatePickerComponent } from './blocks/datepicker/DatePicker';
-import { TextareaComponent } from './blocks/textarea/Textarea';
-import { DataTableComponent } from './blocks/datatable/DataTable';
-import { DataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
-import { FieldsetComponent } from './blocks/fieldset/Fieldset';
-import { PanelComponent } from './blocks/panel/Panel';
+import { useComboboxComponent } from './blocks/combobox/Combobox';
+import { useRadioComponent } from './blocks/radio/Radio';
+import { useDatePickerComponent } from './blocks/datepicker/DatePicker';
+import { useTextareaComponent } from './blocks/textarea/Textarea';
+import { useDataTableComponent } from './blocks/datatable/DataTable';
+import { useDataTableColumnComponent } from './blocks/datatablecolumn/DataTableColumn';
+import { useFieldsetComponent } from './blocks/fieldset/Fieldset';
+import { usePanelComponent } from './blocks/panel/Panel';
 import { getParentComponent } from '../data/data';
-import { CompositeComponent } from './blocks/composite/Composite';
-import { DialogComponent } from './blocks/dialog/Dialog';
+import { useCompositeComponent } from './blocks/composite/Composite';
+import { useDialogComponent } from './blocks/dialog/Dialog';
 
 export const useComponents = () => {
+  const { InputComponent } = useInputComponent();
+  const { TextareaComponent } = useTextareaComponent();
+  const { DatePickerComponent } = useDatePickerComponent();
+  const { ComboboxComponent } = useComboboxComponent();
+  const { CheckboxComponent } = useCheckboxComponent();
+  const { RadioComponent } = useRadioComponent();
+  const { SelectComponent } = useSelectComponent();
+  const { TextComponent } = useTextComponent();
+  const { ButtonComponent } = useButtonComponent();
+  const { LinkComponent } = useLinkComponent();
+  const { LayoutComponent } = useLayoutComponent();
+  const { DataTableComponent } = useDataTableComponent();
+  const { DataTableColumnComponent } = useDataTableColumnComponent();
+  const { FieldsetComponent } = useFieldsetComponent();
+  const { PanelComponent } = usePanelComponent();
+  const { DialogComponent } = useDialogComponent();
+  const { CompositeComponent } = useCompositeComponent();
+
   const config: Config = {
     components: {
       Input: InputComponent,
@@ -32,7 +50,7 @@ export const useComponents = () => {
       Radio: RadioComponent,
       Select: SelectComponent,
       Text: TextComponent,
-      Button: useButtonComponent().ButtonComponent,
+      Button: ButtonComponent,
       Link: LinkComponent,
       Layout: LayoutComponent,
       DataTable: DataTableComponent,

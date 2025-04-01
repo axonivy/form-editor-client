@@ -1,6 +1,6 @@
 import { useDraggable } from '@dnd-kit/core';
 import './PaletteItem.css';
-import { componentByName } from '../../components/components';
+import { useComponents } from '../../components/components';
 import { Flex } from '@axonivy/ui-components';
 import type { CreateComponentData } from '../../types/config';
 
@@ -12,6 +12,7 @@ export type PaletteConfig = {
 };
 
 export const PaletteItem = ({ name, description, data, directCreate }: PaletteConfig) => {
+  const { componentByName } = useComponents();
   const { attributes, listeners, setNodeRef } = useDraggable({ id: name, data });
   const componentName = data?.componentName ?? name;
   return (
@@ -36,6 +37,7 @@ export const PaletteItem = ({ name, description, data, directCreate }: PaletteCo
 };
 
 export const PaletteItemOverlay = ({ name, data }: PaletteConfig) => {
+  const { componentByName } = useComponents();
   const component = componentByName(data?.componentName ?? name);
   return (
     <div className='draggable dragging' style={{ width: 400 }}>

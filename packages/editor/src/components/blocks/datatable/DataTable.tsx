@@ -17,12 +17,14 @@ import { ColumnsField } from './fields/ColumnsField';
 import { renderEditableDataTableField } from './fields/EditableDataTableField';
 import { renderListOfObjectsField } from './fields/ListOfObjectsField';
 import { useTranslation } from 'react-i18next';
+import { useDialogComponent } from '../dialog/Dialog';
 
 type DataTableProps = Prettify<DataTable>;
 
-const useDataTableComponent = () => {
+export const useDataTableComponent = () => {
   const { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } = useBase();
   const { componentByName } = useComponents();
+  const { DialogComponent } = useDialogComponent();
 
   const defaultDataTableProps: DataTable = {
     components: [],

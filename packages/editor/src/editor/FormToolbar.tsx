@@ -24,7 +24,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import { allComponentsByCategory } from '../components/components';
+import { useComponents } from '../components/components';
 import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
@@ -38,6 +38,7 @@ type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { t } = useTranslation();
+  const { allComponentsByCategory } = useComponents();
   const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
   const { setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();

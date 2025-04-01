@@ -9,7 +9,7 @@ import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent,
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useState } from 'react';
 import { Palette } from '../palette/Palette';
-import { allComponentsByCategory, componentByName } from '../../components/components';
+import { useComponents } from '../../components/components';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
@@ -22,11 +22,14 @@ type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   preId?: string;
 };
 
-export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => (
-  <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
-    <Draggable config={componentByName(component.type)} data={component} />
-  </DropZone>
-);
+export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => {
+  const { componentByName } = useComponents();
+  return (
+    <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
+      <Draggable config={componentByName(component.type)} data={component} />
+    </DropZone>
+  );
+};
 
 export type DraggableProps = {
   config: ComponentConfig;
@@ -167,6 +170,7 @@ const Quickbar = ({
   createActionColumnButtonAction
 }: QuickbarProps) => {
   const { t } = useTranslation();
+  const { allComponentsByCategory } = useComponents();
   const [menu, setMenu] = useState(false);
   const readonly = useReadonly();
   if (readonly) {

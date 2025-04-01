@@ -2,7 +2,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import type { ItemCategory } from '../../types/config';
 import { Button, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
 import { Palette } from './Palette';
-import { componentsByCategory } from '../../components/components';
+import { useComponents } from '../../components/components';
 import { useDndContext } from '@dnd-kit/core';
 import { useEffect, useState, type ReactNode } from 'react';
 import './PalettePopover.css';
@@ -41,8 +41,11 @@ export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) =
   );
 };
 
-export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children'> & { label: ItemCategory }) => (
-  <PalettePopover {...props}>
-    <Palette sections={componentsByCategory(props.label)} />
-  </PalettePopover>
-);
+export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children'> & { label: ItemCategory }) => {
+  const { componentsByCategory } = useComponents();
+  return (
+    <PalettePopover {...props}>
+      <Palette sections={componentsByCategory(props.label)} />
+    </PalettePopover>
+  );
+};

@@ -1,14 +1,16 @@
-import type { Input, InputType, Prettify, SymbolPosition } from '@axonivy/form-editor-protocol';
+import type { ConfigData, Input, InputType, Prettify, SymbolPosition } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Input.css';
 import { useBase } from '../base';
 import IconSvg from './Input.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
+type InputProps = Prettify<Input>;
+
+type NumberFormattingProps = { decimalPlaces: string; symbol: string; symbolPosition: SymbolPosition };
+
 export const useInputComponent = () => {
   const { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } = useBase();
-
-  type InputProps = Prettify<Input>;
 
   const typeOptions: FieldOption<InputType>[] = [
     { label: 'Text', value: 'TEXT' },
@@ -21,8 +23,6 @@ export const useInputComponent = () => {
     { label: 'Suffix', value: 's' },
     { label: 'Prefix', value: 'p' }
   ] as const;
-
-  type NumberFormattingProps = { decimalPlaces: string; symbol: string; symbolPosition: SymbolPosition };
 
   const defaultNumberFormatting: NumberFormattingProps = {
     decimalPlaces: '',

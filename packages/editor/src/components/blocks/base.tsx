@@ -3,11 +3,10 @@ import type { FieldOption, Fields, GenericFieldProps } from '../../types/config'
 import { BasicField, Input } from '@axonivy/ui-components';
 import { useAppContext } from '../../context/AppContext';
 import { useValidation } from '../../context/useValidation';
-import { useButtonComponent } from './button/Button';
+import { hideButtonField } from './button/Button';
 import { IvyIcons } from '@axonivy/ui-icons';
 
 export const useBase = () => {
-  const { hideButtonField } = useButtonComponent();
   type BaseComponentProps = { id: string; alignSelf: LayoutAlignItems; lgSpan: string; mdSpan: string };
   type SelectItemsProps = {
     label: string;

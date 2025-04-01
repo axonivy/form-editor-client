@@ -9,7 +9,7 @@ import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
 type ComboboxProps = Prettify<Combobox>;
 
-const useComboboxComponent = () => {
+export const useComboboxComponent = () => {
   const { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } = useBase();
 
   const defaultComboboxProps: Combobox = {

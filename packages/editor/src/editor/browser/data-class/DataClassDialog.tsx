@@ -25,7 +25,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { Variable } from '@axonivy/form-editor-protocol';
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable, type ColumnDef, type Row } from '@tanstack/react-table';
 import { createInitForm, creationTargetId } from '../../../data/data';
-import { variableTreeData, rowToCreateData, findAttributesOfType } from './variable-tree-data';
+import { useVariableTreeData } from './variable-tree-data';
 import { useKnownHotkeys } from '../../../utils/hotkeys';
 import { useTranslation } from 'react-i18next';
 
@@ -97,6 +97,7 @@ const DataClassSelect = ({
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const [workflowButtons, setWorkflowButtons] = useState(showWorkflowButtonsCheckbox ? workflowButtonsInit : false);
   const dataClass = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
+  const { variableTreeData, rowToCreateData, findAttributesOfType } = useVariableTreeData();
   useEffect(() => {
     if (onlyAttributs) {
       setTree(findAttributesOfType(dataClass, onlyAttributs, 10, parentName));

@@ -1,5 +1,5 @@
 import type { ComponentConfig, CreateComponentData, CreateData } from '../types/config';
-import { componentByName } from '../components/components';
+import { useComponents } from '../components/components';
 import { add, remove } from '../utils/array';
 import {
   isButton,
@@ -164,6 +164,7 @@ type ModifyAction =
   | { type: 'paste'; data: { id: string; targetId?: string } };
 
 const dndModify = (data: Array<ComponentData>, action: Extract<ModifyAction, { type: 'dnd' }>['data']) => {
+  const { componentByName } = useComponents();
   const component = componentByName(action.activeId);
   if (component) {
     return addComponent(data, createComponentData(data, component, action.create), action.targetId);
@@ -236,6 +237,7 @@ const defineNewCid = (components: Array<ComponentData>, component: ComponentData
 };
 
 export const modifyData = (data: FormData, action: ModifyAction) => {
+  const { componentByName } = useComponents();
   const newData = structuredClone(data);
   let newComponentId;
   switch (action.type) {

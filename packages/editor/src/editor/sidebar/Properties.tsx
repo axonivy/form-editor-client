@@ -14,7 +14,7 @@ import { useData } from '../../data/data';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 import { useComponents } from '../../components/components';
 import type { ConfigData } from '@axonivy/form-editor-protocol';
-import { PropertySubSectionControl } from './PropertySubSectionControl';
+import { usePropertySubSectionControl } from './PropertySubSectionControl';
 import { useTranslation } from 'react-i18next';
 
 export const Properties = () => {
@@ -57,6 +57,8 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
   if (element === undefined) {
     return null;
   }
+
+  const { PropertySubSectionControl } = usePropertySubSectionControl();
 
   return (
     <Collapsible defaultOpen={true}>
