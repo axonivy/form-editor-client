@@ -1,64 +1,72 @@
 import type { Textarea, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './Textarea.css';
-import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
+import { useBase } from '../base';
 import IconSvg from './Textarea.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 
-type TextareaProps = Prettify<Textarea>;
+export const useTextareaComponent = () => {
+  const { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } = useBase();
+  type TextareaProps = Prettify<Textarea>;
 
-export const defaultInputProps: Textarea = {
-  label: 'Textarea',
-  value: '',
-  rows: '5',
-  autoResize: true,
-  ...defaultBehaviourComponent,
-  ...defaultBaseComponent
-} as const;
+  const defaultInputProps: Textarea = {
+    label: 'Textarea',
+    value: '',
+    rows: '5',
+    autoResize: true,
+    ...defaultBehaviourComponent,
+    ...defaultBaseComponent
+  } as const;
 
-export const TextareaComponent: ComponentConfig<TextareaProps> = {
-  name: 'Textarea',
-  category: 'Elements',
-  subcategory: 'Input',
-  icon: <IconSvg />,
-  description: 'A customizable Textarea component',
-  defaultProps: defaultInputProps,
-  render: props => <UiBlock {...props} />,
-  create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
-  outlineInfo: component => component.label,
-  fields: {
-    ...baseComponentFields,
-    label: {
-      subsection: 'General',
-      label: 'Label',
-      type: 'textBrowser',
-      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+  const TextareaComponent: ComponentConfig<TextareaProps> = {
+    name: 'Textarea',
+    category: 'Elements',
+    subcategory: 'Input',
+    icon: <IconSvg />,
+    description: 'A customizable Textarea component',
+    defaultProps: defaultInputProps,
+    render: props => <UiBlock {...props} />,
+    create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
+    outlineInfo: component => component.label,
+    fields: {
+      ...baseComponentFields,
+      label: {
+        subsection: 'General',
+        label: 'Label',
+        type: 'textBrowser',
+        browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+      },
+      value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
+      rows: { subsection: 'General', label: 'Visible Rows', type: 'number' },
+      autoResize: { subsection: 'General', label: 'Auto Resize', type: 'checkbox' },
+      ...behaviourComponentFields
     },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
-    rows: { subsection: 'General', label: 'Visible Rows', type: 'number' },
-    autoResize: { subsection: 'General', label: 'Auto Resize', type: 'checkbox' },
-    ...behaviourComponentFields
-  },
-  quickActions: DEFAULT_QUICK_ACTIONS
-};
+    quickActions: DEFAULT_QUICK_ACTIONS
+  };
 
-const UiBlock = ({ label, value, rows, autoResize, visible, required, disabled, updateOnChange }: UiComponentProps<TextareaProps>) => {
-  return (
-    <div className='block-textarea'>
-      <UiBlockHeader
-        visible={visible}
-        label={label}
-        required={required}
-        disabled={disabled}
-        additionalInfo={rows + ' rows'}
-        updateOnChange={updateOnChange}
-      />
-      <div className='block-textarea__input-wrapper'>
-        <span className='block-textarea__input'>
-          <UiBadge value={value} />
-        </span>
-        {!autoResize && <div className='resize-icon' />}
+  const UiBlock = ({ label, value, rows, autoResize, visible, required, disabled, updateOnChange }: UiComponentProps<TextareaProps>) => {
+    return (
+      <div className='block-textarea'>
+        <UiBlockHeader
+          visible={visible}
+          label={label}
+          required={required}
+          disabled={disabled}
+          additionalInfo={rows + ' rows'}
+          updateOnChange={updateOnChange}
+        />
+        <div className='block-textarea__input-wrapper'>
+          <span className='block-textarea__input'>
+            <UiBadge value={value} />
+          </span>
+          {!autoResize && <div className='resize-icon' />}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  return {
+    defaultInputProps,
+    TextareaComponent
+  };
 };
