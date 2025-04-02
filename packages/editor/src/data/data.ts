@@ -168,9 +168,7 @@ const dndModify = (
   action: Extract<ModifyAction, { type: 'dnd' }>['data'],
   componentByName: ComponentByName
 ) => {
-  console.log(action.activeId);
   const component = componentByName(action.activeId);
-  console.log(component);
   if (component) {
     return addComponent(data, createComponentData(data, component, action.create), action.targetId);
   } else {

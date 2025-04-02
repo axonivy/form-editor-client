@@ -1,4 +1,39 @@
 {
+  "align": {
+    "bottom": "Bottom",
+    "center": "Center",
+    "top": "Top"
+  },
+  "button": {
+    "description": "A button to fire actions",
+    "name": "Button",
+    "type": {
+      "danger": "Danger",
+      "primary": "Primary",
+      "secondary": "Secondary"
+    }
+  },
+  "category": {
+    "actions": "Actions",
+    "behaviour": "Behaviour",
+    "columns": "Columns",
+    "dynamicOptions": "Dynamic Options",
+    "elements": "Elements",
+    "general": "General",
+    "hidden": "Hidden",
+    "input": "Input",
+    "layout": "Layout",
+    "options": "Options",
+    "selection": "Selection",
+    "staticOptions": "Static Options",
+    "structures": "Structures",
+    "styling": "Styling",
+    "text": "Text"
+  },
+  "checkbox": {
+    "description": "A selectable boolean checkbox",
+    "name": "Checkbox"
+  },
   "dataTable": {
     "columnFromValue": "Create columns from value",
     "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
@@ -10,6 +45,7 @@
     "elementPropsEdit": "Select an Element to edit its properties."
   },
   "label": {
+    "action": "Action",
     "actions": "Actions",
     "addNewActionCol": "Add new Action Column Button",
     "allComponents": "All Components",
@@ -25,16 +61,35 @@
     "createContentObj": "Create content object: '{{parentUri}}{{name}}' value: {{value}}-{{category}}",
     "createFrom": "Create from {{component}}",
     "createFromData": "Create from data",
+    "data": "Data",
+    "disable": "Disable",
     "dragFirstButton": "Drag first button inside the {{type}}",
     "enableReqProjects": "Enable required Projects",
     "filterBy": "Filter by",
+    "icon": "Icon",
+    "id": "ID",
     "label": "Label",
+    "largeSpan": "Large Span",
+    "listOfObjects": "List of Objects",
+    "mediumSpan": "Medium Span",
+    "name": "Name",
+    "objectLabel": "Object Label",
+    "objectValue": "Object Value",
     "objNotValid": "Defined Object is not valid",
+    "options": "Options",
     "outline": "Outline",
+    "required": "Required",
+    "requiredMessage": "Required Message",
+    "selected": "Selected",
     "setDefaultCol": "Set default Columns",
     "togglePropView": "Toggle Property View",
+    "type": "Type",
+    "updateFormChange": "Update Form on Change",
     "useEntireObj": "Use entire Object",
-    "value": "Value"
+    "value": "Value",
+    "variant": "Variant",
+    "verticalAlign": "Vertical Align",
+    "visible": "Visible"
   },
   "message": {
     "error": "An error has occurred: {{error}}",

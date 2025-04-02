@@ -25,10 +25,12 @@ export type CreateComponentData = { componentName: ComponentType; targetId?: str
 export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
   typeof data === 'object' && data !== null && 'componentName' in data;
 
-type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options' | 'Columns' | (string & {});
+export type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options' | 'Columns' | (string & {});
+
+export type TranslatedCategory<T> = { id: T; label: string };
 
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
-  subsection: Subsection;
+  subsection: TranslatedCategory<Subsection>;
   label?: string;
   hide?: (component: ComponentProps) => boolean;
   section?: 'Layout' | (string & {});
@@ -87,8 +89,9 @@ export type ItemSubcategory = 'General' | 'Input' | 'Selection' | 'Text';
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: ComponentType;
-  category: ItemCategory;
-  subcategory: ItemSubcategory;
+  displayName: string;
+  category: TranslatedCategory<ItemCategory>;
+  subcategory: TranslatedCategory<ItemSubcategory>;
   icon: ReactNode;
   description: string;
   render: UiComponent<ComponentProps>;

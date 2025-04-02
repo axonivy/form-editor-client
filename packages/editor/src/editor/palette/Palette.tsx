@@ -14,7 +14,11 @@ export const Palette = ({ sections, directCreate }: PaletteProps) => {
     <Flex direction='column' className='palette' gap={3}>
       <SearchInput placeholder='Search...' value={searchTerm} onChange={setSearchTerm} />
       {Object.entries(sections).map(([section, sectionItems]) => {
-        const filteredItems = sectionItems.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        console.log(section);
+        // TODO: Cleanup
+        const filteredItems = sectionItems.filter(item =>
+          (item.displayName ? item.displayName : item.name).toLowerCase().includes(searchTerm.toLowerCase())
+        );
         if (filteredItems.length > 0) {
           return <PaletteSection key={section} items={filteredItems} title={section} directCreate={directCreate} />;
         }

@@ -19,6 +19,7 @@ import { useAppContext } from './AppContext';
 import { useComponents } from '../components/components';
 
 const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...args }) => {
+  //TODO: slow? -> firing 100+ times per zone
   const rectIntersectionCollisions = rectIntersection({
     ...args,
     droppableContainers: droppableContainers.filter(({ id }) => id === 'canvas')
@@ -32,12 +33,12 @@ const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...arg
   return pointerWithin({ droppableContainers, ...args });
 };
 
-export const DndContext = ({ children }: { children: ReactNode }) => {
+export const DndContext = ({ componentByName, children }: { componentByName: any; children: ReactNode }) => {
+  // TODO: component faster?
   const { ui } = useAppContext();
   const { data, setData, setSelectedElement } = useData();
   const [activeId, setActiveId] = useState<string | undefined>();
   const [createData, setCreateData] = useState<CreateComponentData | undefined>();
-  const { componentByName } = useComponents();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const targetId = event.over?.id as string | undefined;

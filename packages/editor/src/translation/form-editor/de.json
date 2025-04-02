@@ -1,4 +1,39 @@
 {
+  "align": {
+    "bottom": "__MISSING_TRANSLATION__",
+    "center": "__MISSING_TRANSLATION__",
+    "top": "__MISSING_TRANSLATION__"
+  },
+  "button": {
+    "description": "__MISSING_TRANSLATION__",
+    "name": "__MISSING_TRANSLATION__",
+    "type": {
+      "danger": "__MISSING_TRANSLATION__",
+      "primary": "__MISSING_TRANSLATION__",
+      "secondary": "__MISSING_TRANSLATION__"
+    }
+  },
+  "category": {
+    "actions": "__MISSING_TRANSLATION__",
+    "behaviour": "__MISSING_TRANSLATION__",
+    "columns": "__MISSING_TRANSLATION__",
+    "dynamicOptions": "__MISSING_TRANSLATION__",
+    "elements": "__MISSING_TRANSLATION__",
+    "general": "__MISSING_TRANSLATION__",
+    "hidden": "__MISSING_TRANSLATION__",
+    "input": "__MISSING_TRANSLATION__",
+    "layout": "__MISSING_TRANSLATION__",
+    "options": "__MISSING_TRANSLATION__",
+    "selection": "__MISSING_TRANSLATION__",
+    "staticOptions": "__MISSING_TRANSLATION__",
+    "structures": "__MISSING_TRANSLATION__",
+    "styling": "__MISSING_TRANSLATION__",
+    "text": "__MISSING_TRANSLATION__"
+  },
+  "checkbox": {
+    "description": "__MISSING_TRANSLATION__",
+    "name": "__MISSING_TRANSLATION__"
+  },
   "dataTable": {
     "columnFromValue": "__MISSING_TRANSLATION__",
     "valueEmpty": "__MISSING_TRANSLATION__"
@@ -10,6 +45,7 @@
     "elementPropsEdit": "__MISSING_TRANSLATION__"
   },
   "label": {
+    "action": "__MISSING_TRANSLATION__",
     "actions": "__MISSING_TRANSLATION__",
     "addNewActionCol": "__MISSING_TRANSLATION__",
     "allComponents": "__MISSING_TRANSLATION__",
@@ -25,16 +61,35 @@
     "createContentObj": "__MISSING_TRANSLATION__",
     "createFrom": "__MISSING_TRANSLATION__",
     "createFromData": "__MISSING_TRANSLATION__",
+    "data": "__MISSING_TRANSLATION__",
+    "disable": "__MISSING_TRANSLATION__",
     "dragFirstButton": "__MISSING_TRANSLATION__",
     "enableReqProjects": "__MISSING_TRANSLATION__",
     "filterBy": "__MISSING_TRANSLATION__",
+    "icon": "__MISSING_TRANSLATION__",
+    "id": "__MISSING_TRANSLATION__",
     "label": "__MISSING_TRANSLATION__",
+    "largeSpan": "__MISSING_TRANSLATION__",
+    "listOfObjects": "__MISSING_TRANSLATION__",
+    "mediumSpan": "__MISSING_TRANSLATION__",
+    "name": "__MISSING_TRANSLATION__",
+    "objectLabel": "__MISSING_TRANSLATION__",
+    "objectValue": "__MISSING_TRANSLATION__",
     "objNotValid": "__MISSING_TRANSLATION__",
+    "options": "__MISSING_TRANSLATION__",
     "outline": "__MISSING_TRANSLATION__",
+    "required": "__MISSING_TRANSLATION__",
+    "requiredMessage": "__MISSING_TRANSLATION__",
+    "selected": "__MISSING_TRANSLATION__",
     "setDefaultCol": "__MISSING_TRANSLATION__",
     "togglePropView": "__MISSING_TRANSLATION__",
+    "type": "__MISSING_TRANSLATION__",
+    "updateFormChange": "__MISSING_TRANSLATION__",
     "useEntireObj": "__MISSING_TRANSLATION__",
-    "value": "__MISSING_TRANSLATION__"
+    "value": "__MISSING_TRANSLATION__",
+    "variant": "__MISSING_TRANSLATION__",
+    "verticalAlign": "__MISSING_TRANSLATION__",
+    "visible": "__MISSING_TRANSLATION__"
   },
   "message": {
     "error": "__MISSING_TRANSLATION__",

@@ -41,11 +41,13 @@ export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) =
   );
 };
 
-export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children'> & { label: ItemCategory }) => {
+export const PaletteCategoryPopover = (
+  props: Omit<PalettePopoverProps, 'children' | 'label'> & { category: { id: ItemCategory; label: string } }
+) => {
   const { componentsByCategory } = useComponents();
   return (
-    <PalettePopover {...props}>
-      <Palette sections={componentsByCategory(props.label)} />
+    <PalettePopover label={props.category.label} icon={props.icon}>
+      <Palette sections={componentsByCategory(props.category.id)} />
     </PalettePopover>
   );
 };

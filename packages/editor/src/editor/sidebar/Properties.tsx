@@ -54,11 +54,10 @@ const PropertySection = ({ section, fields }: { section: string; fields: Visible
 
 const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleFields }) => {
   const { element, setElement } = useData();
+  const { PropertySubSectionControl } = usePropertySubSectionControl();
   if (element === undefined) {
     return null;
   }
-
-  const { PropertySubSectionControl } = usePropertySubSectionControl();
 
   return (
     <Collapsible defaultOpen={true}>

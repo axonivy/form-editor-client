@@ -12,9 +12,11 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { MasterPart } from './MasterPart';
 import { Sidebar } from './sidebar/Sidebar';
 import { useTranslation } from 'react-i18next';
+import { useComponents } from '../components/components';
 
 export const Editor = (props: FormEditorProps) => {
   const { t } = useTranslation();
+  const { componentByName } = useComponents();
   const [context, setContext] = useState(props.context);
   const [directSave, setDirectSave] = useState(props.directSave);
   useEffect(() => {
@@ -115,7 +117,7 @@ export const Editor = (props: FormEditorProps) => {
       <link rel='stylesheet' href='/dev-workflow-ui/webjars/font-awesome/6.1.0/css/all.min.css' />
       <link rel='stylesheet' href='/dev-workflow-ui/webjars/streamline-icons/11.4.0/StreamlineIcons.css' />
       <link rel='stylesheet' href='/dev-workflow-ui/faces/javax.faces.resource/primeicons/primeicons.css?ln=primefaces&v=13.0.14-LTS' />
-      <DndContext>
+      <DndContext componentByName={componentByName}>
         <ResizablePanelGroup direction='horizontal' autoSaveId='form-editor-resize'>
           <MasterPart />
           {ui.properties && (
