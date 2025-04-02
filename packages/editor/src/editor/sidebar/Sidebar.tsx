@@ -11,9 +11,10 @@ import { useKnownHotkeys } from '../../utils/hotkeys';
 
 export const Sidebar = () => {
   const { helpUrl } = useAppContext();
-  const { element } = useData();
+  const { element, data } = useData();
   const [outline, setOutline] = useState(false);
-  const elementType = element ? (element.type ? element.type : 'DataTableColumn') : 'Properties';
+  const formatType = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  const elementType = element ? element.type : formatType(data.config.type);
   const messages = useValidations(element?.cid ?? '', { exact: true });
   const openUrl = useAction('openUrl');
   const { openHelp: shortcut } = useKnownHotkeys();
