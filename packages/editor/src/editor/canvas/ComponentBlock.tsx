@@ -1,4 +1,4 @@
-import type { Button as ButtonType, Component, ComponentData, ComponentType } from '@axonivy/form-editor-protocol';
+import type { Button as ButtonType, Component, ComponentData, ComponentType, Composite } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
@@ -16,6 +16,7 @@ import { useClipboard, type TextDropItem } from 'react-aria';
 import { useComponentBlockActions } from './useComponentBlockActions';
 import { useTranslation } from 'react-i18next';
 import { useComponents } from '../../context/ComponentsContext';
+import { useAction } from '../../context/useAction';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -54,7 +55,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { createElement, duplicateElement, deleteElement, createActionButton, createActionColumn, createColumn } = useComponentBlockActions(
     { config, data }
   );
-
+  const openComponent = useAction('openComponent');
   const validations = useValidations(data.cid);
   const { clipboardProps } = useClipboard({
     getItems() {
@@ -134,6 +135,11 @@ const Draggable = ({ config, data }: DraggableProps) => {
             ? data.cid
             : undefined
         }
+        openComponentAction={
+          config.quickActions.includes('OPENCOMPONENT') && data.type === 'Composite'
+            ? () => openComponent((data.config as Composite).name)
+            : undefined
+        }
         createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
         createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
         createActionColumnButtonAction={
@@ -155,6 +161,7 @@ type QuickbarProps = {
   deleteAction?: () => void;
   duplicateAction?: () => void;
   createAction?: (name: ComponentType) => void;
+  openComponentAction?: () => void;
   createColumnAction?: () => void;
   createActionColumnAction?: () => void;
   createActionColumnButtonAction?: () => void;
@@ -165,6 +172,7 @@ const Quickbar = ({
   deleteAction,
   duplicateAction,
   createAction,
+  openComponentAction,
   createColumnAction,
   createActionColumnAction,
   createFromDataAction,
@@ -191,6 +199,15 @@ const Quickbar = ({
                 aria-label={t('label.duplicateComp')}
                 title={t('label.duplicateComp')}
                 onClick={duplicateAction}
+              />
+            )}
+            {openComponentAction && (
+              <Button
+                icon={IvyIcons.SubEnd}
+                rotate={180}
+                aria-label={t('label.openComponent')}
+                title={t('label.openComponent')}
+                onClick={openComponentAction}
               />
             )}
             {(createColumnAction || createActionColumnButtonAction || createAction || createFromDataAction) && (
