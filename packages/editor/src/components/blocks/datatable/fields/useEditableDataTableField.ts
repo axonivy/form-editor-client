@@ -5,11 +5,13 @@ import type { CreateComponentData } from '../../../../types/config';
 import { stripELExpression } from '../../../../utils/string';
 import { useAppContext } from '../../../../context/AppContext';
 import { useMeta } from '../../../../context/useMeta';
+import { useComponents } from '../../../components';
 
 export const useEditableDataTableField = () => {
   const { element, setData, setElement } = useData();
   const { context } = useAppContext();
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
+  const { componentByName } = useComponents();
 
   const createEditComponents = () => {
     if (isTable(element)) {
@@ -22,14 +24,18 @@ export const useEditableDataTableField = () => {
           if (existingActionColumn !== undefined && create.componentName === 'DataTableColumn') {
             return updatedData;
           }
-          const data = modifyData(updatedData, {
-            type: 'add',
-            data: {
-              componentName: create.componentName,
-              create,
-              targetId: create.componentName === 'Button' ? COLUMN_DROPZONE_ID_PREFIX + actionColumnId : create.targetId
-            }
-          });
+          const data = modifyData(
+            updatedData,
+            {
+              type: 'add',
+              data: {
+                componentName: create.componentName,
+                create,
+                targetId: create.componentName === 'Button' ? COLUMN_DROPZONE_ID_PREFIX + actionColumnId : create.targetId
+              }
+            },
+            componentByName
+          );
           if (create.componentName === 'Dialog' && data.newComponentId) {
             dialogId = data.newComponentId;
           }
@@ -60,10 +66,14 @@ export const useEditableDataTableField = () => {
       );
       setData(data => {
         return deleteIds.reduce((updatedData, id) => {
-          return modifyData(updatedData, {
-            type: 'remove',
-            data: { id: id }
-          }).newData;
+          return modifyData(
+            updatedData,
+            {
+              type: 'remove',
+              data: { id: id }
+            },
+            componentByName
+          ).newData;
         }, data);
       });
 

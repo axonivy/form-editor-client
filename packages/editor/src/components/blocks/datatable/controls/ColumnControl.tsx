@@ -5,10 +5,12 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import type { CreateComponentData } from '../../../../types/config';
 import { isTable } from '@axonivy/form-editor-protocol';
 import { useTranslation } from 'react-i18next';
+import { useComponents } from '../../../components';
 
 export const ColumnControl = (props: CollapsibleControlProps) => {
   const { element, setData } = useData();
   const { boundInactiveColumns } = useDataTableColumns();
+  const { componentByName } = useComponents();
   const { t } = useTranslation();
 
   const bindAllColumns = () => {
@@ -21,7 +23,7 @@ export const ColumnControl = (props: CollapsibleControlProps) => {
             value: column.value
           }))
           .filter(create => create !== undefined);
-        return createInitTableColumns(element.cid, data, creates);
+        return createInitTableColumns(element.cid, data, creates, componentByName);
       });
     }
   };

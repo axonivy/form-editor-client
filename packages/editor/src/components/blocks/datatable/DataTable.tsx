@@ -7,24 +7,21 @@ import { ComponentBlock } from '../../../editor/canvas/ComponentBlock';
 import { useAppContext } from '../../../context/AppContext';
 import { Button, cn, Flex, Message } from '@axonivy/ui-components';
 import { useMeta } from '../../../context/useMeta';
-import { useComponents } from '../../components';
+import { type ComponentByName } from '../../components';
 import { createInitTableColumns, findComponentDeep, modifyData } from '../../../data/data';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
-import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
 import { ColumnControl } from './controls/ColumnControl';
 import { ColumnsField } from './fields/ColumnsField';
 import { renderEditableDataTableField } from './fields/EditableDataTableField';
 import { renderListOfObjectsField } from './fields/ListOfObjectsField';
 import { useTranslation } from 'react-i18next';
-import { useDialogComponent } from '../dialog/Dialog';
+import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
 
 type DataTableProps = Prettify<DataTable>;
 
-export const useDataTableComponent = () => {
+export const useDataTableComponent = (componentByName: ComponentByName) => {
   const { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } = useBase();
-  const { componentByName } = useComponents();
-  const { DialogComponent } = useDialogComponent();
 
   const defaultDataTableProps: DataTable = {
     components: [],
@@ -70,7 +67,7 @@ export const useDataTableComponent = () => {
     subSectionControls: (props, subSection) => (subSection === 'Columns' ? <ColumnControl {...props} /> : null),
     onDelete: (component, setData) => {
       if (component.editDialogId.length > 0) {
-        setData(oldData => modifyData(oldData, { type: 'remove', data: { id: component.editDialogId } }).newData);
+        setData(oldData => modifyData(oldData, { type: 'remove', data: { id: component.editDialogId } }, componentByName).newData);
       }
     }
   };
@@ -150,7 +147,7 @@ export const useDataTableComponent = () => {
             };
           })
           .filter(create => create !== undefined);
-        return createInitTableColumns(id, data, creates);
+        return createInitTableColumns(id, data, creates, componentByName);
       });
     };
 

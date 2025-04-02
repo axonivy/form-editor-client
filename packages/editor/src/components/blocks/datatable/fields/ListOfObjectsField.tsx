@@ -4,8 +4,8 @@ import { isTable, type VariableInfo } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../../context/AppContext';
 import { useMeta } from '../../../../context/useMeta';
 import { InputFieldWithBrowser } from '../../../../editor/sidebar/fields/InputFieldWithBrowser';
-import { findAttributesOfType } from '../../../../editor/browser/data-class/variable-tree-data';
 import { useValidation } from '../../../../context/useValidation';
+import { findAttributesOfType } from '../../../../editor/browser/data-class/variable-tree-data';
 
 export const renderListOfObjectsField = (props: GenericFieldProps) => {
   return <ListOfObjectsField {...props} />;

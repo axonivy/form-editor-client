@@ -15,9 +15,9 @@ import {
 import { useAppContext } from '../../../context/AppContext';
 import { findComponentDeep, getParentComponent, useData } from '../../../data/data';
 import type { BrowserOptions } from '../Browser';
-import { useVariableTreeData } from './variable-tree-data';
 import { stripELExpression } from '../../../utils/string';
 import { useTranslation } from 'react-i18next';
+import { variableTreeData, fullVariablePath, findAttributesOfType } from './variable-tree-data';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute';
 
@@ -28,7 +28,6 @@ type getApplyModifierValueType = (
 ) => { value: string };
 
 export const useAttributeBrowser = (options?: BrowserOptions): Browser & { getApplyModifierValue: getApplyModifierValueType } => {
-  const { findAttributesOfType, variableTreeData, fullVariablePath } = useVariableTreeData();
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const [componentInDialog, setComponentInDialog] = useState(false);
   const { context } = useAppContext();

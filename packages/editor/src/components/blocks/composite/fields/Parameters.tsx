@@ -3,7 +3,7 @@ import type { GenericFieldProps } from '../../../../types/config';
 import { useMeta } from '../../../../context/useMeta';
 import { useAppContext } from '../../../../context/AppContext';
 import { useData } from '../../../../data/data';
-import { isComposite } from '../Composite';
+import { useCompositeComponent } from '../Composite';
 import { InputFieldWithBrowser } from '../../../../editor/sidebar/fields/InputFieldWithBrowser';
 import type { ParameterInfo, PrimitiveValue } from '@axonivy/form-editor-protocol';
 import { useValidation } from '../../../../context/useValidation';
@@ -20,6 +20,7 @@ const Parameters = ({ value, ...props }: GenericFieldProps) => {
   const { t } = useTranslation();
   const { context } = useAppContext();
   const { element } = useData();
+  const { isComposite } = useCompositeComponent();
   const method = useMeta('meta/composite/all', context, [])
     .data.find(composite => isComposite(element) && composite.id === element.config.name)
     ?.startMethods.find(method => isComposite(element) && method.name === element.config.startMethod);

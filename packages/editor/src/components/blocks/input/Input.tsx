@@ -1,4 +1,4 @@
-import type { ConfigData, Input, InputType, Prettify, SymbolPosition } from '@axonivy/form-editor-protocol';
+import type { Input, InputType, Prettify, SymbolPosition } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Input.css';
 import { useBase } from '../base';

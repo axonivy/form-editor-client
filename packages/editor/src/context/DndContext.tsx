@@ -16,6 +16,7 @@ import { findComponentElement, modifyData, useData } from '../data/data';
 import { ItemDragOverlay } from '../editor/ItemDragOverlay';
 import { isCreateComponentData, type CreateComponentData } from '../types/config';
 import { useAppContext } from './AppContext';
+import { useComponents } from '../components/components';
 
 const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...args }) => {
   const rectIntersectionCollisions = rectIntersection({
@@ -36,15 +37,20 @@ export const DndContext = ({ children }: { children: ReactNode }) => {
   const { data, setData, setSelectedElement } = useData();
   const [activeId, setActiveId] = useState<string | undefined>();
   const [createData, setCreateData] = useState<CreateComponentData | undefined>();
+  const { componentByName } = useComponents();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const targetId = event.over?.id as string | undefined;
     if (targetId && activeId) {
       setData(oldData => {
-        const modifiedData = modifyData(oldData, {
-          type: 'dnd',
-          data: { activeId: createData?.componentName ?? activeId, targetId, create: createData }
-        });
+        const modifiedData = modifyData(
+          oldData,
+          {
+            type: 'dnd',
+            data: { activeId: createData?.componentName ?? activeId, targetId, create: createData }
+          },
+          componentByName
+        );
         const newData = modifiedData.newData;
         const newComponentId = modifiedData.newComponentId;
         setSelectedElement(newComponentId ?? activeId);

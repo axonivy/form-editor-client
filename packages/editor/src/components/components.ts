@@ -1,4 +1,4 @@
-import type { Config, ItemCategory } from '../types/config';
+import type { ComponentConfig, Config, ItemCategory } from '../types/config';
 import { groupBy } from '../utils/array';
 import { useButtonComponent } from './blocks/button/Button';
 import { useLayoutComponent } from './blocks/layout/Layout';
@@ -21,47 +21,23 @@ import { getParentComponent } from '../data/data';
 import { useCompositeComponent } from './blocks/composite/Composite';
 import { useDialogComponent } from './blocks/dialog/Dialog';
 
-export const useComponents = () => {
-  const { InputComponent } = useInputComponent();
-  const { TextareaComponent } = useTextareaComponent();
-  const { DatePickerComponent } = useDatePickerComponent();
-  const { ComboboxComponent } = useComboboxComponent();
-  const { CheckboxComponent } = useCheckboxComponent();
-  const { RadioComponent } = useRadioComponent();
-  const { SelectComponent } = useSelectComponent();
-  const { TextComponent } = useTextComponent();
-  const { ButtonComponent } = useButtonComponent();
-  const { LinkComponent } = useLinkComponent();
-  const { LayoutComponent } = useLayoutComponent();
-  const { DataTableComponent } = useDataTableComponent();
-  const { DataTableColumnComponent } = useDataTableColumnComponent();
-  const { FieldsetComponent } = useFieldsetComponent();
-  const { PanelComponent } = usePanelComponent();
-  const { DialogComponent } = useDialogComponent();
-  const { CompositeComponent } = useCompositeComponent();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ComponentByName = (name: AutoCompleteWithString<ComponentType>) => Omit<ComponentConfig<any, any>, 'type'>;
 
-  const config: Config = {
-    components: {
-      Input: InputComponent,
-      Textarea: TextareaComponent,
-      DatePicker: DatePickerComponent,
-      Combobox: ComboboxComponent,
-      Checkbox: CheckboxComponent,
-      Radio: RadioComponent,
-      Select: SelectComponent,
-      Text: TextComponent,
-      Button: ButtonComponent,
-      Link: LinkComponent,
-      Layout: LayoutComponent,
-      DataTable: DataTableComponent,
-      DataTableColumn: DataTableColumnComponent,
-      Fieldset: FieldsetComponent,
-      Panel: PanelComponent,
-      Dialog: DialogComponent,
-      Composite: CompositeComponent
+export type ComponentForType = (type: AutoCompleteWithString<ComponentType>) =>
+  | {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      component: Omit<ComponentConfig<any, any>, 'type'>;
+      defaultProps?: undefined;
     }
-  } as const;
+  | {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      component: Omit<ComponentConfig<any, any>, 'type'>;
+      defaultProps: object;
+    }
+  | undefined;
 
+export const useComponents = () => {
   const componentByElement = (element: ComponentData, data: Array<ComponentData>) => {
     const component = componentByName(element.type);
     if (component === undefined && isTable(getParentComponent(data, element.cid))) {
@@ -120,6 +96,46 @@ export const useComponents = () => {
         return undefined;
     }
   };
+
+  const { InputComponent } = useInputComponent();
+  const { TextareaComponent } = useTextareaComponent();
+  const { DatePickerComponent } = useDatePickerComponent();
+  const { ComboboxComponent } = useComboboxComponent();
+  const { CheckboxComponent } = useCheckboxComponent();
+  const { RadioComponent } = useRadioComponent();
+  const { SelectComponent } = useSelectComponent();
+  const { TextComponent } = useTextComponent();
+  const { ButtonComponent } = useButtonComponent();
+  const { LinkComponent } = useLinkComponent();
+  const { LayoutComponent } = useLayoutComponent();
+  const { DataTableComponent } = useDataTableComponent(componentByName);
+  const { DataTableColumnComponent } = useDataTableColumnComponent();
+  const { FieldsetComponent } = useFieldsetComponent();
+  const { PanelComponent } = usePanelComponent();
+  const { DialogComponent } = useDialogComponent();
+  const { CompositeComponent } = useCompositeComponent();
+
+  const config: Config = {
+    components: {
+      Input: InputComponent,
+      Textarea: TextareaComponent,
+      DatePicker: DatePickerComponent,
+      Combobox: ComboboxComponent,
+      Checkbox: CheckboxComponent,
+      Radio: RadioComponent,
+      Select: SelectComponent,
+      Text: TextComponent,
+      Button: ButtonComponent,
+      Link: LinkComponent,
+      Layout: LayoutComponent,
+      DataTable: DataTableComponent,
+      DataTableColumn: DataTableColumnComponent,
+      Fieldset: FieldsetComponent,
+      Panel: PanelComponent,
+      Dialog: DialogComponent,
+      Composite: CompositeComponent
+    }
+  } as const;
 
   return {
     componentByElement,

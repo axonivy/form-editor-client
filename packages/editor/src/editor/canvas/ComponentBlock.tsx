@@ -39,6 +39,7 @@ export type DraggableProps = {
 const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
   const { data: formData, setData } = useData();
+  const { componentByName } = useComponents();
   const readonly = useReadonly();
   const isDataTableEditableButtons =
     data.type === 'Button' && ((data.config as ButtonType).type === 'EDIT' || (data.config as ButtonType).type === 'DELETE');
@@ -63,7 +64,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
       if (readonly) return;
       const item = items.filter(item => item.kind === 'text' && item.types.has('text/plain'))[0] as TextDropItem;
       const cid = await item.getText('text/plain');
-      setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }).newData);
+      setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }, componentByName).newData);
     }
   });
   const parentComponent = getParentComponent(formData.components, data.cid);
@@ -97,11 +98,11 @@ const Draggable = ({ config, data }: DraggableProps) => {
             }
             if (e.key === 'ArrowUp' && !isDataTableEditableButtons) {
               e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
+              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }, componentByName).newData);
             }
             if (e.key === 'ArrowDown' && !isDataTableEditableButtons) {
               e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
+              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }, componentByName).newData);
             }
             if (e.code === 'KeyM' && !isDataTableEditableButtons) {
               e.stopPropagation();
