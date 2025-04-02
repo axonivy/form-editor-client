@@ -91,7 +91,8 @@ const data = {
   id: 'a5c1d16e-1d08-4e1f-a9f0-436c553a3881',
   config: {
     renderer: 'JSF',
-    theme: 'freya-ivy'
+    theme: 'freya-ivy',
+    type: 'FORM'
   },
   components: [
     {
@@ -151,7 +152,8 @@ const dataEditableTable = {
   id: 'a5c1d16e-1d08-4e1f-a9f0-436c553a3881',
   config: {
     renderer: 'JSF',
-    theme: 'freya-ivy'
+    theme: 'freya-ivy',
+    type: 'FORM'
   },
   components: [
     {

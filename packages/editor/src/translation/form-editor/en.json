@@ -181,6 +181,11 @@
         "autoResize": "Auto Resize",
         "visibleRows": "Visible Rows"
       }
+    },
+    "form": {
+      "accordion": "Properties",
+      "type": "Form Type",
+      "placeholder": "This is a Text"
     }
   },
   "hint": {

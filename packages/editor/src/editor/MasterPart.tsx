@@ -8,9 +8,13 @@ import { FormToolbar } from './FormToolbar';
 import { useRef } from 'react';
 
 export const MasterPart = () => {
-  const { setSelectedElement } = useAppContext();
+  const { setSelectedElement, setUi } = useAppContext();
   const { data } = useData();
   const toolbarDiv = useRef<HTMLDivElement>(null);
+
+  const isClickOutside = (e: React.MouseEvent) => {
+    return e.target !== e.currentTarget && !toolbarDiv.current?.contains(e.target as Node);
+  };
 
   return (
     <ResizablePanel
@@ -20,8 +24,13 @@ export const MasterPart = () => {
       minSize={30}
       className='panel'
       onClick={e => {
-        if (e.target !== e.currentTarget && !toolbarDiv.current?.contains(e.target as Node)) {
+        if (isClickOutside(e)) {
           setSelectedElement(undefined);
+        }
+      }}
+      onDoubleClick={e => {
+        if (isClickOutside(e)) {
+          setUi(old => ({ ...old, properties: !old.properties }));
         }
       }}
     >

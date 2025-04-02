@@ -8,6 +8,7 @@
 
 export type CmsQuickactionCategory = ("global" | "local")
 export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
+export type FormType = "FORM" | "COMPONENT";
 export type LayoutAlignItems = "START" | "CENTER" | "END";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET" | "EDIT" | "DELETE";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
@@ -103,6 +104,7 @@ export interface Form {
 export interface FormConfig {
   renderer: "JSF";
   theme: string;
+  type: FormType;
 }
 export interface Component {
   cid: string;
