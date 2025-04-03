@@ -1,4 +1,4 @@
-import type { Button as ButtonType, Component, ComponentData, ComponentType, Composite } from '@axonivy/form-editor-protocol';
+import type { Button as ButtonType, Component, ComponentData, ComponentType, Composite, Layout } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
@@ -16,7 +16,6 @@ import { useClipboard, type TextDropItem } from 'react-aria';
 import { useComponentBlockActions } from './useComponentBlockActions';
 import { useTranslation } from 'react-i18next';
 import { useComponents } from '../../context/ComponentsContext';
-import { useAction } from '../../context/useAction';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -38,7 +37,7 @@ export type DraggableProps = {
 };
 
 const Draggable = ({ config, data }: DraggableProps) => {
-  const { setUi } = useAppContext();
+  const { setUi, context } = useAppContext();
   const { data: formData, setData } = useData();
   const { componentByName } = useComponents();
   const readonly = useReadonly();
@@ -52,10 +51,17 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { selectedElement, setSelectedElement } = useAppContext();
   const isSelected = selectedElement === data.cid;
   const elementConfig = { ...config.defaultProps, ...data.config };
-  const { createElement, duplicateElement, deleteElement, createActionButton, createActionColumn, createColumn } = useComponentBlockActions(
-    { config, data }
-  );
-  const openComponent = useAction('openComponent');
+  const {
+    createElement,
+    duplicateElement,
+    openComponent,
+    onKeyDown,
+    deleteElement,
+    createActionButton,
+    createActionColumn,
+    createColumn,
+    extractIntoComponent
+  } = useComponentBlockActions({ config, data });
   const validations = useValidations(data.cid);
   const { clipboardProps } = useClipboard({
     getItems() {
@@ -84,32 +90,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
             e.stopPropagation();
             setUi(old => ({ ...old, properties: true }));
           }}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              e.stopPropagation();
-              setSelectedElement(data.cid);
-              setUi(old => ({ ...old, properties: true }));
-            }
-            if (readonly) {
-              return;
-            }
-            if (e.key === 'Delete') {
-              e.stopPropagation();
-              deleteElement();
-            }
-            if (e.key === 'ArrowUp' && !isDataTableEditableButtons) {
-              e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }, componentByName).newData);
-            }
-            if (e.key === 'ArrowDown' && !isDataTableEditableButtons) {
-              e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }, componentByName).newData);
-            }
-            if (e.code === 'KeyM' && !isDataTableEditableButtons) {
-              e.stopPropagation();
-              duplicateElement();
-            }
-          }}
+          onKeyDown={onKeyDown}
           className={cn(
             'draggable',
             isSelected && 'selected',
@@ -140,6 +121,16 @@ const Draggable = ({ config, data }: DraggableProps) => {
             ? () => openComponent((data.config as Composite).name)
             : undefined
         }
+        extractIntoComponent={
+          config.quickActions.includes('EXTRACTINTOCOMPONENT') && data.type === 'Layout'
+            ? () =>
+                extractIntoComponent.mutate({
+                  context,
+                  layoutId: data.cid,
+                  newComponentName: (data.config as Layout).id.length > 0 ? (data.config as Layout).id : data.cid
+                })
+            : undefined
+        }
         createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
         createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
         createActionColumnButtonAction={
@@ -162,6 +153,7 @@ type QuickbarProps = {
   duplicateAction?: () => void;
   createAction?: (name: ComponentType) => void;
   openComponentAction?: () => void;
+  extractIntoComponent?: () => void;
   createColumnAction?: () => void;
   createActionColumnAction?: () => void;
   createActionColumnButtonAction?: () => void;
@@ -172,6 +164,7 @@ const Quickbar = ({
   deleteAction,
   duplicateAction,
   createAction,
+  extractIntoComponent,
   openComponentAction,
   createColumnAction,
   createActionColumnAction,
@@ -208,6 +201,14 @@ const Quickbar = ({
                 aria-label={t('label.openComponent')}
                 title={t('label.openComponent')}
                 onClick={openComponentAction}
+              />
+            )}
+            {extractIntoComponent && (
+              <Button
+                icon={IvyIcons.WrapToSubprocess}
+                aria-label={t('label.extractIntoComponent')}
+                title={t('label.extractIntoComponent')}
+                onClick={extractIntoComponent}
               />
             )}
             {(createColumnAction || createActionColumnButtonAction || createAction || createFromDataAction) && (

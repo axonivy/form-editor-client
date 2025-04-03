@@ -30,6 +30,7 @@ export interface Forms {
   compositeInfo: CompositeInfo[];
   contentObject: ContentObject[];
   executeCmsQuickActionRequest: ExecuteCmsQuickActionRequest;
+  extractContext: ExtractContext;
   form: Form;
   formActionArgs: FormActionArgs;
   formContext: FormContext;
@@ -94,6 +95,11 @@ export interface MapStringString {
 export interface ExecuteCmsQuickActionRequest {
   cmsQuickAction: CmsQuickAction;
   context: FormContext;
+}
+export interface ExtractContext {
+  context: FormContext;
+  layoutId: string;
+  newComponentName: string;
 }
 export interface Form {
   $schema: string;
