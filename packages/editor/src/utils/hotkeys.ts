@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 type KnownHotkey = { hotkey: string; label: string };
 
 export const useKnownHotkeys = () => {
+  // TODO: translate
   const undo = useMemo<KnownHotkey>(() => {
     const hotkey = 'mod+Z';
     return { hotkey, label: `Undo (${hotkeyText(hotkey)})` };

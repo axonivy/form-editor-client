@@ -11,15 +11,15 @@ import {
   PanelMessage
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
-import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
-import { useComponents } from '../../components/components';
 import type { ConfigData } from '@axonivy/form-editor-protocol';
 import { usePropertySubSectionControl } from './PropertySubSectionControl';
 import { useTranslation } from 'react-i18next';
 import { useBase } from '../../components/blocks/base';
+import { useSharedComponents } from '../../components/ComponentsContext';
+import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 
 export const Properties = () => {
-  const { componentByElement } = useComponents();
+  const { componentByElement } = useSharedComponents();
   const { t } = useTranslation();
   const { element, data, parent } = useData();
   if (element === undefined) {

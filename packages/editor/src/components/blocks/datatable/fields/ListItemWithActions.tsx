@@ -2,7 +2,7 @@ import { Button, Flex, Label } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { modifyData, useData } from '../../../../data/data';
 import { useTranslation } from 'react-i18next';
-import { useComponents } from '../../../components';
+import { useSharedComponents } from '../../../ComponentsContext';
 
 type ListItemWithActionsProps = {
   componentCid: string;
@@ -13,7 +13,7 @@ type ListItemWithActionsProps = {
 
 export const ListItemWithActions = ({ componentCid, label, icon, isBound }: ListItemWithActionsProps) => {
   const { t } = useTranslation();
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
   const { setData, setSelectedElement } = useData();
   return (
     <Flex

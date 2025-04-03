@@ -5,14 +5,14 @@ import type { CreateComponentData } from '../../../../types/config';
 import { stripELExpression } from '../../../../utils/string';
 import { useAppContext } from '../../../../context/AppContext';
 import { useMeta } from '../../../../context/useMeta';
-import { useComponents } from '../../../components';
 import { useTranslation } from 'react-i18next';
+import { useSharedComponents } from '../../../ComponentsContext';
 
 export const useEditableDataTableField = () => {
   const { element, setData, setElement } = useData();
   const { context } = useAppContext();
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
   const { t } = useTranslation();
 
   const createEditComponents = () => {

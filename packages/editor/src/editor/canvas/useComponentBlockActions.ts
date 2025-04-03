@@ -2,11 +2,11 @@ import { useAppContext } from '../../context/AppContext';
 import type { ComponentType } from '@axonivy/form-editor-protocol';
 import { COLUMN_DROPZONE_ID_PREFIX, creationTargetId, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../data/data';
 import type { DraggableProps } from './ComponentBlock';
-import { useComponents } from '../../components/components';
+import { useSharedComponents } from '../../components/ComponentsContext';
 
 export const useComponentBlockActions = ({ config, data }: DraggableProps) => {
   const { setSelectedElement } = useAppContext();
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
   const { setData } = useData();
   const elementConfig = { ...config.defaultProps, ...data.config };
   const deleteElement = () => {

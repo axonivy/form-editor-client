@@ -5,12 +5,12 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import type { CreateComponentData } from '../../../../types/config';
 import { isTable } from '@axonivy/form-editor-protocol';
 import { useTranslation } from 'react-i18next';
-import { useComponents } from '../../../components';
+import { useSharedComponents } from '../../../ComponentsContext';
 
 export const ColumnControl = (props: CollapsibleControlProps) => {
   const { element, setData } = useData();
   const { boundInactiveColumns } = useDataTableColumns();
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
   const { t } = useTranslation();
 
   const bindAllColumns = () => {

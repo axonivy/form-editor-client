@@ -1,11 +1,11 @@
 import { useData } from '../../data/data';
 import { type CollapsibleControlProps } from '@axonivy/ui-components';
-import { useComponents } from '../../components/components';
+import { useSharedComponents } from '../../components/ComponentsContext';
 
 export const usePropertySubSectionControl = () => {
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
+  const { element } = useData();
   const PropertySubSectionControl = ({ title, ...props }: CollapsibleControlProps & { title: string }) => {
-    const { element } = useData();
     if (element === undefined) {
       return null;
     }

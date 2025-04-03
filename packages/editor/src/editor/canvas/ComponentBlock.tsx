@@ -9,13 +9,13 @@ import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent,
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useState } from 'react';
 import { Palette } from '../palette/Palette';
-import { useComponents } from '../../components/components';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 import { useClipboard, type TextDropItem } from 'react-aria';
 import { useComponentBlockActions } from './useComponentBlockActions';
 import { useTranslation } from 'react-i18next';
+import { useSharedComponents } from '../../components/ComponentsContext';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -23,7 +23,7 @@ type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
 };
 
 export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => {
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
   return (
     <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
       <Draggable config={componentByName(component.type)} data={component} />
@@ -39,7 +39,7 @@ export type DraggableProps = {
 const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
   const { data: formData, setData } = useData();
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
   const readonly = useReadonly();
   const isDataTableEditableButtons =
     data.type === 'Button' && ((data.config as ButtonType).type === 'EDIT' || (data.config as ButtonType).type === 'DELETE');
@@ -171,7 +171,7 @@ const Quickbar = ({
   createActionColumnButtonAction
 }: QuickbarProps) => {
   const { t } = useTranslation();
-  const { allComponentsByCategory } = useComponents();
+  const { allComponentsByCategory } = useSharedComponents();
   const [menu, setMenu] = useState(false);
   const readonly = useReadonly();
   if (readonly) {

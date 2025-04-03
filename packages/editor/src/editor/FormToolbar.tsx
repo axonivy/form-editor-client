@@ -24,7 +24,6 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import { useComponents } from '../components/components';
 import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
@@ -33,12 +32,13 @@ import { DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
 import { useKnownHotkeys } from '../utils/hotkeys';
 import { useTranslation } from 'react-i18next';
+import { useSharedComponents } from '../components/ComponentsContext';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { t } = useTranslation();
-  const { allComponentsByCategory } = useComponents();
+  const { allComponentsByCategory } = useSharedComponents();
   const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
   const { setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();

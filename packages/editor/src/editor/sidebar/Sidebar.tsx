@@ -9,13 +9,13 @@ import { useAction } from '../../context/useAction';
 import { useAppContext } from '../../context/AppContext';
 import { useKnownHotkeys } from '../../utils/hotkeys';
 import { useTranslation } from 'react-i18next';
-import { useComponents } from '../../components/components';
+import { useSharedComponents } from '../../components/ComponentsContext';
 
 export const Sidebar = () => {
   const { t } = useTranslation();
   const { helpUrl } = useAppContext();
   const { element } = useData();
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
   const [outline, setOutline] = useState(false);
   const elementType = element ? (element.type ? componentByName(element.type).displayName : 'DataTableColumn') : 'Properties';
   const messages = useValidations(element?.cid ?? '', { exact: true });

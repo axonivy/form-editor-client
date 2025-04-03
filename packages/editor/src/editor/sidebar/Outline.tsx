@@ -1,11 +1,11 @@
 import { type ComponentData, isStructure } from '@axonivy/form-editor-protocol';
 import { type OutlineNode, Outline } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useComponents } from '../../components/components';
 import { useData } from '../../data/data';
+import { useSharedComponents } from '../../components/ComponentsContext';
 
 export const FormOutline = ({ hideOutline }: { hideOutline: () => void }) => {
-  const { componentByName } = useComponents();
+  const { componentByName } = useSharedComponents();
 
   const iconByCategory = (category: string) => {
     switch (category) {
