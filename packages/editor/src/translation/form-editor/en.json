@@ -40,27 +40,49 @@
     "name": "Combobox"
   },
   "composite": {
-    "name": "__MISSING_TRANSLATION__"
+    "description": "A button for fire actions",
+    "name": "Composite"
   },
   "dataTable": {
     "columnFromValue": "Create columns from value",
+    "description": "A datatable component",
+    "name": "DataTable",
     "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
   },
+  "dataTableColumn": {
+    "description": "A Column for the DataTable",
+    "name": "DataTableColumn"
+  },
+  "datePicker": {
+    "description": "A datepicker with label for date or datetime",
+    "label": "Date Picker",
+    "name": "DatePicker"
+  },
+  "dialog": {
+    "description": "A flexable layout",
+    "name": "Dialog"
+  },
   "error": "Error: {{error}}",
+  "fieldset": {
+    "description": "A group of inputs",
+    "name": "Fieldset"
+  },
   "hint": {
     "dragFirstItem": "Drag first element inside the canvas or",
     "dragItemInto": "Drag first element inside the {{type}}",
     "elementPropsEdit": "Select an Element to edit its properties."
   },
+  "input": {
+    "description": "A input with a label",
+    "name": "Input"
+  },
   "label": {
-    "action": "Action",
     "actions": "Actions",
     "addNewActionCol": "Add new Action Column Button",
     "allComponents": "All Components",
     "browser": "Browser",
     "cmsQuickfix": "CMS-Quickfix",
     "colBoundByAttr": "Column is bound to an object attribute",
-    "completeMethod": "Complete Method",
     "composites": "Composites",
     "createActionCol": "Create Action Column",
     "createActionColBtn": "Create Action Column Button",
@@ -78,15 +100,12 @@
     "enableReqProjects": "Enable required Projects",
     "filterBy": "Filter by",
     "generic": "Generic",
-    "icon": "Icon",
     "id": "ID",
-    "itemLabel": "Item Label",
-    "itemValue": "Item Value",
     "label": "Label",
     "largeSpan": "Large Span",
     "listOfObjects": "List of Objects",
     "mediumSpan": "Medium Span",
-    "name": "Name",
+    "nRowsPerPage": "Rows per Page: {{rows}}",
     "objectLabel": "Object Label",
     "objectValue": "Object Value",
     "objNotValid": "Defined Object is not valid",
@@ -94,16 +113,29 @@
     "outline": "Outline",
     "required": "Required",
     "requiredMessage": "Required Message",
-    "selected": "Selected",
     "setDefaultCol": "Set default Columns",
     "togglePropView": "Toggle Property View",
-    "type": "Type",
     "updateFormChange": "Update Form on Change",
     "useEntireObj": "Use entire Object",
     "value": "Value",
-    "variant": "Variant",
     "verticalAlign": "Vertical Align",
     "visible": "Visible"
+  },
+  "layout": {
+    "column_one": "{{count}} Column",
+    "column_other": "{{count}} Columns",
+    "description": "A flexible layout",
+    "flex": "Flex",
+    "free": "Free",
+    "grid": "Grid",
+    "left": "Left",
+    "name": "Layout",
+    "right": "Right",
+    "spaceBetween": "Space Between"
+  },
+  "link": {
+    "description": "Link to somewhere",
+    "name": "Link"
   },
   "message": {
     "error": "An error has occurred: {{error}}",
@@ -113,5 +145,81 @@
     "noOptionsDefined": "No Options defined",
     "noParam": "No parameters",
     "typeDefinedBy": "Type '{{type}}' defined by the input field"
+  },
+  "panel": {
+    "description": "A group of components",
+    "name": "Panel"
+  },
+  "property": {
+    "action": "Action",
+    "actionColumn": "Action Column",
+    "actions": "Actions",
+    "addButton": "Add Button",
+    "autoResize": "Auto Resize",
+    "collapsedDefault": "Collapsed by default",
+    "collapsible": "Collapisble",
+    "columns": "Columns",
+    "completeMethod": "Complete Method",
+    "content": "Content",
+    "datePattern": "Date Pattern",
+    "decimalPlaces": "Decimal Places",
+    "editable": "Editable",
+    "editDialog": "Edit Dialog",
+    "editRow": "Edit Row",
+    "email": "E-Mail",
+    "enableFiltering": "Enable Filtering",
+    "enablePaginator": "Enable Paginator",
+    "enableSorting": "Enable Sorting",
+    "groupActions": "Group Actions",
+    "header": "Header",
+    "horizontal": "Horizontal",
+    "horizontalAlignment": "Horizontal Alignment",
+    "href": "Href",
+    "icon": "Icon",
+    "iconStyle": "Icon Style",
+    "itemLabel": "Item Label",
+    "itemValue": "Item Value",
+    "label": "Label",
+    "linkedComponent": "Linked Component",
+    "name": "Name",
+    "number": "number",
+    "objectBoundColumns": "Object-Bound Columns",
+    "option1": "Option 1",
+    "option2": "Option 2",
+    "orientation": "Orientation",
+    "password": "Password",
+    "prefix": "Prefix",
+    "rowsPerPage": "Rows per Page",
+    "rowType": "Row Type",
+    "selected": "Selected",
+    "startMethod": "Start Method",
+    "suffix": "Suffix",
+    "symbol": "Symbol",
+    "symbolPosition": "Symbol Position",
+    "text": "Text",
+    "timePattern": "Time Pattern",
+    "title": "Title",
+    "type": "Type",
+    "value": "Value",
+    "variant": "Variant",
+    "vertical": "Vertical",
+    "visibleRows": "Visible Rows"
+  },
+  "radio": {
+    "description": "A radio button group with label for selecting a single option",
+    "name": "Radio"
+  },
+  "select": {
+    "description": "A dropdown menu with label for selecting a single option",
+    "name": "Select"
+  },
+  "text": {
+    "description": "Text Output",
+    "name": "Text",
+    "placeholder": "This is a Text"
+  },
+  "textarea": {
+    "description": "A customizable Textarea component",
+    "name": "Textarea"
   }
 }

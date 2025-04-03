@@ -4,53 +4,60 @@ import './Link.css';
 import { useBase } from '../base';
 import IconSvg from './Link.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const useLinkComponent = () => {
   const { baseComponentFields, defaultBaseComponent, defaultVisibleComponent, visibleComponentField } = useBase();
+  const { t } = useTranslation();
   type LinkProps = Prettify<Link>;
 
-  const defaultLinkProps: LinkProps = {
-    name: 'link',
-    href: '',
-    ...defaultVisibleComponent,
-    ...defaultBaseComponent
-  } as const;
+  const LinkComponent = useMemo(() => {
+    const defaultLinkProps: LinkProps = {
+      name: t('link.name'),
+      href: '',
+      ...defaultVisibleComponent,
+      ...defaultBaseComponent
+    } as const;
 
-  const LinkComponent: ComponentConfig<LinkProps> = {
-    name: 'Link',
-    category: 'Actions',
-    subcategory: 'General',
-    icon: <IconSvg />,
-    description: 'Link to somewhere',
-    defaultProps: defaultLinkProps,
-    render: props => <UiBlock {...props} />,
-    create: () => defaultLinkProps,
-    outlineInfo: component => component.name,
-    fields: {
-      ...baseComponentFields,
-      name: {
-        subsection: 'General',
-        label: 'Name',
-        type: 'textBrowser',
-        browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    const LinkComponent: ComponentConfig<LinkProps> = {
+      name: 'Link',
+      displayName: t('link.name'),
+      category: 'Actions',
+      subcategory: 'General',
+      icon: <IconSvg />,
+      description: t('link.description'),
+      defaultProps: defaultLinkProps,
+      render: props => <UiBlock {...props} />,
+      create: () => defaultLinkProps,
+      outlineInfo: component => component.name,
+      fields: {
+        ...baseComponentFields,
+        name: {
+          subsection: 'General',
+          label: t('property.name'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+        },
+        href: { subsection: 'General', label: t('property.href'), type: 'text' },
+        ...visibleComponentField
       },
-      href: { subsection: 'General', label: 'Href', type: 'text' },
-      ...visibleComponentField
-    },
-    quickActions: DEFAULT_QUICK_ACTIONS
-  };
+      quickActions: DEFAULT_QUICK_ACTIONS
+    };
 
-  const UiBlock = ({ name, visible, ...props }: UiComponentProps<LinkProps>) => (
-    <>
-      <UiBlockHeader visible={visible} />
-      <p className='block-link' {...props}>
-        <UiBadge value={name} />
-      </p>
-    </>
-  );
+    const UiBlock = ({ name, visible, ...props }: UiComponentProps<LinkProps>) => (
+      <>
+        <UiBlockHeader visible={visible} />
+        <p className='block-link' {...props}>
+          <UiBadge value={name} />
+        </p>
+      </>
+    );
+
+    return LinkComponent;
+  }, [baseComponentFields, defaultBaseComponent, defaultVisibleComponent, t, visibleComponentField]);
 
   return {
-    defaultLinkProps,
     LinkComponent
   };
 };

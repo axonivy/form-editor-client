@@ -18,7 +18,7 @@ export const ColumnControl = (props: CollapsibleControlProps) => {
       setData(data => {
         const creates = boundInactiveColumns
           .map<CreateComponentData>(column => ({
-            componentName: 'DataTableColumn',
+            componentName: 'DataTableColumn', // TODO: translation?
             label: column.value.length > 0 ? column.value : column.header,
             value: column.value
           }))

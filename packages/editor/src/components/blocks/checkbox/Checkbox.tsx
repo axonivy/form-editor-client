@@ -16,7 +16,7 @@ export const useCheckboxComponent = () => {
 
   const defaultCheckboxProps: Checkbox = useMemo(() => {
     return {
-      label: t('label.label'),
+      label: t('property.label'),
       selected: 'true',
       ...defaultDisabledComponent,
       updateOnChange: false,
@@ -40,13 +40,13 @@ export const useCheckboxComponent = () => {
         ...baseComponentFields,
         label: {
           subsection: 'General',
-          label: t('label.label'),
+          label: t('property.label'),
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
         selected: {
           subsection: 'General',
-          label: t('label.selected'),
+          label: t('property.selected'),
           type: 'textBrowser',
           browsers: [{ type: 'ATTRIBUTE' }]
         },

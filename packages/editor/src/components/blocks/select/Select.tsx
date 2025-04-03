@@ -6,53 +6,60 @@ import IconSvg from './Select.svg?react';
 import { IvyIcon } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
+import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 export const useSelectComponent = () => {
   const { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent, selectItemsComponentFields } =
     useBase();
+  const { t } = useTranslation();
   type SelectProps = Prettify<Select>;
 
-  const defaultInputProps: Select = {
-    label: 'Select',
-    value: '',
-    staticItems: [],
-    dynamicItemsList: '',
-    dynamicItemsLabel: '',
-    dynamicItemsValue: '',
-    ...defaultBehaviourComponent,
-    ...defaultBaseComponent
-  } as const;
+  const SelectComponent = useMemo(() => {
+    const defaultInputProps: Select = {
+      label: t('select.name'),
+      value: '',
+      staticItems: [],
+      dynamicItemsList: '',
+      dynamicItemsLabel: '',
+      dynamicItemsValue: '',
+      ...defaultBehaviourComponent,
+      ...defaultBaseComponent
+    } as const;
 
-  const SelectComponent: ComponentConfig<SelectProps> = {
-    name: 'Select',
-    category: 'Elements',
-    subcategory: 'Selection',
-    icon: <IconSvg />,
-    description: 'A dropdown menu with label for selecting a single option',
-    defaultProps: defaultInputProps,
-    render: props => <UiBlock {...props} />,
-    create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
-    outlineInfo: component => component.label,
-    fields: {
-      ...baseComponentFields,
-      ...selectItemsComponentFields,
-      ...behaviourComponentFields
-    },
-    quickActions: DEFAULT_QUICK_ACTIONS
-  };
+    const SelectComponent: ComponentConfig<SelectProps> = {
+      name: 'Select',
+      displayName: t('select.name'),
+      category: 'Elements',
+      subcategory: 'Selection',
+      icon: <IconSvg />,
+      description: t('select.description'),
+      defaultProps: defaultInputProps,
+      render: props => <UiBlock {...props} />,
+      create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
+      outlineInfo: component => component.label,
+      fields: {
+        ...baseComponentFields,
+        ...selectItemsComponentFields,
+        ...behaviourComponentFields
+      },
+      quickActions: DEFAULT_QUICK_ACTIONS
+    };
 
-  const UiBlock = ({ label, value, visible, required, disabled, updateOnChange }: UiComponentProps<SelectProps>) => (
-    <div className='block-input'>
-      <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
-      <div className='block-input__input'>
-        <UiBadge value={value} />
-        <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
+    const UiBlock = ({ label, value, visible, required, disabled, updateOnChange }: UiComponentProps<SelectProps>) => (
+      <div className='block-input'>
+        <UiBlockHeader visible={visible} label={label} required={required} disabled={disabled} updateOnChange={updateOnChange} />
+        <div className='block-input__input'>
+          <UiBadge value={value} />
+          <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
+        </div>
       </div>
-    </div>
-  );
+    );
+
+    return SelectComponent;
+  }, []);
 
   return {
-    defaultInputProps,
     SelectComponent
   };
 };

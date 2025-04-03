@@ -4,69 +4,75 @@ import './Textarea.css';
 import { useBase } from '../base';
 import IconSvg from './Textarea.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
+import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 export const useTextareaComponent = () => {
   const { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } = useBase();
+  const { t } = useTranslation();
   type TextareaProps = Prettify<Textarea>;
 
-  const defaultInputProps: Textarea = {
-    label: 'Textarea',
-    value: '',
-    rows: '5',
-    autoResize: true,
-    ...defaultBehaviourComponent,
-    ...defaultBaseComponent
-  } as const;
+  const TextareaComponent = useMemo(() => {
+    const defaultInputProps: Textarea = {
+      label: t('textarea.name'),
+      value: '',
+      rows: '5',
+      autoResize: true,
+      ...defaultBehaviourComponent,
+      ...defaultBaseComponent
+    } as const;
 
-  const TextareaComponent: ComponentConfig<TextareaProps> = {
-    name: 'Textarea',
-    category: 'Elements',
-    subcategory: 'Input',
-    icon: <IconSvg />,
-    description: 'A customizable Textarea component',
-    defaultProps: defaultInputProps,
-    render: props => <UiBlock {...props} />,
-    create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
-    outlineInfo: component => component.label,
-    fields: {
-      ...baseComponentFields,
-      label: {
-        subsection: 'General',
-        label: 'Label',
-        type: 'textBrowser',
-        browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+    const TextareaComponent: ComponentConfig<TextareaProps> = {
+      name: 'Textarea',
+      displayName: t('textarea.name'),
+      category: 'Elements',
+      subcategory: 'Input',
+      icon: <IconSvg />,
+      description: t('textarea.description'),
+      defaultProps: defaultInputProps,
+      render: props => <UiBlock {...props} />,
+      create: ({ label, value, ...defaultProps }) => ({ ...defaultInputProps, label, value, ...defaultProps }),
+      outlineInfo: component => component.label,
+      fields: {
+        ...baseComponentFields,
+        label: {
+          subsection: 'General',
+          label: t('property.label'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+        },
+        value: { subsection: 'General', label: t('property.value'), type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
+        rows: { subsection: 'General', label: t('property.visibleRows'), type: 'number' },
+        autoResize: { subsection: 'General', label: t('property.autoResize'), type: 'checkbox' },
+        ...behaviourComponentFields
       },
-      value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
-      rows: { subsection: 'General', label: 'Visible Rows', type: 'number' },
-      autoResize: { subsection: 'General', label: 'Auto Resize', type: 'checkbox' },
-      ...behaviourComponentFields
-    },
-    quickActions: DEFAULT_QUICK_ACTIONS
-  };
+      quickActions: DEFAULT_QUICK_ACTIONS
+    };
 
-  const UiBlock = ({ label, value, rows, autoResize, visible, required, disabled, updateOnChange }: UiComponentProps<TextareaProps>) => {
-    return (
-      <div className='block-textarea'>
-        <UiBlockHeader
-          visible={visible}
-          label={label}
-          required={required}
-          disabled={disabled}
-          additionalInfo={rows + ' rows'}
-          updateOnChange={updateOnChange}
-        />
-        <div className='block-textarea__input-wrapper'>
-          <span className='block-textarea__input'>
-            <UiBadge value={value} />
-          </span>
-          {!autoResize && <div className='resize-icon' />}
+    const UiBlock = ({ label, value, rows, autoResize, visible, required, disabled, updateOnChange }: UiComponentProps<TextareaProps>) => {
+      return (
+        <div className='block-textarea'>
+          <UiBlockHeader
+            visible={visible}
+            label={label}
+            required={required}
+            disabled={disabled}
+            additionalInfo={rows + ' rows'}
+            updateOnChange={updateOnChange}
+          />
+          <div className='block-textarea__input-wrapper'>
+            <span className='block-textarea__input'>
+              <UiBadge value={value} />
+            </span>
+            {!autoResize && <div className='resize-icon' />}
+          </div>
         </div>
-      </div>
-    );
-  };
+      );
+    };
+    return TextareaComponent;
+  }, [baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent, t]);
 
   return {
-    defaultInputProps,
     TextareaComponent
   };
 };

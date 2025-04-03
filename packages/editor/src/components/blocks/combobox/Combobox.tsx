@@ -41,31 +41,31 @@ export const useComboboxComponent = () => {
         ...baseComponentFields,
         label: {
           subsection: 'General',
-          label: t('label.label'),
+          label: t('property.label'),
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
         value: {
           subsection: 'General',
-          label: t('label.value'),
+          label: t('property.value'),
           type: 'textBrowser',
           browsers: [{ type: 'ATTRIBUTE' }]
         },
         completeMethod: {
           subsection: 'Options',
-          label: t('label.completeMethod'),
+          label: t('property.completeMethod'),
           type: 'textBrowser',
           browsers: [{ type: 'LOGIC' }]
         },
         itemLabel: {
           subsection: 'Options',
-          label: t('label.itemLabel'),
+          label: t('property.itemLabel'),
           type: 'text',
           hide: data => data.completeMethod.length === 0
         },
         itemValue: {
           subsection: 'Options',
-          label: t('label.itemValue'),
+          label: t('property.itemValue'),
           type: 'text',
           hide: data => data.completeMethod.length === 0
         },
@@ -75,7 +75,7 @@ export const useComboboxComponent = () => {
       quickActions: DEFAULT_QUICK_ACTIONS
     };
     return component;
-  }, [t]);
+  }, [baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent, t]);
 
   const UiBlock = ({ label, value, visible, required, disabled, updateOnChange }: UiComponentProps<ComboboxProps>) => (
     <div className='block-input'>

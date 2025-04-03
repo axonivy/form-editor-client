@@ -16,6 +16,7 @@ export const useCompositeComponent = () => {
   };
   const { baseComponentFields, defaultBaseComponent } = useBase();
   const { t } = useTranslation();
+
   const CompositeComponent: ComponentConfig<CompositeProps> = useMemo(() => {
     const defaultCompositeProps: Composite = {
       name: '',
@@ -30,15 +31,15 @@ export const useCompositeComponent = () => {
       category: 'Hidden',
       subcategory: 'General',
       icon: <IconSvg />,
-      description: 'A button for fire actions',
+      description: t('composite.description'),
       defaultProps: defaultCompositeProps,
       render: props => <UiBlock {...props} />,
       create: ({ label, defaultProps }) => ({ ...defaultCompositeProps, name: label, ...defaultProps }),
       outlineInfo: component => component.name,
       fields: {
         ...baseComponentFields,
-        name: { subsection: 'General', label: 'Composite', type: 'text', options: { disabled: true } },
-        startMethod: { subsection: 'General', label: 'Start Method', type: 'generic', render: renderStartMethodSelect },
+        name: { subsection: 'General', label: t('property.name'), type: 'text', options: { disabled: true } },
+        startMethod: { subsection: 'General', label: t('property.startMethod'), type: 'generic', render: renderStartMethodSelect },
         parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters }
       },
       quickActions: DEFAULT_QUICK_ACTIONS

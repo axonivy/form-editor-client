@@ -60,32 +60,32 @@ export const useButtonComponent = () => {
         ...baseComponentFields,
         type: {
           subsection: 'General',
-          label: t('label.type'),
+          label: t('property.type'),
           type: 'generic',
           render: renderTypeField
         },
         name: {
           subsection: 'General',
-          label: t('label.name'),
+          label: t('property.name'),
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
         action: {
           subsection: 'General',
-          label: t('label.action'),
+          label: t('property.action'),
           type: 'textBrowser',
           browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }],
           hide: data => hideButtonField(data)
         },
         variant: {
           subsection: 'General',
-          label: t('label.variant'),
+          label: t('property.variant'),
           type: 'select',
           options: variantOptions
         },
         icon: {
           subsection: 'General',
-          label: t('label.icon'),
+          label: t('property.icon'),
           type: 'generic',
           render: renderIconField
         },
