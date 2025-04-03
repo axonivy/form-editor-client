@@ -112,6 +112,7 @@ export type QuickAction =
   | 'DELETE'
   | 'DUPLICATE'
   | 'OPENCOMPONENT'
+  | 'EXTRACTINTOCOMPONENT'
   | 'CREATE'
   | 'CREATEFROMDATA'
   | 'CREATECOLUMN'

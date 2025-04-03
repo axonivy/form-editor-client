@@ -69,7 +69,7 @@ export const LayoutComponent: ComponentConfig<LayoutProps> = {
     },
     ...visibleComponentField
   },
-  quickActions: DEFAULT_QUICK_ACTIONS
+  quickActions: [...DEFAULT_QUICK_ACTIONS, 'EXTRACTINTOCOMPONENT']
 };
 
 const UiBlock = ({ id, components, type, justifyContent, gridVariant, visible }: UiComponentProps<LayoutProps>) => {

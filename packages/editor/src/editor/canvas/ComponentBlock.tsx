@@ -1,4 +1,4 @@
-import type { Button as ButtonType, Component, ComponentData, ComponentType, Composite } from '@axonivy/form-editor-protocol';
+import type { Button as ButtonType, Component, ComponentData, ComponentType, Composite, Layout } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
@@ -15,7 +15,6 @@ import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 import { useClipboard, type TextDropItem } from 'react-aria';
 import { useComponentBlockActions } from './useComponentBlockActions';
-import { useAction } from '../../context/useAction';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -34,7 +33,7 @@ export type DraggableProps = {
 };
 
 const Draggable = ({ config, data }: DraggableProps) => {
-  const { setUi } = useAppContext();
+  const { setUi, context } = useAppContext();
   const { data: formData, setData } = useData();
   const readonly = useReadonly();
   const isDataTableEditableButtons =
@@ -47,10 +46,17 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { selectedElement, setSelectedElement } = useAppContext();
   const isSelected = selectedElement === data.cid;
   const elementConfig = { ...config.defaultProps, ...data.config };
-  const { createElement, duplicateElement, deleteElement, createActionButton, createActionColumn, createColumn } = useComponentBlockActions(
-    { config, data }
-  );
-  const openComponent = useAction('openComponent');
+  const {
+    createElement,
+    duplicateElement,
+    openComponent,
+    onKeyDown,
+    deleteElement,
+    createActionButton,
+    createActionColumn,
+    createColumn,
+    extractIntoComponent
+  } = useComponentBlockActions({ config, data });
   const validations = useValidations(data.cid);
   const { clipboardProps } = useClipboard({
     getItems() {
@@ -79,32 +85,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
             e.stopPropagation();
             setUi(old => ({ ...old, properties: true }));
           }}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              e.stopPropagation();
-              setSelectedElement(data.cid);
-              setUi(old => ({ ...old, properties: true }));
-            }
-            if (readonly) {
-              return;
-            }
-            if (e.key === 'Delete') {
-              e.stopPropagation();
-              deleteElement();
-            }
-            if (e.key === 'ArrowUp' && !isDataTableEditableButtons) {
-              e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
-            }
-            if (e.key === 'ArrowDown' && !isDataTableEditableButtons) {
-              e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
-            }
-            if (e.code === 'KeyM' && !isDataTableEditableButtons) {
-              e.stopPropagation();
-              duplicateElement();
-            }
-          }}
+          onKeyDown={onKeyDown}
           className={cn(
             'draggable',
             isSelected && 'selected',
@@ -135,6 +116,16 @@ const Draggable = ({ config, data }: DraggableProps) => {
             ? () => openComponent((data.config as Composite).name)
             : undefined
         }
+        extractIntoComponent={
+          config.quickActions.includes('EXTRACTINTOCOMPONENT') && data.type === 'Layout'
+            ? () =>
+                extractIntoComponent.mutate({
+                  context,
+                  layoutId: data.cid,
+                  newComponentName: (data.config as Layout).id.length > 0 ? (data.config as Layout).id : data.cid
+                })
+            : undefined
+        }
         createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
         createActionColumnAction={config.quickActions.includes('CREATEACTIONCOLUMN') ? createActionColumn : undefined}
         createActionColumnButtonAction={
@@ -157,6 +148,7 @@ type QuickbarProps = {
   duplicateAction?: () => void;
   createAction?: (name: ComponentType) => void;
   openComponentAction?: () => void;
+  extractIntoComponent?: () => void;
   createColumnAction?: () => void;
   createActionColumnAction?: () => void;
   createActionColumnButtonAction?: () => void;
@@ -167,6 +159,7 @@ const Quickbar = ({
   deleteAction,
   duplicateAction,
   createAction,
+  extractIntoComponent,
   openComponentAction,
   createColumnAction,
   createActionColumnAction,
@@ -184,14 +177,24 @@ const Quickbar = ({
         <PopoverAnchor asChild>
           <Flex gap={1}>
             {deleteAction && <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />}
-            {duplicateAction && <Button icon={IvyIcons.Duplicate} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />}
+            {duplicateAction && (
+              <Button icon={IvyIcons.Duplicate} aria-label='Duplicate (M)' title='Duplicate (M)' onClick={duplicateAction} />
+            )}
             {openComponentAction && (
               <Button
                 icon={IvyIcons.SubEnd}
                 rotate={180}
-                aria-label='Open Component'
-                title='Open Component'
+                aria-label='Open Component (J)'
+                title='Open Component (J)'
                 onClick={openComponentAction}
+              />
+            )}
+            {extractIntoComponent && (
+              <Button
+                icon={IvyIcons.WrapToSubprocess}
+                aria-label='Extract into own Ivy Component (E)'
+                title='Extract into own Ivy Component (E)'
+                onClick={extractIntoComponent}
               />
             )}
             {(createColumnAction || createActionColumnButtonAction || createAction || createFromDataAction) && (

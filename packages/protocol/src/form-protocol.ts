@@ -13,7 +13,8 @@ import type {
   CmsQuickActionRequest,
   CmsQuickAction,
   ExecuteCmsQuickActionRequest,
-  EditorFileContent
+  EditorFileContent,
+  ExtractContext
 } from './data/form';
 import type { FormEditor, FormSaveData } from './data/form-data';
 
@@ -25,6 +26,7 @@ export interface FormMetaRequestTypes {
   'meta/cms/cmsQuickActions': [CmsQuickActionRequest, Array<CmsQuickAction>];
   'meta/composite/all': [FormContext, Array<CompositeInfo>];
   'meta/composite/params': [CompositeContext, Array<ParameterInfo>];
+  'meta/composite/extractIntoComponent': [ExtractContext, string];
 }
 
 export interface FormRequestTypes extends FormMetaRequestTypes {
