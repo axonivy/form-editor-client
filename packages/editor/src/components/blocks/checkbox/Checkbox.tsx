@@ -12,15 +12,7 @@ import { useMemo } from 'react';
 type CheckboxProps = Prettify<Checkbox>;
 
 export const useCheckboxComponent = () => {
-  const {
-    baseComponentFields,
-    defaultBaseComponent,
-    defaultDisabledComponent,
-    disabledComponentFields,
-    CategoryLookup,
-    SubCategoryLookup,
-    SubsectionLookup
-  } = useBase();
+  const { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } = useBase();
 
   const defaultCheckboxProps: Checkbox = useMemo(() => {
     return {
@@ -33,11 +25,11 @@ export const useCheckboxComponent = () => {
   }, [defaultBaseComponent, defaultDisabledComponent]);
 
   const CheckboxComponent: ComponentConfig<CheckboxProps> = useMemo(() => {
-    return {
+    const component: ComponentConfig<CheckboxProps> = {
       name: 'Checkbox',
       displayName: t('checkbox.name'),
-      category: CategoryLookup['Elements'],
-      subcategory: SubCategoryLookup['Selection'],
+      category: 'Elements',
+      subcategory: 'Selection',
       icon: <IconSvg />,
       description: t('checkbox.description'),
       defaultProps: defaultCheckboxProps,
@@ -47,23 +39,24 @@ export const useCheckboxComponent = () => {
       fields: {
         ...baseComponentFields,
         label: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.label'),
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
         selected: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.selected'),
           type: 'textBrowser',
           browsers: [{ type: 'ATTRIBUTE' }]
         },
         ...disabledComponentFields,
-        updateOnChange: { subsection: SubsectionLookup['Behaviour'], label: t('label.updateFormChange'), type: 'checkbox' }
+        updateOnChange: { subsection: 'Behaviour', label: t('label.updateFormChange'), type: 'checkbox' }
       },
       quickActions: DEFAULT_QUICK_ACTIONS
     };
-  }, [CategoryLookup, SubCategoryLookup, SubsectionLookup, baseComponentFields, defaultCheckboxProps, disabledComponentFields]);
+    return component;
+  }, [baseComponentFields, defaultCheckboxProps, disabledComponentFields]);
 
   const UiBlock = ({ label, selected, visible, disabled, updateOnChange }: UiComponentProps<CheckboxProps>) => (
     <>

@@ -12,15 +12,7 @@ import { useMemo } from 'react';
 type ComboboxProps = Prettify<Combobox>;
 
 export const useComboboxComponent = () => {
-  const {
-    baseComponentFields,
-    behaviourComponentFields,
-    defaultBaseComponent,
-    defaultBehaviourComponent,
-    CategoryLookup,
-    SubCategoryLookup,
-    SubsectionLookup
-  } = useBase();
+  const { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } = useBase();
   const { t } = useTranslation();
 
   const ComboboxComponent: ComponentConfig<ComboboxProps> = useMemo(() => {
@@ -37,8 +29,8 @@ export const useComboboxComponent = () => {
     const component: ComponentConfig<ComboboxProps> = {
       name: 'Combobox',
       displayName: t('combobox.name'),
-      category: CategoryLookup['Elements'],
-      subcategory: SubCategoryLookup['Input'],
+      category: 'Elements',
+      subcategory: 'Input',
       icon: <IconSvg />,
       description: t('combobox.description'),
       defaultProps: defaultComboboxProps,
@@ -48,36 +40,36 @@ export const useComboboxComponent = () => {
       fields: {
         ...baseComponentFields,
         label: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.label'),
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
         value: {
-          subsection: SubCategoryLookup['General'],
+          subsection: 'General',
           label: t('label.value'),
           type: 'textBrowser',
           browsers: [{ type: 'ATTRIBUTE' }]
         },
         completeMethod: {
-          subsection: SubsectionLookup['Options'],
+          subsection: 'Options',
           label: t('label.completeMethod'),
           type: 'textBrowser',
           browsers: [{ type: 'LOGIC' }]
         },
         itemLabel: {
-          subsection: SubsectionLookup['Options'],
+          subsection: 'Options',
           label: t('label.itemLabel'),
           type: 'text',
           hide: data => data.completeMethod.length === 0
         },
         itemValue: {
-          subsection: SubsectionLookup['Options'],
+          subsection: 'Options',
           label: t('label.itemValue'),
           type: 'text',
           hide: data => data.completeMethod.length === 0
         },
-        withDropdown: { subsection: SubsectionLookup['Options'], label: t('combobox.addDropdown'), type: 'checkbox' },
+        withDropdown: { subsection: 'Options', label: t('combobox.addDropdown'), type: 'checkbox' },
         ...behaviourComponentFields
       },
       quickActions: DEFAULT_QUICK_ACTIONS

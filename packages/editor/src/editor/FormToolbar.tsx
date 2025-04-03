@@ -33,13 +33,11 @@ import { DataClassDialog } from './browser/data-class/DataClassDialog';
 import { PaletteButton } from './palette/PaletteButton';
 import { useKnownHotkeys } from '../utils/hotkeys';
 import { useTranslation } from 'react-i18next';
-import { useBase } from '../components/blocks/base';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { t } = useTranslation();
-  const { CategoryLookup } = useBase();
   const { allComponentsByCategory } = useComponents();
   const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
   const { setUnhistoricisedData } = useData();
@@ -136,9 +134,9 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           </PalettePopover>
           <ToolbarContainer maxWidth={650}>
             <Flex gap={3}>
-              <PaletteCategoryPopover category={CategoryLookup['Structures']} icon={IvyIcons.LaneSwimlanes} />
-              <PaletteCategoryPopover category={CategoryLookup['Elements']} icon={IvyIcons.ChangeType} />
-              <PaletteCategoryPopover category={CategoryLookup['Actions']} icon={IvyIcons.MultiSelection} />
+              <PaletteCategoryPopover category={'Structures'} icon={IvyIcons.LaneSwimlanes} />
+              <PaletteCategoryPopover category={'Elements'} icon={IvyIcons.ChangeType} />
+              <PaletteCategoryPopover category={'Actions'} icon={IvyIcons.MultiSelection} />
             </Flex>
           </ToolbarContainer>
           <PalettePopover label={t('label.composites')} icon={IvyIcons.File}>

@@ -2,6 +2,7 @@ import './Palette.css';
 import { Flex, SearchInput, Separator } from '@axonivy/ui-components';
 import { useState } from 'react';
 import { PaletteItem, type PaletteConfig } from './PaletteItem';
+import { useBase } from '../../components/blocks/base';
 
 export type PaletteProps = {
   sections: Record<string, PaletteConfig[]>;
@@ -10,17 +11,17 @@ export type PaletteProps = {
 
 export const Palette = ({ sections, directCreate }: PaletteProps) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { Lookup } = useBase();
   return (
     <Flex direction='column' className='palette' gap={3}>
       <SearchInput placeholder='Search...' value={searchTerm} onChange={setSearchTerm} />
       {Object.entries(sections).map(([section, sectionItems]) => {
-        console.log(section);
         // TODO: Cleanup
         const filteredItems = sectionItems.filter(item =>
           (item.displayName ? item.displayName : item.name).toLowerCase().includes(searchTerm.toLowerCase())
         );
         if (filteredItems.length > 0) {
-          return <PaletteSection key={section} items={filteredItems} title={section} directCreate={directCreate} />;
+          return <PaletteSection key={section} items={filteredItems} title={Lookup[section]} directCreate={directCreate} />;
         }
         return null;
       })}

@@ -1,5 +1,5 @@
 import { expect } from 'vitest';
-import { useAttributeBrowser } from './useAttributeBrowser';
+import { getApplyModifierValue } from './useAttributeBrowser';
 import type { Row } from '@tanstack/react-table';
 import type { BrowserNode } from '@axonivy/ui-components';
 
@@ -9,29 +9,24 @@ const row = {
 } as Row<BrowserNode>;
 
 test('return empty value when row is undefined', () => {
-  const { getApplyModifierValue } = useAttributeBrowser();
   const result = getApplyModifierValue(undefined, false);
   expect(result).toEqual({ value: '' });
 });
 
 test('returns full variable path when row is defined and componentInDialog is false', () => {
-  const { getApplyModifierValue } = useAttributeBrowser();
   const result = getApplyModifierValue(row, false);
   expect(result).toEqual({ value: 'data.address.location.country' });
 });
 test('returns prefixed variable path when row is defined and componentInDialog is true', () => {
-  const { getApplyModifierValue } = useAttributeBrowser();
   const result = getApplyModifierValue(row, true);
   expect(result).toEqual({ value: 'ivyFormGenericRow.selectedRow.address.location.country' });
 });
 test('returns partial path when onlyAttributes is COLUMN and componentInDialog is false', () => {
-  const { getApplyModifierValue } = useAttributeBrowser();
   const result = getApplyModifierValue(row, false, { onlyAttributes: 'COLUMN' });
   expect(result).toEqual({ value: 'address.location.country' });
 });
 
 test('returns only prefix when row has no parents and componentInDialog is true', () => {
-  const { getApplyModifierValue } = useAttributeBrowser();
   const result = getApplyModifierValue(
     {
       original: { value: 'variable', info: 'String' },
@@ -43,7 +38,6 @@ test('returns only prefix when row has no parents and componentInDialog is true'
 });
 
 test('returns only row value when onlyAttributes is COLUMN and row has no parents', () => {
-  const { getApplyModifierValue } = useAttributeBrowser();
   const result = getApplyModifierValue(
     {
       original: { value: 'data', info: 'String' },

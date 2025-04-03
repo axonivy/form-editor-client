@@ -24,28 +24,16 @@ export const hideButtonField = <T,>(obj: T): boolean => {
 };
 
 export const useButtonComponent = () => {
-  const {
-    baseComponentFields,
-    defaultBaseComponent,
-    defaultDisabledComponent,
-    disabledComponentFields,
-    CategoryLookup,
-    SubCategoryLookup,
-    SubsectionLookup
-  } = useBase();
+  const { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } = useBase();
   const { t } = useTranslation();
 
-  const variantOptions: FieldOption<ButtonVariant>[] = useMemo(
-    () =>
-      [
-        { label: t('button.type.primary'), value: 'PRIMARY' },
-        { label: t('button.type.secondary'), value: 'SECONDARY' },
-        { label: t('button.type.danger'), value: 'DANGER' }
-      ] as const,
-    [t]
-  );
-
   const ButtonComponent: ComponentConfig<ButtonProps> = useMemo(() => {
+    const variantOptions: FieldOption<ButtonVariant>[] = [
+      { label: t('button.type.primary'), value: 'PRIMARY' },
+      { label: t('button.type.secondary'), value: 'SECONDARY' },
+      { label: t('button.type.danger'), value: 'DANGER' }
+    ] as const;
+
     const defaultButtonProps: Button = {
       name: 'Action',
       action: '',
@@ -56,11 +44,12 @@ export const useButtonComponent = () => {
       ...defaultDisabledComponent,
       ...defaultBaseComponent
     } as const;
-    return {
+
+    const component: ComponentConfig<ButtonProps> = {
       name: 'Button',
       displayName: t('button.name'),
-      category: CategoryLookup['Elements'],
-      subcategory: SubCategoryLookup['General'],
+      category: 'Actions',
+      subcategory: 'General',
       icon: <IconSvg />,
       description: t('button.description'),
       defaultProps: defaultButtonProps,
@@ -70,52 +59,44 @@ export const useButtonComponent = () => {
       fields: {
         ...baseComponentFields,
         type: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.type'),
           type: 'generic',
           render: renderTypeField
         },
         name: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.name'),
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
         action: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.action'),
           type: 'textBrowser',
           browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }],
           hide: data => hideButtonField(data)
         },
         variant: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.variant'),
           type: 'select',
           options: variantOptions
         },
         icon: {
-          subsection: SubsectionLookup['General'],
+          subsection: 'General',
           label: t('label.icon'),
           type: 'generic',
           render: renderIconField
         },
-        processOnlySelf: { subsection: SubsectionLookup['Behaviour'], type: 'hidden' },
+        processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
         ...disabledComponentFields
       },
       quickActions: DEFAULT_QUICK_ACTIONS
     };
-  }, [
-    CategoryLookup,
-    SubCategoryLookup,
-    SubsectionLookup,
-    baseComponentFields,
-    defaultBaseComponent,
-    defaultDisabledComponent,
-    disabledComponentFields,
-    t,
-    variantOptions
-  ]);
+
+    return component;
+  }, [baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields, t]);
 
   const UiBlock = ({ name, icon, variant, visible, disabled }: UiComponentProps<ButtonProps>) => (
     <>

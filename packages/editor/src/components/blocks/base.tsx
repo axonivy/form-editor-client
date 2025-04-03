@@ -1,13 +1,5 @@
 import type { LayoutAlignItems, SelectItem } from '@axonivy/form-editor-protocol';
-import type {
-  FieldOption,
-  Fields,
-  GenericFieldProps,
-  ItemCategory,
-  ItemSubcategory,
-  Subsection,
-  TranslatedCategory
-} from '../../types/config';
+import type { FieldOption, Fields, GenericFieldProps, ItemCategory, ItemSubcategory, Subsection } from '../../types/config';
 import { BasicField, Input } from '@axonivy/ui-components';
 import { useAppContext } from '../../context/AppContext';
 import { useValidation } from '../../context/useValidation';
@@ -18,35 +10,23 @@ import { useMemo } from 'react';
 
 export const useBase = () => {
   const { t } = useTranslation();
-  const CategoryLookup: Record<ItemCategory, TranslatedCategory<ItemCategory>> = useMemo(() => {
-    return {
-      Elements: { id: 'Elements', label: t('category.elements') },
-      Structures: { id: 'Structures', label: t('category.structures') },
-      Actions: { id: 'Actions', label: t('category.actions') },
-      Hidden: { id: 'Hidden', label: t('category.hidden') }
-    };
-  }, [t]);
 
-  const SubCategoryLookup: Record<ItemSubcategory, TranslatedCategory<ItemSubcategory>> = useMemo(() => {
-    return {
-      General: { id: 'General', label: t('category.general') },
-      Input: { id: 'Input', label: t('category.input') },
-      Selection: { id: 'Selection', label: t('category.selection') },
-      Text: { id: 'Text', label: t('category.text') }
-    };
-  }, [t]);
-
-  const SubsectionLookup: Record<Subsection, TranslatedCategory<Subsection>> = useMemo(() => {
-    return {
-      General: { id: 'General', label: t('category.general') },
-      Styling: { id: 'Styling', label: t('category.styling') },
-      Behaviour: { id: 'Behaviour', label: t('category.behaviour') },
-      Options: { id: 'Options', label: t('category.options') },
-      'Static Options': { id: 'Static Options', label: t('category.staticOptions') },
-      'Dynamic Options': { id: 'Dynamic Options', label: t('category.dynamicOptions') },
-      Columns: { id: 'Columns', label: t('category.columns') }
-    };
-  }, [t]);
+  const Lookup: Record<ItemCategory | ItemSubcategory | Subsection, string> = {
+    Elements: t('category.elements'),
+    Structures: t('category.structures'),
+    Actions: t('category.actions'),
+    Hidden: t('category.hidden'),
+    General: t('category.general'),
+    Input: t('category.input'),
+    Selection: t('category.selection'),
+    Text: t('category.text'),
+    Styling: t('category.styling'),
+    Behaviour: t('category.behaviour'),
+    Options: t('category.options'),
+    'Static Options': t('category.staticOptions'),
+    'Dynamic Options': t('category.dynamicOptions'),
+    Columns: t('category.columns')
+  };
 
   type BaseComponentProps = { id: string; alignSelf: LayoutAlignItems; lgSpan: string; mdSpan: string };
   type SelectItemsProps = {
@@ -84,15 +64,6 @@ export const useBase = () => {
     mdSpan: '12'
   } as const;
 
-  const spanOptions: FieldOption<string>[] = [
-    { label: '1', value: '2' },
-    { label: '2', value: '4' },
-    { label: '3', value: '6' },
-    { label: '4', value: '8' },
-    { label: '5', value: '10' },
-    { label: '6', value: '12' }
-  ] as const;
-
   const alignItemsOptions: FieldOption<LayoutAlignItems>[] = useMemo(
     () =>
       [
@@ -104,96 +75,104 @@ export const useBase = () => {
   );
 
   const baseComponentFields: Fields<BaseComponentProps> = useMemo(() => {
+    const spanOptions: FieldOption<string>[] = [
+      { label: '1', value: '2' },
+      { label: '2', value: '4' },
+      { label: '3', value: '6' },
+      { label: '4', value: '8' },
+      { label: '5', value: '10' },
+      { label: '6', value: '12' }
+    ] as const;
     return {
-      id: { subsection: SubsectionLookup['General'], type: 'generic', label: t('label.id'), render: props => <IdInput {...props} /> },
+      id: { subsection: 'General', type: 'generic', label: t('label.id'), render: props => <IdInput {...props} /> },
       alignSelf: {
         section: t('category.layout'),
-        subsection: SubsectionLookup['General'],
+        subsection: 'General',
         type: 'toggleGroup',
         label: t('label.verticalAlign'),
         options: alignItemsOptions
       },
       lgSpan: {
         section: t('category.layout'),
-        subsection: SubsectionLookup['General'],
+        subsection: 'General',
         type: 'select',
         label: t('label.largeSpan'),
         options: spanOptions
       },
       mdSpan: {
         section: t('category.layout'),
-        subsection: SubsectionLookup['General'],
+        subsection: 'General',
         type: 'select',
         label: t('label.mediumSpan'),
         options: spanOptions
       }
     };
-  }, [SubsectionLookup, alignItemsOptions, spanOptions, t]);
+  }, [alignItemsOptions, t]);
 
   const visibleComponentField: Fields<VisibleItemProps> = useMemo(() => {
     return {
       visible: {
-        subsection: SubsectionLookup['Behaviour'],
+        subsection: 'Behaviour',
         label: t('label.visible'),
         type: 'textBrowser',
         browsers: [{ type: 'CONDITION' }],
         hide: data => hideButtonField(data)
       }
     };
-  }, [SubsectionLookup, t]);
+  }, [t]);
 
   const disabledComponentFields: Fields<DisabledItemProps> = useMemo(() => {
     return {
       ...visibleComponentField,
       disabled: {
-        subsection: SubsectionLookup['Behaviour'],
+        subsection: 'Behaviour',
         label: t('label.disable'),
         type: 'textBrowser',
         browsers: [{ type: 'CONDITION' }],
         hide: data => hideButtonField(data)
       }
     };
-  }, [SubsectionLookup, t, visibleComponentField]);
+  }, [t, visibleComponentField]);
 
   const behaviourComponentFields: Fields<BehaviourItemProps> = useMemo(() => {
     return {
       ...disabledComponentFields,
       required: {
-        subsection: SubsectionLookup['Behaviour'],
+        subsection: 'Behaviour',
         label: t('label.required'),
         type: 'textBrowser',
         browsers: [{ type: 'CONDITION' }]
       },
       requiredMessage: {
-        subsection: SubsectionLookup['Behaviour'],
+        subsection: 'Behaviour',
         label: t('label.requiredMessage'),
         type: 'textBrowser',
         browsers: [{ type: 'CMS', options: { overrideSelection: true } }],
         hide: data => data.required.length === 0
       },
-      updateOnChange: { subsection: SubsectionLookup['Behaviour'], label: t('label.updateFormChange'), type: 'checkbox' }
+      updateOnChange: { subsection: 'Behaviour', label: t('label.updateFormChange'), type: 'checkbox' }
     };
-  }, [SubsectionLookup, disabledComponentFields, t]);
+  }, [disabledComponentFields, t]);
 
   const selectItemsComponentFields: Fields<SelectItemsProps> = useMemo(() => {
     return {
       label: {
-        subsection: SubsectionLookup['General'],
+        subsection: 'General',
         label: t('label.label'),
         type: 'textBrowser',
         browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
       },
-      value: { subsection: SubsectionLookup['General'], label: t('label.value'), type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
-      staticItems: { subsection: SubsectionLookup['Static Options'], label: t('label.options'), type: 'selectTable' },
+      value: { subsection: 'General', label: t('label.value'), type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE' }] },
+      staticItems: { subsection: 'Static Options', label: t('label.options'), type: 'selectTable' },
       dynamicItemsList: {
-        subsection: SubsectionLookup['Dynamic Options'],
+        subsection: 'Dynamic Options',
         label: t('label.listOfObjects'),
         type: 'textBrowser',
         browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }],
         options: { placeholder: 'e.g. #{data.dynamicList}' } // TODO: Translate
       },
       dynamicItemsLabel: {
-        subsection: SubsectionLookup['Dynamic Options'],
+        subsection: 'Dynamic Options',
         label: t('label.objectLabel'),
         type: 'textBrowser',
         browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'DYNAMICLIST', withoutEl: true } }],
@@ -203,7 +182,7 @@ export const useBase = () => {
         hide: data => data.dynamicItemsList.length == 0
       },
       dynamicItemsValue: {
-        subsection: SubsectionLookup['Dynamic Options'],
+        subsection: 'Dynamic Options',
         label: t('label.objectValue'),
         type: 'textBrowser',
         browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'DYNAMICLIST', withoutEl: true } }],
@@ -213,7 +192,7 @@ export const useBase = () => {
         hide: data => data.dynamicItemsList.length == 0
       }
     };
-  }, [SubsectionLookup, t]);
+  }, [t]);
 
   const IdInput = ({ label, onChange, value, validationPath }: GenericFieldProps) => {
     const { selectedElement } = useAppContext();
@@ -226,9 +205,7 @@ export const useBase = () => {
   };
 
   return {
-    CategoryLookup,
-    SubCategoryLookup,
-    SubsectionLookup,
+    Lookup,
     defaultVisibleComponent,
     defaultDisabledComponent,
     defaultBehaviourComponent,

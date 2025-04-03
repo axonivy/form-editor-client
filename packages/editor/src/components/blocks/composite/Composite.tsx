@@ -14,7 +14,7 @@ export const useCompositeComponent = () => {
   const isComposite = (component?: Component | ComponentData): component is ComponentData & { config: Composite } => {
     return component !== undefined && component.type === 'Composite' && 'name' in component.config && 'startMethod' in component.config;
   };
-  const { baseComponentFields, defaultBaseComponent, CategoryLookup, SubCategoryLookup, SubsectionLookup } = useBase();
+  const { baseComponentFields, defaultBaseComponent } = useBase();
   const { t } = useTranslation();
   const CompositeComponent: ComponentConfig<CompositeProps> = useMemo(() => {
     const defaultCompositeProps: Composite = {
@@ -27,8 +27,8 @@ export const useCompositeComponent = () => {
     const CompositeComponent: ComponentConfig<CompositeProps> = {
       name: 'Composite',
       displayName: t('composite.name'),
-      category: CategoryLookup['Hidden'],
-      subcategory: SubCategoryLookup['General'],
+      category: 'Hidden',
+      subcategory: 'General',
       icon: <IconSvg />,
       description: 'A button for fire actions',
       defaultProps: defaultCompositeProps,
@@ -37,14 +37,14 @@ export const useCompositeComponent = () => {
       outlineInfo: component => component.name,
       fields: {
         ...baseComponentFields,
-        name: { subsection: SubsectionLookup['General'], label: 'Composite', type: 'text', options: { disabled: true } },
-        startMethod: { subsection: SubsectionLookup['General'], label: 'Start Method', type: 'generic', render: renderStartMethodSelect },
-        parameters: { subsection: SubsectionLookup['Parameters'], type: 'generic', render: renderParameters }
+        name: { subsection: 'General', label: 'Composite', type: 'text', options: { disabled: true } },
+        startMethod: { subsection: 'General', label: 'Start Method', type: 'generic', render: renderStartMethodSelect },
+        parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters }
       },
       quickActions: DEFAULT_QUICK_ACTIONS
     } as const;
     return CompositeComponent;
-  }, [CategoryLookup, SubCategoryLookup, SubsectionLookup, baseComponentFields, defaultBaseComponent, t]);
+  }, [baseComponentFields, defaultBaseComponent, t]);
 
   const UiBlock = ({ name }: UiComponentProps<CompositeProps>) => (
     <div className='block-composite'>

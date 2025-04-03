@@ -69,8 +69,8 @@ export const fullVariablePath = (row: Row<BrowserNode>, showRootNode: boolean = 
 
 export const rowToCreateData = (
   row: Row<BrowserNode>,
-  showRootNode: boolean = true,
   componentForType: ComponentForType,
+  showRootNode: boolean = true,
   prefix?: string
 ): CreateComponentData | undefined => {
   const node = row.original;

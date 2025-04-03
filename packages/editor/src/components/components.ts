@@ -54,9 +54,9 @@ export const useComponents = () => {
     // Provisional: Filter out undefined components before checking category
     const filteredComponents = Object.values(config.components)
       .filter(component => component !== undefined)
-      .filter(component => component.category.id === category);
+      .filter(component => component.category === category);
 
-    return groupBy(Object.values(filteredComponents), item => item.subcategory.label);
+    return groupBy(Object.values(filteredComponents), item => item.subcategory);
   };
 
   const allComponentsByCategory = () => {
@@ -64,8 +64,8 @@ export const useComponents = () => {
     return groupBy(
       Object.values(config.components)
         .filter(component => component !== undefined)
-        .filter(component => component.category.id !== 'Hidden'),
-      item => item.category.label
+        .filter(component => component.category !== 'Hidden'),
+      item => item.category
     );
   };
 
@@ -138,6 +138,7 @@ export const useComponents = () => {
   } as const;
 
   return {
+    config,
     componentByElement,
     componentByName,
     componentsByCategory,

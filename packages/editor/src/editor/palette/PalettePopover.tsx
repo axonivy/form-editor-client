@@ -7,6 +7,7 @@ import { useDndContext } from '@dnd-kit/core';
 import { useEffect, useState, type ReactNode } from 'react';
 import './PalettePopover.css';
 import { PaletteButton } from './PaletteButton';
+import { useBase } from '../../components/blocks/base';
 
 type PalettePopoverProps = {
   label: string;
@@ -41,13 +42,12 @@ export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) =
   );
 };
 
-export const PaletteCategoryPopover = (
-  props: Omit<PalettePopoverProps, 'children' | 'label'> & { category: { id: ItemCategory; label: string } }
-) => {
+export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children' | 'label'> & { category: ItemCategory }) => {
   const { componentsByCategory } = useComponents();
+  const { Lookup } = useBase();
   return (
-    <PalettePopover label={props.category.label} icon={props.icon}>
-      <Palette sections={componentsByCategory(props.category.id)} />
+    <PalettePopover label={Lookup[props.category]} icon={props.icon}>
+      <Palette sections={componentsByCategory(props.category)} />
     </PalettePopover>
   );
 };

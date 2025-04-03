@@ -27,10 +27,8 @@ export const isCreateComponentData = (data: unknown): data is CreateComponentDat
 
 export type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options' | 'Columns' | (string & {});
 
-export type TranslatedCategory<T> = { id: T; label: string };
-
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
-  subsection: TranslatedCategory<Subsection>;
+  subsection: Subsection;
   label?: string;
   hide?: (component: ComponentProps) => boolean;
   section?: 'Layout' | (string & {});
@@ -90,8 +88,8 @@ export type ItemSubcategory = 'General' | 'Input' | 'Selection' | 'Text';
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: ComponentType;
   displayName: string;
-  category: TranslatedCategory<ItemCategory>;
-  subcategory: TranslatedCategory<ItemSubcategory>;
+  category: ItemCategory;
+  subcategory: ItemSubcategory;
   icon: ReactNode;
   description: string;
   render: UiComponent<ComponentProps>;

@@ -16,6 +16,7 @@ import { useComponents } from '../../components/components';
 import type { ConfigData } from '@axonivy/form-editor-protocol';
 import { usePropertySubSectionControl } from './PropertySubSectionControl';
 import { useTranslation } from 'react-i18next';
+import { useBase } from '../../components/blocks/base';
 
 export const Properties = () => {
   const { componentByElement } = useComponents();
@@ -39,18 +40,21 @@ export const Properties = () => {
   );
 };
 
-const PropertySection = ({ section, fields }: { section: string; fields: VisibleFields }) => (
-  <AccordionItem key={section} value={section}>
-    <AccordionTrigger>{section}</AccordionTrigger>
-    <AccordionContent>
-      <Flex direction='column' gap={2}>
-        {groupFieldsBySubsection(fields).map(({ title, fields }) => (
-          <PropertySubSection key={title} title={title} fields={fields} />
-        ))}
-      </Flex>
-    </AccordionContent>
-  </AccordionItem>
-);
+const PropertySection = ({ section, fields }: { section: string; fields: VisibleFields }) => {
+  const { Lookup } = useBase();
+  return (
+    <AccordionItem key={section} value={section}>
+      <AccordionTrigger>{section}</AccordionTrigger>
+      <AccordionContent>
+        <Flex direction='column' gap={2}>
+          {groupFieldsBySubsection(fields).map(({ title, fields }) => (
+            <PropertySubSection key={title} title={Lookup[title]} fields={fields} />
+          ))}
+        </Flex>
+      </AccordionContent>
+    </AccordionItem>
+  );
+};
 
 const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleFields }) => {
   const { element, setElement } = useData();

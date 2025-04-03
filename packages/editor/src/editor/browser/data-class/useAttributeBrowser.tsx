@@ -15,19 +15,14 @@ import {
 import { useAppContext } from '../../../context/AppContext';
 import { findComponentDeep, getParentComponent, useData } from '../../../data/data';
 import type { BrowserOptions } from '../Browser';
+import { findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
 import { stripELExpression } from '../../../utils/string';
 import { useTranslation } from 'react-i18next';
-import { variableTreeData, fullVariablePath, findAttributesOfType } from './variable-tree-data';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute';
 
-type getApplyModifierValueType = (
-  row: Row<BrowserNode<unknown>> | undefined,
-  componentInDialog: boolean,
-  options?: BrowserOptions
-) => { value: string };
-
-export const useAttributeBrowser = (options?: BrowserOptions): Browser & { getApplyModifierValue: getApplyModifierValueType } => {
+export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
+  const { t } = useTranslation();
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const [componentInDialog, setComponentInDialog] = useState(false);
   const { context } = useAppContext();
@@ -43,60 +38,6 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser & { getAp
     [variableInfo, setTree]
   );
   const browser = useBrowser(tree, { loadChildren: row => loadChildren(row.original) });
-  const { t } = useTranslation();
-
-  const getApplyModifierValue: getApplyModifierValueType = (row, componentInDialog, options?) => {
-    if (!row) {
-      return { value: '' };
-    }
-
-    const prefix = componentInDialog ? 'ivyFormGenericRow.selectedRow' : '';
-    const path = fullVariablePath(row, (componentInDialog || options?.onlyAttributes) && false);
-
-    return { value: `${prefix}${componentInDialog && path.length > 0 ? '.' : ''}${path}` };
-  };
-
-  const determineTreeData = (
-    element: ComponentData | undefined,
-    data: FormData,
-    variableInfo: VariableInfo,
-    options?: BrowserOptions,
-    setComponentInDialog?: (value: boolean) => void
-  ): Array<BrowserNode<Variable>> => {
-    if (!element) {
-      return variableTreeData().of(variableInfo);
-    }
-
-    const parentComponent = getParentComponent(data.components, element.cid);
-    switch (options?.onlyAttributes) {
-      case 'DYNAMICLIST':
-        return findAttributesOfType(variableInfo, (element.config as ConfigData).dynamicItemsList as string);
-      case 'COLUMN':
-        if (parentComponent && isTable(parentComponent)) {
-          return findAttributesOfType(variableInfo, parentComponent.config.value || '');
-        }
-        break;
-      default:
-        if (parentComponent?.type === 'DataTableColumn') {
-          const parentTableComponent = getParentComponent(data.components, parentComponent.cid);
-          return [
-            ...findAttributesOfType(variableInfo, isTable(parentTableComponent) ? parentComponent.config.value : '', 10, 'row'),
-            ...variableTreeData().of(variableInfo)
-          ];
-        } else if (parentComponent?.type === 'Dialog') {
-          setComponentInDialog?.(true);
-          const dataTable = findComponentDeep(data.components, (parentComponent.config as unknown as Dialog)?.linkedComponent);
-          const table = dataTable ? dataTable.data[dataTable.index] : undefined;
-          if (table && isTable(table)) {
-            return findAttributesOfType(variableInfo, stripELExpression(table.config.value), 10, 'row');
-          }
-        } else {
-          return variableTreeData().of(variableInfo);
-        }
-    }
-
-    return variableTreeData().of(variableInfo);
-  };
 
   return {
     name: ATTRIBUTE_BROWSER_ID,
@@ -104,7 +45,63 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser & { getAp
     browser,
     header: options?.typeHint ? <Message variant='info' message={t('message.typeDefinedBy', { type: options.typeHint })} /> : undefined,
     infoProvider: row => row?.original.info,
-    applyModifier: row => getApplyModifierValue(row, componentInDialog, options),
-    getApplyModifierValue
+    applyModifier: row => getApplyModifierValue(row, componentInDialog, options)
   };
+};
+
+export const getApplyModifierValue = (
+  row: Row<BrowserNode<unknown>> | undefined,
+  componentInDialog: boolean,
+  options?: BrowserOptions
+): { value: string } => {
+  if (!row) {
+    return { value: '' };
+  }
+
+  const prefix = componentInDialog ? 'ivyFormGenericRow.selectedRow' : '';
+  const path = fullVariablePath(row, (componentInDialog || options?.onlyAttributes) && false);
+
+  return { value: `${prefix}${componentInDialog && path.length > 0 ? '.' : ''}${path}` };
+};
+
+const determineTreeData = (
+  element: ComponentData | undefined,
+  data: FormData,
+  variableInfo: VariableInfo,
+  options?: BrowserOptions,
+  setComponentInDialog?: (value: boolean) => void
+): Array<BrowserNode<Variable>> => {
+  if (!element) {
+    return variableTreeData().of(variableInfo);
+  }
+
+  const parentComponent = getParentComponent(data.components, element.cid);
+  switch (options?.onlyAttributes) {
+    case 'DYNAMICLIST':
+      return findAttributesOfType(variableInfo, (element.config as ConfigData).dynamicItemsList as string);
+    case 'COLUMN':
+      if (parentComponent && isTable(parentComponent)) {
+        return findAttributesOfType(variableInfo, parentComponent.config.value || '');
+      }
+      break;
+    default:
+      if (parentComponent?.type === 'DataTableColumn') {
+        const parentTableComponent = getParentComponent(data.components, parentComponent.cid);
+        return [
+          ...findAttributesOfType(variableInfo, isTable(parentTableComponent) ? parentComponent.config.value : '', 10, 'row'),
+          ...variableTreeData().of(variableInfo)
+        ];
+      } else if (parentComponent?.type === 'Dialog') {
+        setComponentInDialog?.(true);
+        const dataTable = findComponentDeep(data.components, (parentComponent.config as unknown as Dialog)?.linkedComponent);
+        const table = dataTable ? dataTable.data[dataTable.index] : undefined;
+        if (table && isTable(table)) {
+          return findAttributesOfType(variableInfo, stripELExpression(table.config.value), 10, 'row');
+        }
+      } else {
+        return variableTreeData().of(variableInfo);
+      }
+  }
+
+  return variableTreeData().of(variableInfo);
 };
