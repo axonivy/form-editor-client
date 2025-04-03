@@ -34,6 +34,14 @@
     "description": "A selectable boolean checkbox",
     "name": "Checkbox"
   },
+  "combobox": {
+    "addDropdown": "Add Dropdown-Button to Combobox",
+    "description": "A autocomplete combobox with label",
+    "name": "Combobox"
+  },
+  "composite": {
+    "name": "__MISSING_TRANSLATION__"
+  },
   "dataTable": {
     "columnFromValue": "Create columns from value",
     "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
@@ -52,6 +60,7 @@
     "browser": "Browser",
     "cmsQuickfix": "CMS-Quickfix",
     "colBoundByAttr": "Column is bound to an object attribute",
+    "completeMethod": "Complete Method",
     "composites": "Composites",
     "createActionCol": "Create Action Column",
     "createActionColBtn": "Create Action Column Button",
@@ -62,12 +71,17 @@
     "createFrom": "Create from {{component}}",
     "createFromData": "Create from data",
     "data": "Data",
+    "delete": "Delete",
     "disable": "Disable",
     "dragFirstButton": "Drag first button inside the {{type}}",
+    "edit": "Edit",
     "enableReqProjects": "Enable required Projects",
     "filterBy": "Filter by",
+    "generic": "Generic",
     "icon": "Icon",
     "id": "ID",
+    "itemLabel": "Item Label",
+    "itemValue": "Item Value",
     "label": "Label",
     "largeSpan": "Large Span",
     "listOfObjects": "List of Objects",

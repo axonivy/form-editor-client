@@ -33,6 +33,8 @@ export const visibleSections = (fields: VisibleFields, parent?: ComponentData) =
 export const groupFieldsBySubsection = (fields: VisibleFields) => {
   const subsections = new Map<string, { title: string; fields: VisibleFields }>();
   fields.forEach(visibleField => {
+    console.log(visibleField);
+    console.log(visibleField.field);
     const id = visibleField.field.subsection.id;
     const title = visibleField.field.subsection.label;
     let subsection = subsections.get(id);

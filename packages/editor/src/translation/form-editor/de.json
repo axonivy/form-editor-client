@@ -34,6 +34,14 @@
     "description": "__MISSING_TRANSLATION__",
     "name": "__MISSING_TRANSLATION__"
   },
+  "combobox": {
+    "addDropdown": "__MISSING_TRANSLATION__",
+    "description": "__MISSING_TRANSLATION__",
+    "name": "__MISSING_TRANSLATION__"
+  },
+  "composite": {
+    "name": "__MISSING_TRANSLATION__"
+  },
   "dataTable": {
     "columnFromValue": "__MISSING_TRANSLATION__",
     "valueEmpty": "__MISSING_TRANSLATION__"
@@ -52,6 +60,7 @@
     "browser": "__MISSING_TRANSLATION__",
     "cmsQuickfix": "__MISSING_TRANSLATION__",
     "colBoundByAttr": "__MISSING_TRANSLATION__",
+    "completeMethod": "__MISSING_TRANSLATION__",
     "composites": "__MISSING_TRANSLATION__",
     "createActionCol": "__MISSING_TRANSLATION__",
     "createActionColBtn": "__MISSING_TRANSLATION__",
@@ -62,12 +71,17 @@
     "createFrom": "__MISSING_TRANSLATION__",
     "createFromData": "__MISSING_TRANSLATION__",
     "data": "__MISSING_TRANSLATION__",
+    "delete": "__MISSING_TRANSLATION__",
     "disable": "__MISSING_TRANSLATION__",
     "dragFirstButton": "__MISSING_TRANSLATION__",
+    "edit": "__MISSING_TRANSLATION__",
     "enableReqProjects": "__MISSING_TRANSLATION__",
     "filterBy": "__MISSING_TRANSLATION__",
+    "generic": "__MISSING_TRANSLATION__",
     "icon": "__MISSING_TRANSLATION__",
     "id": "__MISSING_TRANSLATION__",
+    "itemLabel": "__MISSING_TRANSLATION__",
+    "itemValue": "__MISSING_TRANSLATION__",
     "label": "__MISSING_TRANSLATION__",
     "largeSpan": "__MISSING_TRANSLATION__",
     "listOfObjects": "__MISSING_TRANSLATION__",
