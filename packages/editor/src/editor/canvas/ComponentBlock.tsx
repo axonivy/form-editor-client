@@ -7,7 +7,7 @@ import { getParentComponent, modifyData, useData } from '../../data/data';
 import { dragData } from './drag-data';
 import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Palette } from '../palette/Palette';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
@@ -23,10 +23,9 @@ type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
 };
 
 export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => {
-  const { componentByName } = useSharedComponents();
   return (
     <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
-      <Draggable config={componentByName(component.type)} data={component} />
+      <Draggable type={component.type} data={component} />
     </DropZone>
   );
 };
@@ -36,10 +35,15 @@ export type DraggableProps = {
   data: Component | ComponentData;
 };
 
-const Draggable = ({ config, data }: DraggableProps) => {
+type Draggable = Omit<DraggableProps, 'config'> & {
+  type: ComponentType;
+};
+
+const Draggable = ({ type, data }: Draggable) => {
   const { setUi } = useAppContext();
   const { data: formData, setData } = useData();
   const { componentByName } = useSharedComponents();
+  const config = useMemo(() => componentByName(type), [componentByName, type]);
   const readonly = useReadonly();
   const isDataTableEditableButtons =
     data.type === 'Button' && ((data.config as ButtonType).type === 'EDIT' || (data.config as ButtonType).type === 'DELETE');
@@ -54,6 +58,12 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { createElement, duplicateElement, deleteElement, createActionButton, createActionColumn, createColumn } = useComponentBlockActions(
     { config, data }
   );
+
+  useEffect(() => {
+    // TODO: remounts because of?
+    console.log('MOUNTED', data.cid);
+    return () => console.log('UNMOUNTED', data.cid);
+  }, [data.cid]);
 
   const validations = useValidations(data.cid);
   const { clipboardProps } = useClipboard({
@@ -84,6 +94,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
             setUi(old => ({ ...old, properties: true }));
           }}
           onKeyDown={e => {
+            console.log('key down: ' + e.key);
             if (e.key === 'Enter') {
               e.stopPropagation();
               setSelectedElement(data.cid);
@@ -172,6 +183,7 @@ const Quickbar = ({
 }: QuickbarProps) => {
   const { t } = useTranslation();
   const { allComponentsByCategory } = useSharedComponents();
+  const allComponents = useMemo(() => allComponentsByCategory(), [allComponentsByCategory]);
   const [menu, setMenu] = useState(false);
   const readonly = useReadonly();
   if (readonly) {
@@ -249,7 +261,7 @@ const Quickbar = ({
           </Flex>
         </PopoverAnchor>
         <PopoverContent className='quickbar-menu' sideOffset={8} onClick={e => e.stopPropagation()}>
-          <Palette sections={allComponentsByCategory()} directCreate={type => createAction?.(type as ComponentType)} />
+          <Palette sections={allComponents} directCreate={type => createAction?.(type as ComponentType)} />
         </PopoverContent>
       </Popover>
     </PopoverContent>
