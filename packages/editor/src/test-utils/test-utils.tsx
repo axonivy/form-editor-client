@@ -12,6 +12,7 @@ import { AppProvider, type UI } from '../context/AppContext';
 import { renderHook, type RenderHookOptions } from '@testing-library/react';
 import { ClientContextProvider, type ClientContext } from '../context/ClientContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ComponentsProvider } from '../components/ComponentsContext';
 
 type ContextHelperProps = {
   appContext?: {
@@ -51,23 +52,25 @@ const ContextHelper = ({ appContext, meta, children }: ContextHelperProps & { ch
   return (
     <ClientContextProvider client={client.client}>
       <QueryClientProvider client={queryClient}>
-        <AppProvider
-          value={{
-            context: appContext?.context ?? ({ file: '' } as FormContext),
-            data,
-            // @ts-ignore
-            setData: appContext?.setData ? getData => appContext.setData(getData(data)) : () => {},
-            selectedElement: appContext?.selectedElement,
-            setSelectedElement: appContext?.setSelectedElement ?? (() => {}),
-            ui: appContext?.ui ?? { deviceMode: 'desktop', helpPaddings: true, properties: false },
-            setUi: appContext?.setUi ? appContext.setUi : () => {},
-            history: { push: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
-            validations: [],
-            helpUrl: appContext?.helpUrl ?? ''
-          }}
-        >
-          {children}
-        </AppProvider>
+        <ComponentsProvider>
+          <AppProvider
+            value={{
+              context: appContext?.context ?? ({ file: '' } as FormContext),
+              data,
+              // @ts-ignore
+              setData: appContext?.setData ? getData => appContext.setData(getData(data)) : () => {},
+              selectedElement: appContext?.selectedElement,
+              setSelectedElement: appContext?.setSelectedElement ?? (() => {}),
+              ui: appContext?.ui ?? { deviceMode: 'desktop', helpPaddings: true, properties: false },
+              setUi: appContext?.setUi ? appContext.setUi : () => {},
+              history: { push: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
+              validations: [],
+              helpUrl: appContext?.helpUrl ?? ''
+            }}
+          >
+            {children}
+          </AppProvider>
+        </ComponentsProvider>
       </QueryClientProvider>
     </ClientContextProvider>
   );

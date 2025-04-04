@@ -16,7 +16,7 @@ import { findComponentElement, modifyData, useData } from '../data/data';
 import { ItemDragOverlay } from '../editor/ItemDragOverlay';
 import { isCreateComponentData, type CreateComponentData } from '../types/config';
 import { useAppContext } from './AppContext';
-import { useComponents } from '../components/components';
+import type { ComponentByName } from '../components/components';
 
 const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...args }) => {
   //TODO: slow? -> firing 100+ times per zone
@@ -33,7 +33,7 @@ const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...arg
   return pointerWithin({ droppableContainers, ...args });
 };
 
-export const DndContext = ({ componentByName, children }: { componentByName: any; children: ReactNode }) => {
+export const DndContext = ({ componentByName, children }: { componentByName: ComponentByName; children: ReactNode }) => {
   // TODO: component faster?
   const { ui } = useAppContext();
   const { data, setData, setSelectedElement } = useData();
