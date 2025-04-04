@@ -27,8 +27,8 @@ export function themeParam(): 'dark' | 'light' {
   return 'light';
 }
 
-export function datatableParam(): boolean {
-  return parameter('datatable') === 'true';
+export function selectedElementParam(): string | undefined {
+  return parameter('selectedElement');
 }
 
 export function readonlyParam(): boolean {

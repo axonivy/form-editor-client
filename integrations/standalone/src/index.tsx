@@ -5,7 +5,16 @@ import { ThemeProvider, ReadonlyProvider, toast, Toaster, Spinner, Flex, Hotkeys
 import { webSocketConnection, type Connection } from '@axonivy/jsonrpc';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { webSocketBase, appParam, pmvParam, fileParam, directSaveParam, themeParam, readonlyParam } from './url-helper';
+import {
+  webSocketBase,
+  appParam,
+  pmvParam,
+  fileParam,
+  directSaveParam,
+  themeParam,
+  readonlyParam,
+  selectedElementParam
+} from './url-helper';
 import { initTranslation } from './i18n';
 
 export async function start() {
@@ -16,6 +25,7 @@ export async function start() {
   const directSave = directSaveParam();
   const theme = themeParam();
   const readonly = readonlyParam();
+  const selectedElement = selectedElementParam();
   const queryClient = initQueryClient();
   const rootElement = document.getElementById('root');
   if (rootElement === null) {
@@ -43,7 +53,7 @@ export async function start() {
             <QueryProvider client={queryClient}>
               <ReadonlyProvider readonly={readonly}>
                 <HotkeysProvider initiallyActiveScopes={['global']}>
-                  <App context={{ app, pmv, file }} directSave={directSave} />
+                  <App context={{ app, pmv, file }} selectedElement={selectedElement} directSave={directSave} />
                 </HotkeysProvider>
               </ReadonlyProvider>
             </QueryProvider>

@@ -43,4 +43,5 @@ export interface FormNotificationTypes {
 export interface FormOnNotificationTypes {
   dataChanged: void;
   validationChanged: void;
+  selectElement: string;
 }
