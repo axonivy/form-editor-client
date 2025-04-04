@@ -34,6 +34,7 @@ export async function start(): Promise<void> {
 
   const initialize = async (connection: Connection) => {
     const client = await FormClientJsonRpc.startClient(connection);
+    client.initialize({ app, pmv, file });
     root.render(
       <React.StrictMode>
         <ThemeProvider defaultTheme={theme}>

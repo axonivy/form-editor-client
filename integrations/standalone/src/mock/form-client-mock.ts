@@ -21,6 +21,7 @@ export class FormClientMock implements FormClient {
       defaults: {},
       data: datatable ? dataDataTable : data,
       helpUrl: 'https://dev.axonivy.com',
+      previewUrl: '',
       namespace: ''
     };
   }
@@ -29,6 +30,12 @@ export class FormClientMock implements FormClient {
   onValidationChanged = this.onValidationChangedEmitter.event;
   protected onDataChangedEmitter = new Emitter<void>();
   onDataChanged = this.onDataChangedEmitter.event;
+  protected onSelectElementEmitter = new Emitter<string>();
+  onSelectElement = this.onSelectElementEmitter.event;
+
+  initialize(): Promise<void> {
+    return Promise.resolve();
+  }
 
   data(): Promise<FormEditor> {
     return Promise.resolve(this.formData);

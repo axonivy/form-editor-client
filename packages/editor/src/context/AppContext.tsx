@@ -33,6 +33,7 @@ export type AppContext = {
   history: ReturnType<typeof useHistoryData<FormData>>;
   validations: Array<ValidationResult>;
   helpUrl: string;
+  previewUrl: string;
   namespace: string;
 };
 
@@ -46,6 +47,7 @@ export const appContext = createContext<AppContext>({
   history: { push: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
   validations: [],
   helpUrl: '',
+  previewUrl: '',
   namespace: ''
 });
 

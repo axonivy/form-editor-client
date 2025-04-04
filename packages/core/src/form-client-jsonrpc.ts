@@ -23,14 +23,29 @@ import {
 export class FormClientJsonRpc extends BaseRpcClient implements FormClient {
   protected onDataChangedEmitter = new Emitter<void>();
   protected onValidaitonChangedEmitter = new Emitter<void>();
+  protected onSelectElementEmitter = new Emitter<string>();
   onDataChanged = this.onDataChangedEmitter.event;
   onValidationChanged = this.onValidaitonChangedEmitter.event;
+  onSelectElement = this.onSelectElementEmitter.event;
+
   protected override setupConnection(): void {
     super.setupConnection();
     this.toDispose.push(this.onDataChangedEmitter);
     this.toDispose.push(this.onValidaitonChangedEmitter);
-    this.onNotification('dataChanged', data => this.onDataChangedEmitter.fire(data));
-    this.onNotification('validationChanged', data => this.onValidaitonChangedEmitter.fire(data));
+    this.toDispose.push(this.onSelectElementEmitter);
+    this.onNotification('dataChanged', data => {
+      this.onDataChangedEmitter.fire(data);
+    });
+    this.onNotification('validationChanged', data => {
+      this.onValidaitonChangedEmitter.fire(data);
+    });
+    this.onNotification('selectElement', data => {
+      this.onSelectElementEmitter.fire(data);
+    });
+  }
+
+  initialize(context: FormContext): Promise<void> {
+    return this.sendRequest('initialize', { ...context });
   }
 
   data(context: FormContext): Promise<FormEditor> {

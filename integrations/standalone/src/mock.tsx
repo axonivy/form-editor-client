@@ -4,10 +4,10 @@ import { HotkeysProvider, ReadonlyProvider, ThemeProvider } from '@axonivy/ui-co
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
-import { datatableParam, readonlyParam } from './url-helper';
+import { parameter, readonlyParam } from './url-helper';
 
 export function start() {
-  const datatable = datatableParam();
+  const datatable = parameter('datatable') === 'true';
   const formClient = new FormClientMock(datatable);
   const queryClient = initQueryClient();
   const readonly = readonlyParam();
