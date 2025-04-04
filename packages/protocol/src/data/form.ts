@@ -378,7 +378,7 @@ export interface Textarea {
   visible: string;
 }
 export interface FormActionArgs {
-  actionId: "openDataClass" | "openProcess" | "openUrl";
+  actionId: "openComponent" | "openDataClass" | "openProcess" | "openUrl";
   context: FormContext;
   payload: string;
 }
