@@ -16,6 +16,11 @@ export const useKnownHotkeys = () => {
     return { hotkey, label: t('common.hotkey.redo', { hotkey: hotkeyText(hotkey) }) };
   }, [t]);
 
+  const openPreview = useMemo<KnownHotkey>(() => {
+    const hotkey = 'S';
+    return { hotkey, label: t('hotkey.openPreview', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
+
   const openDataClass = useMemo<KnownHotkey>(() => {
     const hotkey = 'D';
     return { hotkey, label: t('hotkey.openDataClass', { hotkey: hotkeyText(hotkey) }) };
@@ -64,6 +69,7 @@ export const useKnownHotkeys = () => {
   return {
     undo,
     redo,
+    openPreview,
     openDataClass,
     openProcess,
     openHelp,

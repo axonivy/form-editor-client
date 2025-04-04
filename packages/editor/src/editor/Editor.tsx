@@ -5,7 +5,7 @@ import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGrou
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../context/ClientContext';
 import type { Unary } from '../types/types';
-import type { FormContext, FormData, FormEditor, FormEditorProps } from '@axonivy/form-editor-protocol';
+import type { FormContext, FormData, FormEditor } from '@axonivy/form-editor-protocol';
 import { DndContext } from '../context/DndContext';
 import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -15,18 +15,20 @@ import { useTranslation } from 'react-i18next';
 import { ComponentsProvider } from '../context/ComponentsContext';
 import { useComponentsInit } from '../components/components';
 
+export type FormEditorProps = { context: FormContext; directSave?: boolean };
+
 export const Editor = (props: FormEditorProps) => {
   const { t } = useTranslation();
   const components = useComponentsInit();
   const { componentByName } = components;
   const [context, setContext] = useState(props.context);
   const [directSave, setDirectSave] = useState(props.directSave);
+  const [selectedElement, setSelectedElement] = useState<string>();
   useEffect(() => {
     setContext(props.context);
     setDirectSave(props.directSave);
   }, [props]);
   const { ui, setUi } = useUiState();
-  const [selectedElement, setSelectedElement] = useState<string>();
   const [initialData, setInitalData] = useState<FormData | undefined>(undefined);
   const history = useHistoryData<FormData>();
 
@@ -57,9 +59,11 @@ export const Editor = (props: FormEditorProps) => {
   useEffect(() => {
     const validationDispose = client.onValidationChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.validation(context) }));
     const dataDispose = client.onDataChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.data(context) }));
+    const selectElementDispose = client.onSelectElement(selectedElement => setSelectedElement(selectedElement));
     return () => {
       validationDispose.dispose();
       dataDispose.dispose();
+      selectElementDispose.dispose();
     };
   }, [client, context, queryClient, queryKeys]);
 
@@ -113,7 +117,8 @@ export const Editor = (props: FormEditorProps) => {
         context,
         history,
         validations,
-        helpUrl: data.helpUrl
+        helpUrl: data.helpUrl,
+        previewUrl: data.previewUrl
       }}
     >
       <link rel='stylesheet' href='/dev-workflow-ui/webjars/font-awesome/6.1.0/css/all.min.css' />

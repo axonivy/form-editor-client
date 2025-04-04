@@ -192,6 +192,7 @@
     "createFormData": "Aus Daten erstellen ({{hotkey}})",
     "deviceMode": "Gerätemodus ändern ({{hotkey}})",
     "openDataClass": "Datenklasse öffnen ({{hotkey}})",
+    "openPreview": "Preview öffnen ({{hotkey}})",
     "openProcess": "Prozess öffnen ({{hotkey}})",
     "viewMode": "Ansichtsmodus ({{hotkey}})"
   },

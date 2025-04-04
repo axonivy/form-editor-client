@@ -39,7 +39,7 @@ type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { t } = useTranslation();
   const { allComponentsByCategory } = useComponents();
-  const { ui, setUi, history, helpUrl } = useAppContext();
+  const { ui, setUi, history, helpUrl, previewUrl } = useAppContext();
   const { setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();
   const editable = !useReadonly();
@@ -53,6 +53,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   useHotkeys(hotkeys.undo.hotkey, e => hotkeyUndoFix(e, undo), { scopes: ['global'] });
   useHotkeys(hotkeys.redo.hotkey, e => hotkeyRedoFix(e, redo), { scopes: ['global'] });
 
+  useHotkeys(hotkeys.openPreview.hotkey, () => openUrl(previewUrl), { scopes: ['global'] });
   useHotkeys(hotkeys.openDataClass.hotkey, () => openDataClass(), { scopes: ['global'] });
   useHotkeys(hotkeys.openProcess.hotkey, () => openProcess(), { scopes: ['global'] });
   useHotkeys(hotkeys.openHelp.hotkey, () => openUrl(helpUrl), { scopes: ['global'] });
@@ -151,43 +152,58 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       )}
 
       <Flex gap={1} alignItems='center'>
-        <Button
-          title={hotkeys.openDataClass.label}
-          aria-label={hotkeys.openDataClass.label}
-          icon={IvyIcons.DatabaseLink}
-          size='large'
-          onClick={() => openDataClass()}
-        />
-        <Button
-          title={hotkeys.openProcess.label}
-          aria-label={hotkeys.openProcess.label}
-          icon={IvyIcons.Process}
-          size='large'
-          onClick={() => openProcess()}
-        />
-        {!disabled && (
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button title={t('common.label.options')} aria-label={t('common.label.options')} icon={IvyIcons.Settings} size='large' />
-            </PopoverTrigger>
-            <PopoverContent sideOffset={12} collisionPadding={5}>
-              <ReadonlyProvider readonly={false}>
-                <Flex direction='column' gap={2}>
-                  <Field direction='row' alignItems='center' justifyContent='space-between' gap={4}>
-                    <Label>
-                      <Flex alignItems='center' gap={1}>
-                        <IvyIcon icon={IvyIcons.DarkMode} />
-                        {t('common.label.theme')}
-                      </Flex>
-                    </Label>
-                    <Switch defaultChecked={theme === 'dark'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} size='small' />
-                  </Field>
-                </Flex>
-                <PopoverArrow />
-              </ReadonlyProvider>
-            </PopoverContent>
-          </Popover>
-        )}
+        <ToolbarContainer maxWidth={450}>
+          <Flex gap={1} alignItems='center'>
+            <Button
+              title={hotkeys.openPreview.label}
+              aria-label={hotkeys.openPreview.label}
+              icon={IvyIcons.Play}
+              size='large'
+              onClick={() => openUrl(previewUrl)}
+            />
+            <Button
+              title={hotkeys.openDataClass.label}
+              aria-label={hotkeys.openDataClass.label}
+              icon={IvyIcons.DatabaseLink}
+              size='large'
+              onClick={() => openDataClass()}
+            />
+            <Button
+              title={hotkeys.openProcess.label}
+              aria-label={hotkeys.openProcess.label}
+              icon={IvyIcons.Process}
+              size='large'
+              onClick={() => openProcess()}
+            />
+            {!disabled && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button title={t('common.label.options')} aria-label={t('common.label.options')} icon={IvyIcons.Settings} size='large' />
+                </PopoverTrigger>
+                <PopoverContent sideOffset={12} collisionPadding={5}>
+                  <ReadonlyProvider readonly={false}>
+                    <Flex direction='column' gap={2}>
+                      <Field direction='row' alignItems='center' justifyContent='space-between' gap={4}>
+                        <Label>
+                          <Flex alignItems='center' gap={1}>
+                            <IvyIcon icon={IvyIcons.DarkMode} />
+                            {t('common.label.theme')}
+                          </Flex>
+                        </Label>
+                        <Switch
+                          defaultChecked={theme === 'dark'}
+                          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                          size='small'
+                        />
+                      </Field>
+                    </Flex>
+                    <PopoverArrow />
+                  </ReadonlyProvider>
+                </PopoverContent>
+              </Popover>
+            )}
+          </Flex>
+        </ToolbarContainer>
         <Button
           icon={IvyIcons.LayoutSidebarRightCollapse}
           title={t('label.togglePropView')}
