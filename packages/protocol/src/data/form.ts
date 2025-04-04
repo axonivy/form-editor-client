@@ -30,6 +30,7 @@ export interface Forms {
   contentObject: ContentObject[];
   editorFileContent: EditorFileContent;
   executeCmsQuickActionRequest: ExecuteCmsQuickActionRequest;
+  extractContext: ExtractContext;
   form: Form;
   formActionArgs: FormActionArgs;
   formCmsMetaRequest: FormCmsMetaRequest;
@@ -93,6 +94,11 @@ export interface EditorFileContent {
 export interface ExecuteCmsQuickActionRequest {
   cmsQuickAction: CmsQuickAction;
   context: FormContext;
+}
+export interface ExtractContext {
+  context: FormContext;
+  layoutId: string;
+  newComponentName: string;
 }
 export interface Form {
   $schema: string;
