@@ -36,7 +36,7 @@ import { useKnownHotkeys } from '../utils/hotkeys';
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
-  const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
+  const { ui, setUi, selectedElement, history, helpUrl, previewUrl } = useAppContext();
   const { setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();
   const editable = !useReadonly();
@@ -153,6 +153,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       )}
 
       <Flex gap={1} alignItems='center'>
+        <Button title='Preview' aria-label='Preview' icon={IvyIcons.Play} size='large' onClick={() => openUrl(previewUrl)} />
         <Button
           title={hotkeys.openDataClass.label}
           aria-label={hotkeys.openDataClass.label}
