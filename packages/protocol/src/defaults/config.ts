@@ -4,7 +4,8 @@ export const EMPTY_FORM: FormData = {
   id: 'empty',
   config: {
     renderer: 'JSF',
-    theme: ''
+    theme: '',
+    type: 'FORM'
   },
   components: []
 } as const;

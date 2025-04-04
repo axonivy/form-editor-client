@@ -23,7 +23,7 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
-import { forwardRef, useEffect, useMemo, useRef } from 'react';
+import { forwardRef, useMemo, useRef } from 'react';
 import { allComponentsByCategory } from '../components/components';
 import { Palette } from './palette/Palette';
 import { useData } from '../data/data';
@@ -36,15 +36,10 @@ import { useKnownHotkeys } from '../utils/hotkeys';
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
 export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
-  const { ui, setUi, selectedElement, history, helpUrl } = useAppContext();
+  const { ui, setUi, history, helpUrl } = useAppContext();
   const { setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();
   const editable = !useReadonly();
-  useEffect(() => {
-    if (selectedElement === undefined) {
-      setUi(old => ({ ...old, properties: false }));
-    }
-  }, [selectedElement, setUi]);
   const openDataClass = useAction('openDataClass');
   const openProcess = useAction('openProcess');
   const openUrl = useAction('openUrl');

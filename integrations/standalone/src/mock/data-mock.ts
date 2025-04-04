@@ -4,7 +4,8 @@ export const data: FormData = {
   id: 'a5c1d16e-1d08-4e1f-a9f0-436c553a3881',
   config: {
     renderer: 'JSF',
-    theme: ''
+    theme: '',
+    type: 'FORM'
   },
   components: [
     {

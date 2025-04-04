@@ -8,6 +8,7 @@
 
 export type CmsQuickactionCategory = ("global" | "local")
 export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
+export type FormType = "FORM" | "COMPONENT";
 export type LayoutAlignItems = "START" | "CENTER" | "END";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET" | "EDIT" | "DELETE";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
@@ -29,6 +30,7 @@ export interface Forms {
   contentObject: ContentObject[];
   editorFileContent: EditorFileContent;
   executeCmsQuickActionRequest: ExecuteCmsQuickActionRequest;
+  extractContext: ExtractContext;
   form: Form;
   formActionArgs: FormActionArgs;
   formCmsMetaRequest: FormCmsMetaRequest;
@@ -93,6 +95,11 @@ export interface ExecuteCmsQuickActionRequest {
   cmsQuickAction: CmsQuickAction;
   context: FormContext;
 }
+export interface ExtractContext {
+  context: FormContext;
+  layoutId: string;
+  newComponentName: string;
+}
 export interface Form {
   $schema: string;
   id: string;
@@ -102,6 +109,7 @@ export interface Form {
 export interface FormConfig {
   renderer: "JSF";
   theme: string;
+  type: FormType;
 }
 export interface Component {
   cid: string;
@@ -376,7 +384,7 @@ export interface Textarea {
   visible: string;
 }
 export interface FormActionArgs {
-  actionId: "openDataClass" | "openProcess" | "openUrl";
+  actionId: "openComponent" | "openDataClass" | "openProcess" | "openUrl";
   context: FormContext;
   payload: string;
 }

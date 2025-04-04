@@ -35,7 +35,7 @@ export const CompositeComponent: ComponentConfig<CompositeProps> = {
     startMethod: { subsection: 'General', label: 'Start Method', type: 'generic', render: renderStartMethodSelect },
     parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters }
   },
-  quickActions: DEFAULT_QUICK_ACTIONS
+  quickActions: [...DEFAULT_QUICK_ACTIONS, 'OPENCOMPONENT']
 } as const;
 
 const UiBlock = ({ name }: UiComponentProps<CompositeProps>) => (
