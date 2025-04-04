@@ -107,7 +107,8 @@ export const Editor = (props: FormEditorProps) => {
         context,
         history,
         validations,
-        helpUrl: data.helpUrl
+        helpUrl: data.helpUrl,
+        previewUrl: data.previewUrl
       }}
     >
       <link rel='stylesheet' href='/dev-workflow-ui/webjars/font-awesome/6.1.0/css/all.min.css' />
