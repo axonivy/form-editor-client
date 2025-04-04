@@ -8,6 +8,6 @@
     },
     "types": ["vitest/globals", "vite-plugin-svgr/client"]
   },
-  "include": ["src"],
+  "include": ["src", "src/translation/**/*.json"],
   "references": [{ "path": "../../packages/protocol/tsconfig.json" }]
 }

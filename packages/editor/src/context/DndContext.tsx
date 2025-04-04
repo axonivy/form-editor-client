@@ -16,8 +16,10 @@ import { findComponentElement, modifyData, useData } from '../data/data';
 import { ItemDragOverlay } from '../editor/ItemDragOverlay';
 import { isCreateComponentData, type CreateComponentData } from '../types/config';
 import { useAppContext } from './AppContext';
+import type { ComponentByName } from '../components/components';
 
 const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...args }) => {
+  //TODO: slow? -> firing 100+ times per zone
   const rectIntersectionCollisions = rectIntersection({
     ...args,
     droppableContainers: droppableContainers.filter(({ id }) => id === 'canvas')
@@ -31,7 +33,8 @@ const ownCollisionDetection: CollisionDetection = ({ droppableContainers, ...arg
   return pointerWithin({ droppableContainers, ...args });
 };
 
-export const DndContext = ({ children }: { children: ReactNode }) => {
+export const DndContext = ({ componentByName, children }: { componentByName: ComponentByName; children: ReactNode }) => {
+  // TODO: component faster?
   const { ui } = useAppContext();
   const { data, setData, setSelectedElement } = useData();
   const [activeId, setActiveId] = useState<string | undefined>();
@@ -41,10 +44,14 @@ export const DndContext = ({ children }: { children: ReactNode }) => {
     const targetId = event.over?.id as string | undefined;
     if (targetId && activeId) {
       setData(oldData => {
-        const modifiedData = modifyData(oldData, {
-          type: 'dnd',
-          data: { activeId: createData?.componentName ?? activeId, targetId, create: createData }
-        });
+        const modifiedData = modifyData(
+          oldData,
+          {
+            type: 'dnd',
+            data: { activeId: createData?.componentName ?? activeId, targetId, create: createData }
+          },
+          componentByName
+        );
         const newData = modifiedData.newData;
         const newComponentId = modifiedData.newComponentId;
         setSelectedElement(newComponentId ?? activeId);

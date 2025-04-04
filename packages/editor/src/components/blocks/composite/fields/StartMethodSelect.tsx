@@ -3,7 +3,7 @@ import type { GenericFieldProps } from '../../../../types/config';
 import { useMeta } from '../../../../context/useMeta';
 import { useAppContext } from '../../../../context/AppContext';
 import { useData } from '../../../../data/data';
-import { isComposite } from '../Composite';
+import { useCompositeComponent } from '../Composite';
 import { typesString } from '../../../../utils/string';
 import { useValidation } from '../../../../context/useValidation';
 
@@ -14,6 +14,7 @@ export const renderStartMethodSelect = (props: GenericFieldProps) => {
 const StartMethodSelect = ({ label, value, onChange, validationPath }: GenericFieldProps) => {
   const { context } = useAppContext();
   const { element } = useData();
+  const { isComposite } = useCompositeComponent();
   const methods =
     useMeta('meta/composite/all', context, [])
       .data.find(composite => isComposite(element) && composite.id === element?.config.name)

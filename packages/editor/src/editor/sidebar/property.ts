@@ -36,7 +36,7 @@ export const groupFieldsBySubsection = (fields: VisibleFields) => {
     const title = visibleField.field.subsection;
     let subsection = subsections.get(title);
     if (subsection === undefined) {
-      subsection = { title, fields: [] };
+      subsection = { title: title, fields: [] };
       subsections.set(title, subsection);
     }
     subsection.fields.push(visibleField);

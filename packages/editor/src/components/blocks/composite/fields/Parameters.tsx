@@ -3,10 +3,11 @@ import type { GenericFieldProps } from '../../../../types/config';
 import { useMeta } from '../../../../context/useMeta';
 import { useAppContext } from '../../../../context/AppContext';
 import { useData } from '../../../../data/data';
-import { isComposite } from '../Composite';
+import { useCompositeComponent } from '../Composite';
 import { InputFieldWithBrowser } from '../../../../editor/sidebar/fields/InputFieldWithBrowser';
 import type { ParameterInfo, PrimitiveValue } from '@axonivy/form-editor-protocol';
 import { useValidation } from '../../../../context/useValidation';
+import { useTranslation } from 'react-i18next';
 
 export const renderParameters = (props: GenericFieldProps) => {
   return <Parameters {...props} />;
@@ -16,8 +17,10 @@ const isStringRecord = (primitive?: PrimitiveValue): primitive is Record<string,
   primitive !== undefined && typeof primitive === 'object';
 
 const Parameters = ({ value, ...props }: GenericFieldProps) => {
+  const { t } = useTranslation();
   const { context } = useAppContext();
   const { element } = useData();
+  const { isComposite } = useCompositeComponent();
   const method = useMeta('meta/composite/all', context, [])
     .data.find(composite => isComposite(element) && composite.id === element.config.name)
     ?.startMethods.find(method => isComposite(element) && method.name === element.config.startMethod);
@@ -27,7 +30,7 @@ const Parameters = ({ value, ...props }: GenericFieldProps) => {
     return null;
   }
   if (method === undefined || (method.parameters.length === 0 && params.length === 0)) {
-    return <Message variant='info' message='No parameters' />;
+    return <Message variant='info' message={t('message.noParam')} />;
   }
   return (
     <Flex direction='column' gap={2}>
