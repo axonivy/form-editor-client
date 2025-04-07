@@ -52,8 +52,8 @@ pipeline {
                 devSchema="${artifacts}/workspace/ch.ivyteam.ivy.dialog.form.lsp.schema/target/schema/form/*/form-tsgen.json/*zip*/schema.zip"
                 curl -o schema.zip ${devSchema}
                 unzip -j schema.zip
-                mv $PWD/form-tsgen.json $PWD/form.json
-                npm run protocol generate $PWD/form.json
+                mv $PWD/form-tsgen.json $PWD/forms.json
+                npm run protocol generate $PWD/forms.json
 
                 npm run build && npm run lint:ci
               '''
