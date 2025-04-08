@@ -19,12 +19,8 @@ import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFi
 import type { FieldOption } from '../../types/config';
 import { SelectField } from './fields/SelectField';
 
-const formTypeOptions: FieldOption<FormType>[] = [
-  { label: 'Component', value: 'COMPONENT' },
-  { label: 'Form', value: 'FORM' }
-] as const;
-
 export const Properties = () => {
+  const { t } = useTranslation();
   const { componentByElement } = useComponents();
   const { element, data, parent } = useData();
   if (element === undefined) {
@@ -36,7 +32,7 @@ export const Properties = () => {
   const sections = visibleSections(fields, parent);
   return (
     <div style={{ overflowY: 'auto' }}>
-      <Accordion type='single' collapsible defaultValue='Properties'>
+      <Accordion type='single' collapsible defaultValue={t('category.properties')}>
         {[...sections].map(([section, fields]) => (
           <PropertySection key={section} section={section} fields={fields} />
         ))}
@@ -49,7 +45,7 @@ const PropertySection = ({ section, fields }: { section: string; fields: Visible
   const { categoryTranslations: CategoryTranslations } = useBase();
   return (
     <AccordionItem key={section} value={section}>
-      <AccordionTrigger>{section}</AccordionTrigger>
+      <AccordionTrigger>{CategoryTranslations[section]}</AccordionTrigger>
       <AccordionContent>
         <Flex direction='column' gap={2}>
           {groupFieldsBySubsection(fields).map(({ title, fields }) => (
@@ -94,8 +90,14 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
 };
 
 const FormPropertySection = () => {
-  const { data, setData } = useData();
   const { t } = useTranslation();
+
+  const formTypeOptions: FieldOption<FormType>[] = [
+    { label: t('label.component'), value: 'COMPONENT' },
+    { label: t('label.form'), value: 'FORM' }
+  ] as const;
+
+  const { data, setData } = useData();
   return (
     <Accordion type='single' collapsible defaultValue='Properties'>
       <AccordionItem key='Properties' value={t('label.properties')}>
