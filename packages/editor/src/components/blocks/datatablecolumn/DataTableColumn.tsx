@@ -1,7 +1,7 @@
 import './DataTableColumn.css';
 import { isTable, type ActionColumnComponent, type DataTableColumn, type Prettify } from '@axonivy/form-editor-protocol';
 import type { ComponentConfig, UiComponentProps } from '../../../types/config';
-import { baseComponentFields, defaultVisibleComponent, visibleComponentField } from '../base';
+import { useBase } from '../base';
 import { Flex, IvyIcon, PanelMessage } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBadge, UiBlockHeaderVisiblePart } from '../../UiBlockHeader';
@@ -11,61 +11,87 @@ import { DropZone } from '../../../editor/canvas/DropZone';
 import { ActionButtonsField } from './ActionButtonsField';
 import { ContentControls } from './controls/ContentControls';
 import { useAppContext } from '../../../context/AppContext';
+import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 type DataTableColumnProps = Prettify<DataTableColumn>;
 
-export const defaultDataTableColumnProps: DataTableColumn = {
-  header: 'header',
-  value: '',
-  components: [],
-  asActionColumn: false,
-  actionColumnAsMenu: false,
-  sortable: false,
-  filterable: false,
-  ...defaultVisibleComponent
-} as const;
+export const useDataTableColumnComponent = () => {
+  const { baseComponentFields, defaultVisibleComponent, visibleComponentField } = useBase();
+  const { t } = useTranslation();
 
-export const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = {
-  name: 'DataTableColumn',
-  category: 'Hidden',
-  subcategory: 'Input',
-  icon: '',
-  description: 'A Column for the DataTable',
-  defaultProps: defaultDataTableColumnProps,
-  render: props => <UiBlock {...props} />,
-  create: ({ label, value, defaultProps }) => ({ ...defaultDataTableColumnProps, header: label, value, ...defaultProps }),
-  outlineInfo: component => component.header,
-  fields: {
-    ...baseComponentFields,
-    header: {
-      subsection: 'General',
-      label: 'Header',
-      type: 'textBrowser',
-      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
-    },
-    asActionColumn: { subsection: 'General', label: 'Action Column', type: 'checkbox' },
-    actionColumnAsMenu: { subsection: 'Content', label: 'Group Actions', type: 'checkbox', hide: data => !data.asActionColumn },
-    components: {
-      subsection: 'Content',
-      label: 'Actions',
-      type: 'generic',
-      render: () => <ActionButtonsField />,
-      hide: data => !data.asActionColumn
-    },
-    value: {
-      subsection: 'Content',
-      label: 'Value',
-      type: 'textBrowser',
-      browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'COLUMN', withoutEl: true } }],
-      hide: data => data.asActionColumn
-    },
-    sortable: { subsection: 'General', label: 'Enable Sorting', type: 'checkbox', hide: data => data.asActionColumn },
-    filterable: { subsection: 'General', label: 'Enable Filtering', type: 'checkbox', hide: data => data.asActionColumn },
+  const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = useMemo(() => {
+    const defaultDataTableColumnProps: DataTableColumn = {
+      header: 'header',
+      value: '',
+      components: [],
+      asActionColumn: false,
+      actionColumnAsMenu: false,
+      sortable: false,
+      filterable: false,
+      ...defaultVisibleComponent
+    } as const;
 
-    ...visibleComponentField
-  },
-  quickActions: ['DELETE', 'DUPLICATE', 'CREATEACTIONCOLUMNBUTTON'],
-  subSectionControls: (props, subSection) => (subSection === 'Content' ? <ContentControls {...props} /> : null)
+    const component: ComponentConfig<DataTableColumnProps> = {
+      name: 'DataTableColumn',
+      displayName: t('components.dataTableColumn.name'),
+      category: 'Hidden',
+      subcategory: 'Input',
+      icon: '',
+      description: t('components.dataTableColumn.description'),
+      defaultProps: defaultDataTableColumnProps,
+      render: props => <UiBlock {...props} />,
+      create: ({ label, value, defaultProps }) => ({ ...defaultDataTableColumnProps, header: label, value, ...defaultProps }),
+      outlineInfo: component => component.header,
+      fields: {
+        ...baseComponentFields,
+        header: {
+          subsection: 'General',
+          label: t('components.dataTableColumn.property.header'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+        },
+        asActionColumn: { subsection: 'General', label: t('components.dataTableColumn.property.actionColumn'), type: 'checkbox' },
+        actionColumnAsMenu: {
+          subsection: 'Content',
+          label: t('components.dataTableColumn.property.groupActions'),
+          type: 'checkbox',
+          hide: data => !data.asActionColumn
+        },
+        components: {
+          subsection: 'Content',
+          label: t('property.action'),
+          type: 'generic',
+          render: () => <ActionButtonsField />,
+          hide: data => !data.asActionColumn
+        },
+        value: {
+          subsection: 'Content',
+          label: t('property.value'),
+          type: 'textBrowser',
+          browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'COLUMN', withoutEl: true } }],
+          hide: data => data.asActionColumn
+        },
+        sortable: { subsection: 'General', label: t('property.enableSorting'), type: 'checkbox', hide: data => data.asActionColumn },
+        filterable: {
+          subsection: 'General',
+          label: t('components.dataTableColumn.property.enableFiltering'),
+          type: 'checkbox',
+          hide: data => data.asActionColumn
+        },
+
+        ...visibleComponentField
+      },
+      quickActions: ['DELETE', 'DUPLICATE', 'CREATEACTIONCOLUMNBUTTON'],
+      subSectionControls: (props, subSection) => (subSection === 'Content' ? <ContentControls {...props} /> : null)
+    };
+
+    return component;
+  }, [baseComponentFields, defaultVisibleComponent, t, visibleComponentField]);
+
+  return {
+    DataTableColumnComponent
+  };
 };
 
 const UiBlock = ({
@@ -79,6 +105,7 @@ const UiBlock = ({
   asActionColumn,
   actionColumnAsMenu
 }: UiComponentProps<DataTableColumnProps>) => {
+  const { t } = useTranslation();
   const { data } = useData();
   const parentTable = getParentComponent(data.components, id);
   return (
@@ -99,7 +126,7 @@ const UiBlock = ({
             </Flex>
           </Flex>
           <Flex className='block-column__filter' data-active={filterable && !asActionColumn} gap={1}>
-            Filter By <UiBadge value={header} />
+            {t('label.filterBy')} <UiBadge value={header} />
           </Flex>
         </Flex>
       </div>
@@ -121,45 +148,41 @@ const UiBlock = ({
             <EmptyActionColumnBlock components={components} id={id} type='Action Column' />
           )
         ) : (
-          <span>{value?.length === 0 || value === 'variable' ? 'Use entire Object' : value}</span>
+          <span>{value?.length === 0 || value === 'variable' ? t('label.useEntireObj') : value}</span>
         )}
       </div>
     </div>
   );
 };
 
-export const EmptyActionColumnBlock = ({
-  id,
-  components,
-  type
-}: {
-  id: string;
-  components: Array<ActionColumnComponent>;
-  type: string;
-}) => (
-  <DropZone id={`${COLUMN_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
-    {components.length === 0 ? (
-      <PanelMessage message={`Drag first button inside the ${type}`} mode='row' className='drag-hint row' />
-    ) : (
-      <div className='empty-block for-layout' />
-    )}
-  </DropZone>
-);
+const EmptyActionColumnBlock = ({ id, components, type }: { id: string; components: Array<ActionColumnComponent>; type: string }) => {
+  const { t } = useTranslation();
+  return (
+    <DropZone id={`${COLUMN_DROPZONE_ID_PREFIX}${id}`} preId={components[components.length - 1]?.cid}>
+      {components.length === 0 ? (
+        <PanelMessage message={t('label.dragFirstButton', { type: type })} mode='row' className='drag-hint row' />
+      ) : (
+        <div className='empty-block for-layout' />
+      )}
+    </DropZone>
+  );
+};
 
 const ButtonMenu = ({ children }: { children: React.ReactNode }) => {
   const { ui } = useAppContext();
+  const { t } = useTranslation();
   return ui.helpPaddings ? (
     <>
       <div className='block-button button-menu-header' style={{ borderRadius: '5px 5px 0px 0px' }} data-variant='primary'>
         <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
-        Actions
+        {t('property.actions')}
       </div>
       {children}
     </>
   ) : (
     <div className='block-button button-menu-header' data-variant='primary'>
       <IvyIcon icon={IvyIcons.Chevron} rotate={90} />
-      <div>Actions</div>
+      <div>{t('property.actions')}</div>
     </div>
   );
 };

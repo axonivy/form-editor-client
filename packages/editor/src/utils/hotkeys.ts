@@ -1,63 +1,65 @@
 import { hotkeyText, isWindows } from '@axonivy/ui-components';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type KnownHotkey = { hotkey: string; label: string };
 
 export const useKnownHotkeys = () => {
+  const { t } = useTranslation();
   const undo = useMemo<KnownHotkey>(() => {
     const hotkey = 'mod+Z';
-    return { hotkey, label: `Undo (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('common:hotkey.undo', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const redo = useMemo<KnownHotkey>(() => {
     const hotkey = isWindows() ? 'mod+Y' : 'mod+shift+Z';
-    return { hotkey, label: `Redo (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('common:hotkey.redo', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const openDataClass = useMemo<KnownHotkey>(() => {
     const hotkey = 'D';
-    return { hotkey, label: `Open Data Class (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('hotkey.openDataClass', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const openProcess = useMemo<KnownHotkey>(() => {
     const hotkey = 'P';
-    return { hotkey, label: `Open Process (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('hotkey.openProcess', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const openHelp = useMemo<KnownHotkey>(() => {
     const hotkey = 'F1';
-    return { hotkey, label: `Open Help (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('common:hotkey.help', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const viewMode = useMemo<KnownHotkey>(() => {
     const hotkey = 'E';
-    return { hotkey, label: `View Mode (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('hotkey.viewMode', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const deviceMode = useMemo<KnownHotkey>(() => {
     const hotkey = 'S';
-    return { hotkey, label: `Change device mode (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('hotkey.deviceMode', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const createFromData = useMemo<KnownHotkey>(() => {
     const hotkey = 'A';
-    return { hotkey, label: `Create from data (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('hotkey.createFormData', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const focusToolbar = useMemo<KnownHotkey>(() => {
     const hotkey = '1';
-    return { hotkey, label: `Focus Toolbar (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('common:hotkey.focusToolbar', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const focusMain = useMemo<KnownHotkey>(() => {
     const hotkey = '2';
-    return { hotkey, label: `Focus Main (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('common:hotkey.focusMain', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   const focusInscription = useMemo<KnownHotkey>(() => {
     const hotkey = '3';
-    return { hotkey, label: `Focus Inscription (${hotkeyText(hotkey)})` };
-  }, []);
+    return { hotkey, label: t('common:hotkey.focusInscription', { hotkey: hotkeyText(hotkey) }) };
+  }, [t]);
 
   return {
     undo,

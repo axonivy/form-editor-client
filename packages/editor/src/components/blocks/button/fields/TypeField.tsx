@@ -3,12 +3,14 @@ import { SelectField } from '../../../../editor/sidebar/fields/SelectField';
 import type { FieldOption, GenericFieldProps } from '../../../../types/config';
 import { isEditableTable, useData } from '../../../../data/data';
 import { useValidation } from '../../../../context/useValidation';
+import { useTranslation } from 'react-i18next';
 
 export const renderTypeField = (props: GenericFieldProps) => {
   return <TypeField {...props} />;
 };
 
 const TypeField = ({ label, value, onChange, validationPath }: GenericFieldProps) => {
+  const { t } = useTranslation();
   const { setElement, element, data } = useData();
   const message = useValidation(validationPath);
   if (!isEditableTable(data.components, element)) {
@@ -16,9 +18,9 @@ const TypeField = ({ label, value, onChange, validationPath }: GenericFieldProps
   }
 
   const typeOptions: FieldOption<ButtonType>[] = [
-    { label: 'Edit', value: 'EDIT' },
-    { label: 'Delete', value: 'DELETE' },
-    { label: 'Generic', value: 'BUTTON' }
+    { label: t('components.button.fieldType.edit'), value: 'EDIT' },
+    { label: t('components.button.fieldType.delete'), value: 'DELETE' },
+    { label: t('components.button.fieldType.generic'), value: 'BUTTON' }
   ];
 
   const updateValueAndAction = (change: string) => {

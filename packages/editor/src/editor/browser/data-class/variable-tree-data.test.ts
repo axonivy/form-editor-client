@@ -2,6 +2,11 @@ import type { VariableInfo } from '@axonivy/form-editor-protocol';
 import type { BrowserNode } from '@axonivy/ui-components';
 import type { Row } from '@tanstack/react-table';
 import { findAttributesOfType, formatVariableValue, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
+import { renderHook } from '@testing-library/react';
+import { useComponentsInit } from '../../../components/components';
+
+// Needs because 'renderHook' is imported
+/* eslint-disable testing-library/no-node-access */
 
 const variableInfo: VariableInfo = {
   variables: [
@@ -145,8 +150,12 @@ test('fullVariablePath dontShowRootNode', () => {
 });
 
 test('rowToCreateData', () => {
-  expect(rowToCreateData({ original: { value: 'country', info: 'java.util.List' } } as Row<BrowserNode>)).toEqual(undefined);
-  expect(rowToCreateData(row)).toEqual({
+  const { result: componentsResult } = renderHook(() => useComponentsInit());
+  const { componentForType } = componentsResult.current;
+  expect(rowToCreateData({ original: { value: 'country', info: 'java.util.List' } } as Row<BrowserNode>, componentForType)).toEqual(
+    undefined
+  );
+  expect(rowToCreateData(row, componentForType)).toEqual({
     componentName: 'Input',
     label: 'Country',
     value: '#{data.address.location.country}'

@@ -17,10 +17,12 @@ import { findComponentDeep, getParentComponent, useData } from '../../../data/da
 import type { BrowserOptions } from '../Browser';
 import { findAttributesOfType, variableTreeData, fullVariablePath } from './variable-tree-data';
 import { stripELExpression } from '../../../utils/string';
+import { useTranslation } from 'react-i18next';
 
 export const ATTRIBUTE_BROWSER_ID = 'Attribute' as const;
 
 export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
+  const { t } = useTranslation();
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
   const [componentInDialog, setComponentInDialog] = useState(false);
   const { context } = useAppContext();
@@ -41,7 +43,7 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
     name: ATTRIBUTE_BROWSER_ID,
     icon: IvyIcons.Attribute,
     browser,
-    header: options?.typeHint ? <Message variant='info' message={`Type '${options.typeHint}' defined by the input field`} /> : undefined,
+    header: options?.typeHint ? <Message variant='info' message={t('message.typeDefinedBy', { type: options.typeHint })} /> : undefined,
     infoProvider: row => row?.original.info,
     applyModifier: row => getApplyModifierValue(row, componentInDialog, options)
   };

@@ -10,7 +10,7 @@ test('default', async ({ page }) => {
   const content = general.input({ label: 'Content' });
   const behaviour = properties.behaviour();
 
-  await content.expectValue('This is a text');
+  await content.expectValue('This is a Text');
   await content.fill('lorem ipsum');
   await behaviour.fillVisible();
 

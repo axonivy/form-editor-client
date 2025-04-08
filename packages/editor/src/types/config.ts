@@ -25,7 +25,20 @@ export type CreateComponentData = { componentName: ComponentType; targetId?: str
 export const isCreateComponentData = (data: unknown): data is CreateComponentData =>
   typeof data === 'object' && data !== null && 'componentName' in data;
 
-type Subsection = 'General' | 'Styling' | 'Behaviour' | 'Options' | 'Static Options' | 'Dynamic Options' | 'Columns' | (string & {});
+export type Subsection =
+  | 'General'
+  | 'Styling'
+  | 'Behaviour'
+  | 'Options'
+  | 'Static Options'
+  | 'Dynamic Options'
+  | 'Columns'
+  | 'Formatting'
+  | 'Parameters'
+  | 'Paginator'
+  | 'Content'
+  | 'Layout'
+  | 'Icon';
 
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   subsection: Subsection;
@@ -87,6 +100,7 @@ export type ItemSubcategory = 'General' | 'Input' | 'Selection' | 'Text';
 
 export type ComponentConfig<ComponentProps extends DefaultComponentProps = DefaultComponentProps, DefaultProps = ComponentProps> = {
   name: ComponentType;
+  displayName: string;
   category: ItemCategory;
   subcategory: ItemSubcategory;
   icon: ReactNode;

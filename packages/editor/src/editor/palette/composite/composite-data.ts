@@ -7,6 +7,7 @@ export const paletteItems = (composites: Array<CompositeInfo>): Record<string, A
   const paletteItems: Record<string, Array<PaletteConfig>> = {};
   paletteItems['All'] = composites.map<PaletteConfig>(composite => ({
     name: splitByCamelCase(simpleType(composite.id)),
+    displayName: splitByCamelCase(simpleType(composite.id)),
     description: composite.id,
     data: { componentName: 'Composite', label: composite.id, value: composite.id }
   }));

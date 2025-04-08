@@ -1,53 +1,79 @@
 import type { DatePicker, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type UiComponentProps } from '../../../types/config';
 import './DatePicker.css';
-import { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } from '../base';
+import { useBase } from '../base';
 import IconSvg from './DatePicker.svg?react';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type DatePickerProps = Prettify<DatePicker>;
 
-export const defaultDatePickerProps: DatePicker = {
-  label: 'Date Picker',
-  value: '',
-  datePattern: 'dd.MM.yyyy',
-  timePattern: 'HH:mm',
-  showTime: false,
-  ...defaultBehaviourComponent,
-  ...defaultBaseComponent
-} as const;
+export const useDatePickerComponent = () => {
+  const { baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent } = useBase();
+  const { t } = useTranslation();
 
-export const DatePickerComponent: ComponentConfig<DatePickerProps> = {
-  name: 'DatePicker',
-  category: 'Elements',
-  subcategory: 'Input',
-  icon: <IconSvg />,
-  description: 'A datepicker with label for date or datetime',
-  defaultProps: defaultDatePickerProps,
-  render: props => <UiBlock {...props} />,
-  create: ({ label, value, ...defaultProps }) => ({ ...defaultDatePickerProps, label, value, ...defaultProps }),
-  outlineInfo: component => component.label,
-  fields: {
-    ...baseComponentFields,
-    label: {
-      subsection: 'General',
-      label: 'Label',
-      type: 'textBrowser',
-      browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
-    },
-    value: { subsection: 'General', label: 'Value', type: 'textBrowser', browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'Date' } }] },
-    datePattern: { subsection: 'General', label: 'Date Pattern', type: 'text', options: { placeholder: 'e.g. dd.MM.yyyy' } },
-    showTime: { subsection: 'General', label: 'Show Time', type: 'checkbox' },
-    timePattern: {
-      subsection: 'General',
-      label: 'Time Pattern',
-      type: 'text',
-      options: { placeholder: 'e.g. HH:mm' },
-      hide: data => !data.showTime
-    },
-    ...behaviourComponentFields
-  },
-  quickActions: DEFAULT_QUICK_ACTIONS
+  const DatePickerComponent = useMemo(() => {
+    const defaultDatePickerProps: DatePicker = {
+      label: t('components.datePicker.label'),
+      value: '',
+      datePattern: 'dd.MM.yyyy',
+      timePattern: 'HH:mm',
+      showTime: false,
+      ...defaultBehaviourComponent,
+      ...defaultBaseComponent
+    } as const;
+
+    const DatePickerComponent: ComponentConfig<DatePickerProps> = {
+      name: 'DatePicker',
+      displayName: t('components.datePicker.name'),
+      category: 'Elements',
+      subcategory: 'Input',
+      icon: <IconSvg />,
+      description: t('components.datePicker.description'),
+      defaultProps: defaultDatePickerProps,
+      render: props => <UiBlock {...props} />,
+      create: ({ label, value, ...defaultProps }) => ({ ...defaultDatePickerProps, label, value, ...defaultProps }),
+      outlineInfo: component => component.label,
+      fields: {
+        ...baseComponentFields,
+        label: {
+          subsection: 'General',
+          label: t('property.label'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
+        },
+        value: {
+          subsection: 'General',
+          label: t('property.value'),
+          type: 'textBrowser',
+          browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'Date' } }]
+        },
+        datePattern: {
+          subsection: 'General',
+          label: t('components.datePicker.property.datePattern'),
+          type: 'text',
+          options: { placeholder: t('components.datePicker.datePlaceholder') }
+        },
+        showTime: { subsection: 'General', label: 'Show Time', type: 'checkbox' },
+        timePattern: {
+          subsection: 'General',
+          label: t('components.datePicker.property.timePattern'),
+          type: 'text',
+          options: { placeholder: t('components.datePicker.timePlaceholder') },
+          hide: data => !data.showTime
+        },
+        ...behaviourComponentFields
+      },
+      quickActions: DEFAULT_QUICK_ACTIONS
+    };
+
+    return DatePickerComponent;
+  }, [baseComponentFields, behaviourComponentFields, defaultBaseComponent, defaultBehaviourComponent, t]);
+
+  return {
+    DatePickerComponent
+  };
 };
 
 const UiBlock = ({

@@ -1,0 +1,22 @@
+{
+  "hotkey": {
+    "focusInscription": "Focus Inscription ({{hotkey}})",
+    "focusMain": "Focus Main ({{hotkey}})",
+    "focusToolbar": "Focus Toolbar ({{hotkey}})",
+    "help": "Open Help ({{hotkey}})",
+    "redo": "Redo ({{hotkey}})",
+    "undo": "Undo ({{hotkey}})"
+  },
+  "label": {
+    "cancel": "Cancel",
+    "create": "Create",
+    "delete": "Delete",
+    "options": "Options",
+    "save": "Save",
+    "search": "Search",
+    "theme": "Theme"
+  },
+  "message": {
+    "errorOccured": "An error has occurred: {{message}}"
+  }
+}

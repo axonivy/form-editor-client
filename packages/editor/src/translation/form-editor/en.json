@@ -1,0 +1,263 @@
+{
+  "align": {
+    "bottom": "Bottom",
+    "center": "Center",
+    "top": "Top"
+  },
+  "category": {
+    "actions": "Actions",
+    "behaviour": "Behaviour",
+    "columns": "Columns",
+    "content": "Content",
+    "dynamicOptions": "Dynamic Options",
+    "elements": "Elements",
+    "formatting": "Formatting",
+    "general": "General",
+    "hidden": "Hidden",
+    "input": "Input",
+    "layout": "Layout",
+    "options": "Options",
+    "paginator": "Paginator",
+    "parameters": "Parameters",
+    "selection": "Selection",
+    "staticOptions": "Static Options",
+    "structures": "Structures",
+    "styling": "Styling",
+    "text": "Text"
+  },
+  "cms": {
+    "cmsQuickfix": "CMS-Quickfix",
+    "cmsQuickfixCat": "CMS-Quickfix-{{cat}}",
+    "createCmsObj": "Create {{category}} CMS-Object: '{{name}}'",
+    "createContentObj": "Create content object: '{{parentUri}}{{name}}' value: {{value}}-{{category}}"
+  },
+  "components": {
+    "button": {
+      "description": "A button to fire actions",
+      "fieldType": {
+        "delete": "Delete",
+        "edit": "Edit",
+        "generic": "Generic"
+      },
+      "name": "Button",
+      "type": {
+        "danger": "Danger",
+        "primary": "Primary",
+        "secondary": "Secondary"
+      }
+    },
+    "checkbox": {
+      "description": "A selectable boolean checkbox",
+      "name": "Checkbox"
+    },
+    "combobox": {
+      "addDropdown": "Add Dropdown-Button to Combobox",
+      "description": "A autocomplete combobox with label",
+      "name": "Combobox"
+    },
+    "composite": {
+      "description": "A button for fire actions",
+      "name": "Composite",
+      "property": {
+        "startMethod": "Start Method"
+      }
+    },
+    "dataTable": {
+      "columnFromValue": "Create columns from value",
+      "description": "A datatable component",
+      "name": "DataTable",
+      "property": {
+        "addButton": "Add Button",
+        "colBoundByAttr": "Column is bound to an object attribute",
+        "editable": "Editable",
+        "editDialog": "Edit Dialog",
+        "enablePaginator": "Enable Paginator",
+        "rowsPerPage": "Rows per Page",
+        "rowType": "Row Type"
+      },
+      "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
+    },
+    "dataTableColumn": {
+      "description": "A Column for the DataTable",
+      "name": "DataTableColumn",
+      "property": {
+        "actionColumn": "Action Column",
+        "enableFiltering": "Enable Filtering",
+        "groupActions": "Group Actions",
+        "header": "Header"
+      }
+    },
+    "datePicker": {
+      "datePlaceholder": " 'e.g. dd.MM.yyyy'",
+      "description": "A datepicker with label for date or datetime",
+      "label": "Date Picker",
+      "name": "DatePicker",
+      "property": {
+        "datePattern": "Date Pattern",
+        "timePattern": "Time Pattern"
+      },
+      "timePlaceholder": "e.g. HH:mm"
+    },
+    "dialog": {
+      "description": "A flexable layout",
+      "name": "Dialog"
+    },
+    "fieldset": {
+      "description": "A group of inputs",
+      "name": "Fieldset"
+    },
+    "input": {
+      "description": "A input with a label",
+      "name": "Input"
+    },
+    "layout": {
+      "column_one": "{{count}} Column",
+      "column_other": "{{count}} Columns",
+      "description": "A flexible layout",
+      "flex": "Flex",
+      "free": "Free",
+      "grid": "Grid",
+      "left": "Left",
+      "name": "Layout",
+      "property": {
+        "columns": "Columns"
+      },
+      "right": "Right",
+      "spaceBetween": "Space Between"
+    },
+    "link": {
+      "description": "Link to somewhere",
+      "name": "Link",
+      "property": {
+        "href": "Href"
+      }
+    },
+    "panel": {
+      "description": "A group of components",
+      "name": "Panel"
+    },
+    "radio": {
+      "description": "A radio button group with label for selecting a single option",
+      "name": "Radio",
+      "property": {
+        "orientation": "Orientation"
+      }
+    },
+    "select": {
+      "description": "A dropdown menu with label for selecting a single option",
+      "name": "Select"
+    },
+    "text": {
+      "description": "Text Output",
+      "name": "Text",
+      "placeholder": "This is a Text"
+    },
+    "textarea": {
+      "description": "A customizable Textarea component",
+      "name": "Textarea",
+      "property": {
+        "autoResize": "Auto Resize",
+        "visibleRows": "Visible Rows"
+      }
+    }
+  },
+  "hint": {
+    "dragFirstItem": "Drag first element inside the canvas or",
+    "dragItemInto": "Drag first element inside the {{type}}"
+  },
+  "hotkey": {
+    "createFormData": "Create from data ({{hotkey}})",
+    "deviceMode": "Change device mode ({{hotkey}})",
+    "openDataClass": "Open Data Class({{hotkey}})",
+    "openProcess": "Open Process ({{hotkey}})",
+    "viewMode": "View Mode ({{hotkey}})"
+  },
+  "label": {
+    "addNewActionCol": "Add new Action Column Button",
+    "allComponents": "All Components",
+    "browser": "Browser",
+    "composites": "Composites",
+    "createActionCol": "Create Action Column",
+    "createActionColBtn": "Create Action Column Button",
+    "createBtns": "Create proceed and cancel buttons",
+    "createCol": "Create Column",
+    "createFrom": "Create from {{component}}",
+    "createFromData": "Create from data",
+    "data": "Data",
+    "deviceModeParam": "Device mode {{mode}} ({{hotkey}})",
+    "disable": "Disable",
+    "dragFirstButton": "Drag first button inside the {{type}}",
+    "duplicateComp": "Duplicate",
+    "enableReqProjects": "Enable required Projects",
+    "filterBy": "Filter by",
+    "id": "ID",
+    "largeSpan": "Large Span",
+    "listOfObjects": "List of Objects",
+    "mediumSpan": "Medium Span",
+    "nRowsPerPage": "Rows per Page: {{rows}}",
+    "objectLabel": "Object Label",
+    "objectValue": "Object Value",
+    "objNotValid": "Defined Object is not valid",
+    "options": "Options",
+    "outline": "Outline",
+    "required": "Required",
+    "requiredMessage": "Required Message",
+    "setDefaultCol": "Set default Columns",
+    "togglePropView": "Toggle Property View",
+    "updateFormChange": "Update Form on Change",
+    "useEntireObj": "Use entire Object",
+    "verticalAlign": "Vertical Alignement",
+    "visible": "Visible"
+  },
+  "message": {
+    "errorOnly": "Error: {{error}}",
+    "fieldTypeUnknown": "unknown field type",
+    "formNotFound": "Form not found",
+    "noData": "No data",
+    "noOptionsDefined": "No Options defined",
+    "noParam": "No parameters",
+    "typeDefinedBy": "Type '{{type}}' defined by the input field"
+  },
+  "placeholder": {
+    "attributeOrBlank": "Enter attribute (or leave blank to select entire object)",
+    "dynamicList": "e.g. #{data.dynamicList}"
+  },
+  "property": {
+    "action": "Action",
+    "actions": "Actions",
+    "collapsedDefault": "Collapsed by default",
+    "collapsible": "Collapisble",
+    "completeMethod": "Complete Method",
+    "content": "Content",
+    "decimalPlaces": "Decimal Places",
+    "editRow": "Edit Row",
+    "email": "E-Mail",
+    "enableSorting": "Enable Sorting",
+    "header": "Header",
+    "horizontal": "Horizontal",
+    "horizontalAlignment": "Horizontal Alignment",
+    "icon": "Icon",
+    "iconStyle": "Icon Style",
+    "itemLabel": "Item Label",
+    "itemValue": "Item Value",
+    "label": "Label",
+    "linkedComponent": "Linked Component",
+    "name": "Name",
+    "number": "Number",
+    "objectBoundColumns": "Object-Bound Columns",
+    "option1": "Option 1",
+    "option2": "Option 2",
+    "password": "Password",
+    "prefix": "Prefix",
+    "selected": "Selected",
+    "suffix": "Suffix",
+    "symbol": "Symbol",
+    "symbolPosition": "Symbol Position",
+    "text": "Text",
+    "title": "Title",
+    "type": "Type",
+    "value": "Value",
+    "variant": "Variant",
+    "vertical": "Vertical"
+  }
+}

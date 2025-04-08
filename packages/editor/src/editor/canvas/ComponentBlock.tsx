@@ -9,23 +9,27 @@ import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent,
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useState } from 'react';
 import { Palette } from '../palette/Palette';
-import { allComponentsByCategory, componentByName } from '../../components/components';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
 import { useClipboard, type TextDropItem } from 'react-aria';
 import { useComponentBlockActions } from './useComponentBlockActions';
+import { useTranslation } from 'react-i18next';
+import { useComponents } from '../../context/ComponentsContext';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
   preId?: string;
 };
 
-export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => (
-  <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
-    <Draggable config={componentByName(component.type)} data={component} />
-  </DropZone>
-);
+export const ComponentBlock = ({ component, preId, ...props }: ComponentBlockProps) => {
+  const { componentByName } = useComponents();
+  return (
+    <DropZone id={component.cid} type={component.type} preId={preId} {...props}>
+      <Draggable config={componentByName(component.type)} data={component} />
+    </DropZone>
+  );
+};
 
 export type DraggableProps = {
   config: ComponentConfig;
@@ -35,6 +39,7 @@ export type DraggableProps = {
 const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
   const { data: formData, setData } = useData();
+  const { componentByName } = useComponents();
   const readonly = useReadonly();
   const isDataTableEditableButtons =
     data.type === 'Button' && ((data.config as ButtonType).type === 'EDIT' || (data.config as ButtonType).type === 'DELETE');
@@ -59,7 +64,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
       if (readonly) return;
       const item = items.filter(item => item.kind === 'text' && item.types.has('text/plain'))[0] as TextDropItem;
       const cid = await item.getText('text/plain');
-      setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }).newData);
+      setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }, componentByName).newData);
     }
   });
   const parentComponent = getParentComponent(formData.components, data.cid);
@@ -93,11 +98,11 @@ const Draggable = ({ config, data }: DraggableProps) => {
             }
             if (e.key === 'ArrowUp' && !isDataTableEditableButtons) {
               e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }).newData);
+              setData(oldData => modifyData(oldData, { type: 'moveUp', data: { id: data.cid } }, componentByName).newData);
             }
             if (e.key === 'ArrowDown' && !isDataTableEditableButtons) {
               e.stopPropagation();
-              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }).newData);
+              setData(oldData => modifyData(oldData, { type: 'moveDown', data: { id: data.cid } }, componentByName).newData);
             }
             if (e.code === 'KeyM' && !isDataTableEditableButtons) {
               e.stopPropagation();
@@ -165,6 +170,8 @@ const Quickbar = ({
   createFromDataAction,
   createActionColumnButtonAction
 }: QuickbarProps) => {
+  const { t } = useTranslation();
+  const { allComponentsByCategory } = useComponents();
   const [menu, setMenu] = useState(false);
   const readonly = useReadonly();
   if (readonly) {
@@ -175,8 +182,17 @@ const Quickbar = ({
       <Popover open={menu} onOpenChange={change => setMenu(change)}>
         <PopoverAnchor asChild>
           <Flex gap={1}>
-            {deleteAction && <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />}
-            {duplicateAction && <Button icon={IvyIcons.Duplicate} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />}
+            {deleteAction && (
+              <Button icon={IvyIcons.Trash} aria-label={t('common:label.delete')} title={t('common:label.delete')} onClick={deleteAction} />
+            )}
+            {duplicateAction && (
+              <Button
+                icon={IvyIcons.Duplicate}
+                aria-label={t('label.duplicateComp')}
+                title={t('label.duplicateComp')}
+                onClick={duplicateAction}
+              />
+            )}
             {(createColumnAction || createActionColumnButtonAction || createAction || createFromDataAction) && (
               <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
             )}
@@ -184,24 +200,24 @@ const Quickbar = ({
               <Button
                 icon={IvyIcons.PoolSwimlanes}
                 rotate={90}
-                aria-label='Create Column'
-                title='Create Column'
+                aria-label={t('label.createCol')}
+                title={t('label.createCol')}
                 onClick={createColumnAction}
               />
             )}
             {createActionColumnAction && (
               <Button
                 icon={IvyIcons.MultiSelection}
-                aria-label='Create Action Column'
-                title='Create Action Column'
+                aria-label={t('label.createActionCol')}
+                title={t('label.createActionCol')}
                 onClick={createActionColumnAction}
               />
             )}
             {createActionColumnButtonAction && (
               <Button
                 icon={IvyIcons.MultiSelection}
-                aria-label='Create Action Column Button'
-                title='Create Action Column Button'
+                aria-label={t('label.createActionColBtn')}
+                title={t('label.createActionColBtn')}
                 onClick={createActionColumnButtonAction}
               />
             )}
@@ -211,8 +227,8 @@ const Quickbar = ({
                 <Button
                   icon={IvyIcons.DatabaseLink}
                   size='small'
-                  aria-label='Create from data'
-                  title='Create from data'
+                  aria-label={t('label.createFromData')}
+                  title={t('label.createFromData')}
                   onClick={e => {
                     e.stopPropagation();
                   }}
@@ -222,8 +238,8 @@ const Quickbar = ({
             {createAction && (
               <Button
                 icon={IvyIcons.Task}
-                aria-label='All Components'
-                title='All Components'
+                aria-label={t('label.allComponents')}
+                title={t('label.allComponents')}
                 onClick={e => {
                   e.stopPropagation();
                   setMenu(old => !old);

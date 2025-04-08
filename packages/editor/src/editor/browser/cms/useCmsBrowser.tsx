@@ -7,6 +7,7 @@ import { useMemo, useState } from 'react';
 import type { ContentObject } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../../context/AppContext';
 import { cmsTreeData } from './cms-tree-data';
+import { useTranslation } from 'react-i18next';
 
 export const CMS_BROWSER_ID = 'CMS' as const;
 
@@ -16,13 +17,14 @@ export const useCmsBrowser = (): Browser => {
   const cmsTree = useMeta('meta/cms/cmsTree', { context, requiredProjects: requiredProject }, []).data;
   const tree = useMemo(() => cmsTreeData(cmsTree), [cmsTree]);
   const browser = useBrowser(tree, { expandedState: true });
+  const { t } = useTranslation();
   return {
     name: CMS_BROWSER_ID,
     icon: IvyIcons.Cms,
     browser,
     header: (
       <BasicCheckbox
-        label='Enable required Projects'
+        label={t('label.enableReqProjects')}
         checked={requiredProject}
         onCheckedChange={() => setRequiredProject(!requiredProject)}
       />
