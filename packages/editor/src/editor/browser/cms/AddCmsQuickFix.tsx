@@ -7,6 +7,7 @@ import { useFunction } from '../../../context/useFunction';
 import { useQueryClient } from '@tanstack/react-query';
 import { genQueryKey } from '../../../query/query-client';
 import type { InputTextAreaRef, Selection } from './useTextSelection';
+import { useTranslation } from 'react-i18next';
 
 type AddCmsQuickFixPopoverProps = {
   value: string;
@@ -17,7 +18,7 @@ type AddCmsQuickFixPopoverProps = {
 
 export const AddCmsQuickFixPopover = ({ value, onChange, selection, inputRef }: AddCmsQuickFixPopoverProps) => {
   const [open, setOpen] = useState(false);
-
+  const { t } = useTranslation();
   const { context } = useAppContext();
   const queryClient = useQueryClient();
   const cmsQuickFixes = useMeta('meta/cms/cmsQuickActions', { context, text: value }, []).data;
@@ -59,7 +60,7 @@ export const AddCmsQuickFixPopover = ({ value, onChange, selection, inputRef }: 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button icon={IvyIcons.Cms} aria-label='CMS-Quickfix' title='CMS-Quickfix' />
+        <Button icon={IvyIcons.Cms} aria-label={t('cms.cmsQuickfix')} title={t('cms.cmsQuickfix')} />
       </PopoverTrigger>
       <PopoverContent
         sideOffset={12}
@@ -77,8 +78,13 @@ export const AddCmsQuickFixPopover = ({ value, onChange, selection, inputRef }: 
               <Button
                 key={index}
                 icon={IvyIcons.Cms}
-                aria-label={`CMS-Quickfix-${fix.category}`}
-                title={`Create content object: '${fix.parentUri}${fix.coName}' value: ${fix.coContent}`}
+                aria-label={t('cms.cmsQuickfixCat', { cat: fix.category })}
+                title={t('cms.createContentObj', {
+                  parentUri: fix.parentUri,
+                  name: fix.coName,
+                  value: fix.coContent,
+                  category: fix.category
+                })}
                 onClick={() => {
                   executeCmsQuickFix.mutate({
                     context,
@@ -87,7 +93,7 @@ export const AddCmsQuickFixPopover = ({ value, onChange, selection, inputRef }: 
                 }}
                 style={{ width: '100%', justifyContent: 'start' }}
               >
-                {`Create ${fix.category} CMS-Object: '${fix.coName}'`}
+                {t('cms.createCmsObj', { category: fix.category, name: fix.coName })}
               </Button>
             ))}
         </Flex>

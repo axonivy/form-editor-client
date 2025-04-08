@@ -5,6 +5,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
 import { datatableParam, readonlyParam } from './url-helper';
+import { initTranslation } from './i18n';
 
 export function start() {
   const datatable = datatableParam();
@@ -16,6 +17,7 @@ export function start() {
   if (root === null) {
     throw new Error('Root element not found');
   }
+  initTranslation();
   createRoot(root).render(
     <React.StrictMode>
       <ThemeProvider defaultTheme='light'>
