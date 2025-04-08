@@ -6,12 +6,13 @@ import IconSvg from './Checkbox.svg?react';
 import { Flex, IvyIcon } from '@axonivy/ui-components';
 import { UiBadge, UiBlockHeader } from '../../UiBlockHeader';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 
 type CheckboxProps = Prettify<Checkbox>;
 
 export const useCheckboxComponent = () => {
+  const { t } = useTranslation();
   const { baseComponentFields, defaultBaseComponent, defaultDisabledComponent, disabledComponentFields } = useBase();
 
   const defaultCheckboxProps: Checkbox = useMemo(() => {
@@ -22,7 +23,7 @@ export const useCheckboxComponent = () => {
       updateOnChange: false,
       ...defaultBaseComponent
     } as const;
-  }, [defaultBaseComponent, defaultDisabledComponent]);
+  }, [defaultBaseComponent, defaultDisabledComponent, t]);
 
   const CheckboxComponent: ComponentConfig<CheckboxProps> = useMemo(() => {
     const component: ComponentConfig<CheckboxProps> = {
@@ -57,7 +58,7 @@ export const useCheckboxComponent = () => {
     };
 
     return component;
-  }, [baseComponentFields, defaultCheckboxProps, disabledComponentFields]);
+  }, [baseComponentFields, defaultCheckboxProps, disabledComponentFields, t]);
 
   return {
     defaultCheckboxProps,

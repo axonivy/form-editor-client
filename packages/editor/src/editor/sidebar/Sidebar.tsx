@@ -14,7 +14,7 @@ import { useComponents } from '../../context/ComponentsContext';
 export const Sidebar = () => {
   const { t } = useTranslation();
   const { helpUrl } = useAppContext();
-  const { element, data } = useData();
+  const { element } = useData();
   const { componentByName } = useComponents();
   const [outline, setOutline] = useState(false);
   const elementType = element ? (element.type ? componentByName(element.type).displayName : 'DataTableColumn') : 'Properties';

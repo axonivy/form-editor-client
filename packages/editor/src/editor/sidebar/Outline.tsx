@@ -3,10 +3,8 @@ import { type OutlineNode, Outline } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useData } from '../../data/data';
 import { useComponents } from '../../context/ComponentsContext';
-import { useTranslation } from 'react-i18next';
 
 export const FormOutline = ({ hideOutline }: { hideOutline: () => void }) => {
-  const { t } = useTranslation();
   const { componentByName } = useComponents();
 
   const iconByCategory = (category: string) => {
@@ -39,13 +37,5 @@ export const FormOutline = ({ hideOutline }: { hideOutline: () => void }) => {
 
   const { data, element, setSelectedElement } = useData();
   const outlineData = toOutlineNodes(data.components);
-  return (
-    <Outline
-      options={{ searchPlaceholder: t('common:label.search') }}
-      outline={outlineData}
-      selection={element?.cid}
-      onClick={setSelectedElement}
-      onDoubleClick={hideOutline}
-    />
-  );
+  return <Outline outline={outlineData} selection={element?.cid} onClick={setSelectedElement} onDoubleClick={hideOutline} />;
 };

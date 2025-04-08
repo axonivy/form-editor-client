@@ -182,8 +182,17 @@ const Quickbar = ({
       <Popover open={menu} onOpenChange={change => setMenu(change)}>
         <PopoverAnchor asChild>
           <Flex gap={1}>
-            {deleteAction && <Button icon={IvyIcons.Trash} aria-label='Delete' title='Delete' onClick={deleteAction} />}
-            {duplicateAction && <Button icon={IvyIcons.Duplicate} aria-label='Duplicate' title='Duplicate' onClick={duplicateAction} />}
+            {deleteAction && (
+              <Button icon={IvyIcons.Trash} aria-label={t('common:label.delete')} title={t('common:label.delete')} onClick={deleteAction} />
+            )}
+            {duplicateAction && (
+              <Button
+                icon={IvyIcons.Duplicate}
+                aria-label={t('label.duplicateComp')}
+                title={t('label.duplicateComp')}
+                onClick={duplicateAction}
+              />
+            )}
             {(createColumnAction || createActionColumnButtonAction || createAction || createFromDataAction) && (
               <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />
             )}
