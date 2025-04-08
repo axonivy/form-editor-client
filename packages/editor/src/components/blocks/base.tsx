@@ -92,28 +92,28 @@ export const useBase = () => {
     return {
       id: { subsection: 'General', type: 'generic', label: t('label.id'), render: props => <IdInput {...props} /> },
       alignSelf: {
-        section: categoryTranslations['Layout'],
+        section: 'Layout',
         subsection: 'General',
         type: 'toggleGroup',
         label: t('label.verticalAlign'),
         options: alignItemsOptions
       },
       lgSpan: {
-        section: categoryTranslations['Layout'],
+        section: 'Layout',
         subsection: 'General',
         type: 'select',
         label: t('label.largeSpan'),
         options: spanOptions
       },
       mdSpan: {
-        section: categoryTranslations['Layout'],
+        section: 'Layout',
         subsection: 'General',
         type: 'select',
         label: t('label.mediumSpan'),
         options: spanOptions
       }
     };
-  }, [categoryTranslations, t]);
+  }, [t]);
 
   const visibleComponentField: Fields<VisibleItemProps> = useMemo(() => {
     return {
