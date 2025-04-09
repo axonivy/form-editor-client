@@ -14,8 +14,10 @@ import { Sidebar } from './sidebar/Sidebar';
 import { useTranslation } from 'react-i18next';
 import { ComponentsProvider } from '../context/ComponentsContext';
 import { useComponentsInit } from '../components/components';
+import { initTranslation } from '../translation/i18n';
 
 export const Editor = (props: FormEditorProps) => {
+  initTranslation();
   const { t } = useTranslation();
   const components = useComponentsInit();
   const { componentByName } = components;
@@ -95,7 +97,7 @@ export const Editor = (props: FormEditorProps) => {
     );
   }
   if (isError) {
-    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('common:message.errorOccured', { message: error.message })} />;
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('common.message.errorOccured', { message: error.message })} />;
   }
   if (data.data.components === undefined) {
     return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('message.formNotFound')} />;
