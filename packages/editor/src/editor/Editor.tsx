@@ -14,8 +14,10 @@ import { Sidebar } from './sidebar/Sidebar';
 import { useTranslation } from 'react-i18next';
 import { ComponentsProvider } from '../context/ComponentsContext';
 import { useComponentsInit } from '../components/components';
+import { initTranslation } from '../translation/i18n';
 
 export const Editor = (props: FormEditorProps) => {
+  initTranslation();
   const { t } = useTranslation();
   const components = useComponentsInit();
   const { componentByName } = components;
