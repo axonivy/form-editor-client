@@ -168,7 +168,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
         {!disabled && (
           <Popover>
             <PopoverTrigger asChild>
-              <Button title={t('common:label.options')} aria-label={t('common:label.options')} icon={IvyIcons.Settings} size='large' />
+              <Button title={t('common.label.options')} aria-label={t('common.label.options')} icon={IvyIcons.Settings} size='large' />
             </PopoverTrigger>
             <PopoverContent sideOffset={12} collisionPadding={5}>
               <ReadonlyProvider readonly={false}>
@@ -177,7 +177,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
                     <Label>
                       <Flex alignItems='center' gap={1}>
                         <IvyIcon icon={IvyIcons.DarkMode} />
-                        {t('common:label.theme')}
+                        {t('common.label.theme')}
                       </Flex>
                     </Label>
                     <Switch defaultChecked={theme === 'dark'} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} size='small' />

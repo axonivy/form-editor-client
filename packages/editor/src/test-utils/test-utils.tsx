@@ -16,7 +16,6 @@ import { ComponentsProvider } from '../context/ComponentsContext';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import enMessages from '../translation/form-editor/en.json';
-import enCommonMessages from '../translation/common/en.json';
 import { useComponentsInit } from '../components/components';
 
 type ContextHelperProps = {
@@ -45,7 +44,7 @@ const initTranslation = () => {
     ns: ['form-editor'],
     defaultNS: 'form-editor',
     resources: {
-      en: { 'form-editor': enMessages, common: enCommonMessages }
+      en: { 'form-editor': enMessages }
     }
   });
 };

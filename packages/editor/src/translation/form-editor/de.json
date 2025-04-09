@@ -32,6 +32,28 @@
     "createCmsObj": "{{category}} CMS-Objekt erstellen: '{{name}}'",
     "createContentObj": "Inhaltsobjekt erstellen: '{{parentUri}}{{name}}' Wert: {{value}}-{{category}}"
   },
+  "common": {
+    "hotkey": {
+      "focusInscription": "Fokus auf Beschriftung ({{hotkey}})",
+      "focusMain": "Fokus auf Hauptbereich ({{hotkey}})",
+      "focusToolbar": "Fokus auf Werkzeugleiste ({{hotkey}})",
+      "help": "Hilfe öffnen ({{hotkey}})",
+      "redo": "Wiederholen ({{hotkey}})",
+      "undo": "Rückgängig ({{hotkey}})"
+    },
+    "label": {
+      "cancel": "Abbrechen",
+      "create": "Erstellen",
+      "delete": "Löschen",
+      "options": "Optionen",
+      "save": "Speichern",
+      "search": "Suchen",
+      "theme": "Design"
+    },
+    "message": {
+      "errorOccured": "Ein Fehler ist aufgetreten: {{message}}"
+    }
+  },
   "components": {
     "button": {
       "description": "Ein Knopf zum Auslösen von Aktionen",

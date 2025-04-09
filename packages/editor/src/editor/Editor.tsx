@@ -95,7 +95,7 @@ export const Editor = (props: FormEditorProps) => {
     );
   }
   if (isError) {
-    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('common:message.errorOccured', { message: error.message })} />;
+    return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('common.message.errorOccured', { message: error.message })} />;
   }
   if (data.data.components === undefined) {
     return <PanelMessage icon={IvyIcons.ErrorXMark} message={t('message.formNotFound')} />;
