@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { deCommonMessages, deMessages, enCommonMessages, enMessages } from '@axonivy/form-editor';
+import { deMessages, enMessages } from '@axonivy/form-editor';
 
 export const initTranslation = () => {
   if (i18n.isInitializing || i18n.isInitialized) return;
@@ -15,8 +15,8 @@ export const initTranslation = () => {
       ns: ['form-editor'],
       defaultNS: 'form-editor',
       resources: {
-        en: { 'form-editor': enMessages, common: enCommonMessages },
-        de: { 'form-editor': deMessages, common: deCommonMessages }
+        en: { 'form-editor': enMessages },
+        de: { 'form-editor': deMessages }
       },
       detection: {
         order: ['querystring']

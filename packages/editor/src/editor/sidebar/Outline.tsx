@@ -41,7 +41,7 @@ export const FormOutline = ({ hideOutline }: { hideOutline: () => void }) => {
   const outlineData = toOutlineNodes(data.components);
   return (
     <Outline
-      options={{ searchPlaceholder: t('common:label.search') }}
+      options={{ searchPlaceholder: t('common.label.search') }}
       outline={outlineData}
       selection={element?.cid}
       onClick={setSelectedElement}
