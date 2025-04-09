@@ -181,11 +181,11 @@ const DataClassSelect = ({
       <DialogFooter>
         <DialogClose asChild>
           <Button variant='primary' onClick={createForm} disabled={tree.length === 0}>
-            {t('common:label.create')}
+            {t('common.label.create')}
           </Button>
         </DialogClose>
         <DialogClose asChild>
-          <Button variant='outline'>{t('common:label.cancel')}</Button>
+          <Button variant='outline'>{t('common.label.cancel')}</Button>
         </DialogClose>
       </DialogFooter>
     </>

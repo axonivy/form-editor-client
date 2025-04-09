@@ -183,7 +183,7 @@ const Quickbar = ({
         <PopoverAnchor asChild>
           <Flex gap={1}>
             {deleteAction && (
-              <Button icon={IvyIcons.Trash} aria-label={t('common:label.delete')} title={t('common:label.delete')} onClick={deleteAction} />
+              <Button icon={IvyIcons.Trash} aria-label={t('common.label.delete')} title={t('common.label.delete')} onClick={deleteAction} />
             )}
             {duplicateAction && (
               <Button

@@ -16,7 +16,7 @@ export const Palette = ({ sections, directCreate }: PaletteProps) => {
   const { categoryTranslations: CategoryTranslations } = useBase();
   return (
     <Flex direction='column' className='palette' gap={3}>
-      <SearchInput placeholder={t('common:label.search')} value={searchTerm} onChange={setSearchTerm} />
+      <SearchInput placeholder={t('common.label.search')} value={searchTerm} onChange={setSearchTerm} />
       {Object.entries(sections).map(([section, sectionItems]) => {
         const filteredItems = sectionItems.filter(item => item.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
         if (filteredItems.length > 0) {

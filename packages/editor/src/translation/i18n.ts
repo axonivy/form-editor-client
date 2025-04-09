@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import enCommonMessages from './common/en.json';
 import enMessages from './form-editor/en.json';
 
 export const initTranslation = () => {
@@ -12,7 +11,7 @@ export const initTranslation = () => {
     ns: ['form-editor'],
     defaultNS: 'form-editor',
     resources: {
-      en: { 'form-editor': enMessages, common: enCommonMessages }
+      en: { 'form-editor': enMessages }
     }
   });
 };
