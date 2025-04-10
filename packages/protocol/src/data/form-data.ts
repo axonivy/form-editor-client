@@ -6,7 +6,6 @@ import type {
   DataTableColumn,
   Fieldset,
   Form,
-  FormContext,
   FormEditorData,
   FormSaveDataArgs,
   Layout,
@@ -72,8 +71,6 @@ export const isAlignSelfLayout = (component?: Component | ComponentData): compon
 export const isFreeLayout = (component?: Component | ComponentData): component is LayoutConfig => {
   return isLayout(component) && component.config.type === 'GRID' && component.config.gridVariant === 'FREE';
 };
-
-export type FormEditorProps = { context: FormContext; directSave?: boolean };
 
 export type FormEditor = Omit<FormEditorData, 'data'> & {
   data: FormData;

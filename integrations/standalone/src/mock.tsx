@@ -4,14 +4,15 @@ import { HotkeysProvider, ReadonlyProvider, ThemeProvider } from '@axonivy/ui-co
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FormClientMock } from './mock/form-client-mock';
-import { datatableParam, readonlyParam } from './url-helper';
+import { parameter, readonlyParam, selectedElementParam } from './url-helper';
 import { initTranslation } from './i18n';
 
 export function start() {
-  const datatable = datatableParam();
+  const datatable = parameter('datatable') === 'true';
   const formClient = new FormClientMock(datatable);
   const queryClient = initQueryClient();
   const readonly = readonlyParam();
+  const selectedElement = selectedElementParam();
 
   const root = document.getElementById('root');
   if (root === null) {
@@ -25,7 +26,7 @@ export function start() {
           <QueryProvider client={queryClient}>
             <ReadonlyProvider readonly={readonly}>
               <HotkeysProvider initiallyActiveScopes={['global']}>
-                <App context={{ app: '', pmv: '', file: '' }} />
+                <App context={{ app: '', pmv: '', file: '' }} selectedElement={selectedElement} />
               </HotkeysProvider>
             </ReadonlyProvider>
           </QueryProvider>

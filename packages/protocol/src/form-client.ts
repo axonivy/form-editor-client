@@ -26,4 +26,5 @@ export interface FormClient {
 
   onDataChanged: Event<void>;
   onValidationChanged: Event<void>;
+  onSelectElement: Event<string>;
 }
