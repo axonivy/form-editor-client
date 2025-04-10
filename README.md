@@ -1,10 +1,12 @@
-# Form Editor (Prototype)
+# Form Editor
 
-This repo contains the prototype of the web-based next gen form editor.
+[![translation-status](https://hosted.weblate.org/widget/axonivy/form-editor/svg-badge.svg)](https://hosted.weblate.org/engage/axonivy/)
+
+This repo contains the web-based next gen form editor.
 
 ## Client
 
-This prototype is build with React.
+This client is build with React.
 
 ### Available Scripts
 
