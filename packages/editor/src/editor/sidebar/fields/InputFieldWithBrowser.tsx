@@ -29,7 +29,14 @@ export const InputFieldWithBrowser = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <BasicField label={label} message={message} style={{ flex: '1' }} {...focusWithinProps} className='badge-field' tabIndex={0}>
+      <BasicField
+        label={label}
+        message={message}
+        style={{ flex: '1', minWidth: 0 }}
+        {...focusWithinProps}
+        className='badge-field'
+        tabIndex={0}
+      >
         {isFocusWithin || showQuickFix() ? (
           <InputGroup>
             <BasicInput
