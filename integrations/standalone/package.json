@@ -11,9 +11,9 @@
   "dependencies": {
     "@axonivy/form-editor": "*",
     "@axonivy/form-editor-core": "*",
-    "@axonivy/ui-components": "~13.1.0-next.612",
-    "@axonivy/ui-icons": "~13.1.0-next.612",
-    "@axonivy/jsonrpc": "~13.1.0-next.612",
+    "@axonivy/ui-components": "~13.1.0-next.630",
+    "@axonivy/ui-icons": "~13.1.0-next.630",
+    "@axonivy/jsonrpc": "~13.1.0-next.630",
     "@tanstack/react-query": "^5.64",
     "@tanstack/react-query-devtools": "^5.64",
     "i18next": "^24.2.3",
