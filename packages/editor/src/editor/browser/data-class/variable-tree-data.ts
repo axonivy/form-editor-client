@@ -61,7 +61,7 @@ export const fullVariablePath = (row: Row<BrowserNode>, showRootNode: boolean = 
 
   const parentPath = relevantParents.map(parent => parent.original.value).join('.');
 
-  if (row.original.value === 'variable' && !showRootNode) {
+  if ((row.original.value === 'variable' || row.original.value === 'row') && !showRootNode) {
     return '';
   }
   return parentPath ? `${parentPath}.${row.original.value}` : row.original.value;

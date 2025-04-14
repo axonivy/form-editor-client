@@ -58,7 +58,7 @@ export const getApplyModifierValue = (
     return { value: '' };
   }
 
-  const prefix = componentInDialog ? 'ivyFormGenericRow.selectedRow' : '';
+  const prefix = componentInDialog ? 'ivyFormDataTableHandler.currentRow' : '';
   const path = fullVariablePath(row, (componentInDialog || options?.onlyAttributes) && false);
 
   return { value: `${prefix}${componentInDialog && path.length > 0 ? '.' : ''}${path}` };

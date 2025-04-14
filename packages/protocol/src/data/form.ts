@@ -185,7 +185,6 @@ export interface DataTable {
   maxRows: string;
   mdSpan: string;
   paginator: boolean;
-  rowType: string;
   value: string;
   visible: string;
 }
@@ -233,6 +232,7 @@ export interface Dialog {
   lgSpan: string;
   linkedComponent: string;
   mdSpan: string;
+  onApply: string;
 }
 export interface Fieldset {
   alignSelf: LayoutAlignItems;

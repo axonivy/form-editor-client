@@ -19,6 +19,7 @@
     "options": "Options",
     "paginator": "Paginator",
     "parameters": "Parameters",
+    "properties": "Properties",
     "selection": "Selection",
     "staticOptions": "Static Options",
     "structures": "Structures",
@@ -94,8 +95,7 @@
         "editable": "Editable",
         "editDialog": "Edit Dialog",
         "enablePaginator": "Enable Paginator",
-        "rowsPerPage": "Rows per Page",
-        "rowType": "Row Type"
+        "rowsPerPage": "Rows per Page"
       },
       "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
     },
@@ -127,10 +127,6 @@
     "fieldset": {
       "description": "A group of inputs",
       "name": "Fieldset"
-    },
-    "form": {
-      "accordion": "Properties",
-      "type": "Form Type"
     },
     "input": {
       "description": "A input with a label",
@@ -195,6 +191,7 @@
     "createFormData": "Create from data ({{hotkey}})",
     "deviceMode": "Change device mode ({{hotkey}})",
     "openDataClass": "Open Data Class({{hotkey}})",
+    "openPreview": "Open Preview ({{hotkey}})",
     "openProcess": "Open Process ({{hotkey}})",
     "viewMode": "View Mode ({{hotkey}})"
   },
@@ -202,6 +199,7 @@
     "addNewActionCol": "Add new Action Column Button",
     "allComponents": "All Components",
     "browser": "Browser",
+    "component": "Component",
     "composites": "Composites",
     "createActionCol": "Create Action Column",
     "createActionColBtn": "Create Action Column Button",
@@ -213,10 +211,13 @@
     "deviceModeParam": "Device mode {{mode}} ({{hotkey}})",
     "disable": "Disable",
     "dragFirstButton": "Drag first button inside the {{type}}",
-    "duplicateComp": "Duplicate (M)",
+    "duplicate": "Duplicate (M)",
     "enableReqProjects": "Enable required Projects",
-    "extractIntoComponent": "Extract into own Ivy Component (E)",
+    "extractComponent": "Extract into own Ivy Component (E)",
     "filterBy": "Filter by",
+    "form": "Form",
+    "formType": "Form Type",
+    "general": "General",
     "id": "ID",
     "largeSpan": "Large Span",
     "listOfObjects": "List of Objects",
@@ -254,7 +255,7 @@
     "action": "Action",
     "actions": "Actions",
     "collapsedDefault": "Collapsed by default",
-    "collapsible": "Collapsible",
+    "collapsible": "Collapisble",
     "completeMethod": "Complete Method",
     "content": "Content",
     "decimalPlaces": "Decimal Places",
