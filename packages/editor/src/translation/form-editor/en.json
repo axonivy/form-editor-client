@@ -128,6 +128,10 @@
       "description": "A group of inputs",
       "name": "Fieldset"
     },
+    "form": {
+      "accordion": "Properties",
+      "type": "Form Type"
+    },
     "input": {
       "description": "A input with a label",
       "name": "Input"
@@ -181,11 +185,6 @@
         "autoResize": "Auto Resize",
         "visibleRows": "Visible Rows"
       }
-    },
-    "form": {
-      "accordion": "Properties",
-      "type": "Form Type",
-      "placeholder": "This is a Text"
     }
   },
   "hint": {
@@ -214,8 +213,9 @@
     "deviceModeParam": "Device mode {{mode}} ({{hotkey}})",
     "disable": "Disable",
     "dragFirstButton": "Drag first button inside the {{type}}",
-    "duplicateComp": "Duplicate",
+    "duplicateComp": "Duplicate (M)",
     "enableReqProjects": "Enable required Projects",
+    "extractIntoComponent": "Extract into own Ivy Component (E)",
     "filterBy": "Filter by",
     "id": "ID",
     "largeSpan": "Large Span",
@@ -225,6 +225,7 @@
     "objectLabel": "Object Label",
     "objectValue": "Object Value",
     "objNotValid": "Defined Object is not valid",
+    "openComponent": "Open Component (J)",
     "options": "Options",
     "outline": "Outline",
     "required": "Required",
