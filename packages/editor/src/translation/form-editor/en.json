@@ -95,8 +95,7 @@
         "editable": "Editable",
         "editDialog": "Edit Dialog",
         "enablePaginator": "Enable Paginator",
-        "rowsPerPage": "Rows per Page",
-        "rowType": "Row Type"
+        "rowsPerPage": "Rows per Page"
       },
       "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
     },

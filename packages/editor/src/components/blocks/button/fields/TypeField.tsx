@@ -28,12 +28,12 @@ const TypeField = ({ label, value, onChange, validationPath }: GenericFieldProps
     setElement(element => {
       if (isButton(element)) {
         if (change === 'EDIT') {
-          element.config.action = '#{ivyFormGenericRow.editRow(row)}';
+          element.config.action = '#{ivyFormDataTableHandler.editRow(row)}'; //just placeholder, will be set from backend
           element.config.variant = 'PRIMARY';
           element.config.name = '';
           element.config.icon = 'pi pi-pencil';
         } else if (change === 'DELETE') {
-          element.config.action = '#{ivyFormGenericRow.deleteRow(row)}';
+          element.config.action = '#{ivyFormDataTableHandler.deleteRow(row)}'; //just placeholder, will be set from backend
           element.config.variant = 'DANGER';
           element.config.name = '';
           element.config.icon = 'pi pi-trash';
