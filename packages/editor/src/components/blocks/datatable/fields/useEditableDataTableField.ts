@@ -110,13 +110,13 @@ export const useEditableDataTableField = () => {
     {
       componentName: 'Button',
       label: '',
-      value: '#{ivyFormGenericRow.editRow(row)}',
+      value: '#{ivyFormDataTableHandler.edit(row)}', // just placeholder, will be set from backend
       defaultProps: { type: 'EDIT', icon: 'pi pi-pencil', variant: 'PRIMARY' }
     },
     {
       componentName: 'Button',
       label: '',
-      value: `#{ivyFormGenericRow.deleteRow(${stripELExpression(isTable(element) ? element.config.value : '')}, row)}`,
+      value: `#{ivyFormDataTableHandler.delete(row)}`, // just placeholder, will be set from backend
       defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
     }
   ];
