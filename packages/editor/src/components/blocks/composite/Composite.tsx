@@ -79,17 +79,30 @@ const UiBlock = ({ name }: UiComponentProps<CompositeProps>) => {
 
 const CompositeRenderer = ({ name }: { name: string }) => {
   const { context } = useAppContext();
-
   const { componentByName } = useComponents();
+
   const content = useMeta(
     'meta/composite/data',
     { context, compositeId: name },
-    { data: { $schema: '', components: [], config: { renderer: 'JSF', theme: '', type: 'FORM' }, id: '' } }
+    {
+      data: {
+        $schema: 'default',
+        components: [],
+        config: { renderer: 'JSF', theme: '', type: 'FORM' },
+        id: ''
+      }
+    }
   ).data;
 
-  return content.data.components.map(component => {
-    const config = componentByName(component.type);
-    const elementConfig = { ...config.defaultProps, ...component.config };
-    return <React.Fragment key={component.cid}>{config.render({ ...elementConfig, id: component.cid })}</React.Fragment>;
-  });
+  return content && content.data.$schema !== 'default' ? (
+    content.data.components.map(component => {
+      const config = componentByName(component.type);
+      const elementConfig = { ...config.defaultProps, ...component.config };
+      return <React.Fragment key={component.cid}>{config.render({ ...elementConfig, id: component.cid })}</React.Fragment>;
+    })
+  ) : (
+    <div className='block-composite'>
+      <span>{name}</span>
+    </div>
+  );
 };
