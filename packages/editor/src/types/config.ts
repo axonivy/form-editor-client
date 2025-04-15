@@ -125,6 +125,8 @@ export type Config<Props extends { [key: string]: any } = { [key: string]: any }
 export type QuickAction =
   | 'DELETE'
   | 'DUPLICATE'
+  | 'OPENCOMPONENT'
+  | 'EXTRACTINTOCOMPONENT'
   | 'CREATE'
   | 'CREATEFROMDATA'
   | 'CREATECOLUMN'

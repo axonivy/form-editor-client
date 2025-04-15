@@ -70,7 +70,7 @@ test('properties', async ({ page }) => {
   await expect(editor.inscription.view).toBeHidden();
   await toolbar.toggleProperties();
   await expect(editor.inscription.view).toBeVisible();
-  await editor.inscription.expectEmptyPage();
+  await editor.inscription.expectHeader('Form');
 });
 
 test('responsive', async ({ page }) => {

@@ -33,10 +33,6 @@ export class Inscription {
   async expectHeader(title: string) {
     await expect(this.view.locator('.sidebar-header')).toContainText(title);
   }
-
-  async expectEmptyPage() {
-    await expect(this.view).toContainText('Select an Element to edit its properties.');
-  }
 }
 
 class Accordion {

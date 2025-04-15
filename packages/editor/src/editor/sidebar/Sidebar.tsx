@@ -9,16 +9,14 @@ import { useAction } from '../../context/useAction';
 import { useAppContext } from '../../context/AppContext';
 import { useKnownHotkeys } from '../../utils/hotkeys';
 import { useTranslation } from 'react-i18next';
-import { useComponents } from '../../context/ComponentsContext';
 
 export const Sidebar = () => {
   const { t } = useTranslation();
   const { helpUrl } = useAppContext();
-  const { element } = useData();
-  const { componentByName } = useComponents();
+  const { element, data } = useData();
   const [outline, setOutline] = useState(false);
-  const elementType = element ? (element.type ? componentByName(element.type).displayName : 'DataTableColumn') : 'Properties';
-
+  const formatType = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  const elementType = element ? element.type : formatType(data.config.type);
   const messages = useValidations(element?.cid ?? '', { exact: true });
   const openUrl = useAction('openUrl');
   const { openHelp: shortcut } = useKnownHotkeys();

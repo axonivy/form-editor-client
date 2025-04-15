@@ -7,21 +7,28 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Flex,
-  PanelMessage
+  Flex
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
-import type { ConfigData } from '@axonivy/form-editor-protocol';
 import { usePropertySubSectionControl } from './PropertySubSectionControl';
 import { useBase } from '../../components/blocks/base';
 import { useComponents } from '../../context/ComponentsContext';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
+import type { ConfigData, FormType } from '@axonivy/form-editor-protocol';
+import type { FieldOption } from '../../types/config';
+import { SelectField } from './fields/SelectField';
+import { useTranslation } from 'react-i18next';
+
+const formTypeOptions: FieldOption<FormType>[] = [
+  { label: 'Component', value: 'COMPONENT' },
+  { label: 'Form', value: 'FORM' }
+] as const;
 
 export const Properties = () => {
   const { componentByElement } = useComponents();
   const { element, data, parent } = useData();
   if (element === undefined) {
-    return <PanelMessage message='Select an Element to edit its properties.' />;
+    return <FormPropertySection />;
   }
   const propertyConfig = componentByElement(element, data.components);
   const elementConfig = { ...propertyConfig.defaultProps, ...element.config };
@@ -83,5 +90,39 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
         </Flex>
       </CollapsibleContent>
     </Collapsible>
+  );
+};
+
+const FormPropertySection = () => {
+  const { data, setData } = useData();
+  const { t } = useTranslation();
+  return (
+    <Accordion type='single' collapsible defaultValue='Properties'>
+      <AccordionItem key='Properties' value='Properties'>
+        <AccordionTrigger>{t('components.form.accordion')}</AccordionTrigger>
+        <AccordionContent>
+          <Flex direction='column' gap={2}>
+            <Collapsible defaultOpen={true}>
+              <CollapsibleTrigger>{t('category.general')}</CollapsibleTrigger>
+              <CollapsibleContent>
+                <Flex direction='column' gap={2}>
+                  <SelectField
+                    label={t('components.form.type')}
+                    options={formTypeOptions}
+                    value={data.config.type}
+                    onChange={value => {
+                      setData(data => {
+                        data.config.type = value as FormType;
+                        return data;
+                      });
+                    }}
+                  />
+                </Flex>
+              </CollapsibleContent>
+            </Collapsible>
+          </Flex>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 };

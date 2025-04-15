@@ -5,8 +5,11 @@ import { useBase } from '../base';
 import IconSvg from './Composite.svg?react';
 import { renderStartMethodSelect } from './fields/StartMethodSelect';
 import { renderParameters } from './fields/Parameters';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAppContext } from '../../../context/AppContext';
+import { useMeta } from '../../../context/useMeta';
+import { useComponents } from '../../../context/ComponentsContext';
 
 type CompositeProps = Prettify<Composite>;
 
@@ -47,7 +50,7 @@ export const useCompositeComponent = () => {
         },
         parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters }
       },
-      quickActions: DEFAULT_QUICK_ACTIONS
+      quickActions: [...DEFAULT_QUICK_ACTIONS, 'OPENCOMPONENT']
     } as const;
 
     return CompositeComponent;
@@ -59,8 +62,34 @@ export const useCompositeComponent = () => {
   };
 };
 
-const UiBlock = ({ name }: UiComponentProps<CompositeProps>) => (
-  <div className='block-composite'>
-    <span>{name}</span>
-  </div>
-);
+const UiBlock = ({ name }: UiComponentProps<CompositeProps>) => {
+  const { ui } = useAppContext();
+  return (
+    <>
+      {ui.helpPaddings ? (
+        <div className='block-composite'>
+          <span>{name}</span>
+        </div>
+      ) : (
+        <CompositeRenderer name={name} />
+      )}
+    </>
+  );
+};
+
+const CompositeRenderer = ({ name }: { name: string }) => {
+  const { context } = useAppContext();
+
+  const { componentByName } = useComponents();
+  const content = useMeta(
+    'meta/composite/data',
+    { context, compositeId: name },
+    { data: { $schema: '', components: [], config: { renderer: 'JSF', theme: '', type: 'FORM' }, id: '' } }
+  ).data;
+
+  return content.data.components.map(component => {
+    const config = componentByName(component.type);
+    const elementConfig = { ...config.defaultProps, ...component.config };
+    return <React.Fragment key={component.cid}>{config.render({ ...elementConfig, id: component.cid })}</React.Fragment>;
+  });
+};

@@ -9,7 +9,7 @@ export type UI = {
   deviceMode: 'desktop' | 'tablet' | 'mobile';
 };
 
-const DEFAULT_UI: UI = { properties: true, helpPaddings: true, deviceMode: 'desktop' };
+const DEFAULT_UI: UI = { properties: false, helpPaddings: true, deviceMode: 'desktop' };
 
 export const useUiState = () => {
   const readonly = useReadonly();
