@@ -7,7 +7,6 @@
  */
 
 export type CmsQuickactionCategory = ("global" | "local")
-export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
 export type FormType = "FORM" | "COMPONENT";
 export type LayoutAlignItems = "START" | "CENTER" | "END";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET" | "EDIT" | "DELETE";
@@ -20,12 +19,14 @@ export type LayoutType = "GRID" | "FLEX";
 export type OrientationType = "horizontal" | "vertical";
 export type TextIconStyle = "INLINE" | "BLOCK";
 export type TextType = "RAW" | "MARKDOWN";
+export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
 export type Severity = "INFO" | "WARNING" | "ERROR";
 
 export interface Forms {
   cmsQuickAction: CmsQuickAction[];
   cmsQuickActionRequest: CmsQuickActionRequest;
   compositeContext: CompositeContext;
+  compositeData: CompositeData;
   compositeInfo: CompositeInfo[];
   contentObject: ContentObject[];
   editorFileContent: EditorFileContent;
@@ -64,41 +65,8 @@ export interface CompositeContext {
   compositeId: string;
   context: FormContext;
 }
-export interface CompositeInfo {
-  id: string;
-  startMethods: MethodInfo[];
-}
-export interface MethodInfo {
-  deprecated: boolean;
-  name: string;
-  parameters: ParameterInfo[];
-}
-export interface ParameterInfo {
-  description: string;
-  name: string;
-  type: string;
-}
-export interface ContentObject {
-  children: ContentObject[];
-  fullPath: string;
-  name: string;
-  type: ContentObjectType;
-  values: MapStringString;
-}
-export interface MapStringString {
-  [k: string]: string;
-}
-export interface EditorFileContent {
-  content: string;
-}
-export interface ExecuteCmsQuickActionRequest {
-  cmsQuickAction: CmsQuickAction;
-  context: FormContext;
-}
-export interface ExtractContext {
-  context: FormContext;
-  layoutId: string;
-  newComponentName: string;
+export interface CompositeData {
+  data: Form;
 }
 export interface Form {
   $schema: string;
@@ -198,6 +166,9 @@ export interface Composite {
   name: string;
   parameters: MapStringString;
   startMethod: string;
+}
+export interface MapStringString {
+  [k: string]: string;
 }
 export interface DataTable {
   addButton: boolean;
@@ -382,6 +353,39 @@ export interface Textarea {
   updateOnChange: boolean;
   value: string;
   visible: string;
+}
+export interface CompositeInfo {
+  id: string;
+  startMethods: MethodInfo[];
+}
+export interface MethodInfo {
+  deprecated: boolean;
+  name: string;
+  parameters: ParameterInfo[];
+}
+export interface ParameterInfo {
+  description: string;
+  name: string;
+  type: string;
+}
+export interface ContentObject {
+  children: ContentObject[];
+  fullPath: string;
+  name: string;
+  type: ContentObjectType;
+  values: MapStringString;
+}
+export interface EditorFileContent {
+  content: string;
+}
+export interface ExecuteCmsQuickActionRequest {
+  cmsQuickAction: CmsQuickAction;
+  context: FormContext;
+}
+export interface ExtractContext {
+  context: FormContext;
+  layoutId: string;
+  newComponentName: string;
 }
 export interface FormActionArgs {
   actionId: "openComponent" | "openDataClass" | "openProcess" | "openUrl";
