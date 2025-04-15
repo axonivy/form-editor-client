@@ -23,6 +23,7 @@ export type ContentObjectType = "STRING" | "FILE" | "FOLDER";
 export type Severity = "INFO" | "WARNING" | "ERROR";
 
 export interface Forms {
+  boolean: boolean;
   cmsQuickAction: CmsQuickAction[];
   cmsQuickActionRequest: CmsQuickActionRequest;
   compositeContext: CompositeContext;
@@ -401,6 +402,7 @@ export interface FormEditorData {
   data: Form;
   defaults: DefaultConfig;
   helpUrl: string;
+  previewUrl: string;
   readonly: boolean;
 }
 export interface DefaultConfig {}

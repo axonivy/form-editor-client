@@ -32,6 +32,7 @@ export interface FormMetaRequestTypes {
 }
 
 export interface FormRequestTypes extends FormMetaRequestTypes {
+  initialize: [FormContext, void];
   data: [FormContext, FormEditor];
   saveData: [FormSaveData, EditorFileContent];
 
@@ -45,4 +46,5 @@ export interface FormNotificationTypes {
 export interface FormOnNotificationTypes {
   dataChanged: void;
   validationChanged: void;
+  selectElement: string;
 }
