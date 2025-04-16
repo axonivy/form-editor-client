@@ -18,11 +18,13 @@ import { useComponents } from '../../context/ComponentsContext';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
 import type { FieldOption } from '../../types/config';
 import { SelectField } from './fields/SelectField';
+import { useState } from 'react';
 
 export const Properties = () => {
   const { t } = useTranslation();
   const { componentByElement } = useComponents();
   const { element, data, parent } = useData();
+  const [value, setValue] = useState(t('category.properties'));
   if (element === undefined) {
     return <FormPropertySection />;
   }
@@ -32,7 +34,7 @@ export const Properties = () => {
   const sections = visibleSections(fields, parent);
   return (
     <div style={{ overflowY: 'auto' }}>
-      <Accordion type='single' collapsible defaultValue={t('category.properties')}>
+      <Accordion type='single' collapsible value={value} onValueChange={setValue}>
         {[...sections].map(([section, fields]) => (
           <PropertySection key={section} section={section} fields={fields} />
         ))}
@@ -98,10 +100,11 @@ const FormPropertySection = () => {
   ] as const;
 
   const { data, setData } = useData();
+  const [value, setValue] = useState(t('category.properties'));
   return (
-    <Accordion type='single' collapsible defaultValue='Properties'>
-      <AccordionItem key='Properties' value={t('label.properties')}>
-        <AccordionTrigger>{t('label.properties')}</AccordionTrigger>
+    <Accordion type='single' collapsible value={value} onValueChange={setValue}>
+      <AccordionItem value={t('category.properties')}>
+        <AccordionTrigger>{t('category.properties')}</AccordionTrigger>
         <AccordionContent>
           <Flex direction='column' gap={2}>
             <Collapsible defaultOpen={true}>
