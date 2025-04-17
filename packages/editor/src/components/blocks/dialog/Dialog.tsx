@@ -77,7 +77,7 @@ const DialogUiBlock = ({ id, components, header, linkedComponent }: UiComponentP
           creationTarget={id}
           onlyAttributs={onlyAttributs}
           showRootNode={false}
-          prefix='ivyFormGenericRow.selectedRow'
+          prefix='ivyFormDataTableHandler.row'
           parentName='row'
         >
           <Button

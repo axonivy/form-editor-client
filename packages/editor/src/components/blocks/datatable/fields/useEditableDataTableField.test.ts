@@ -52,7 +52,7 @@ const dialog: ComponentData = {
 const editButton: ComponentData = {
   cid: 'button5',
   config: {
-    action: '#{ivyFormGenericRow.editRow(row)}',
+    action: '#{ivyFormDataTableHandler.edit(row)}', // just placeholder, will be set from backend
     alignSelf: 'START',
     disabled: '',
     icon: 'pi pi-pencil',
@@ -71,7 +71,7 @@ const editButton: ComponentData = {
 const deleteButton: ComponentData = {
   cid: 'button6',
   config: {
-    action: '#{ivyFormGenericRow.deleteRow(data.persons, row)}',
+    action: '#{ivyFormDataTableHandler.delete(row)}', // just placeholder, will be set from backend
     alignSelf: 'START',
     disabled: '',
     icon: 'pi pi-trash',
