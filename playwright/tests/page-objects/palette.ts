@@ -6,11 +6,11 @@ export class Palette {
 
   constructor(page: Page) {
     this.page = page;
-    this.palette = page.locator('.palette');
+    this.palette = page.locator('.ui-palette');
   }
 
   paletteItem(name: string) {
-    return this.palette.locator(`.palette-item >> text="${name}"`).first();
+    return this.palette.locator(`.ui-palette-item >> text="${name}"`).first();
   }
 
   async dndTo(name: string, target: Locator) {
@@ -29,9 +29,9 @@ export class Palette {
   }
 
   async expectSections(sections: Array<string>) {
-    await expect(this.palette.locator('.palette-section-title')).toHaveCount(sections.length);
+    await expect(this.palette.locator('.ui-palette-section-title')).toHaveCount(sections.length);
     for (let i = 0; i < sections.length; i++) {
-      await expect(this.palette.locator('.palette-section-title').nth(i)).toHaveText(sections[i]);
+      await expect(this.palette.locator('.ui-palette-section-title').nth(i)).toHaveText(sections[i]);
     }
   }
 }

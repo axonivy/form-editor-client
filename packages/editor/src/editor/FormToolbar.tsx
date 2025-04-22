@@ -7,6 +7,8 @@ import {
   hotkeyUndoFix,
   IvyIcon,
   Label,
+  PaletteButton,
+  PaletteButtonLabel,
   Popover,
   PopoverArrow,
   PopoverContent,
@@ -24,12 +26,11 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
 import { forwardRef, useMemo, useRef } from 'react';
-import { Palette } from './palette/Palette';
+import { FormPalette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
 import { useAction } from '../context/useAction';
 import { DataClassDialog } from './browser/data-class/DataClassDialog';
-import { PaletteButton } from './palette/PaletteButton';
 import { useKnownHotkeys } from '../utils/hotkeys';
 import { useTranslation } from 'react-i18next';
 import { useComponents } from '../context/ComponentsContext';
@@ -126,7 +127,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       {editable && (
         <Flex gap={3} className='palette-section'>
           <PalettePopover label={t('label.allComponents')} icon={IvyIcons.Task}>
-            <Palette sections={allComponentsByCategory()} />
+            <FormPalette sections={allComponentsByCategory()} />
           </PalettePopover>
           <ToolbarContainer maxWidth={650}>
             <Flex gap={3}>
@@ -138,16 +139,11 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
           <PalettePopover label={t('label.composites')} icon={IvyIcons.File}>
             <CompositePalette />
           </PalettePopover>
-          <PaletteButton text={t('label.data')}>
+          <PaletteButtonLabel label={t('label.data')}>
             <DataClassDialog workflowButtonsInit={false}>
-              <Button
-                icon={IvyIcons.DatabaseLink}
-                size='large'
-                aria-label={hotkeys.createFromData.label}
-                title={hotkeys.createFromData.label}
-              />
+              <PaletteButton icon={IvyIcons.DatabaseLink} label={hotkeys.createFromData.label} withoutChevron={true} />
             </DataClassDialog>
-          </PaletteButton>
+          </PaletteButtonLabel>
         </Flex>
       )}
 

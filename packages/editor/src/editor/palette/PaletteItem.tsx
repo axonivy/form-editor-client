@@ -1,43 +1,51 @@
+import { Flex, type PaletteItemConfig, type PaletteItemProps, cn } from '@axonivy/ui-components';
 import { useDraggable } from '@dnd-kit/core';
-import './PaletteItem.css';
-import { Flex } from '@axonivy/ui-components';
-import type { CreateComponentData } from '../../types/config';
 import { useComponents } from '../../context/ComponentsContext';
+import type { CreateComponentData } from '../../types/config';
+import type { AutoCompleteWithString } from '../../types/types';
+import type { ComponentType } from '@axonivy/form-editor-protocol';
+import './PaletteItem.css';
 
-export type PaletteConfig = {
-  name: string;
+export type FormPaletteItemConfig = Omit<PaletteItemConfig, 'icon'> & {
   displayName: string;
-  description: string;
   data?: CreateComponentData;
   directCreate?: (name: string) => void;
 };
 
-export const PaletteItem = ({ name, displayName, description, data, directCreate }: PaletteConfig) => {
+export const FormPaletteItem = ({
+  displayName,
+  name,
+  description,
+  classNames,
+  data,
+  directCreate
+}: PaletteItemProps<FormPaletteItemConfig>) => {
   const { componentByName } = useComponents();
   const { attributes, listeners, setNodeRef } = useDraggable({ id: name, data });
   const componentName = data?.componentName ?? name;
   return (
-    <Flex
-      className='palette-item'
-      direction='column'
-      gap={1}
-      alignItems='center'
+    <button
+      className={cn(classNames.paletteItem, 'ui-palette-item')}
       title={description}
+      style={{ cursor: 'grab' }}
       ref={setNodeRef}
       {...listeners}
       {...attributes}
       onClick={() => directCreate?.(name)}
-      style={directCreate ? { cursor: 'pointer' } : undefined}
     >
-      <Flex className='palette-item-icon' justifyContent='center' alignItems='center'>
-        {componentByName(componentName).icon}
+      <Flex direction='column' gap={1} alignItems='center'>
+        <Flex className={cn(classNames.paletteItemIcon, 'ui-palette-item-icon')} justifyContent='center' alignItems='center'>
+          {componentByName(componentName)?.icon}
+        </Flex>
+        <Flex justifyContent='center'>{displayName}</Flex>
       </Flex>
-      <Flex justifyContent='center'>{displayName}</Flex>
-    </Flex>
+    </button>
   );
 };
 
-export const PaletteItemOverlay = ({ name, data }: PaletteConfig) => {
+type PaletteItemOverlayProps = { name: AutoCompleteWithString<ComponentType>; data?: CreateComponentData };
+
+export const PaletteItemOverlay = ({ name, data }: PaletteItemOverlayProps) => {
   const { componentByName } = useComponents();
   const component = componentByName(data?.componentName ?? name);
   return (

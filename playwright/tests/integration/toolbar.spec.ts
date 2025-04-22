@@ -42,7 +42,7 @@ test('undo/redo', async ({ page, browserName }) => {
 
 test('palette', async ({ page }) => {
   const { toolbar } = await FormEditor.openMock(page);
-  await expect(toolbar.palette.locator('.palette-button')).toHaveCount(6);
+  await expect(toolbar.palette.locator('.ui-palette-button')).toHaveCount(6);
 });
 
 test('help paddings', async ({ page }) => {
@@ -77,7 +77,7 @@ test('responsive', async ({ page }) => {
   const {
     toolbar: { palette, redoButton, undoButton }
   } = await FormEditor.openMock(page);
-  const paletteBtn = palette.locator('.category-label:has-text("Structure")');
+  const paletteBtn = palette.locator('.ui-palette-button-label:has-text("Structure")');
   await expect(paletteBtn).toBeVisible();
   await expect(undoButton).toBeVisible();
   await expect(redoButton).toBeVisible();
