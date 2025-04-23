@@ -20,7 +20,6 @@ const data = {
       config: {
         components: [],
         value: '#{data.persons}',
-        rowType: 'form.test.project.Person',
         isEditable: false,
         editDialogId: 'dialog3'
       }

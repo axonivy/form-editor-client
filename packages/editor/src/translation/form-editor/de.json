@@ -95,8 +95,7 @@
         "editable": "Bearbeitbar",
         "editDialog": "Dialog bearbeiten",
         "enablePaginator": "Seitennummerierung aktivieren",
-        "rowsPerPage": "Zeilen pro Seite",
-        "rowType": "Zeilentyp"
+        "rowsPerPage": "Zeilen pro Seite"
       },
       "valueEmpty": "Wert der Datentabelle ist leer. Definiere den Wert in den Eigenschaften der Datentabelle"
     },
