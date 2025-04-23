@@ -23,4 +23,7 @@
     border: var(--select-active-border);
     background-color: var(--P50);
   }
+  &.dragging {
+    cursor: grabbing;
+  }
 }

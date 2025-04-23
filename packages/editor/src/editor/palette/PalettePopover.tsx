@@ -1,11 +1,9 @@
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { ItemCategory } from '../../types/config';
-import { Button, IvyIcon, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
-import { Palette } from './Palette';
+import { PaletteButton, PaletteButtonLabel, Popover, PopoverArrow, PopoverContent, PopoverTrigger } from '@axonivy/ui-components';
+import { FormPalette } from './Palette';
 import { useDndContext } from '@dnd-kit/core';
 import { useEffect, useState, type ReactNode } from 'react';
-import './PalettePopover.css';
-import { PaletteButton } from './PaletteButton';
 import { useBase } from '../../components/blocks/base';
 import { useComponents } from '../../context/ComponentsContext';
 
@@ -26,28 +24,28 @@ export const PalettePopover = ({ label, icon, children }: PalettePopoverProps) =
   }, [active, popoverOpen]);
 
   return (
-    <PaletteButton text={label}>
-      <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
+    <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
+      <PaletteButtonLabel label={label}>
         <PopoverTrigger asChild>
-          <Button aria-label={label} icon={icon} size='large'>
-            <IvyIcon icon={IvyIcons.Chevron} className='category-icon' rotate={90} />
-          </Button>
+          <PaletteButton label={label} icon={icon} />
         </PopoverTrigger>
-        <PopoverContent sideOffset={5} hideWhenDetached={true}>
-          {children}
-          <PopoverArrow />
-        </PopoverContent>
-      </Popover>
-    </PaletteButton>
+      </PaletteButtonLabel>
+      <PopoverContent sideOffset={7} hideWhenDetached={true}>
+        {children}
+        <PopoverArrow />
+      </PopoverContent>
+    </Popover>
   );
 };
 
-export const PaletteCategoryPopover = (props: Omit<PalettePopoverProps, 'children' | 'label'> & { category: ItemCategory }) => {
+type PaletteCategoryPopoverProps = Omit<PalettePopoverProps, 'children' | 'label'> & { category: ItemCategory };
+
+export const PaletteCategoryPopover = ({ category, icon }: PaletteCategoryPopoverProps) => {
   const { componentsByCategory } = useComponents();
   const { categoryTranslations: CategoryTranslations } = useBase();
   return (
-    <PalettePopover label={CategoryTranslations[props.category]} icon={props.icon}>
-      <Palette sections={componentsByCategory(props.category)} />
+    <PalettePopover label={CategoryTranslations[category]} icon={icon}>
+      <FormPalette sections={componentsByCategory(category)} />
     </PalettePopover>
   );
 };

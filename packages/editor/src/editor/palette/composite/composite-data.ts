@@ -1,11 +1,11 @@
 import type { CompositeInfo } from '@axonivy/form-editor-protocol';
-import type { PaletteConfig } from '../PaletteItem';
 import { simpleType } from '../../../utils/string';
 import { splitByCamelCase } from '@axonivy/ui-components';
+import type { FormPaletteItemConfig } from '../PaletteItem';
 
-export const paletteItems = (composites: Array<CompositeInfo>): Record<string, Array<PaletteConfig>> => {
-  const paletteItems: Record<string, Array<PaletteConfig>> = {};
-  paletteItems['All'] = composites.map<PaletteConfig>(composite => ({
+export const paletteItems = (composites: Array<CompositeInfo>): Record<string, Array<FormPaletteItemConfig>> => {
+  const paletteItems: Record<string, Array<FormPaletteItemConfig>> = {};
+  paletteItems['All'] = composites.map<FormPaletteItemConfig>(composite => ({
     name: splitByCamelCase(simpleType(composite.id)),
     displayName: splitByCamelCase(simpleType(composite.id)),
     description: composite.id,

@@ -8,7 +8,7 @@ import { dragData } from './drag-data';
 import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useState } from 'react';
-import { Palette } from '../palette/Palette';
+import { FormPalette } from '../palette/Palette';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
@@ -262,7 +262,7 @@ const Quickbar = ({
           </Flex>
         </PopoverAnchor>
         <PopoverContent className='quickbar-menu' sideOffset={8} onClick={e => e.stopPropagation()}>
-          <Palette sections={allComponentsByCategory()} directCreate={type => createAction?.(type as ComponentType)} />
+          <FormPalette sections={allComponentsByCategory()} directCreate={type => createAction?.(type as ComponentType)} />
         </PopoverContent>
       </Popover>
     </PopoverContent>
