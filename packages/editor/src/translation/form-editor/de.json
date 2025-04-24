@@ -8,6 +8,7 @@
     "actions": "Aktionen",
     "behaviour": "Verhalten",
     "columns": "Spalten",
+    "confirmDialog": "Bestätigungsdialog",
     "content": "Inhalt",
     "dynamicOptions": "Dynamische Optionen",
     "elements": "Elemente",
@@ -56,6 +57,12 @@
   },
   "components": {
     "button": {
+      "confirmSeverity": {
+        "error": "Fehler",
+        "info": "Info",
+        "success": "Erfolg",
+        "warn": "Warnung"
+      },
       "description": "Ein Knopf zum Auslösen von Aktionen",
       "fieldType": {
         "delete": "Löschen",
@@ -63,6 +70,11 @@
         "generic": "Generisch"
       },
       "name": "Knopf",
+      "property": {
+        "confirmDialog": "Bestätigungsdialog",
+        "message": "Dialognachricht",
+        "severity": "Schweregrad"
+      },
       "type": {
         "danger": "Gefahr",
         "primary": "Primär",
@@ -257,6 +269,8 @@
     "collapsedDefault": "Standardmässig eingeklappt",
     "collapsible": "Einklappbar",
     "completeMethod": "Vervollständigungs-Methode",
+    "confirmDialogHeader": "Löschbestätigung",
+    "confirmDialogMessage": "Möchten Sie diese Zeile wirklich löschen?",
     "content": "Inhalt",
     "decimalPlaces": "Dezimalstellen",
     "editRow": "Zeile bearbeiten",

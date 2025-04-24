@@ -54,6 +54,10 @@ const editButton: ComponentData = {
   config: {
     action: '#{ivyFormDataTableHandler.editRow(row)}', // just placeholder, will be set from backend
     alignSelf: 'START',
+    cdHeader: 'property.confirmDialogHeader',
+    cdMessage: 'property.confirmDialogMessage',
+    cdSeverity: 'WARN',
+    confirmDialog: false,
     disabled: '',
     icon: 'pi pi-pencil',
     id: '',
@@ -73,6 +77,10 @@ const deleteButton: ComponentData = {
   config: {
     action: '#{ivyFormDataTableHandler.deleteRow(row)}', // just placeholder, will be set from backend
     alignSelf: 'START',
+    cdHeader: 'property.confirmDialogHeader',
+    cdMessage: 'property.confirmDialogMessage',
+    cdSeverity: 'WARN',
+    confirmDialog: true,
     disabled: '',
     icon: 'pi pi-trash',
     id: '',

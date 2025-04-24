@@ -8,6 +8,7 @@
     "actions": "Actions",
     "behaviour": "Behaviour",
     "columns": "Columns",
+    "confirmDialog": "Confirm Dialog",
     "content": "Content",
     "dynamicOptions": "Dynamic Options",
     "elements": "Elements",
@@ -56,6 +57,12 @@
   },
   "components": {
     "button": {
+      "confirmSeverity": {
+        "error": "Error",
+        "info": "Info",
+        "success": "Success",
+        "warn": "Warning"
+      },
       "description": "A button to fire actions",
       "fieldType": {
         "delete": "Delete",
@@ -63,6 +70,11 @@
         "generic": "Generic"
       },
       "name": "Button",
+      "property": {
+        "confirmDialog": "Confirm Dialog",
+        "message": "Dialog Message",
+        "severity": "Severity"
+      },
       "type": {
         "danger": "Danger",
         "primary": "Primary",
@@ -257,6 +269,8 @@
     "collapsedDefault": "Collapsed by default",
     "collapsible": "Collapsible",
     "completeMethod": "Complete Method",
+    "confirmDialogHeader": "Delete Confirmation",
+    "confirmDialogMessage": "Are you sure you want to delete this row?",
     "content": "Content",
     "decimalPlaces": "Decimal Places",
     "editRow": "Edit Row",

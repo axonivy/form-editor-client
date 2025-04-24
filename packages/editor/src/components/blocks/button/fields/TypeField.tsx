@@ -32,11 +32,16 @@ const TypeField = ({ label, value, onChange, validationPath }: GenericFieldProps
           element.config.variant = 'PRIMARY';
           element.config.name = '';
           element.config.icon = 'pi pi-pencil';
+          element.config.confirmDialog = false;
         } else if (change === 'DELETE') {
           element.config.action = '#{ivyFormDataTableHandler.deleteRow(row)}'; //just placeholder, will be set from backend
           element.config.variant = 'DANGER';
           element.config.name = '';
           element.config.icon = 'pi pi-trash';
+          element.config.confirmDialog = true;
+          element.config.cdMessage = t('property.confirmDialogMessage');
+          element.config.cdHeader = t('property.confirmDialogHeader');
+          element.config.cdSeverity = 'WARN';
         }
       }
       return element;
