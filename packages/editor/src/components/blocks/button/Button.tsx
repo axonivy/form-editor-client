@@ -1,4 +1,4 @@
-import type { Button, ButtonVariant, Prettify } from '@axonivy/form-editor-protocol';
+import type { Button, ButtonVariant, ConfirmDialogSeverity, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
 import { useBase } from '../base';
@@ -34,6 +34,13 @@ export const useButtonComponent = () => {
       { label: t('components.button.type.danger'), value: 'DANGER' }
     ] as const;
 
+    const confirmDialogSeverity: FieldOption<ConfirmDialogSeverity>[] = [
+      { label: t('components.button.confirmSeverity.info'), value: 'INFO' },
+      { label: t('components.button.confirmSeverity.success'), value: 'SUCCESS' },
+      { label: t('components.button.confirmSeverity.warn'), value: 'WARN' },
+      { label: t('components.button.confirmSeverity.error'), value: 'ERROR' }
+    ] as const;
+
     const defaultButtonProps: Button = {
       name: t('property.action'),
       action: '',
@@ -41,6 +48,12 @@ export const useButtonComponent = () => {
       type: 'BUTTON',
       icon: '',
       processOnlySelf: false,
+      confirmDialog: false,
+      confirmMessage: t('components.button.confirm.confirmDialogMessage'),
+      confirmHeader: t('components.button.confirm.confirmDialogHeader'),
+      confirmSeverity: 'WARN',
+      confirmCancelValue: t('components.button.confirm.no'),
+      confirmOkValue: t('components.button.confirm.yes'),
       ...defaultDisabledComponent,
       ...defaultBaseComponent
     } as const;
@@ -89,7 +102,55 @@ export const useButtonComponent = () => {
           type: 'generic',
           render: renderIconField
         },
+
         processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
+        confirmDialog: {
+          section: 'Confirm',
+          subsection: 'General',
+          label: t('components.button.property.confirmDialog'),
+          type: 'checkbox',
+          hide: data => data.type !== 'DELETE'
+        },
+        confirmSeverity: {
+          section: 'Confirm',
+          subsection: 'General',
+          label: t('components.button.property.severity'),
+          type: 'select',
+          options: confirmDialogSeverity,
+          hide: data => !data.confirmDialog || data.type !== 'DELETE'
+        },
+        confirmHeader: {
+          section: 'Confirm',
+          subsection: 'General',
+          label: t('property.header'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }],
+          hide: data => !data.confirmDialog || data.type !== 'DELETE'
+        },
+        confirmMessage: {
+          section: 'Confirm',
+          subsection: 'General',
+          label: t('components.button.property.message'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }],
+          hide: data => !data.confirmDialog || data.type !== 'DELETE'
+        },
+        confirmOkValue: {
+          section: 'Confirm',
+          subsection: 'General',
+          label: t('components.button.property.confirmButton'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }],
+          hide: data => !data.confirmDialog || data.type !== 'DELETE'
+        },
+        confirmCancelValue: {
+          section: 'Confirm',
+          subsection: 'General',
+          label: t('components.button.property.cancelButton'),
+          type: 'textBrowser',
+          browsers: [{ type: 'CMS', options: { overrideSelection: true } }],
+          hide: data => !data.confirmDialog || data.type !== 'DELETE'
+        },
         ...disabledComponentFields
       },
       quickActions: DEFAULT_QUICK_ACTIONS

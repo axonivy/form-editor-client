@@ -44,7 +44,7 @@ export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComp
   subsection: Subsection;
   label?: string;
   hide?: (component: ComponentProps) => boolean;
-  section?: 'Layout' | (string & {});
+  section?: 'Layout' | 'Confirm Dialog' | (string & {});
 };
 
 export type TextFieldOptions = {
