@@ -266,6 +266,7 @@
   "property": {
     "action": "Action",
     "actions": "Actions",
+    "additionalAction": "Additional Action",
     "collapsedDefault": "Collapsed by default",
     "collapsible": "Collapsible",
     "completeMethod": "Complete Method",

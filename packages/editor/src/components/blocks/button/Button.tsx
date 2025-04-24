@@ -8,6 +8,7 @@ import { renderIconField } from './fields/IconField';
 import { renderTypeField } from './fields/TypeField';
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
+import { renderActionField } from './fields/ActionField';
 
 type ButtonProps = Prettify<Button>;
 
@@ -84,9 +85,8 @@ export const useButtonComponent = () => {
         action: {
           subsection: 'General',
           label: t('property.action'),
-          type: 'textBrowser',
-          browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }],
-          hide: data => hideButtonField(data)
+          type: 'generic',
+          render: renderActionField
         },
         variant: {
           subsection: 'General',
