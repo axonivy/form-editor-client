@@ -203,6 +203,17 @@
       }
     }
   },
+  "dialog": {
+    "applyExtract": "Extrahieren",
+    "componentName": "Name",
+    "dataClass": "Datenklasse",
+    "extractComponent": "{{component}} in eigene Ivy-Komponente extrahieren",
+    "extractErrorTitle": "Komponente konnte nicht als Ivy-Komponente extrahiert werden",
+    "extractExists": "Ivy-Komponente {{componentId}} existiert bereits",
+    "extractSuccess": "Ivy-Komponente '{{componentName}}' wurde erfolgreich erstellt",
+    "logicWarning": "Wenn im '{{component}}' Logik-Prozesse verwendet werden, werden diese nicht exportiert und müssen nach der Extraktion manuell implementiert werden.",
+    "nameSpace": "Namensraum"
+  },
   "hint": {
     "dragFirstItem": "Ziehen Sie das erste Element in die Arbeitsfläche oder",
     "dragItemInto": "Ziehen Sie das erste Element in den {{type}}"
@@ -259,9 +270,12 @@
     "visible": "Sichtbar"
   },
   "message": {
+    "componentNamespaceNotEmpty": "Der Namespace der Komponente darf nicht leer sein.",
+    "componentNotEmpty": "Der Komponenten-Name darf nicht leer sein.",
     "errorOnly": "Fehler: {{error}}",
     "fieldTypeUnknown": "Unbekannter Feldtyp",
     "formNotFound": "Formular nicht gefunden",
+    "invalidChar": "Ungültiges Zeichen '{{- char}}' an Position {{pos}} in '{{- str}}'.",
     "noData": "Keine Daten",
     "noOptionsDefined": "Keine Optionen definiert",
     "noParam": "Keine Parameter",

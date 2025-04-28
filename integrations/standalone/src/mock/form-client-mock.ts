@@ -22,7 +22,8 @@ export class FormClientMock implements FormClient {
       defaults: {},
       data: datatable ? dataDataTable : data,
       helpUrl: 'https://dev.axonivy.com',
-      previewUrl: ''
+      previewUrl: '',
+      namespace: ''
     };
   }
 

@@ -203,6 +203,17 @@
       }
     }
   },
+  "dialog": {
+    "applyExtract": "Extract",
+    "componentName": "Name",
+    "dataClass": "Dataclass",
+    "extractComponent": "Extract {{component}} into own Ivy Component",
+    "extractErrorTitle": "Failed to extract Component into own Ivy Component",
+    "extractExists": "Ivy Component '{{componentId}}' already exists",
+    "extractSuccess": "Ivy Component '{{componentName}}' was successfully created",
+    "logicWarning": "If Logic Processes are used within '{{component}}', they will not be exported and must be implemented manually after extraction.",
+    "nameSpace": "Namespace"
+  },
   "hint": {
     "dragFirstItem": "Drag first element inside the canvas or",
     "dragItemInto": "Drag first element inside the {{type}}"
@@ -259,9 +270,12 @@
     "visible": "Visible"
   },
   "message": {
+    "componentNamespaceNotEmpty": "Component namespace must not be empty.",
+    "componentNotEmpty": "Component name must not be empty.",
     "errorOnly": "Error: {{error}}",
     "fieldTypeUnknown": "unknown field type",
     "formNotFound": "Form not found",
+    "invalidChar": "Invalid character '{{- char}}' at position {{pos}} in '{{- str}}'.",
     "noData": "No data",
     "noOptionsDefined": "No Options defined",
     "noParam": "No parameters",
