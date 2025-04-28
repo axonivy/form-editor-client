@@ -8,6 +8,7 @@
     "actions": "Aktionen",
     "behaviour": "Verhalten",
     "columns": "Spalten",
+    "confirm": "Bestätigung",
     "content": "Inhalt",
     "dynamicOptions": "Dynamische Optionen",
     "elements": "Elemente",
@@ -56,6 +57,18 @@
   },
   "components": {
     "button": {
+      "confirm": {
+        "confirmDialogHeader": "Löschbestätigung",
+        "confirmDialogMessage": "Möchten Sie diese Zeile wirklich löschen?",
+        "no": "Nein",
+        "yes": "Ja"
+      },
+      "confirmSeverity": {
+        "error": "Fehler",
+        "info": "Info",
+        "success": "Erfolg",
+        "warn": "Warnung"
+      },
       "description": "Ein Knopf zum Auslösen von Aktionen",
       "fieldType": {
         "delete": "Löschen",
@@ -63,6 +76,13 @@
         "generic": "Generisch"
       },
       "name": "Knopf",
+      "property": {
+        "cancelButton": "Wert Abbrechbutton",
+        "confirmButton": "Wert Bestätigungsbutton",
+        "confirmDialog": "Bestätigungsdialog",
+        "message": "Dialognachricht",
+        "severity": "Schweregrad"
+      },
       "type": {
         "danger": "Gefahr",
         "primary": "Primär",
@@ -110,7 +130,7 @@
       }
     },
     "datePicker": {
-      "datePlaceholder": " z. B. dd.MM.yyyy",
+      "datePlaceholder": " z.\u202fB. dd.MM.yyyy",
       "description": "Ein Datumswähler mit Beschriftung für Datum oder Datum-Zeit",
       "label": "Datumswähler",
       "name": "Datumswähler",
@@ -118,7 +138,7 @@
         "datePattern": "Datumsformat",
         "timePattern": "Zeitformat"
       },
-      "timePlaceholder": "z. B. HH:mm"
+      "timePlaceholder": "z.\u202fB. HH:mm"
     },
     "dialog": {
       "description": "Ein flexibles Layout",

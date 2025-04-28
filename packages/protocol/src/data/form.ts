@@ -9,6 +9,7 @@
 export type CmsQuickactionCategory = ("global" | "local")
 export type FormType = "FORM" | "COMPONENT";
 export type LayoutAlignItems = "START" | "CENTER" | "END";
+export type ConfirmDialogSeverity = "INFO" | "WARN" | "ERROR" | "SUCCESS";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET" | "EDIT" | "DELETE";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type SymbolPosition = "p" | "s";
@@ -120,6 +121,12 @@ export interface Component {
 export interface Button {
   action: string;
   alignSelf: LayoutAlignItems;
+  confirmCancelValue: string;
+  confirmDialog: boolean;
+  confirmHeader: string;
+  confirmMessage: string;
+  confirmOkValue: string;
+  confirmSeverity: ConfirmDialogSeverity;
   disabled: string;
   icon: string;
   id: string;

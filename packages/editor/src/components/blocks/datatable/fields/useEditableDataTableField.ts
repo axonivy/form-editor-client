@@ -105,13 +105,13 @@ export const useEditableDataTableField = () => {
       componentName: 'Button',
       label: '',
       value: '#{ivyFormDataTableHandler.editRow(row)}', // just placeholder, will be set from backend
-      defaultProps: { type: 'EDIT', icon: 'pi pi-pencil', variant: 'PRIMARY' }
+      defaultProps: { type: 'EDIT', icon: 'pi pi-pencil', variant: 'PRIMARY', confirmDialog: false }
     },
     {
       componentName: 'Button',
       label: '',
       value: `#{ivyFormDataTableHandler.deleteRow(row)}`, // just placeholder, will be set from backend
-      defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
+      defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER', confirmDialog: true }
     }
   ];
 

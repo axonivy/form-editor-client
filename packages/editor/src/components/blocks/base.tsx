@@ -32,7 +32,8 @@ export const useBase = () => {
       Content: t('category.content'),
       Formatting: t('category.formatting'),
       Layout: t('category.layout'),
-      Properties: t('category.properties')
+      Properties: t('category.properties'),
+      Confirm: t('category.confirm')
     }),
     [t]
   );
