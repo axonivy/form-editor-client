@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
@@ -26,4 +26,56 @@ test('default', async ({ page }) => {
   await action.expectValue('close');
   await variant.expectValue('Secondary');
   await behaviour.excpectDisabled();
+});
+
+test('confirm dialog section', async ({ page }) => {
+  const editor = await FormEditor.openMock(page, true);
+  const table = editor.canvas.blockByNth(0, { datatable: true });
+  await table.block.getByRole('button').click();
+
+  await table.block.dblclick({ position: { x: 10, y: 10 } });
+  const properties = editor.inscription.section('Properties');
+  const section = properties.collapsible('General');
+  const editable = section.checkbox({ label: 'Editable' });
+
+  await editable.check();
+  const deleteButton = editor.canvas.blockByNth(1, { datatableNth: 0, columnNth: 3, actionButton: true });
+  await deleteButton.select(true);
+
+  const confirm = editor.inscription.section('Confirm');
+  await confirm.toggle();
+  const confirmGeneral = confirm.collapsible('General');
+  const confirmDialog = confirmGeneral.checkbox({ label: 'Confirm Dialog' });
+  const severity = confirmGeneral.select({ label: 'Severity' });
+  const header = confirmGeneral.input({ label: 'Header' });
+  const dialogMessage = confirmGeneral.input({ label: 'Dialog Message' });
+  const confirmButton = confirmGeneral.input({ label: 'Confirm-Button Value' });
+  const cancelButton = confirmGeneral.input({ label: 'Cancel-Button Value' });
+
+  await confirmDialog.expectValue(true);
+  await severity.expectValue('Warning');
+  await header.expectValue('Delete Confirmation');
+  await dialogMessage.expectValue('Are you sure you want to delete this row?');
+  await header.expectValue('Delete Confirmation');
+  await confirmButton.expectValue('Yes');
+  await cancelButton.expectValue('No');
+  await header.fill('Cancel');
+  await dialogMessage.fill('Really?');
+  await severity.choose('Info');
+  await confirmButton.fill('Ok');
+  await cancelButton.fill('Nop');
+
+  await deleteButton.select(true);
+  await header.expectValue('Cancel');
+  await dialogMessage.expectValue('Really?');
+  await severity.expectValue('Info');
+  await confirmButton.expectValue('Ok');
+  await cancelButton.fill('Nop');
+
+  await confirmDialog.uncheck();
+  await expect(header.locator).toBeHidden();
+  await expect(dialogMessage.locator).toBeHidden();
+  await expect(severity.locator).toBeHidden();
+  await expect(confirmButton.locator).toBeHidden();
+  await expect(cancelButton.locator).toBeHidden();
 });

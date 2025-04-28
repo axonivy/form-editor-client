@@ -1,20 +1,21 @@
 import { useAppContext } from '../../context/AppContext';
-import type { Button, ComponentType, Composite, Layout } from '@axonivy/form-editor-protocol';
+import type { Button, ComponentType, Composite } from '@axonivy/form-editor-protocol';
 import { COLUMN_DROPZONE_ID_PREFIX, creationTargetId, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../data/data';
 import type { DraggableProps } from './ComponentBlock';
-import { useComponents } from '../../context/ComponentsContext';
-import { useFunction } from '../../context/useFunction';
-import { toast, useReadonly } from '@axonivy/ui-components';
-import { useQueryClient } from '@tanstack/react-query';
-import { genQueryKey } from '../../query/query-client';
+import { useReadonly } from '@axonivy/ui-components';
 import { useAction } from '../../context/useAction';
+import { useComponents } from '../../context/ComponentsContext';
+import type { Dispatch, SetStateAction } from 'react';
 
-export const useComponentBlockActions = ({ config, data }: DraggableProps) => {
+export const useComponentBlockActions = ({
+  config,
+  data,
+  setShowExtractDialog
+}: DraggableProps & { setShowExtractDialog: Dispatch<SetStateAction<boolean>> }) => {
+  const { setSelectedElement, setUi } = useAppContext();
   const { componentByName } = useComponents();
-  const { setSelectedElement, context, setUi } = useAppContext();
   const readonly = useReadonly();
   const { setData } = useData();
-  const queryClient = useQueryClient();
   const isDataTableEditableButtons =
     data.type === 'Button' && ((data.config as Button).type === 'EDIT' || (data.config as Button).type === 'DELETE');
 
@@ -96,29 +97,6 @@ export const useComponentBlockActions = ({ config, data }: DraggableProps) => {
     );
   };
 
-  const extractIntoComponent = useFunction(
-    'meta/composite/extractIntoComponent',
-    {
-      context,
-      layoutId: data.cid,
-      newComponentName: (data.config as Layout)?.id?.length > 0 ? (data.config as Layout).id : data.cid
-    },
-    {
-      onSuccess: componentName => {
-        toast.info('Ivy Component "' + componentName + '" was successfully created');
-        queryClient.invalidateQueries({ queryKey: genQueryKey('data', context) });
-      },
-      onError: error => {
-        toast.error('Failed to extract Component into own Ivy Component', {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          description: (error as any).data?.includes('already exists')
-            ? 'Ivy Component ' + ((data.config as Layout).id.length > 0 ? (data.config as Layout).id : data.cid) + ' already exists'
-            : error.message
-        });
-      }
-    }
-  );
-
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.stopPropagation();
@@ -148,11 +126,7 @@ export const useComponentBlockActions = ({ config, data }: DraggableProps) => {
     }
     if (e.code === 'KeyE' && config.quickActions.find(q => q === 'EXTRACTINTOCOMPONENT')) {
       e.stopPropagation();
-      extractIntoComponent.mutate({
-        context,
-        layoutId: data.cid,
-        newComponentName: (data.config as Layout).id.length > 0 ? (data.config as Layout).id : data.cid
-      });
+      setTimeout(() => setShowExtractDialog(true), 0);
     }
   };
   return {
@@ -163,7 +137,6 @@ export const useComponentBlockActions = ({ config, data }: DraggableProps) => {
     createColumn,
     createActionColumn,
     createActionButton,
-    createElement,
-    extractIntoComponent
+    createElement
   };
 };

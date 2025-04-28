@@ -99,7 +99,7 @@ const FormPropertySection = () => {
   return (
     <Accordion type='single' collapsible defaultValue='Properties'>
       <AccordionItem key='Properties' value='Properties'>
-        <AccordionTrigger>{t('components.form.accordion')}</AccordionTrigger>
+        <AccordionTrigger>{t('category.properties')}</AccordionTrigger>
         <AccordionContent>
           <Flex direction='column' gap={2}>
             <Collapsible defaultOpen={true}>
@@ -107,7 +107,7 @@ const FormPropertySection = () => {
               <CollapsibleContent>
                 <Flex direction='column' gap={2}>
                   <SelectField
-                    label={t('components.form.type')}
+                    label={t('label.formType')}
                     options={formTypeOptions}
                     value={data.config.type}
                     onChange={value => {

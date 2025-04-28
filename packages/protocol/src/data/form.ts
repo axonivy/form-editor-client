@@ -392,7 +392,9 @@ export interface ExecuteCmsQuickActionRequest {
 }
 export interface ExtractContext {
   context: FormContext;
+  dataClassField: string;
   layoutId: string;
+  nameSpace: string;
   newComponentName: string;
 }
 export interface FormActionArgs {
@@ -408,6 +410,7 @@ export interface FormEditorData {
   data: Form;
   defaults: DefaultConfig;
   helpUrl: string;
+  namespace: string;
   readonly: boolean;
 }
 export interface DefaultConfig {}

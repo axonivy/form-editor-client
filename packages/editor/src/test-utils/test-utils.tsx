@@ -83,7 +83,8 @@ const ContextHelper = ({ appContext, meta, children }: ContextHelperProps & { ch
             setUi: appContext?.setUi ? appContext.setUi : () => {},
             history: { push: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
             validations: [],
-            helpUrl: appContext?.helpUrl ?? ''
+            helpUrl: appContext?.helpUrl ?? '',
+            namespace: ''
           }}
         >
           <ComponentsProvider components={components}>{children}</ComponentsProvider>

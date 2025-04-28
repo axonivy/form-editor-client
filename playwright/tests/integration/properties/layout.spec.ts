@@ -80,6 +80,19 @@ test('1 col grid', async ({ page }) => {
   await columns.choose('1 Column');
 });
 
+test('extract Dialog', async ({ page }) => {
+  const { editor, layoutBlock } = await layout(page);
+  await editor.createBlock('Input', layoutBlock.block);
+  await layoutBlock.quickAction('Extract into own Ivy Component (E)');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  const name = page.locator('.extract-dialog-name input');
+  const namespace = page.locator('.extract-dialog-namespace input');
+  const dataclass = page.locator('.extract-dialog-dataclass button');
+  await expect(name).toHaveValue('layout1');
+  await expect(namespace).toHaveValue('temp');
+  await expect(dataclass).toHaveText(/data/);
+});
+
 const layout = async (page: Page) => {
   const editor = await FormEditor.openNewForm(page, { block: 'Layout' });
   const layoutBlock = editor.canvas.blockByNth(0, { layout: true });
