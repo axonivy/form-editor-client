@@ -23,7 +23,7 @@ export async function applyConditionBuilder(page: Page) {
   const condition = page.locator('.ui-condition-builder-condition');
   const group = page.locator('.ui-condition-builder-group');
 
-  await expect(page.getByRole('dialog').getByRole('combobox').nth(0)).toHaveText('Basic Condition');
+  await page.getByRole('option').getByText('Basic Condition').click();
   await expect(condition).toHaveCount(1);
   await expect(condition.locator('output')).toHaveCount(2);
 
