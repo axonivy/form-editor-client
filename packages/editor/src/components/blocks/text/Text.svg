@@ -1,16 +1,17 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g clip-path="url(#clip0_253_151077)">
-    <path d="M3 15H13H23" stroke="#A3A3A3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M11 10H17H23" stroke="#A3A3A3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M3 11.375L6 4.625L9 11.375" stroke="#A3A3A3" stroke-linecap="round"
-      stroke-linejoin="round" />
-    <path d="M8.32481 9.875H3.6748" stroke="#A3A3A3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M3 20H21" stroke="#A3A3A3" stroke-linecap="round" stroke-linejoin="round" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Outlines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <g id="test">
+    <path class="cls-1"
+      d="M20,7.75h-6c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h6c.41,0,.75.34.75.75s-.34.75-.75.75Z" />
+    <path class="cls-1"
+      d="M20,11.75h-6c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h6c.41,0,.75.34.75.75s-.34.75-.75.75Z" />
+    <path class="cls-1"
+      d="M20,15.75H4c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h16c.41,0,.75.34.75.75s-.34.75-.75.75Z" />
+    <path class="cls-1"
+      d="M20,19.75H4c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h16c.41,0,.75.34.75.75s-.34.75-.75.75Z" />
+    <path class="cls-1"
+      d="M10,13.08c-.41,0-.75-.34-.75-.75v-5.83c0-.47-.18-.91-.51-1.24-.66-.66-1.81-.66-2.47,0-.33.33-.51.77-.51,1.24v5.83c0,.41-.34.75-.75.75s-.75-.34-.75-.75v-5.83c0-.87.34-1.68.95-2.3,1.23-1.23,3.37-1.23,4.6,0,.61.62.95,1.43.95,2.3v5.83c0,.41-.34.75-.75.75Z" />
+    <path class="cls-1"
+      d="M10,9.75h-5c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h5c.41,0,.75.34.75.75s-.34.75-.75.75Z" />
   </g>
-  <defs>
-    <clipPath id="clip0_253_151077">
-      <rect width="24" height="24" fill="white" />
-    </clipPath>
-  </defs>
 </svg>
-  
