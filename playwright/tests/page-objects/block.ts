@@ -63,7 +63,7 @@ export class Block {
   async dndTo(target: Block) {
     await this.block.hover();
     await this.page.mouse.down();
-    await this.page.mouse.move(10, 10);
+    await this.page.mouse.move(100, 100);
     await target.block.hover();
     await this.page.mouse.up();
   }
