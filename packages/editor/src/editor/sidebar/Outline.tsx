@@ -3,15 +3,16 @@ import { type OutlineNode, Outline } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useData } from '../../data/data';
 import { useComponents } from '../../context/ComponentsContext';
+import type { ItemCategory } from '../../types/config';
 
 export const FormOutline = ({ hideOutline }: { hideOutline: () => void }) => {
   const { componentByName } = useComponents();
 
-  const iconByCategory = (category: string) => {
+  const iconByCategory = (category: ItemCategory) => {
     switch (category) {
-      case 'Structure':
+      case 'Structures':
         return IvyIcons.LaneSwimlanes;
-      case 'Action':
+      case 'Actions':
         return IvyIcons.MultiSelection;
       case 'Elements':
       default:
