@@ -6,8 +6,11 @@
     border-radius: var(--border-r2);
     height: 32px;
     width: 60px;
-    svg path {
-      stroke: var(--N600);
+    svg {
+      height: 26px;
+      path {
+        fill: var(--N600);
+      }
     }
   }
 }
