@@ -4,16 +4,17 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { useData } from '../../data/data';
 import { useComponents } from '../../context/ComponentsContext';
 import { useTranslation } from 'react-i18next';
+import type { ItemCategory } from '../../types/config';
 
 export const FormOutline = ({ hideOutline }: { hideOutline: () => void }) => {
   const { t } = useTranslation();
   const { componentByName } = useComponents();
 
-  const iconByCategory = (category: string) => {
+  const iconByCategory = (category: ItemCategory) => {
     switch (category) {
-      case 'Structure':
+      case 'Structures':
         return IvyIcons.LaneSwimlanes;
-      case 'Action':
+      case 'Actions':
         return IvyIcons.MultiSelection;
       case 'Elements':
       default:
