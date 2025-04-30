@@ -1,4 +1,4 @@
-import type { Button as ButtonType, Component, ComponentData, ComponentType, Composite, Layout } from '@axonivy/form-editor-protocol';
+import type { Button as ButtonType, Component, ComponentData, ComponentType, Composite } from '@axonivy/form-editor-protocol';
 import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
@@ -7,7 +7,7 @@ import { getParentComponent, modifyData, useData } from '../../data/data';
 import { dragData } from './drag-data';
 import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { useState } from 'react';
+import { useState, type Dispatch, type SetStateAction } from 'react';
 import { FormPalette } from '../palette/Palette';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
@@ -16,6 +16,7 @@ import { useClipboard, type TextDropItem } from 'react-aria';
 import { useComponentBlockActions } from './useComponentBlockActions';
 import { useTranslation } from 'react-i18next';
 import { useComponents } from '../../context/ComponentsContext';
+import { ExtractComponentDialog } from '../browser/extract/ExtractComponentDialog';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -37,7 +38,7 @@ export type DraggableProps = {
 };
 
 const Draggable = ({ config, data }: DraggableProps) => {
-  const { setUi, context } = useAppContext();
+  const { setUi } = useAppContext();
   const { data: formData, setData } = useData();
   const { componentByName } = useComponents();
   const readonly = useReadonly();
@@ -51,17 +52,9 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { selectedElement, setSelectedElement } = useAppContext();
   const isSelected = selectedElement === data.cid;
   const elementConfig = { ...config.defaultProps, ...data.config };
-  const {
-    createElement,
-    duplicateElement,
-    openComponent,
-    onKeyDown,
-    deleteElement,
-    createActionButton,
-    createActionColumn,
-    createColumn,
-    extractIntoComponent
-  } = useComponentBlockActions({ config, data });
+  const [showExtractDialog, setShowExtractDialog] = useState(false);
+  const { createElement, duplicateElement, openComponent, onKeyDown, deleteElement, createActionButton, createActionColumn, createColumn } =
+    useComponentBlockActions({ config, data, setShowExtractDialog });
   const validations = useValidations(data.cid);
   const { clipboardProps } = useClipboard({
     getItems() {
@@ -123,12 +116,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
         }
         extractIntoComponent={
           config.quickActions.includes('EXTRACTINTOCOMPONENT') && data.type === 'Layout'
-            ? () =>
-                extractIntoComponent.mutate({
-                  context,
-                  layoutId: data.cid,
-                  newComponentName: (data.config as Layout).id.length > 0 ? (data.config as Layout).id : data.cid
-                })
+            ? { data, openDialog: showExtractDialog, setOpenDialog: setShowExtractDialog }
             : undefined
         }
         createColumnAction={config.quickActions.includes('CREATECOLUMN') ? createColumn : undefined}
@@ -153,7 +141,7 @@ type QuickbarProps = {
   duplicateAction?: () => void;
   createAction?: (name: ComponentType) => void;
   openComponentAction?: () => void;
-  extractIntoComponent?: () => void;
+  extractIntoComponent?: { data: Component | ComponentData; openDialog: boolean; setOpenDialog: Dispatch<SetStateAction<boolean>> };
   createColumnAction?: () => void;
   createActionColumnAction?: () => void;
   createActionColumnButtonAction?: () => void;
@@ -199,12 +187,21 @@ const Quickbar = ({
               />
             )}
             {extractIntoComponent && (
-              <Button
-                icon={IvyIcons.WrapToSubprocess}
-                aria-label={t('label.extractComponent')}
-                title={t('label.extractComponent')}
-                onClick={extractIntoComponent}
-              />
+              <ExtractComponentDialog
+                data={extractIntoComponent.data}
+                openDialog={extractIntoComponent.openDialog}
+                setOpenDialog={extractIntoComponent.setOpenDialog}
+              >
+                <Button
+                  icon={IvyIcons.WrapToSubprocess}
+                  aria-label={t('label.extractComponent')}
+                  title={t('label.extractComponent')}
+                  onClick={e => {
+                    e.stopPropagation();
+                    setMenu(old => !old);
+                  }}
+                />
+              </ExtractComponentDialog>
             )}
             {(createColumnAction || createActionColumnButtonAction || createAction || createFromDataAction) && (
               <Separator orientation='vertical' style={{ height: 20, margin: '0 var(--size-1)' }} />

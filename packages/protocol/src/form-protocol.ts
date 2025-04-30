@@ -28,7 +28,7 @@ export interface FormMetaRequestTypes {
   'meta/composite/all': [FormContext, Array<CompositeInfo>];
   'meta/composite/params': [CompositeContext, Array<ParameterInfo>];
   'meta/composite/data': [CompositeContext, CompositeData];
-  'meta/composite/extractIntoComponent': [ExtractContext, string];
+  extractIntoComponent: [ExtractContext, string];
 }
 
 export interface FormRequestTypes extends FormMetaRequestTypes {
