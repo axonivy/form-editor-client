@@ -50,7 +50,7 @@ export const useCompositeComponent = () => {
         },
         parameters: { subsection: 'Parameters', type: 'generic', render: renderParameters }
       },
-      quickActions: DEFAULT_QUICK_ACTIONS
+      quickActions: [...DEFAULT_QUICK_ACTIONS, 'OPENCOMPONENT']
     } as const;
 
     return CompositeComponent;

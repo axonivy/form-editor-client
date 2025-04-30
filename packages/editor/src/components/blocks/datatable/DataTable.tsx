@@ -13,6 +13,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
 import { ColumnControl } from './controls/ColumnControl';
 import { ColumnsField } from './fields/ColumnsField';
+import { renderEditableDataTableField } from './fields/EditableDataTableField';
 import { renderListOfObjectsField } from './fields/ListOfObjectsField';
 import { useTranslation } from 'react-i18next';
 import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
@@ -64,14 +65,14 @@ export const useDataTableComponent = (componentByName: ComponentByName) => {
         isEditable: {
           subsection: 'General',
           label: t('components.dataTable.property.editable'),
-          type: 'hidden'
-          //render: renderEditableDataTableField
+          type: 'generic',
+          render: renderEditableDataTableField
         },
         addButton: {
           subsection: 'General',
           label: t('components.dataTable.property.addButton'),
-          type: 'hidden'
-          //hide: data => !data.isEditable
+          type: 'checkbox',
+          hide: data => !data.isEditable
         },
         editDialogId: { subsection: 'General', label: t('components.dataTable.property.editDialog'), type: 'hidden' },
         components: {

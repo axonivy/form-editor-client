@@ -7,29 +7,28 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Flex,
-  PanelMessage
+  Flex
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
 import { usePropertySubSectionControl } from './PropertySubSectionControl';
 import { useBase } from '../../components/blocks/base';
 import { useComponents } from '../../context/ComponentsContext';
 import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFields } from './property';
-import type { ConfigData } from '@axonivy/form-editor-protocol';
+import type { ConfigData, FormType } from '@axonivy/form-editor-protocol';
+import type { FieldOption } from '../../types/config';
+import { SelectField } from './fields/SelectField';
+import { useTranslation } from 'react-i18next';
 
-/*
 const formTypeOptions: FieldOption<FormType>[] = [
   { label: 'Component', value: 'COMPONENT' },
   { label: 'Form', value: 'FORM' }
 ] as const;
-*/
 
 export const Properties = () => {
   const { componentByElement } = useComponents();
   const { element, data, parent } = useData();
   if (element === undefined) {
-    return <PanelMessage message='Select an Element to edit its properties.' />;
-    // return <FormPropertySection />;
+    return <FormPropertySection />;
   }
   const propertyConfig = componentByElement(element, data.components);
   const elementConfig = { ...propertyConfig.defaultProps, ...element.config };
@@ -94,13 +93,12 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
   );
 };
 
-/*
 const FormPropertySection = () => {
   const { data, setData } = useData();
   const { t } = useTranslation();
   return (
     <Accordion type='single' collapsible defaultValue='Properties'>
-      <AccordionItem value='Properties'>
+      <AccordionItem key='Properties' value='Properties'>
         <AccordionTrigger>{t('components.form.accordion')}</AccordionTrigger>
         <AccordionContent>
           <Flex direction='column' gap={2}>
@@ -128,4 +126,3 @@ const FormPropertySection = () => {
     </Accordion>
   );
 };
-*/
