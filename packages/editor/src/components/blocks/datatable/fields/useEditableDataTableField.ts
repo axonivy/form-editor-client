@@ -1,17 +1,12 @@
 import { isTable, type ButtonType, type ComponentData, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
 import { COLUMN_DROPZONE_ID_PREFIX, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
-import { getRowType } from './ListOfObjectsField';
 import type { CreateComponentData } from '../../../../types/config';
 import { stripELExpression } from '../../../../utils/string';
-import { useAppContext } from '../../../../context/AppContext';
-import { useMeta } from '../../../../context/useMeta';
 import { useTranslation } from 'react-i18next';
 import { useComponents } from '../../../../context/ComponentsContext';
 
 export const useEditableDataTableField = () => {
   const { element, setData, setElement } = useData();
-  const { context } = useAppContext();
-  const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
   const { componentByName } = useComponents();
   const { t } = useTranslation();
 
@@ -52,7 +47,6 @@ export const useEditableDataTableField = () => {
         if (isTable(element) && dialogId) {
           element.config.editDialogId = dialogId;
           element.config.addButton = true;
-          element.config.rowType = getRowType(element.config.value, variableInfo);
         }
         return element;
       });
@@ -110,14 +104,14 @@ export const useEditableDataTableField = () => {
     {
       componentName: 'Button',
       label: '',
-      value: '#{ivyFormGenericRow.editRow(row)}',
-      defaultProps: { type: 'EDIT', icon: 'pi pi-pencil', variant: 'PRIMARY' }
+      value: '#{ivyFormDataTableHandler.editRow(row)}', // just placeholder, will be set from backend
+      defaultProps: { type: 'EDIT', icon: 'pi pi-pencil', variant: 'PRIMARY', confirmDialog: false }
     },
     {
       componentName: 'Button',
       label: '',
-      value: `#{ivyFormGenericRow.deleteRow(${stripELExpression(isTable(element) ? element.config.value : '')}, row)}`,
-      defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER' }
+      value: `#{ivyFormDataTableHandler.deleteRow(row)}`, // just placeholder, will be set from backend
+      defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER', confirmDialog: true }
     }
   ];
 

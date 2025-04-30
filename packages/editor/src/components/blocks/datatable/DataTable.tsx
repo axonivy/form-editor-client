@@ -13,7 +13,7 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { UiBlockHeader } from '../../UiBlockHeader';
 import { ColumnControl } from './controls/ColumnControl';
 import { ColumnsField } from './fields/ColumnsField';
-import { renderListOfObjectsField } from './fields/ListOfObjectsField';
+import { renderEditableDataTableField } from './fields/EditableDataTableField';
 import { useTranslation } from 'react-i18next';
 import { findAttributesOfType } from '../../../editor/browser/data-class/variable-tree-data';
 import { useMemo } from 'react';
@@ -31,7 +31,6 @@ export const useDataTableComponent = (componentByName: ComponentByName) => {
     const defaultDataTableProps: DataTable = {
       components: [],
       value: '',
-      rowType: '',
       isEditable: false,
       addButton: false,
       editDialogId: '',
@@ -57,21 +56,20 @@ export const useDataTableComponent = (componentByName: ComponentByName) => {
         value: {
           subsection: 'General',
           label: t('label.listOfObjects'),
-          type: 'generic',
-          render: renderListOfObjectsField
+          type: 'textBrowser',
+          browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }]
         },
-        rowType: { subsection: 'General', label: t('components.dataTable.property.rowType'), type: 'hidden' },
         isEditable: {
           subsection: 'General',
           label: t('components.dataTable.property.editable'),
-          type: 'hidden'
-          //render: renderEditableDataTableField
+          type: 'generic',
+          render: renderEditableDataTableField
         },
         addButton: {
           subsection: 'General',
           label: t('components.dataTable.property.addButton'),
-          type: 'hidden'
-          //hide: data => !data.isEditable
+          type: 'checkbox',
+          hide: data => !data.isEditable
         },
         editDialogId: { subsection: 'General', label: t('components.dataTable.property.editDialog'), type: 'hidden' },
         components: {

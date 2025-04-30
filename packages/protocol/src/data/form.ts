@@ -9,6 +9,7 @@
 export type CmsQuickactionCategory = ("global" | "local")
 export type FormType = "FORM" | "COMPONENT";
 export type LayoutAlignItems = "START" | "CENTER" | "END";
+export type ConfirmDialogSeverity = "INFO" | "WARN" | "ERROR" | "SUCCESS";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET" | "EDIT" | "DELETE";
 export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
 export type SymbolPosition = "p" | "s";
@@ -123,6 +124,12 @@ export interface Component {
 export interface Button {
   action: string;
   alignSelf: LayoutAlignItems;
+  confirmCancelValue: string;
+  confirmDialog: boolean;
+  confirmHeader: string;
+  confirmMessage: string;
+  confirmOkValue: string;
+  confirmSeverity: ConfirmDialogSeverity;
   disabled: string;
   icon: string;
   id: string;
@@ -185,7 +192,6 @@ export interface DataTable {
   maxRows: string;
   mdSpan: string;
   paginator: boolean;
-  rowType: string;
   value: string;
   visible: string;
 }
@@ -233,6 +239,7 @@ export interface Dialog {
   lgSpan: string;
   linkedComponent: string;
   mdSpan: string;
+  onApply: string;
 }
 export interface Fieldset {
   alignSelf: LayoutAlignItems;
@@ -385,7 +392,9 @@ export interface ExecuteCmsQuickActionRequest {
 }
 export interface ExtractContext {
   context: FormContext;
+  dataClassField: string;
   layoutId: string;
+  nameSpace: string;
   newComponentName: string;
 }
 export interface FormActionArgs {
@@ -401,6 +410,7 @@ export interface FormEditorData {
   data: Form;
   defaults: DefaultConfig;
   helpUrl: string;
+  namespace: string;
   readonly: boolean;
 }
 export interface DefaultConfig {}

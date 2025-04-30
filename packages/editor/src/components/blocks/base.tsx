@@ -31,7 +31,9 @@ export const useBase = () => {
       Paginator: t('category.paginator'),
       Content: t('category.content'),
       Formatting: t('category.formatting'),
-      Layout: t('category.layout')
+      Layout: t('category.layout'),
+      Properties: t('category.properties'),
+      Confirm: t('category.confirm')
     }),
     [t]
   );

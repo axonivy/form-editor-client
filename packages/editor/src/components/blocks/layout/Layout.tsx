@@ -77,7 +77,7 @@ export const useLayoutComponent = () => {
         },
         ...visibleComponentField
       },
-      quickActions: DEFAULT_QUICK_ACTIONS
+      quickActions: [...DEFAULT_QUICK_ACTIONS, 'EXTRACTINTOCOMPONENT']
     };
 
     return LayoutComponent;

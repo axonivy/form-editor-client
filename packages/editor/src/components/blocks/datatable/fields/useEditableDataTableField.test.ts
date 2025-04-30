@@ -52,8 +52,14 @@ const dialog: ComponentData = {
 const editButton: ComponentData = {
   cid: 'button5',
   config: {
-    action: '#{ivyFormGenericRow.editRow(row)}',
+    action: '#{ivyFormDataTableHandler.editRow(row)}', // just placeholder, will be set from backend
     alignSelf: 'START',
+    confirmCancelValue: 'components.button.confirm.no',
+    confirmOkValue: 'components.button.confirm.yes',
+    confirmHeader: 'components.button.confirm.confirmDialogHeader',
+    confirmMessage: 'components.button.confirm.confirmDialogMessage',
+    confirmSeverity: 'WARN',
+    confirmDialog: false,
     disabled: '',
     icon: 'pi pi-pencil',
     id: '',
@@ -71,8 +77,14 @@ const editButton: ComponentData = {
 const deleteButton: ComponentData = {
   cid: 'button6',
   config: {
-    action: '#{ivyFormGenericRow.deleteRow(data.persons, row)}',
+    action: '#{ivyFormDataTableHandler.deleteRow(row)}', // just placeholder, will be set from backend
     alignSelf: 'START',
+    confirmCancelValue: 'components.button.confirm.no',
+    confirmOkValue: 'components.button.confirm.yes',
+    confirmHeader: 'components.button.confirm.confirmDialogHeader',
+    confirmMessage: 'components.button.confirm.confirmDialogMessage',
+    confirmSeverity: 'WARN',
+    confirmDialog: true,
     disabled: '',
     icon: 'pi pi-trash',
     id: '',
@@ -113,7 +125,6 @@ const data = {
           }
         ],
         value: '#{data.persons}',
-        rowType: '',
         isEditable: false,
         editDialogId: ''
       }
@@ -145,7 +156,6 @@ test('useEditableDataTableField createComponentData', async () => {
 
   expect(newData[0].components[1]).toEqual(dialog);
   expect((newData[1].components[0] as TableConfig).config.editDialogId).toEqual('dialog3');
-  expect((newData[1].components[0] as TableConfig).config.rowType).toEqual('form.test.project.Person');
 });
 
 const dataEditableTable = {
@@ -185,7 +195,6 @@ const dataEditableTable = {
           }
         ],
         value: '#{data.persons}',
-        rowType: 'form.test.project.Person',
         isEditable: false,
         editDialogId: 'dialog3'
       }
@@ -212,5 +221,4 @@ test('useEditableDataTableField deleteComponentData', async () => {
   expect((newData[0].components[0] as TableConfig).config.components[0].config.components.length).toEqual(0);
   expect((newData[0].components[0] as TableConfig).config.components[1].config.components.length).toEqual(0);
   expect((newData[1].components[0] as TableConfig).config.editDialogId).toEqual('');
-  expect((newData[1].components[0] as TableConfig).config.rowType).toEqual('form.test.project.Person');
 });

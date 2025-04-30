@@ -8,6 +8,7 @@
     "actions": "Actions",
     "behaviour": "Behaviour",
     "columns": "Columns",
+    "confirm": "Confirm",
     "content": "Content",
     "dynamicOptions": "Dynamic Options",
     "elements": "Elements",
@@ -19,6 +20,7 @@
     "options": "Options",
     "paginator": "Paginator",
     "parameters": "Parameters",
+    "properties": "Properties",
     "selection": "Selection",
     "staticOptions": "Static Options",
     "structures": "Structures",
@@ -55,6 +57,18 @@
   },
   "components": {
     "button": {
+      "confirm": {
+        "confirmDialogHeader": "Delete Confirmation",
+        "confirmDialogMessage": "Are you sure you want to delete this row?",
+        "no": "No",
+        "yes": "Yes"
+      },
+      "confirmSeverity": {
+        "error": "Error",
+        "info": "Info",
+        "success": "Success",
+        "warn": "Warning"
+      },
       "description": "A button to fire actions",
       "fieldType": {
         "delete": "Delete",
@@ -62,6 +76,13 @@
         "generic": "Generic"
       },
       "name": "Button",
+      "property": {
+        "cancelButton": "Cancel-Button Value",
+        "confirmButton": "Confirm-Button Value",
+        "confirmDialog": "Confirm Dialog",
+        "message": "Dialog Message",
+        "severity": "Severity"
+      },
       "type": {
         "danger": "Danger",
         "primary": "Primary",
@@ -94,8 +115,7 @@
         "editable": "Editable",
         "editDialog": "Edit Dialog",
         "enablePaginator": "Enable Paginator",
-        "rowsPerPage": "Rows per Page",
-        "rowType": "Row Type"
+        "rowsPerPage": "Rows per Page"
       },
       "valueEmpty": "Value of DataTable is empty. Define value within Properties of DataTable"
     },
@@ -183,6 +203,17 @@
       }
     }
   },
+  "dialog": {
+    "applyExtract": "Extract",
+    "componentName": "Name",
+    "dataClass": "Dataclass",
+    "extractComponent": "Extract {{component}} into own Ivy Component",
+    "extractErrorTitle": "Failed to extract Component into own Ivy Component",
+    "extractExists": "Ivy Component '{{componentId}}' already exists",
+    "extractSuccess": "Ivy Component '{{componentName}}' was successfully created",
+    "logicWarning": "If Logic Processes are used within '{{component}}', they will not be exported and must be implemented manually after extraction.",
+    "nameSpace": "Namespace"
+  },
   "hint": {
     "dragFirstItem": "Drag first element inside the canvas or",
     "dragItemInto": "Drag first element inside the {{type}}"
@@ -211,8 +242,9 @@
     "dragFirstButton": "Drag first button inside the {{type}}",
     "duplicateComp": "Duplicate (M)",
     "enableReqProjects": "Enable required Projects",
-    "extractIntoComponent": "Extract into own Ivy Component (E)",
+    "extractComponent": "Extract into own Ivy Component (E)",
     "filterBy": "Filter by",
+    "formType": "Form Type",
     "id": "ID",
     "largeSpan": "Large Span",
     "listOfObjects": "List of Objects",
@@ -234,9 +266,12 @@
     "visible": "Visible"
   },
   "message": {
+    "componentNamespaceNotEmpty": "Component namespace must not be empty.",
+    "componentNotEmpty": "Component name must not be empty.",
     "errorOnly": "Error: {{error}}",
     "fieldTypeUnknown": "unknown field type",
     "formNotFound": "Form not found",
+    "invalidChar": "Invalid character '{{- char}}' at position {{pos}} in '{{- str}}'.",
     "noData": "No data",
     "noOptionsDefined": "No Options defined",
     "noParam": "No parameters",
@@ -250,7 +285,7 @@
     "action": "Action",
     "actions": "Actions",
     "collapsedDefault": "Collapsed by default",
-    "collapsible": "Collapsible",
+    "collapsible": "Collapisble",
     "completeMethod": "Complete Method",
     "content": "Content",
     "decimalPlaces": "Decimal Places",

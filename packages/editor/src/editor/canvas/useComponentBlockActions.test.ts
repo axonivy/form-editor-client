@@ -20,7 +20,6 @@ const data = {
       config: {
         components: [],
         value: '#{data.persons}',
-        rowType: 'form.test.project.Person',
         isEditable: false,
         editDialogId: 'dialog3'
       }
@@ -51,7 +50,12 @@ test('delete datatable also deletes dialog', async () => {
   const { DataTableComponent } = dataTableHook.current;
 
   const view = customRenderHook(
-    () => useComponentBlockActions({ config: DataTableComponent as unknown as ComponentConfig, data: compData }),
+    () =>
+      useComponentBlockActions({
+        config: DataTableComponent as unknown as ComponentConfig,
+        data: compData,
+        setShowExtractDialog: () => {}
+      }),
     {
       wrapperProps: {
         appContext: { data: data, setData: data => newData.push(data), selectedElement: 'datatable1' }
