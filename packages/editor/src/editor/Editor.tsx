@@ -5,7 +5,7 @@ import { Flex, PanelMessage, ResizableHandle, ResizablePanel, ResizablePanelGrou
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useClient } from '../context/ClientContext';
 import type { Unary } from '../types/types';
-import type { FormContext, FormData, FormEditor, FormEditorProps } from '@axonivy/form-editor-protocol';
+import type { FormContext, FormData, FormEditor } from '@axonivy/form-editor-protocol';
 import { DndContext } from '../context/DndContext';
 import { genQueryKey } from '../query/query-client';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -15,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { ComponentsProvider } from '../context/ComponentsContext';
 import { useComponentsInit } from '../components/components';
 import { initTranslation } from '../translation/i18n';
+
+export type FormEditorProps = { context: FormContext; directSave?: boolean };
 
 export const Editor = (props: FormEditorProps) => {
   initTranslation();
