@@ -10,8 +10,9 @@ export type CmsQuickactionCategory = ("global" | "local")
 export type FormType = "FORM" | "COMPONENT";
 export type LayoutAlignItems = "START" | "CENTER" | "END";
 export type ConfirmDialogSeverity = "INFO" | "WARN" | "ERROR" | "SUCCESS";
+export type ButtonStyle = "SOLID" | "OUTLINED" | "FLAT";
 export type ButtonType = "SUBMIT" | "BUTTON" | "RESET" | "EDIT" | "DELETE";
-export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER";
+export type ButtonVariant = "PRIMARY" | "SECONDARY" | "DANGER" | "SUCCESS" | "INFO" | "WARNING" | "HELP";
 export type SymbolPosition = "p" | "s";
 export type InputType = "TEXT" | "EMAIL" | "PASSWORD" | "NUMBER";
 export type LayoutGridVariant = "GRID1" | "GRID2" | "GRID4" | "FREE";
@@ -41,7 +42,7 @@ export interface Forms {
   formSaveDataArgs: FormSaveDataArgs;
   logicInfo: LogicInfo;
   parameterInfo: ParameterInfo[];
-  string: string;
+  string: string[];
   validationResult: ValidationResult[];
   variableInfo: VariableInfo;
   void: Void;
@@ -137,6 +138,8 @@ export interface Button {
   mdSpan: string;
   name: string;
   processOnlySelf: boolean;
+  rounded: boolean;
+  style: ButtonStyle;
   type: ButtonType;
   variant: ButtonVariant;
   visible: string;

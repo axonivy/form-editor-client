@@ -63,12 +63,6 @@
         "no": "No",
         "yes": "Yes"
       },
-      "confirmSeverity": {
-        "error": "Error",
-        "info": "Info",
-        "success": "Success",
-        "warn": "Warning"
-      },
       "description": "A button to fire actions",
       "fieldType": {
         "delete": "Delete",
@@ -81,12 +75,24 @@
         "confirmButton": "Confirm-Button Value",
         "confirmDialog": "Confirm Dialog",
         "message": "Dialog Message",
-        "severity": "Severity"
+        "rounded": "Rounded Corners",
+        "severity": "Severity",
+        "style": "Style"
+      },
+      "severity": {
+        "danger": "Danger",
+        "error": "Error",
+        "help": "Help",
+        "info": "Info",
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "success": "Success",
+        "warn": "Warning"
       },
       "type": {
-        "danger": "Danger",
-        "primary": "Primary",
-        "secondary": "Secondary"
+        "flat": "Flat",
+        "outline": "Outline",
+        "solid": "Solid"
       }
     },
     "checkbox": {
@@ -285,7 +291,7 @@
     "action": "Action",
     "actions": "Actions",
     "collapsedDefault": "Collapsed by default",
-    "collapsible": "Collapisble",
+    "collapsible": "Collapsible",
     "completeMethod": "Complete Method",
     "content": "Content",
     "decimalPlaces": "Decimal Places",

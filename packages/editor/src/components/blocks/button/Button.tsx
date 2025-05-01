@@ -1,4 +1,4 @@
-import type { Button, ButtonVariant, ConfirmDialogSeverity, Prettify } from '@axonivy/form-editor-protocol';
+import type { Button, ButtonStyle, ButtonVariant, ConfirmDialogSeverity, Prettify } from '@axonivy/form-editor-protocol';
 import { DEFAULT_QUICK_ACTIONS, type ComponentConfig, type FieldOption, type UiComponentProps } from '../../../types/config';
 import './Button.css';
 import { useBase } from '../base';
@@ -29,22 +29,34 @@ export const useButtonComponent = () => {
 
   const ButtonComponent: ComponentConfig<ButtonProps> = useMemo(() => {
     const variantOptions: FieldOption<ButtonVariant>[] = [
-      { label: t('components.button.type.primary'), value: 'PRIMARY' },
-      { label: t('components.button.type.secondary'), value: 'SECONDARY' },
-      { label: t('components.button.type.danger'), value: 'DANGER' }
+      { label: t('components.button.severity.primary'), value: 'PRIMARY' },
+      { label: t('components.button.severity.secondary'), value: 'SECONDARY' },
+      { label: t('components.button.severity.danger'), value: 'DANGER' },
+      { label: t('components.button.severity.success'), value: 'SUCCESS' },
+      { label: t('components.button.severity.info'), value: 'INFO' },
+      { label: t('components.button.severity.warn'), value: 'WARNING' },
+      { label: t('components.button.severity.help'), value: 'HELP' }
+    ] as const;
+
+    const styleOptions: FieldOption<ButtonStyle>[] = [
+      { label: t('components.button.type.solid'), value: 'SOLID' },
+      { label: t('components.button.type.flat'), value: 'FLAT' },
+      { label: t('components.button.type.outline'), value: 'OUTLINED' }
     ] as const;
 
     const confirmDialogSeverity: FieldOption<ConfirmDialogSeverity>[] = [
-      { label: t('components.button.confirmSeverity.info'), value: 'INFO' },
-      { label: t('components.button.confirmSeverity.success'), value: 'SUCCESS' },
-      { label: t('components.button.confirmSeverity.warn'), value: 'WARN' },
-      { label: t('components.button.confirmSeverity.error'), value: 'ERROR' }
+      { label: t('components.button.severity.info'), value: 'INFO' },
+      { label: t('components.button.severity.success'), value: 'SUCCESS' },
+      { label: t('components.button.severity.warn'), value: 'WARN' },
+      { label: t('components.button.severity.error'), value: 'ERROR' }
     ] as const;
 
     const defaultButtonProps: Button = {
       name: t('property.action'),
       action: '',
       variant: 'PRIMARY',
+      style: 'SOLID',
+      rounded: false,
       type: 'BUTTON',
       icon: '',
       processOnlySelf: false,
@@ -90,17 +102,28 @@ export const useButtonComponent = () => {
           browsers: [{ type: 'LOGIC' }, { type: 'ATTRIBUTE', options: { withoutEl: true, overrideSelection: true } }],
           hide: data => hideButtonField(data)
         },
-        variant: {
-          subsection: 'General',
-          label: t('property.variant'),
-          type: 'select',
-          options: variantOptions
-        },
         icon: {
           subsection: 'General',
           label: t('property.icon'),
           type: 'generic',
           render: renderIconField
+        },
+        variant: {
+          subsection: 'Styling',
+          label: t('property.variant'),
+          type: 'select',
+          options: variantOptions
+        },
+        style: {
+          subsection: 'Styling',
+          label: t('components.button.property.style'),
+          type: 'select',
+          options: styleOptions
+        },
+        rounded: {
+          subsection: 'Styling',
+          label: t('components.button.property.rounded'),
+          type: 'checkbox'
         },
 
         processOnlySelf: { subsection: 'Behaviour', type: 'hidden' },
@@ -164,10 +187,16 @@ export const useButtonComponent = () => {
   };
 };
 
-const UiBlock = ({ name, icon, variant, visible, disabled }: UiComponentProps<ButtonProps>) => (
+const UiBlock = ({ name, icon, variant, visible, style, rounded, disabled }: UiComponentProps<ButtonProps>) => (
   <>
     <UiBlockHeader visible={visible} disabled={disabled} />
-    <div className='block-button' data-variant={variant.toLocaleLowerCase()}>
+    <div
+      className={`block-button`}
+      data-variant={variant.toLocaleLowerCase()}
+      data-style={style.toLocaleLowerCase()}
+      data-rounded={rounded}
+      data-icon={icon.length > 0 && name.length === 0}
+    >
       {icon && <i className={icon} />}
       {(name.length > 0 || icon.length === 0) && <UiBadge value={name} />}
     </div>
