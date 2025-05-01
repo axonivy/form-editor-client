@@ -63,12 +63,6 @@
         "no": "Nein",
         "yes": "Ja"
       },
-      "confirmSeverity": {
-        "error": "Fehler",
-        "info": "Info",
-        "success": "Erfolg",
-        "warn": "Warnung"
-      },
       "description": "Ein Knopf zum Auslösen von Aktionen",
       "fieldType": {
         "delete": "Löschen",
@@ -81,12 +75,24 @@
         "confirmButton": "Wert Bestätigungsbutton",
         "confirmDialog": "Bestätigungsdialog",
         "message": "Dialognachricht",
-        "severity": "Schweregrad"
+        "rounded": "Abgerundete Ecken",
+        "severity": "Schweregrad",
+        "style": "Stil"
+      },
+      "severity": {
+        "danger": "Gefahr",
+        "error": "Fehler",
+        "help": "Hilfe",
+        "info": "Info",
+        "primary": "Primär",
+        "secondary": "Sekundär",
+        "success": "Erfolg",
+        "warn": "Warnung"
       },
       "type": {
-        "danger": "Gefahr",
-        "primary": "Primär",
-        "secondary": "Sekundär"
+        "flat": "Flach",
+        "outline": "Umriss",
+        "solid": "Ausgefüllt"
       }
     },
     "checkbox": {
