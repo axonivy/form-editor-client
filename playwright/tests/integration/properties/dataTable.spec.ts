@@ -211,11 +211,11 @@ test('editable datatable', async ({ page }) => {
   const addressInput = editor.canvas.blockByNth(0, { datatableNth: 0, dialogContent: true });
   await addressInput.block.dblclick();
   const inputValue = section.input({ label: 'Value' });
-  await inputValue.expectValue('ivyFormDataTableHandler.currentRow.address.address');
+  await inputValue.expectValue('address.address');
 
   const birthdayInput = editor.canvas.blockByNth(1, { datatableNth: 0, dialogContent: true });
   await birthdayInput.block.dblclick({ position: { x: 20, y: 10 } });
-  await inputValue.expectValue('ivyFormDataTableHandler.currentRow.birthday');
+  await inputValue.expectValue('birthday');
 
   await table.block.dblclick({ position: { x: 10, y: 10 } });
   await editable.uncheck();
