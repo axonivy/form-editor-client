@@ -14,6 +14,9 @@
   gap: var(--size-2);
   padding: var(--size-2) var(--size-4);
 }
+.block-button[data-icon='true'] {
+  padding: var(--size-2);
+}
 .block-button:hover {
   background-color: color-mix(in srgb, var(--button-bg), transparent 10%);
 }
@@ -23,7 +26,7 @@
 }
 .block-button[data-variant='success'] {
   --button-bg: var(--success-color);
-  --button-color: var(--body);
+  --button-color: var(--background);
 }
 .block-button[data-variant='danger'] {
   --button-bg: var(--error-color);
@@ -31,5 +34,32 @@
 }
 .block-button[data-variant='warning'] {
   --button-bg: var(--warning-color);
-  --button-color: var(--body);
+  --button-color: var(--background);
+}
+.block-button[data-variant='info'] {
+  --button-bg: var(--P75);
+  --button-color: var(--background);
+}
+.block-button[data-variant='help'] {
+  --button-bg: var(--P500);
+  --button-color: var(--background);
+}
+.block-button[data-style='solid'] {
+  border: none;
+}
+
+.block-button[data-style='flat'] {
+  background-color: transparent;
+  color: var(--button-bg);
+  border: none;
+}
+
+.block-button[data-style='outlined'] {
+  background-color: transparent;
+  color: var(--button-bg);
+  border: 1px solid var(--button-bg);
+}
+
+.block-button[data-rounded='true'] {
+  border-radius: 40px;
 }

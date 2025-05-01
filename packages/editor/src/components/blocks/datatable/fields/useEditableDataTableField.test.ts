@@ -67,6 +67,8 @@ const editButton: ComponentData = {
     mdSpan: '12',
     name: '',
     processOnlySelf: false,
+    rounded: false,
+    style: 'SOLID',
     type: 'EDIT',
     variant: 'PRIMARY',
     visible: ''
@@ -92,6 +94,8 @@ const deleteButton: ComponentData = {
     mdSpan: '12',
     name: '',
     processOnlySelf: false,
+    rounded: false,
+    style: 'SOLID',
     type: 'DELETE',
     variant: 'DANGER',
     visible: ''

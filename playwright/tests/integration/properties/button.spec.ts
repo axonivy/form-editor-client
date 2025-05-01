@@ -9,7 +9,10 @@ test('default', async ({ page }) => {
   const section = properties.collapsible('General');
   const name = section.input({ label: 'Name' });
   const action = section.input({ label: 'Action' });
-  const variant = section.select({ label: 'Variant' });
+  const styleSection = properties.collapsible('Styling');
+  const variant = styleSection.select({ label: 'Variant' });
+  const style = styleSection.select({ label: 'Style' });
+  const rounded = styleSection.checkbox({ label: 'Rounded Corners' });
   const behaviour = properties.behaviour();
 
   await name.expectValue('Action');
@@ -18,6 +21,8 @@ test('default', async ({ page }) => {
   await name.fill('Cancel');
   await action.fill('#{logic.close}');
   await variant.choose('Secondary');
+  await style.choose('Outline');
+  await rounded.check();
   await behaviour.fillDisable();
 
   await page.reload();
@@ -25,6 +30,8 @@ test('default', async ({ page }) => {
   await name.expectValue('Cancel');
   await action.expectValue('close');
   await variant.expectValue('Secondary');
+  await style.expectValue('Outline');
+  await rounded.expectValue(true);
   await behaviour.excpectDisabled();
 });
 
