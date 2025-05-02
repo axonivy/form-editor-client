@@ -34,7 +34,7 @@ export const useFieldsetComponent = () => {
       icon: <IconSvg />,
       description: t('components.fieldset.description'),
       defaultProps: defaultFieldsetProps,
-      quickActions: DEFAULT_QUICK_ACTIONS,
+      quickActions: [...DEFAULT_QUICK_ACTIONS, 'EXTRACTINTOCOMPONENT'],
       render: props => <UiBlock {...props} />,
       create: ({ defaultProps }) => ({ ...defaultFieldsetProps, ...defaultProps }),
       outlineInfo: component => component.legend,

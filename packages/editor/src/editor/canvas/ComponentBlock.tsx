@@ -115,7 +115,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
             : undefined
         }
         extractIntoComponent={
-          config.quickActions.includes('EXTRACTINTOCOMPONENT') && data.type === 'Layout'
+          config.quickActions.includes('EXTRACTINTOCOMPONENT')
             ? { data, openDialog: showExtractDialog, setOpenDialog: setShowExtractDialog }
             : undefined
         }
