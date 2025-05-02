@@ -16,9 +16,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  toast
+  toast,
+  type BrowserNode
 } from '@axonivy/ui-components';
-import type { Component, ComponentData, Layout } from '@axonivy/form-editor-protocol';
+import type { Component, ComponentData, Layout, Variable } from '@axonivy/form-editor-protocol';
 import { useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../../context/AppContext';
@@ -26,8 +27,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { genQueryKey } from '../../../query/query-client';
 import { useFunction } from '../../../context/useFunction';
 import { useMeta } from '../../../context/useMeta';
-import { variableTreeData } from '../data-class/variable-tree-data';
+import { collectNodesWithChildren, variableTreeData } from '../data-class/variable-tree-data';
 import { useExtractFieldValidation } from './useExtractFieldValidation';
+import { IvyIcons } from '@axonivy/ui-icons';
+import { Browser } from '../Browser';
 type ExtractComponentDialogProps = {
   children: ReactNode;
   data: Component | ComponentData;
@@ -62,10 +65,11 @@ const ExtractComponentDialogContent = ({ data, layoutId }: { data: Component | C
   const [name, setName] = useState(layoutId);
   const [nameSpace, setNameSpace] = useState(namespace);
   const [field, setField] = useState('data');
+  const [open, setOpen] = useState(false);
 
   const dataClassItems = useMemo(() => {
-    const fullTree = variableTreeData().of(variableInfo);
-    return fullTree[0]?.children && fullTree[0].children.length > 0 ? [fullTree[0], ...fullTree[0].children] : fullTree;
+    const fullTree: BrowserNode<Variable>[] = variableTreeData().of(variableInfo);
+    return fullTree.length === 1 && fullTree[0].children.length === 0 ? [fullTree[0]] : collectNodesWithChildren(fullTree);
   }, [variableInfo]);
   const nameValidation = useMemo(() => validateComponentName(name), [name, validateComponentName]);
   const namespaceValidation = useMemo(() => validateComponentNamespace(nameSpace), [nameSpace, validateComponentNamespace]);
@@ -110,25 +114,40 @@ const ExtractComponentDialogContent = ({ data, layoutId }: { data: Component | C
         <BasicField className='extract-dialog-namespace' label={t('dialog.nameSpace')} message={namespaceValidation}>
           <Input value={nameSpace} onChange={event => setNameSpace(event.target.value)} placeholder={namespace} />
         </BasicField>
-        <BasicField className='extract-dialog-dataclass' label={t('dialog.dataClass')}>
-          <Select value={field} onValueChange={setField} defaultValue={field}>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {dataClassItems.map(item => (
-                  <SelectItem key={item.value} value={item.value}>
-                    <>
-                      {item.value}
-                      <span style={{ color: 'var(--N500)' }}> {item.info}</span>
-                    </>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </BasicField>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <BasicField className='extract-dialog-dataclass' label={t('dialog.dataClass')}>
+            <Flex alignItems='center' gap={2}>
+              <Select value={field} onValueChange={setField} defaultValue={field}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {dataClassItems.map(item => (
+                      <SelectItem key={item.value} value={item.value}>
+                        <>
+                          {item.value}
+                          <span style={{ color: 'var(--N500)' }}> {item.info}</span>
+                        </>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <DialogTrigger asChild>
+                <Button icon={IvyIcons.ListSearch} aria-label={t('label.browser')} />
+              </DialogTrigger>
+            </Flex>
+          </BasicField>
+          <DialogContent style={{ height: '80vh' }}>
+            <Browser
+              activeBrowsers={[{ type: 'ATTRIBUTE', options: { withoutEl: true, attribute: { onlyObjects: true } } }]}
+              close={() => setOpen(false)}
+              value={field}
+              onChange={setField}
+            />
+          </DialogContent>
+        </Dialog>
         <Message variant='info' message={t('dialog.logicWarning', { component: layoutId })} />
       </Flex>
 

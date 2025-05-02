@@ -11,11 +11,15 @@ type OnlyAttributeSelection = 'DYNAMICLIST' | 'COLUMN';
 export type BrowserType = 'ATTRIBUTE' | 'LOGIC' | 'CMS' | 'CONDITION';
 
 export type BrowserOptions = {
-  typeHint?: string;
-  onlyAttributes?: OnlyAttributeSelection;
   withoutEl?: boolean;
   overrideSelection?: boolean;
-  mergeResult?: boolean;
+  attribute?: AttributeBrowserOptions;
+};
+
+type AttributeBrowserOptions = {
+  typeHint?: string;
+  onlyAttributes?: OnlyAttributeSelection;
+  onlyObjects?: boolean;
 };
 
 export type FormBrowser = { type: BrowserType; options?: BrowserOptions };
