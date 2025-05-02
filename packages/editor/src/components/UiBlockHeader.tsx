@@ -1,6 +1,7 @@
 import { Flex, InputBadge } from '@axonivy/ui-components';
 import './UiBlockHeader.css';
 import { badgeProps } from '../utils/badge-properties';
+import { useAppContext } from '../context/AppContext';
 
 type UiBlockHeaderProps = {
   visible: string;
@@ -11,20 +12,23 @@ type UiBlockHeaderProps = {
   additionalInfo?: string;
 };
 
-export const UiBlockHeader = ({ visible, label, required, disabled, additionalInfo, updateOnChange }: UiBlockHeaderProps) => (
-  <Flex direction='row' justifyContent='space-between' alignItems='center' className='header-block__label'>
-    <Flex direction='row'>
-      {label && <UiBadge value={label ?? ''} />}
-      {required && required !== 'false' ? (required === 'false' ? '' : ' *') : ''}
+export const UiBlockHeader = ({ visible, label, required, disabled, additionalInfo, updateOnChange }: UiBlockHeaderProps) => {
+  const { ui } = useAppContext();
+  return (
+    <Flex direction='row' justifyContent='space-between' alignItems='center' className='header-block__label'>
+      <Flex direction='row'>
+        {label && <UiBadge value={label} />}
+        {required && required !== 'false' ? (required === 'false' ? '' : ' *') : ''}
+      </Flex>
+      <Flex alignItems='center' gap={1} className='header-block__indicators'>
+        {additionalInfo && additionalInfo.length === 0 ? null : <span style={{ color: 'var(--N600)' }}>{additionalInfo}</span>}
+        {!ui.helpPaddings && <UiBlockHeaderUpdateOnChangePart updateOnChange={updateOnChange} />}
+        {!ui.helpPaddings && <UiBlockHeaderDisablePart disabled={disabled} />}
+        {!ui.helpPaddings && <UiBlockHeaderVisiblePart visible={visible} />}
+      </Flex>
     </Flex>
-    <Flex alignItems='center' gap={1} className='header-block__indicators'>
-      {additionalInfo && additionalInfo.length === 0 ? null : <span style={{ color: 'var(--N600)' }}>{additionalInfo}</span>}
-      <UiBlockHeaderUpdateOnChangePart updateOnChange={updateOnChange} />
-      <UiBlockHeaderDisablePart disabled={disabled} />
-      <UiBlockHeaderVisiblePart visible={visible} />
-    </Flex>
-  </Flex>
-);
+  );
+};
 
 export const UiBlockHeaderVisiblePart = ({ visible }: { visible: string }) =>
   visible === 'true' || visible.length === 0 ? null : (

@@ -126,7 +126,7 @@ const UiBlock = ({
             </Flex>
           </Flex>
           <Flex className='block-column__filter' data-active={filterable && !asActionColumn} gap={1}>
-            {t('label.filterBy')} <UiBadge value={header} />
+            {t('label.filterBy')} {filterable && !asActionColumn && <UiBadge value={header} />}
           </Flex>
         </Flex>
       </div>
