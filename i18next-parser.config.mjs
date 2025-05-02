@@ -1,3 +1,4 @@
+/** @type {import('i18next-parser').UserConfig} */
 export default {
   defaultNamespace: 'form-editor',
   defaultValue: '__MISSING_TRANSLATION__',
@@ -7,5 +8,6 @@ export default {
   pluralSeparator: '_',
   input: ['src/**/*.ts', 'src/**/*.tsx'],
   verbose: false,
-  sort: true
+  sort: true,
+  lineEnding: 'lf'
 };
