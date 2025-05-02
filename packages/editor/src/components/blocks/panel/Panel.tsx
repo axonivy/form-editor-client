@@ -35,7 +35,7 @@ export const usePanelComponent = () => {
       icon: <IconSvg />,
       description: t('components.panel.description'),
       defaultProps: defaultPanelProps,
-      quickActions: DEFAULT_QUICK_ACTIONS,
+      quickActions: [...DEFAULT_QUICK_ACTIONS, 'EXTRACTINTOCOMPONENT'],
       render: props => <UiBlock {...props} />,
       create: ({ defaultProps }) => ({ ...defaultPanelProps, ...defaultProps }),
       outlineInfo: component => component.title,
