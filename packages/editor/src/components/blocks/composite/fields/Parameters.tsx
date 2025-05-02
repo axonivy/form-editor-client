@@ -59,7 +59,7 @@ const ParameterInput = ({ value, onChange, name, description, type, validationPa
       label={capitalize(name)}
       value={value[name]}
       onChange={change => updateValue(name, change)}
-      browsers={[{ type: 'ATTRIBUTE', options: { typeHint: type } }]}
+      browsers={[{ type: 'ATTRIBUTE', options: { attribute: { typeHint: type } } }]}
       message={message ?? { variant: 'description', message: description }}
     />
   );

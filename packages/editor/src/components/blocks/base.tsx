@@ -175,14 +175,14 @@ export const useBase = () => {
         subsection: 'Dynamic Options',
         label: t('label.listOfObjects'),
         type: 'textBrowser',
-        browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }],
+        browsers: [{ type: 'ATTRIBUTE', options: { attribute: { typeHint: 'List' } } }],
         options: { placeholder: t('placeholder.dynamicList') }
       },
       dynamicItemsLabel: {
         subsection: 'Dynamic Options',
         label: t('label.objectLabel'),
         type: 'textBrowser',
-        browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'DYNAMICLIST', withoutEl: true } }],
+        browsers: [{ type: 'ATTRIBUTE', options: { withoutEl: true, attribute: { onlyAttributes: 'DYNAMICLIST' } } }],
         options: {
           placeholder: t('placeholder.attributeOrBlank')
         },
@@ -192,7 +192,7 @@ export const useBase = () => {
         subsection: 'Dynamic Options',
         label: t('label.objectValue'),
         type: 'textBrowser',
-        browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'DYNAMICLIST', withoutEl: true } }],
+        browsers: [{ type: 'ATTRIBUTE', options: { withoutEl: true, attribute: { onlyAttributes: 'DYNAMICLIST' } } }],
         options: {
           placeholder: t('placeholder.attributeOrBlank')
         },

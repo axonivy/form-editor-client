@@ -57,7 +57,7 @@ export const useDataTableComponent = (componentByName: ComponentByName) => {
           subsection: 'General',
           label: t('label.listOfObjects'),
           type: 'textBrowser',
-          browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'List' } }]
+          browsers: [{ type: 'ATTRIBUTE', options: { attribute: { typeHint: 'List' } } }]
         },
         isEditable: {
           subsection: 'General',

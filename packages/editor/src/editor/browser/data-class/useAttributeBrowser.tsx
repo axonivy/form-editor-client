@@ -30,7 +30,8 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
   const { element, data } = useData();
 
   useEffect(() => {
-    setTree(determineTreeData(element, data, variableInfo, options, setComponentInDialog));
+    const treeData = determineTreeData(element, data, variableInfo, options, setComponentInDialog);
+    setTree(options?.attribute?.onlyObjects ? filterNodesWithChildren(treeData) : treeData);
   }, [data, data.components, element, options, variableInfo]);
 
   const loadChildren = useCallback<(row: BrowserNode) => void>(
@@ -43,7 +44,9 @@ export const useAttributeBrowser = (options?: BrowserOptions): Browser => {
     name: ATTRIBUTE_BROWSER_ID,
     icon: IvyIcons.Attribute,
     browser,
-    header: options?.typeHint ? <Message variant='info' message={t('message.typeDefinedBy', { type: options.typeHint })} /> : undefined,
+    header: options?.attribute?.typeHint ? (
+      <Message variant='info' message={t('message.typeDefinedBy', { type: options.attribute.typeHint })} />
+    ) : undefined,
     infoProvider: row => row?.original.info,
     applyModifier: row => getApplyModifierValue(row, componentInDialog, options)
   };
@@ -59,9 +62,17 @@ export const getApplyModifierValue = (
   }
 
   const prefix = componentInDialog ? 'ivyFormDataTableHandler.currentRow' : '';
-  const path = fullVariablePath(row, (componentInDialog || options?.onlyAttributes) && false);
+  const path = fullVariablePath(row, (componentInDialog || options?.attribute?.onlyAttributes) && false);
 
   return { value: `${prefix}${componentInDialog && path.length > 0 ? '.' : ''}${path}` };
+};
+export const filterNodesWithChildren = (nodes: Array<BrowserNode<Variable>>): Array<BrowserNode<Variable>> => {
+  return nodes
+    .filter(node => node.children && node.children.length > 0)
+    .map(node => ({
+      ...node,
+      children: filterNodesWithChildren(node.children)
+    }));
 };
 
 const determineTreeData = (
@@ -76,7 +87,7 @@ const determineTreeData = (
   }
 
   const parentComponent = getParentComponent(data.components, element.cid);
-  switch (options?.onlyAttributes) {
+  switch (options?.attribute?.onlyAttributes) {
     case 'DYNAMICLIST':
       return findAttributesOfType(variableInfo, (element.config as ConfigData).dynamicItemsList as string);
     case 'COLUMN':
@@ -102,6 +113,5 @@ const determineTreeData = (
         return variableTreeData().of(variableInfo);
       }
   }
-
   return variableTreeData().of(variableInfo);
 };
