@@ -84,6 +84,7 @@ const ContextHelper = ({ appContext, meta, children }: ContextHelperProps & { ch
             history: { push: () => {}, undo: () => {}, redo: () => {}, canUndo: false, canRedo: false },
             validations: [],
             helpUrl: appContext?.helpUrl ?? '',
+            previewUrl: '',
             namespace: ''
           }}
         >

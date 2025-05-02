@@ -27,10 +27,6 @@ export function themeParam(): 'dark' | 'light' {
   return 'light';
 }
 
-export function datatableParam(): boolean {
-  return parameter('datatable') === 'true';
-}
-
 export function readonlyParam(): boolean {
   const readonly = parameter('readonly');
   if (readonly === 'true') {

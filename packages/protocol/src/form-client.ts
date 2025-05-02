@@ -12,6 +12,7 @@ export interface Disposable {
 }
 
 export interface FormClient {
+  initialize(context: FormContext): Promise<void>;
   data(context: FormContext): Promise<FormEditor>;
   saveData(saveData: FormSaveData): Promise<void>;
 
@@ -26,4 +27,5 @@ export interface FormClient {
 
   onDataChanged: Event<void>;
   onValidationChanged: Event<void>;
+  onSelectElement: Event<string>;
 }

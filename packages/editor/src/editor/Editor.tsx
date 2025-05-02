@@ -25,12 +25,12 @@ export const Editor = (props: FormEditorProps) => {
   const { componentByName } = components;
   const [context, setContext] = useState(props.context);
   const [directSave, setDirectSave] = useState(props.directSave);
+  const [selectedElement, setSelectedElement] = useState<string>();
   useEffect(() => {
     setContext(props.context);
     setDirectSave(props.directSave);
   }, [props]);
   const { ui, setUi } = useUiState();
-  const [selectedElement, setSelectedElement] = useState<string>();
   const [initialData, setInitalData] = useState<FormData | undefined>(undefined);
   const history = useHistoryData<FormData>();
 
@@ -61,9 +61,11 @@ export const Editor = (props: FormEditorProps) => {
   useEffect(() => {
     const validationDispose = client.onValidationChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.validation(context) }));
     const dataDispose = client.onDataChanged(() => queryClient.invalidateQueries({ queryKey: queryKeys.data(context) }));
+    const selectElementDispose = client.onSelectElement(selectedElement => setSelectedElement(selectedElement));
     return () => {
       validationDispose.dispose();
       dataDispose.dispose();
+      selectElementDispose.dispose();
     };
   }, [client, context, queryClient, queryKeys]);
 
@@ -118,6 +120,7 @@ export const Editor = (props: FormEditorProps) => {
         history,
         validations,
         helpUrl: data.helpUrl,
+        previewUrl: data.previewUrl,
         namespace: data.namespace
       }}
     >
