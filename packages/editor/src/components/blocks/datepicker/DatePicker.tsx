@@ -47,7 +47,7 @@ export const useDatePickerComponent = () => {
           subsection: 'General',
           label: t('property.value'),
           type: 'textBrowser',
-          browsers: [{ type: 'ATTRIBUTE', options: { typeHint: 'Date' } }]
+          browsers: [{ type: 'ATTRIBUTE', options: { attribute: { typeHint: 'Date' } } }]
         },
         datePattern: {
           subsection: 'General',

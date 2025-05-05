@@ -1,9 +1,17 @@
-import type { VariableInfo } from '@axonivy/form-editor-protocol';
+import type { Variable, VariableInfo } from '@axonivy/form-editor-protocol';
 import type { BrowserNode } from '@axonivy/ui-components';
 import type { Row } from '@tanstack/react-table';
-import { findAttributesOfType, formatVariableValue, fullVariablePath, rowToCreateData, variableTreeData } from './variable-tree-data';
+import {
+  collectNodesWithChildren,
+  findAttributesOfType,
+  formatVariableValue,
+  fullVariablePath,
+  rowToCreateData,
+  variableTreeData
+} from './variable-tree-data';
 import { renderHook } from '@testing-library/react';
 import { useComponentsInit } from '../../../components/components';
+import type { DeepPartial } from '../../../types/types';
 
 // Needs because 'renderHook' is imported
 /* eslint-disable testing-library/no-node-access */
@@ -176,4 +184,62 @@ test('return only the prefix when variablePath is empty', () => {
 
 test('return an empty #{ } when both prefix and variablePath are empty', () => {
   expect(formatVariableValue('')).toBe('#{}');
+});
+
+describe('collectNodesWithChildren', () => {
+  test('returns empty array for empty input', () => {
+    const result = collectNodesWithChildren([]);
+    expect(result).toEqual([]);
+  });
+
+  test('collects single-level nodes with children', () => {
+    const nodes: DeepPartial<BrowserNode<Variable>>[] = [
+      {
+        value: 'parent',
+        children: [{ value: 'child1', children: [] }]
+      }
+    ];
+    const result = collectNodesWithChildren(nodes as BrowserNode<Variable>[]);
+    expect(result).toHaveLength(1);
+    expect(result[0].value).toBe('parent');
+  });
+
+  test('collects nested nodes with adjusted values', () => {
+    const nodes: DeepPartial<BrowserNode<Variable>>[] = [
+      {
+        value: 'root',
+        children: [
+          {
+            value: 'child',
+            children: [{ value: 'subchild', children: [] }]
+          }
+        ]
+      }
+    ];
+    const result = collectNodesWithChildren(nodes as BrowserNode<Variable>[]);
+    expect(result).toHaveLength(2);
+    expect(result[0].value).toBe('root');
+    expect(result[1].value).toBe('root.child');
+  });
+
+  test('handles mixed nodes (some with children, some without)', () => {
+    const nodes: DeepPartial<BrowserNode<Variable>>[] = [
+      {
+        value: 'root1',
+        children: []
+      },
+      {
+        value: 'root2',
+        children: [
+          {
+            value: 'child2',
+            children: []
+          }
+        ]
+      }
+    ];
+    const result = collectNodesWithChildren(nodes as BrowserNode<Variable>[]);
+    expect(result).toHaveLength(1);
+    expect(result[0].value).toBe('root2');
+  });
 });

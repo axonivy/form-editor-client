@@ -54,6 +54,18 @@ export const variableTreeData = () => {
   return { of, loadChildrenFor, typesOfParam };
 };
 
+export const collectNodesWithChildren = (nodes: BrowserNode<Variable>[], parent?: string): BrowserNode<Variable>[] => {
+  let result: BrowserNode<Variable>[] = [];
+  for (const node of nodes) {
+    if (node.children && node.children.length > 0) {
+      const adjustedNode = { ...node, value: parent ? `${parent}.${node.value}` : node.value };
+      result.push(adjustedNode);
+      result = [adjustedNode, ...collectNodesWithChildren(adjustedNode.children, adjustedNode.value)];
+    }
+  }
+  return result;
+};
+
 export const fullVariablePath = (row: Row<BrowserNode>, showRootNode: boolean = true): string => {
   const parentRows = row.getParentRows();
   const isFlatStructure = parentRows.length === 0;
