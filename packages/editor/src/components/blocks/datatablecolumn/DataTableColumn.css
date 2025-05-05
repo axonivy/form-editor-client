@@ -10,6 +10,9 @@
     font-weight: 600;
     border-bottom: var(--basic-border);
   }
+  .block-column__body {
+    width: fit-content;
+  }
   .block-column__body .button-menu-header {
     justify-content: start;
   }

@@ -185,18 +185,18 @@ test('editable datatable', async ({ page }) => {
   await addButton.expectValue(true);
   await columnsSection.expectListItems(4);
   const actionColumn = editor.canvas.blockByNth(3, { datatableNth: 0, column: true });
-  await actionColumn.select();
+  await actionColumn.select({ position: { x: 10, y: 10 } });
   await editor.inscription.expectHeader('DataTableColumn');
 
   const contentSection = properties.collapsible('Content');
   await contentSection.expectListItems(2);
   const editButton = editor.canvas.blockByNth(0, { datatableNth: 0, columnNth: 3, actionButton: true });
   const deleteButton = editor.canvas.blockByNth(1, { datatableNth: 0, columnNth: 3, actionButton: true });
-  await editButton.select(true);
+  await editButton.select({ force: true });
   const buttonType = section.select({ label: 'type' });
   await buttonType.expectValue('Edit');
 
-  await deleteButton.select(true);
+  await deleteButton.select({ force: true });
   await buttonType.expectValue('Delete');
 
   const dialog = editor.canvas.blockByNth(0, { datatableNth: 0, dialog: true });
@@ -245,7 +245,7 @@ test('editable datatable buttons', async ({ page }) => {
   await contentSection.expectListItems(1);
 
   const editButton = editor.canvas.blockByNth(0, { datatableNth: 0, columnNth: 3, actionButton: true });
-  await editButton.select(true);
+  await editButton.select({ force: true });
 
   const buttonType = section.select({ label: 'type' });
   await buttonType.expectValue('Edit');
