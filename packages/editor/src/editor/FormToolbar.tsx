@@ -41,7 +41,7 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
   const { t } = useTranslation();
   const { allComponentsByCategory } = useComponents();
   const { ui, setUi, history, helpUrl, previewUrl } = useAppContext();
-  const { setUnhistoricisedData } = useData();
+  const { data, setUnhistoricisedData } = useData();
   const { theme, setTheme, disabled } = useTheme();
   const editable = !useReadonly();
   const openDataClass = useAction('openDataClass');
@@ -150,13 +150,15 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       <Flex gap={1} alignItems='center'>
         <ToolbarContainer maxWidth={450}>
           <Flex gap={1} alignItems='center'>
-            <Button
-              title={hotkeys.openPreview.label}
-              aria-label={hotkeys.openPreview.label}
-              icon={IvyIcons.Play}
-              size='large'
-              onClick={() => openUrl(previewUrl)}
-            />
+            {data.config.type === 'FORM' && (
+              <Button
+                title={hotkeys.openPreview.label}
+                aria-label={hotkeys.openPreview.label}
+                icon={IvyIcons.Play}
+                size='large'
+                onClick={() => openUrl(previewUrl)}
+              />
+            )}
             <Button
               title={hotkeys.openDataClass.label}
               aria-label={hotkeys.openDataClass.label}
