@@ -47,7 +47,7 @@ test('confirm dialog section', async ({ page }) => {
 
   await editable.check();
   const deleteButton = editor.canvas.blockByNth(1, { datatableNth: 0, columnNth: 3, actionButton: true });
-  await deleteButton.select(true);
+  await deleteButton.select({ force: true });
 
   const confirm = editor.inscription.section('Confirm');
   await confirm.toggle();
@@ -72,7 +72,7 @@ test('confirm dialog section', async ({ page }) => {
   await confirmButton.fill('Ok');
   await cancelButton.fill('Nop');
 
-  await deleteButton.select(true);
+  await deleteButton.select({ force: true });
   await header.expectValue('Cancel');
   await dialogMessage.expectValue('Really?');
   await severity.expectValue('Info');

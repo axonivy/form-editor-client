@@ -45,8 +45,8 @@ export class Block {
     }
   }
 
-  async select(force: boolean = false) {
-    await this.block.click({ force: force });
+  async select(options?: { force?: boolean; position?: { x: number; y: number } }) {
+    await this.block.click(options);
     await this.expectSelected();
   }
 
@@ -56,7 +56,7 @@ export class Block {
   }
 
   async quickAction(name: string, force: boolean = false) {
-    await this.select(force);
+    await this.select({ force: force });
     await this.page.locator('.quickbar').getByRole('button', { name }).click();
   }
 
