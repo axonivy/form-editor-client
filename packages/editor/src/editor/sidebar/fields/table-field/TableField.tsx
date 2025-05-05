@@ -1,10 +1,11 @@
 import { flexRender, type ColumnDef, useReactTable, getCoreRowModel, type Row } from '@tanstack/react-table';
 import {
+  arraymove,
   BasicField,
   Button,
   deepEqual,
   MessageRow,
-  SelectRow,
+  ReorderRow,
   Table,
   TableAddRow,
   TableBody,
@@ -84,6 +85,15 @@ export const TableField = <TData extends object>({
     return null;
   };
 
+  const updateDataArray = (fromIndex: number[], toIndex: number, data: TData[]) => {
+    arraymove(data, fromIndex[0], toIndex);
+    onChange(data);
+    setTableData([...data]);
+  };
+  const updateOrder = (moveId: string, targetId: string) => {
+    updateDataArray([Number(moveId)], Number(targetId), tableData);
+  };
+
   const tableSelection = useTableSelect<TData>();
   const table = useReactTable({
     ...tableSelection.options,
@@ -121,7 +131,7 @@ export const TableField = <TData extends object>({
         <TableResizableHeader headerGroups={table.getHeaderGroups()} onClick={() => table.setRowSelection({})} />
         <TableBody>
           {table.getRowModel().rows.map(row => (
-            <ValidationRow key={row.id} row={row} validationPath={validationPath} />
+            <ValidationRow key={row.id} row={row} validationPath={validationPath} updateOrder={updateOrder} />
           ))}
         </TableBody>
       </Table>
@@ -130,16 +140,25 @@ export const TableField = <TData extends object>({
   );
 };
 
-const ValidationRow = <TData,>({ row, validationPath }: { row: Row<TData>; validationPath: string }) => {
+const ValidationRow = <TData,>({
+  row,
+  validationPath,
+  updateOrder
+}: {
+  row: Row<TData>;
+  validationPath: string;
+  updateOrder: (moveId: string, targetId: string) => void;
+}) => {
   const message = useValidation(`${validationPath}.[${row.index}]`);
   const cells = row.getVisibleCells();
+
   return (
     <>
-      <SelectRow key={row.id} row={row}>
+      <ReorderRow key={row.id} row={row} id={row.id} updateOrder={updateOrder}>
         {cells.map(cell => (
           <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
         ))}
-      </SelectRow>
+      </ReorderRow>
       <MessageRow message={message} columnCount={cells.length} />
     </>
   );
