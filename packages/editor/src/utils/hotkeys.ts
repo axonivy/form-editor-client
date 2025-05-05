@@ -7,13 +7,13 @@ type KnownHotkey = { hotkey: string; label: string };
 export const useKnownHotkeys = () => {
   const { t } = useTranslation();
   const undo = useMemo<KnownHotkey>(() => {
-    const hotkey = 'mod+Z';
-    return { hotkey, label: t('common.hotkey.undo', { hotkey: hotkeyText(hotkey) }) };
+    const hotkey = 'mod+Y';
+    return { hotkey, label: t('common.hotkey.undo', { hotkey: hotkeyText('mod+Z') }) };
   }, [t]);
 
   const redo = useMemo<KnownHotkey>(() => {
-    const hotkey = isWindows() ? 'mod+Y' : 'mod+shift+Z';
-    return { hotkey, label: t('common.hotkey.redo', { hotkey: hotkeyText(hotkey) }) };
+    const hotkey = isWindows() ? 'mod+Z' : 'mod+shift+Y';
+    return { hotkey, label: t('common.hotkey.redo', { hotkey: hotkeyText(isWindows() ? 'mod+Y' : 'mod+shift+Z') }) };
   }, [t]);
 
   const openPreview = useMemo<KnownHotkey>(() => {
