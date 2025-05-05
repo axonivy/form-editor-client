@@ -69,7 +69,7 @@ export const useDataTableColumnComponent = () => {
           subsection: 'Content',
           label: t('property.value'),
           type: 'textBrowser',
-          browsers: [{ type: 'ATTRIBUTE', options: { onlyAttributes: 'COLUMN', withoutEl: true } }],
+          browsers: [{ type: 'ATTRIBUTE', options: { withoutEl: true, attribute: { onlyAttributes: 'COLUMN' } } }],
           hide: data => data.asActionColumn
         },
         sortable: { subsection: 'General', label: t('property.enableSorting'), type: 'checkbox', hide: data => data.asActionColumn },
