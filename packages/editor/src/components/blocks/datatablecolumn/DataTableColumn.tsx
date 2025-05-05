@@ -1,6 +1,12 @@
 import './DataTableColumn.css';
-import { isTable, type ActionColumnComponent, type DataTableColumn, type Prettify } from '@axonivy/form-editor-protocol';
-import type { ComponentConfig, UiComponentProps } from '../../../types/config';
+import {
+  isTable,
+  type ActionButtonAlignment,
+  type ActionColumnComponent,
+  type DataTableColumn,
+  type Prettify
+} from '@axonivy/form-editor-protocol';
+import type { ComponentConfig, FieldOption, UiComponentProps } from '../../../types/config';
 import { useBase } from '../base';
 import { Flex, IvyIcon, PanelMessage } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -21,6 +27,12 @@ export const useDataTableColumnComponent = () => {
   const { t } = useTranslation();
 
   const DataTableColumnComponent: ComponentConfig<DataTableColumnProps> = useMemo(() => {
+    const alignButtonsOptions: FieldOption<ActionButtonAlignment>[] = [
+      { label: t('align.top'), value: 'START', icon: { icon: IvyIcons.AlignLeft } },
+      { label: t('align.center'), value: 'CENTER', icon: { icon: IvyIcons.AlignHorizontal, rotate: 270 } },
+      { label: t('align.bottom'), value: 'END', icon: { icon: IvyIcons.AlignRight } }
+    ] as const;
+
     const defaultDataTableColumnProps: DataTableColumn = {
       header: 'header',
       value: '',
@@ -29,6 +41,7 @@ export const useDataTableColumnComponent = () => {
       actionColumnAsMenu: false,
       sortable: false,
       filterable: false,
+      actionButtonAlignment: 'END',
       ...defaultVisibleComponent
     } as const;
 
@@ -52,6 +65,13 @@ export const useDataTableColumnComponent = () => {
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
         asActionColumn: { subsection: 'General', label: t('components.dataTableColumn.property.actionColumn'), type: 'checkbox' },
+        actionButtonAlignment: {
+          subsection: 'Content',
+          label: t('property.horizontalAlignment'),
+          type: 'toggleGroup',
+          options: alignButtonsOptions,
+          hide: data => !data.asActionColumn
+        },
         actionColumnAsMenu: {
           subsection: 'Content',
           label: t('components.dataTableColumn.property.groupActions'),
@@ -103,7 +123,8 @@ const UiBlock = ({
   visible,
   components,
   asActionColumn,
-  actionColumnAsMenu
+  actionColumnAsMenu,
+  actionButtonAlignment
 }: UiComponentProps<DataTableColumnProps>) => {
   const { t } = useTranslation();
   const { data } = useData();
@@ -130,7 +151,7 @@ const UiBlock = ({
           </Flex>
         </Flex>
       </div>
-      <div className='block-column__body'>
+      <div className='block-column__body' style={asActionColumn ? { justifySelf: actionButtonAlignment.toLowerCase() } : undefined}>
         {asActionColumn ? (
           components.length > 0 ? (
             actionColumnAsMenu ? (
