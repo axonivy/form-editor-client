@@ -93,6 +93,22 @@ test('responsive', async ({ page }) => {
   await expect(redoButton).toBeHidden();
 });
 
+test('open preview', async ({ page }) => {
+  const editor = await FormEditor.openMock(page);
+  const msg1 = consoleLog(page);
+  const openPreviewBtn = editor.toolbar.locator.getByRole('button', { name: 'Open Preview' });
+  await openPreviewBtn.click();
+  expect(await msg1).toContain('openUrl');
+
+  const msg2 = consoleLog(page);
+  await page.keyboard.press('s');
+  expect(await msg2).toContain('openUrl');
+
+  await editor.toolbar.toggleProperties();
+  await editor.inscription.section('Properties').collapsible('General').select({ label: 'Form Type' }).choose('Component');
+  await expect(openPreviewBtn).toBeHidden();
+});
+
 test('open process', async ({ page }) => {
   const editor = await FormEditor.openMock(page);
   const msg1 = consoleLog(page);
