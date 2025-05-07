@@ -9,6 +9,7 @@ export default defineConfig({
   build: { outDir: 'build', chunkSizeWarningLimit: 5000, rollupOptions: { input: { index: './index.html', mock: './mock.html' } } },
   server: {
     port: 3000,
+    host: '0.0.0.0',
     proxy: {
       '/dev-workflow-ui': {
         target: ENGINE_URL,
