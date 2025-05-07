@@ -5,6 +5,7 @@ import type { Row } from '@tanstack/react-table';
 import type { CreateComponentData } from '../../../types/config';
 import { stripELExpression } from '../../../utils/string';
 import type { ComponentForType } from '../../../components/components';
+import { filterNodesWithChildren } from './useAttributeBrowser';
 
 export const variableTreeData = () => {
   const of = (paramInfo: VariableInfo): Array<BrowserNode<Variable>> => {
@@ -54,13 +55,22 @@ export const variableTreeData = () => {
   return { of, loadChildrenFor, typesOfParam };
 };
 
-export const collectNodesWithChildren = (nodes: BrowserNode<Variable>[], parent?: string): BrowserNode<Variable>[] => {
+export const collectNodesWithChildren = (nodes: BrowserNode<Variable>[]): BrowserNode<Variable>[] => {
+  const filteredNodes = filterNodesWithChildren(nodes);
+  return flattenBrowserNodes(filteredNodes);
+};
+
+export const flattenBrowserNodes = (nodes: BrowserNode<Variable>[], parent?: string): BrowserNode<Variable>[] => {
   let result: BrowserNode<Variable>[] = [];
   for (const node of nodes) {
+    const adjustedNode: BrowserNode<Variable> = {
+      ...node,
+      value: parent ? `${parent}.${node.value}` : node.value,
+      children: []
+    };
+    result.push(adjustedNode);
     if (node.children && node.children.length > 0) {
-      const adjustedNode = { ...node, value: parent ? `${parent}.${node.value}` : node.value };
-      result.push(adjustedNode);
-      result = [adjustedNode, ...collectNodesWithChildren(adjustedNode.children, adjustedNode.value)];
+      result = [...result, ...flattenBrowserNodes(node.children, adjustedNode.value)];
     }
   }
   return result;
