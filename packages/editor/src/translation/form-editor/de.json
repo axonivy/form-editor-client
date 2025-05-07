@@ -35,9 +35,9 @@
   },
   "common": {
     "hotkey": {
-      "focusInscription": "Fokus auf Beschriftung ({{hotkey}})",
-      "focusMain": "Fokus auf Hauptbereich ({{hotkey}})",
-      "focusToolbar": "Fokus auf Werkzeugleiste ({{hotkey}})",
+      "focusInscription": "Fokus Inscription ({{hotkey}})",
+      "focusMain": "Fokus Main ({{hotkey}})",
+      "focusToolbar": "Fokus Toolbar ({{hotkey}})",
       "help": "Hilfe öffnen ({{hotkey}})",
       "redo": "Wiederholen ({{hotkey}})",
       "undo": "Rückgängig ({{hotkey}})"
@@ -49,7 +49,7 @@
       "options": "Optionen",
       "save": "Speichern",
       "search": "Suchen",
-      "theme": "Design"
+      "theme": "Thema"
     },
     "message": {
       "errorOccured": "Ein Fehler ist aufgetreten: {{message}}"
