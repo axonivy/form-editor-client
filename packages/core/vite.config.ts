@@ -2,11 +2,9 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  esbuild: {
-    sourcemap: 'inline'
-  },
   build: {
     outDir: 'lib',
+    sourcemap: true,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       fileName: 'core',

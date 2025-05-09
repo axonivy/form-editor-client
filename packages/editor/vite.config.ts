@@ -1,20 +1,11 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vite';
-import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [visualizer(), react(), dts({ tsconfigPath: './tsconfig.production.json' }), svgr()],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src')
-    }
-  },
-  esbuild: {
-    sourcemap: 'inline'
-  },
+  plugins: [react(), dts({ tsconfigPath: './tsconfig.production.json' }), svgr()],
   build: {
     outDir: 'lib',
     sourcemap: true,
@@ -38,5 +29,19 @@ export default defineConfig({
         'react-dom'
       ]
     }
+  },
+  test: {
+    dir: 'src',
+    include: ['**/*.test.ts?(x)'],
+    alias: {
+      'test-utils': resolve(__dirname, 'src/test-utils/test-utils.tsx'),
+      '@axonivy/form-editor-protocol': resolve(__dirname, '../../packages/protocol/src')
+    },
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['src/test-utils/setupTests.tsx'],
+    css: false,
+    reporters: process.env.CI ? ['default', 'junit'] : ['default'],
+    outputFile: 'report.xml'
   }
 });
