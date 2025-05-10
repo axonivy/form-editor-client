@@ -24,7 +24,7 @@
     "selection": "Auswahl",
     "staticOptions": "Statische Optionen",
     "structures": "Strukturen",
-    "styling": "Stil",
+    "styling": "Gestaltung",
     "text": "Text"
   },
   "cms": {
@@ -35,7 +35,7 @@
   },
   "common": {
     "hotkey": {
-      "focusInscription": "Fokus Inscription ({{hotkey}})",
+      "focusInscription": "Fokus Inskription ({{hotkey}})",
       "focusMain": "Fokus Main ({{hotkey}})",
       "focusToolbar": "Fokus Toolbar ({{hotkey}})",
       "help": "Hilfe öffnen ({{hotkey}})",
@@ -71,13 +71,13 @@
       },
       "name": "Knopf",
       "property": {
-        "cancelButton": "Wert Abbrechbutton",
-        "confirmButton": "Wert Bestätigungsbutton",
+        "cancelButton": "Abbrechen-Button Wert",
+        "confirmButton": "Bestätigungsbutton Wert",
         "confirmDialog": "Bestätigungsdialog",
         "message": "Dialognachricht",
         "rounded": "Abgerundete Ecken",
         "severity": "Schweregrad",
-        "style": "Stil"
+        "style": "Format"
       },
       "severity": {
         "danger": "Gefahr",
@@ -91,13 +91,13 @@
       },
       "type": {
         "flat": "Flach",
-        "outline": "Umriss",
+        "outline": "Kontur",
         "solid": "Ausgefüllt"
       }
     },
     "checkbox": {
-      "description": "Ein auswählbares Kontrollkästchen (Boolean)",
-      "name": "Kontrollkästchen"
+      "description": "Eine auswählbare Boolean Checkbox",
+      "name": "Checkbox"
     },
     "combobox": {
       "addDropdown": "Dropdown-Knopf zur Kombobox hinzufügen",
@@ -138,8 +138,8 @@
     "datePicker": {
       "datePlaceholder": " z. B. dd.MM.yyyy",
       "description": "Ein Datumswähler mit Beschriftung für Datum oder Datum-Zeit",
-      "label": "Datumswähler",
-      "name": "Datumswähler",
+      "label": "Datumsauswahl",
+      "name": "Datumsauswahl",
       "property": {
         "datePattern": "Datumsformat",
         "timePattern": "Zeitformat"
@@ -152,7 +152,7 @@
     },
     "fieldset": {
       "description": "Eine Gruppe von Eingaben",
-      "name": "Feldsatz"
+      "name": "Feldgruppe"
     },
     "input": {
       "description": "Eine Eingabe mit Beschriftung",
@@ -256,7 +256,7 @@
     "formType": "Formulartyp",
     "general": "Allgemein",
     "id": "ID",
-    "largeSpan": "Grosse Spanne",
+    "largeSpan": "Breite Spanne",
     "listOfObjects": "Objektliste",
     "mediumSpan": "Mittlere Spanne",
     "nRowsPerPage": "Zeilen pro Seite: {{rows}}",
