@@ -81,7 +81,7 @@
           <useLatestMinor>true</useLatestMinor>
           <engineListPageUrl>${engine.page.url}</engineListPageUrl>
           <engineDirectory>${engine.dir}</engineDirectory>
-          <additionalVmOptions>-Divy.enable.lsp=true -Ddev.mode=true</additionalVmOptions>
+          <additionalVmOptions>-Ddev.mode=true</additionalVmOptions>
         </configuration>
       </plugin>
       <plugin>
