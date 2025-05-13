@@ -25,7 +25,7 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import { useAppContext } from '../context/AppContext';
 import { PaletteCategoryPopover, PalettePopover } from './palette/PalettePopover';
-import { forwardRef, useMemo, useRef } from 'react';
+import { useMemo, useRef, type ComponentProps } from 'react';
 import { FormPalette } from './palette/Palette';
 import { useData } from '../data/data';
 import { CompositePalette } from './palette/composite/CompositePalette';
@@ -37,7 +37,7 @@ import { useComponents } from '../context/ComponentsContext';
 
 type DeviceMode = 'desktop' | 'tablet' | 'mobile';
 
-export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
+export const FormToolbar = ({ ref }: ComponentProps<'div'>) => {
   const { t } = useTranslation();
   const { allComponentsByCategory } = useComponents();
   const { ui, setUi, history, helpUrl, previewUrl } = useAppContext();
@@ -212,4 +212,4 @@ export const FormToolbar = forwardRef<HTMLDivElement>((_, ref) => {
       </Flex>
     </Toolbar>
   );
-});
+};
