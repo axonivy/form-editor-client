@@ -6,7 +6,7 @@ import { render, screen } from '@testing-library/react';
 
 describe('createBadges', () => {
   const inputValues =
-    "#{data.testData} #{logic.testLogic} #{ivy.cms.co('/Categories/agile/cssIcon')} #{el.expression} #{ivyFormDataTableHandler.currentRow.age} #{ivyFormDataTableHandler.currentRow} #{ivyFormDataTableHandler.something}";
+    "#{data.testData} #{logic.testLogic} #{ivy.cms.co('/Categories/agile/cssIcon')} #{el.expression} #{currentRow.age} #{currentRow}";
 
   test('test all badgeProperties', async () => {
     render(<InputBadge badgeProps={badgeProps} value={inputValues} className='badge-output' />);
@@ -31,22 +31,18 @@ describe('createBadges', () => {
     expect(expBadge?.querySelector('i.ivy-start-program')).toBeVisible();
   });
 
-  test('test ivyFormDataTable badgeProperties', async () => {
+  test('test currentRow badgeProperties', async () => {
     render(<InputBadge badgeProps={badgeProps} value={inputValues} className='badge-output' />);
     const ivyFormBadgeAge = screen.getByText('age');
     const ivyFormBadgeCurrentRow = screen.getByText('currentRow');
-    const ivyFormBadgeSomething = screen.getByText('something');
 
     expect(ivyFormBadgeAge).toBeVisible();
     expect(ivyFormBadgeCurrentRow).toBeVisible();
-    expect(ivyFormBadgeSomething).toBeVisible();
 
     expect(ivyFormBadgeAge).toHaveTextContent('age');
     expect(ivyFormBadgeCurrentRow).toHaveTextContent('currentRow');
-    expect(ivyFormBadgeSomething).toHaveTextContent('something');
 
     expect(ivyFormBadgeAge.querySelector('i.ivy-attribute')).toBeVisible();
-    expect(ivyFormBadgeCurrentRow.querySelector('i.ivy-attribute')).toBeVisible();
-    expect(ivyFormBadgeSomething.querySelector('i.ivy-attribute')).toBeVisible();
+    expect(ivyFormBadgeCurrentRow.querySelector('i.ivy-start-program')).toBeVisible();
   });
 });

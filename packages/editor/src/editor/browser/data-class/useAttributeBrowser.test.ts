@@ -21,7 +21,7 @@ test('returns full variable path when row is defined and componentInDialog is fa
 });
 test('returns prefixed variable path when row is defined and componentInDialog is true', () => {
   const result = getApplyModifierValue(row, true);
-  expect(result).toEqual({ value: 'ivyFormDataTableHandler.currentRow.address.location.country' });
+  expect(result).toEqual({ value: 'currentRow.address.location.country' });
 });
 test('returns partial path when onlyAttributes is COLUMN and componentInDialog is false', () => {
   const result = getApplyModifierValue(row, false, { attribute: { onlyAttributes: 'COLUMN' } });
@@ -36,7 +36,7 @@ test('returns only prefix when row has no parents and componentInDialog is true'
     } as Row<BrowserNode>,
     true
   );
-  expect(result).toEqual({ value: 'ivyFormDataTableHandler.currentRow' });
+  expect(result).toEqual({ value: 'currentRow' });
 });
 
 test('returns only row value when onlyAttributes is COLUMN and row has no parents', () => {
