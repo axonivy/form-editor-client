@@ -52,7 +52,7 @@ const dialog: ComponentData = {
 const editButton: ComponentData = {
   cid: 'button5',
   config: {
-    action: '#{ivyFormDataTableHandler.editRow(row)}', // just placeholder, will be set from backend
+    action: 'editRow', // just placeholder, will be set from backend
     alignSelf: 'START',
     confirmCancelValue: 'components.button.confirm.no',
     confirmOkValue: 'components.button.confirm.yes',
@@ -79,7 +79,7 @@ const editButton: ComponentData = {
 const deleteButton: ComponentData = {
   cid: 'button6',
   config: {
-    action: '#{ivyFormDataTableHandler.deleteRow(row)}', // just placeholder, will be set from backend
+    action: 'deleteRow', // just placeholder, will be set from backend
     alignSelf: 'START',
     confirmCancelValue: 'components.button.confirm.no',
     confirmOkValue: 'components.button.confirm.yes',

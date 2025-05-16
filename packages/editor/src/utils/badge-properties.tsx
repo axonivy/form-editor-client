@@ -15,19 +15,10 @@ const badgePropertyData: BadgeType = {
   badgeTextGen: (text: string) => text.replaceAll(/#{\s*data\.|}/g, '')
 };
 
-const badgePropertyIvyFormBean: BadgeType = {
-  regex: /#{\s*ivyFormDataTableHandler\.[^\s}]+\s*}/,
+const badgePropertyCurrentRow: BadgeType = {
+  regex: /#{\s*currentRow\.[^\s}]+\s*}/,
   icon: IvyIcons.Attribute,
-  badgeTextGen: (text: string) => {
-    const cleaned = text.replace(/^#{\s*|\s*}$/g, '');
-    if (cleaned.startsWith('ivyFormDataTableHandler.currentRow.')) {
-      return cleaned.replace('ivyFormDataTableHandler.currentRow.', '');
-    }
-    if (cleaned === 'ivyFormDataTableHandler.currentRow') {
-      return 'currentRow';
-    }
-    return cleaned.replace(/^ivyFormDataTableHandler\./, '');
-  }
+   badgeTextGen: (text: string) => text.replaceAll(/#{\s*currentRow\.|}/g, '')
 };
 
 const badgePropertyLogic: BadgeType = {
@@ -50,7 +41,7 @@ const badgePropertyExpression: BadgeType = {
 
 export const badgeProps = [
   badgePropertyData,
-  badgePropertyIvyFormBean,
+  badgePropertyCurrentRow,
   badgePropertyLogic,
   badgePropertyCMS,
   badgePropertyBean,
