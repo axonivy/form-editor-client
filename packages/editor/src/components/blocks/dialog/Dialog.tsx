@@ -49,8 +49,8 @@ export const useDialogComponent = () => {
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
-        onApply: { subsection: 'General', label: t('property.linkedComponent'), type: 'text' },
-        linkedComponent: { subsection: 'General', label: t('property.linkedComponent'), type: 'text' }
+        onApply: { subsection: 'General', label: t('property.linkedComponent'), type: 'hidden' },
+        linkedComponent: { subsection: 'General', label: t('property.linkedComponent'), type: 'hidden' }
       },
       quickActions: DEFAULT_QUICK_ACTIONS
     };
@@ -79,7 +79,7 @@ const DialogUiBlock = ({ id, components, header, linkedComponent }: UiComponentP
           creationTarget={id}
           onlyAttributs={onlyAttributs}
           showRootNode={false}
-          prefix='ivyFormDataTableHandler.currentRow'
+          prefix='currentRow'
           parentName='row'
         >
           <Button
