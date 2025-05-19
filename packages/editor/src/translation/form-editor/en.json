@@ -278,6 +278,7 @@
   "message": {
     "componentNamespaceNotEmpty": "Component namespace must not be empty.",
     "componentNotEmpty": "Component name must not be empty.",
+    "emptyPalette": "No items available",
     "errorOnly": "Error: {{error}}",
     "fieldTypeUnknown": "unknown field type",
     "formNotFound": "Form not found",
