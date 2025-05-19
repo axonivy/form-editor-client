@@ -136,7 +136,7 @@
       }
     },
     "datePicker": {
-      "datePlaceholder": " z. B. dd.MM.yyyy",
+      "datePlaceholder": " z. B. dd.MM.yyyy",
       "description": "Ein Datumswähler mit Beschriftung für Datum oder Datum-Zeit",
       "label": "Datumsauswahl",
       "name": "Datumsauswahl",
@@ -144,7 +144,7 @@
         "datePattern": "Datumsformat",
         "timePattern": "Zeitformat"
       },
-      "timePlaceholder": "z. B. HH:mm"
+      "timePlaceholder": "z. B. HH:mm"
     },
     "dialog": {
       "description": "Ein flexibles Layout",
@@ -278,6 +278,7 @@
   "message": {
     "componentNamespaceNotEmpty": "Der Namespace der Komponente darf nicht leer sein.",
     "componentNotEmpty": "Der Komponenten-Name darf nicht leer sein.",
+    "emptyPalette": "Keine Elemente verfügbar",
     "errorOnly": "Fehler: {{error}}",
     "fieldTypeUnknown": "Unbekannter Feldtyp",
     "formNotFound": "Formular nicht gefunden",
