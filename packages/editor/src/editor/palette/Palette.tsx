@@ -14,16 +14,20 @@ export const Palette = ({ sections, directCreate }: PaletteProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const { categoryTranslations: CategoryTranslations } = useBase();
+  const filteredSections: Record<string, Array<PaletteConfig>> = {};
+  for (const section of Object.keys(sections)) {
+    const filteredItems = sections[section].filter(item => item.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
+    if (filteredItems.length > 0) {
+      filteredSections[section] = filteredItems;
+    }
+  }
   return (
     <Flex direction='column' className='palette' gap={3}>
       <SearchInput placeholder={t('common.label.search')} value={searchTerm} onChange={setSearchTerm} />
-      {Object.entries(sections).map(([section, sectionItems]) => {
-        const filteredItems = sectionItems.filter(item => item.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
-        if (filteredItems.length > 0) {
-          return <PaletteSection key={section} items={filteredItems} title={CategoryTranslations[section]} directCreate={directCreate} />;
-        }
-        return null;
-      })}
+      {Object.entries(filteredSections).map(([section, sectionItems]) => (
+        <PaletteSection key={section} items={sectionItems} title={CategoryTranslations[section]} directCreate={directCreate} />
+      ))}
+      {Object.keys(filteredSections).length === 0 && t('message.emptyPalette')}
     </Flex>
   );
 };

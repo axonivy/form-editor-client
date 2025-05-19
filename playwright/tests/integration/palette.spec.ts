@@ -14,6 +14,9 @@ test('filter', async ({ page }) => {
   await palette.expectSections(['Elements']);
   await expect(button).toBeHidden();
   await expect(input).toBeVisible();
+
+  await palette.filter('inp1');
+  await expect(palette.palette.getByText('No items available')).toBeVisible();
 });
 
 test('add elements', async ({ page }) => {
