@@ -2,7 +2,7 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class Palette {
   protected readonly page: Page;
-  protected readonly palette: Locator;
+  readonly palette: Locator;
 
   constructor(page: Page) {
     this.page = page;
