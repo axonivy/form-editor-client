@@ -70,7 +70,11 @@ export const DndContext = ({ componentByName, children }: { componentByName: Com
   };
 
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 15 } });
-  const sensors = useSensors(ui.helpPaddings ? mouseSensor : undefined);
+  const sensors = useSensors(mouseSensor);
+
+  if (!ui.helpPaddings) {
+    return <>{children}</>;
+  }
 
   return (
     <DndKitContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors} collisionDetection={ownCollisionDetection}>
