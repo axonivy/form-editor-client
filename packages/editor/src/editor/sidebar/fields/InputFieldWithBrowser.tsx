@@ -17,9 +17,10 @@ export const InputFieldWithBrowser = ({
   onChange,
   browsers,
   onBlur,
+  onBrowserClose,
   message,
   options
-}: InputFieldProps & { browsers: Array<FormBrowser>; options?: TextFieldOptions }) => {
+}: InputFieldProps & { browsers: Array<FormBrowser>; onBrowserClose?: (value: string) => void; options?: TextFieldOptions }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
@@ -37,7 +38,12 @@ export const InputFieldWithBrowser = ({
               value={value}
               onChange={e => onChange(e.target.value)}
               onSelect={() => handleTextSelection()}
-              onBlur={onBlur}
+              onBlur={e => {
+                if (e.relatedTarget && e.currentTarget.parentElement?.contains(e.relatedTarget)) {
+                  return;
+                }
+                onBlur?.();
+              }}
               placeholder={options?.placeholder}
               disabled={options?.disabled}
             />
@@ -64,7 +70,13 @@ export const InputFieldWithBrowser = ({
         style={{ height: '80vh' }}
         onCloseAutoFocus={browsers.find(b => b.type === 'LOGIC') ? e => focusBracketContent(e, value, inputRef.current) : undefined}
       >
-        <Browser activeBrowsers={browsers} close={() => setOpen(false)} value={value} onChange={onChange} selection={selection} />
+        <Browser
+          activeBrowsers={browsers}
+          close={() => setOpen(false)}
+          value={value}
+          onChange={onBrowserClose ?? onChange}
+          selection={selection}
+        />
       </DialogContent>
     </Dialog>
   );

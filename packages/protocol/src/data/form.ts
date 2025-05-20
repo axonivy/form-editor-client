@@ -8,6 +8,7 @@
 
 export type CmsQuickactionCategory = ("global" | "local")
 export type FormType = "FORM" | "COMPONENT";
+export type FormExpression = string;
 export type LayoutAlignItems = "START" | "CENTER" | "END";
 export type ConfirmDialogSeverity = "INFO" | "WARN" | "ERROR" | "SUCCESS";
 export type ButtonStyle = "SOLID" | "OUTLINED" | "FLAT";
@@ -121,53 +122,53 @@ export interface Component {
     | Textarea;
 }
 export interface Button {
-  action: string;
+  action: FormExpression;
   alignSelf: LayoutAlignItems;
-  confirmCancelValue: string;
+  confirmCancelValue: FormExpression;
   confirmDialog: boolean;
-  confirmHeader: string;
-  confirmMessage: string;
-  confirmOkValue: string;
+  confirmHeader: FormExpression;
+  confirmMessage: FormExpression;
+  confirmOkValue: FormExpression;
   confirmSeverity: ConfirmDialogSeverity;
-  disabled: string;
+  disabled: FormExpression;
   icon: string;
   id: string;
   lgSpan: string;
   mdSpan: string;
-  name: string;
+  name: FormExpression;
   processOnlySelf: boolean;
   rounded: boolean;
   style: ButtonStyle;
   type: ButtonType;
   variant: ButtonVariant;
-  visible: string;
+  visible: FormExpression;
 }
 export interface Checkbox {
   alignSelf: LayoutAlignItems;
-  disabled: string;
+  disabled: FormExpression;
   id: string;
-  label: string;
+  label: FormExpression;
   lgSpan: string;
   mdSpan: string;
-  selected: string;
+  selected: FormExpression;
   updateOnChange: boolean;
-  visible: string;
+  visible: FormExpression;
 }
 export interface Combobox {
   alignSelf: LayoutAlignItems;
-  completeMethod: string;
-  disabled: string;
+  completeMethod: FormExpression;
+  disabled: FormExpression;
   id: string;
   itemLabel: string;
   itemValue: string;
-  label: string;
+  label: FormExpression;
   lgSpan: string;
   mdSpan: string;
-  required: string;
-  requiredMessage: string;
+  required: FormExpression;
+  requiredMessage: FormExpression;
   updateOnChange: boolean;
-  value: string;
-  visible: string;
+  value: FormExpression;
+  visible: FormExpression;
   withDropdown: boolean;
 }
 export interface Composite {
@@ -194,7 +195,7 @@ export interface DataTable {
   mdSpan: string;
   paginator: boolean;
   value: string;
-  visible: string;
+  visible: FormExpression;
 }
 export interface TableComponent {
   cid: string;
@@ -207,10 +208,10 @@ export interface DataTableColumn {
   asActionColumn: boolean;
   components: ActionColumnComponent[];
   filterable: boolean;
-  header: string;
+  header: FormExpression;
   sortable: boolean;
-  value: string;
-  visible: string;
+  value: FormExpression;
+  visible: FormExpression;
 }
 export interface ActionColumnComponent {
   cid: string;
@@ -220,23 +221,23 @@ export interface ActionColumnComponent {
 export interface DatePicker {
   alignSelf: LayoutAlignItems;
   datePattern: string;
-  disabled: string;
+  disabled: FormExpression;
   id: string;
-  label: string;
+  label: FormExpression;
   lgSpan: string;
   mdSpan: string;
-  required: string;
-  requiredMessage: string;
+  required: FormExpression;
+  requiredMessage: FormExpression;
   showTime: boolean;
   timePattern: string;
   updateOnChange: boolean;
-  value: string;
-  visible: string;
+  value: FormExpression;
+  visible: FormExpression;
 }
 export interface Dialog {
   alignSelf: LayoutAlignItems;
   components: Component[];
-  header: string;
+  header: FormExpression;
   id: string;
   lgSpan: string;
   linkedComponent: string;
@@ -249,27 +250,27 @@ export interface Fieldset {
   collapsible: boolean;
   components: Component[];
   id: string;
-  legend: string;
+  legend: FormExpression;
   lgSpan: string;
   mdSpan: string;
-  visible: string;
+  visible: FormExpression;
 }
 export interface Input {
   alignSelf: LayoutAlignItems;
   decimalPlaces: string;
-  disabled: string;
+  disabled: FormExpression;
   id: string;
-  label: string;
+  label: FormExpression;
   lgSpan: string;
   mdSpan: string;
-  required: string;
-  requiredMessage: string;
+  required: FormExpression;
+  requiredMessage: FormExpression;
   symbol: string;
   symbolPosition: SymbolPosition;
   type: InputType;
   updateOnChange: boolean;
-  value: string;
-  visible: string;
+  value: FormExpression;
+  visible: FormExpression;
 }
 export interface Layout {
   alignSelf: LayoutAlignItems;
@@ -280,7 +281,7 @@ export interface Layout {
   lgSpan: string;
   mdSpan: string;
   type: LayoutType;
-  visible: string;
+  visible: FormExpression;
 }
 export interface Link {
   alignSelf: LayoutAlignItems;
@@ -288,8 +289,8 @@ export interface Link {
   id: string;
   lgSpan: string;
   mdSpan: string;
-  name: string;
-  visible: string;
+  name: FormExpression;
+  visible: FormExpression;
 }
 export interface Panel {
   alignSelf: LayoutAlignItems;
@@ -299,26 +300,26 @@ export interface Panel {
   id: string;
   lgSpan: string;
   mdSpan: string;
-  title: string;
-  visible: string;
+  title: FormExpression;
+  visible: FormExpression;
 }
 export interface Radio {
   alignSelf: LayoutAlignItems;
-  disabled: string;
-  dynamicItemsLabel: string;
-  dynamicItemsList: string;
-  dynamicItemsValue: string;
+  disabled: FormExpression;
+  dynamicItemsLabel: FormExpression;
+  dynamicItemsList: FormExpression;
+  dynamicItemsValue: FormExpression;
   id: string;
-  label: string;
+  label: FormExpression;
   lgSpan: string;
   mdSpan: string;
   orientation: OrientationType;
-  required: string;
-  requiredMessage: string;
+  required: FormExpression;
+  requiredMessage: FormExpression;
   staticItems: SelectItem[];
   updateOnChange: boolean;
-  value: string;
-  visible: string;
+  value: FormExpression;
+  visible: FormExpression;
 }
 export interface SelectItem {
   label: string;
@@ -326,46 +327,46 @@ export interface SelectItem {
 }
 export interface Select {
   alignSelf: LayoutAlignItems;
-  disabled: string;
-  dynamicItemsLabel: string;
-  dynamicItemsList: string;
-  dynamicItemsValue: string;
+  disabled: FormExpression;
+  dynamicItemsLabel: FormExpression;
+  dynamicItemsList: FormExpression;
+  dynamicItemsValue: FormExpression;
   id: string;
-  label: string;
+  label: FormExpression;
   lgSpan: string;
   mdSpan: string;
-  required: string;
-  requiredMessage: string;
+  required: FormExpression;
+  requiredMessage: FormExpression;
   staticItems: SelectItem[];
   updateOnChange: boolean;
-  value: string;
-  visible: string;
+  value: FormExpression;
+  visible: FormExpression;
 }
 export interface Text {
   alignSelf: LayoutAlignItems;
-  content: string;
+  content: FormExpression;
   icon: string;
   iconStyle: TextIconStyle;
   id: string;
   lgSpan: string;
   mdSpan: string;
   type: TextType;
-  visible: string;
+  visible: FormExpression;
 }
 export interface Textarea {
   alignSelf: LayoutAlignItems;
   autoResize: boolean;
-  disabled: string;
+  disabled: FormExpression;
   id: string;
-  label: string;
+  label: FormExpression;
   lgSpan: string;
   mdSpan: string;
-  required: string;
-  requiredMessage: string;
+  required: FormExpression;
+  requiredMessage: FormExpression;
   rows: string;
   updateOnChange: boolean;
-  value: string;
-  visible: string;
+  value: FormExpression;
+  visible: FormExpression;
 }
 export interface CompositeInfo {
   id: string;
