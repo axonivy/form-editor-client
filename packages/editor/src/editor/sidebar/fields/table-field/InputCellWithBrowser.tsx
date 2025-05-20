@@ -3,12 +3,10 @@ import { useEditCell, type InputProps } from '@axonivy/ui-components';
 import './TableField.css';
 import { InputFieldWithBrowser } from '../InputFieldWithBrowser';
 
-type InputCellProps<TData> = InputProps & {
-  cell: CellContext<TData, string>;
-};
+type InputCellProps<TData> = InputProps & { cell: CellContext<TData, string> };
 
 export const InputCellWithBrowser = <TData,>({ cell }: InputCellProps<TData>) => {
-  const { value, setValue, onBlur } = useEditCell(cell);
+  const { value, setValue, onBlur, updateValue } = useEditCell(cell);
 
   return (
     <InputFieldWithBrowser
@@ -16,7 +14,11 @@ export const InputCellWithBrowser = <TData,>({ cell }: InputCellProps<TData>) =>
       onChange={setValue}
       value={value}
       onBlur={onBlur}
-      browsers={[{ type: 'ATTRIBUTE' }, { type: 'CMS', options: { overrideSelection: true } }]}
+      onBrowserClose={updateValue}
+      browsers={[
+        { type: 'ATTRIBUTE', options: { overrideSelection: true } },
+        { type: 'CMS', options: { overrideSelection: true } }
+      ]}
     />
   );
 };
