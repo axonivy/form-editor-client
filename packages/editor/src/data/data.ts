@@ -333,7 +333,7 @@ export const createInitForm = (
           create: {
             label: 'Cancel',
             value: '#{ivyWorkflowView.cancel()}',
-            defaultProps: { variant: 'SECONDARY', processOnlySelf: true, style: 'FLAT', icon: 'si si-remove' }
+            defaultProps: { variant: 'SECONDARY', processOnlySelf: true, style: 'FLAT' }
           },
           targetId: layoutId
         }
