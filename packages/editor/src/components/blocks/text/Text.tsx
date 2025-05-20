@@ -59,17 +59,17 @@ const UiBlock = ({ content, icon, iconStyle, visible }: UiComponentProps<TextPro
     return (
       <div className='text-icon-wrapper'>
         <IvyIcon icon={IvyIcons.InfoCircle} />
-        <p className='block-text'>{content}</p>
+        <div className='block-text'>{content}</div>
       </div>
     );
   }
   return (
     <>
       <UiBlockHeader visible={visible} />
-      <p className='block-text'>
+      <div className='block-text'>
         {icon && <IvyIcon icon={IvyIcons.InfoCircle} />}
         <UiBadge value={content} />
-      </p>
+      </div>
     </>
   );
 };

@@ -12,26 +12,20 @@
   line-height: inherit;
   font-size: inherit;
   display: flex;
+  overflow: hidden;
+  .ui-input-badge-item {
+    padding: 0;
+    margin-inline: 3px;
+  }
 }
 
-.canvas .ui-badge-label:empty::after {
-  content: '.';
-  visibility: hidden;
-}
-
-.canvas .ui-badge-label .ui-flex {
-  padding: 0;
-  margin-inline: 3px;
-}
-
-.canvas[data-help-paddings='false'] .ui-badge-label .ui-flex {
+.canvas[data-help-paddings='false'] .ui-input-badge-item {
   font-style: italic;
   background: inherit;
   color: inherit;
   border: none;
   gap: 0;
-}
-
-.canvas[data-help-paddings='false'] .ui-badge-label .ivy {
-  display: none;
+  .ivy {
+    display: none;
+  }
 }
