@@ -330,7 +330,11 @@ export const createInitForm = (
         type: 'add',
         data: {
           componentName: 'Button',
-          create: { label: 'Cancel', value: '#{ivyWorkflowView.cancel()}', defaultProps: { variant: 'SECONDARY', processOnlySelf: true } },
+          create: {
+            label: 'Cancel',
+            value: '#{ivyWorkflowView.cancel()}',
+            defaultProps: { variant: 'SECONDARY', processOnlySelf: true, style: 'FLAT', icon: 'si si-remove' }
+          },
           targetId: layoutId
         }
       },
@@ -342,7 +346,11 @@ export const createInitForm = (
         type: 'add',
         data: {
           componentName: 'Button',
-          create: { label: 'Proceed', value: '#{logic.close}', defaultProps: { variant: 'PRIMARY', type: 'SUBMIT' } },
+          create: {
+            label: 'Proceed',
+            value: '#{logic.close}',
+            defaultProps: { variant: 'PRIMARY', type: 'SUBMIT', icon: 'si si-check-1' }
+          },
           targetId: layoutId
         }
       },
