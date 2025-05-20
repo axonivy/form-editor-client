@@ -31,7 +31,6 @@ import { findAttributesOfType, variableTreeData, rowToCreateData } from './varia
 import { useComponents } from '../../../context/ComponentsContext';
 
 type DataClassDialogProps = {
-  children: ReactNode;
   showWorkflowButtonsCheckbox?: boolean;
   workflowButtonsInit?: boolean;
   creationTarget?: string;
@@ -41,16 +40,7 @@ type DataClassDialogProps = {
   prefix?: string;
 };
 
-export const DataClassDialog = ({
-  children,
-  showWorkflowButtonsCheckbox = true,
-  workflowButtonsInit = true,
-  creationTarget,
-  onlyAttributs,
-  parentName,
-  showRootNode,
-  prefix
-}: DataClassDialogProps) => {
+export const DataClassDialog = ({ children, ...props }: DataClassDialogProps & { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
   const { createFromData: shortcut } = useKnownHotkeys();
   useHotkeys(shortcut.hotkey, () => setOpen(true), { scopes: ['global'] });
@@ -62,37 +52,21 @@ export const DataClassDialog = ({
         <DialogHeader>
           <DialogTitle>{t('label.createFromData')}</DialogTitle>
         </DialogHeader>
-        <DataClassSelect
-          workflowButtonsInit={workflowButtonsInit}
-          showWorkflowButtonsCheckbox={showWorkflowButtonsCheckbox}
-          creationTarget={creationTarget}
-          onlyAttributs={onlyAttributs}
-          showRootNode={showRootNode}
-          parentName={parentName}
-          prefix={prefix}
-        />
+        <DataClassSelect {...props} />
       </DialogContent>
     </Dialog>
   );
 };
 
 const DataClassSelect = ({
-  showWorkflowButtonsCheckbox,
-  workflowButtonsInit,
+  showWorkflowButtonsCheckbox = true,
+  workflowButtonsInit = true,
   creationTarget,
   parentName,
   onlyAttributs,
   showRootNode,
   prefix
-}: {
-  workflowButtonsInit: boolean;
-  showWorkflowButtonsCheckbox?: boolean;
-  creationTarget?: string;
-  parentName?: string;
-  onlyAttributs?: string;
-  showRootNode?: boolean;
-  prefix?: string;
-}) => {
+}: DataClassDialogProps) => {
   const { context, setData } = useAppContext();
   const { t } = useTranslation();
   const [tree, setTree] = useState<Array<BrowserNode<Variable>>>([]);
