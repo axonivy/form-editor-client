@@ -8,7 +8,7 @@
     "cid" : "Text1",
     "type" : "Text",
     "config" : {
-      "content" : "This form uses a grid layout for address data and some Ivy Components."
+      "content" : "This form uses a grid layout for address data and some Ivy Components. #{ivy.cms.co('/greetings')}"
     }
   }, {
     "cid" : "Input2",
@@ -85,14 +85,16 @@
         "config" : {
           "name" : "Cancel",
           "action" : "#{ivyWorkflowView.cancel()}",
-          "variant" : "SECONDARY"
+          "variant" : "SECONDARY",
+          "style" : "FLAT"
         }
       }, {
         "cid" : "Button12",
         "type" : "Button",
         "config" : {
           "name" : "Proceed",
-          "action" : "#{logic.close}"
+          "action" : "#{logic.close}",
+          "icon" : "si si-check-1"
         }
       } ],
       "type" : "FLEX",
