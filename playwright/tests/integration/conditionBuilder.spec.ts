@@ -25,7 +25,7 @@ export async function applyConditionBuilder(page: Page) {
 
   await expect(builder).toBeVisible();
   await select.click();
-  await page.getByRole('option').getByText('Basic Condition').click();
+  await page.getByRole('option', { name: 'Basic Condition' }).click();
   await expect(condition).toHaveCount(1);
   await expect(condition.locator('output')).toHaveCount(2);
 
