@@ -99,12 +99,11 @@ const DialogUiBlock = ({ id, components, header, linkedComponent }: UiComponentP
 
       <EmptyLayoutBlock id={id} components={components} type='dialog' />
       <Flex direction='row' justifyContent='flex-end' alignItems='center' gap={1}>
-        <div className='block-button' data-variant={'secondary'}>
-          <i className='pi pi-times' />
+        <div className='block-button' data-variant='secondary' data-style='flat'>
           {t('common.label.cancel')}
         </div>
-        <div className='block-button' data-variant={'primary'}>
-          <i className='pi pi-check' />
+        <div className='block-button' data-variant='primary'>
+          <i className='si si-check-1' />
           {t('common.label.save')}
         </div>
       </Flex>
