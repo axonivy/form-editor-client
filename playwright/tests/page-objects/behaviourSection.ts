@@ -1,7 +1,7 @@
 import type { Collapsible, Input } from './inscription';
 
 export class VisibleInput {
-  private visibleField: Input;
+  visibleField: Input;
 
   constructor(behaviourSection: Collapsible) {
     this.visibleField = behaviourSection.input({ label: 'Visible' });
