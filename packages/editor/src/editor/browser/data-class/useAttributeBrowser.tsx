@@ -61,10 +61,12 @@ export const getApplyModifierValue = (
     return { value: '' };
   }
 
-  const prefix = componentInDialog ? 'currentRow' : '';
+  const prefix = componentInDialog ? 'currentRow' : options?.attribute?.onlyAttributes === 'DYNAMICLIST' ? 'item' : '';
   const path = fullVariablePath(row, (componentInDialog || options?.attribute?.onlyAttributes) && false);
 
-  return { value: `${prefix}${componentInDialog && path.length > 0 ? '.' : ''}${path}` };
+  return {
+    value: `${prefix}${(componentInDialog || options?.attribute?.onlyAttributes === 'DYNAMICLIST') && path.length > 0 ? '.' : ''}${path}`
+  };
 };
 export const filterNodesWithChildren = (nodes: Array<BrowserNode<Variable>>): Array<BrowserNode<Variable>> => {
   return nodes
@@ -92,7 +94,7 @@ const determineTreeData = (
       return findAttributesOfType(variableInfo, (element.config as ConfigData).dynamicItemsList as string);
     case 'COLUMN':
       if (parentComponent && isTable(parentComponent)) {
-        return findAttributesOfType(variableInfo, parentComponent.config.value || '');
+        return findAttributesOfType(variableInfo, parentComponent.config.value || '', 10, 'row');
       }
       break;
     default:

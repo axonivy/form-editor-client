@@ -163,7 +163,7 @@ const EmptyDataTableColumn = ({ id, initValue }: { id: string; initValue: string
   }
 
   const createColumns = () => {
-    const tree = findAttributesOfType(dataClass, initValue);
+    const tree = findAttributesOfType(dataClass, initValue, 10, 'row');
     const isLeafNode = tree[0].children.length === 0;
     const mappableBrowserNode = isLeafNode ? tree : tree[0].children;
     setData(data => {
