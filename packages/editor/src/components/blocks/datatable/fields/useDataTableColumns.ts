@@ -15,7 +15,7 @@ export const useDataTableColumns = () => {
   const { DataTableColumnComponent } = useDataTableColumnComponent();
 
   const variableInfo = useMeta('meta/data/attributes', context, { types: {}, variables: [] }).data;
-  const attributesOfTableType = findAttributesOfType(variableInfo, isTable(element) ? element.config.value : '');
+  const attributesOfTableType = findAttributesOfType(variableInfo, isTable(element) ? element.config.value : '', 10, 'row');
 
   const activeColumns = useMemo(
     () =>

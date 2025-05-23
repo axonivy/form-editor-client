@@ -6,7 +6,7 @@ import { render, screen } from '@testing-library/react';
 
 describe('createBadges', () => {
   const inputValues =
-    "#{data.testData} #{logic.testLogic} #{ivy.cms.co('/Categories/agile/cssIcon')} #{el.expression} #{currentRow.age} #{currentRow}";
+    "#{data.testData} #{logic.testLogic} #{ivy.cms.co('/Categories/agile/cssIcon')} #{el.expression} #{currentRow.age} #{currentRow} #{item.country} #{item}";
 
   test('test all badgeProperties', async () => {
     render(<InputBadge badgeProps={badgeProps} value={inputValues} className='badge-output' />);
@@ -44,5 +44,20 @@ describe('createBadges', () => {
 
     expect(ivyFormBadgeAge.querySelector('i.ivy-attribute')).toBeVisible();
     expect(ivyFormBadgeCurrentRow.querySelector('i.ivy-start-program')).toBeVisible();
+  });
+
+  test('test item badgeProperties', async () => {
+    render(<InputBadge badgeProps={badgeProps} value={inputValues} className='badge-output' />);
+    const ivyFormBadgeCountry = screen.getByText('country');
+    const ivyFormBadgeItem = screen.getByText('item');
+
+    expect(ivyFormBadgeCountry).toBeVisible();
+    expect(ivyFormBadgeItem).toBeVisible();
+
+    expect(ivyFormBadgeCountry).toHaveTextContent('country');
+    expect(ivyFormBadgeItem).toHaveTextContent('item');
+
+    expect(ivyFormBadgeCountry.querySelector('i.ivy-attribute')).toBeVisible();
+    expect(ivyFormBadgeItem.querySelector('i.ivy-start-program')).toBeVisible();
   });
 });
