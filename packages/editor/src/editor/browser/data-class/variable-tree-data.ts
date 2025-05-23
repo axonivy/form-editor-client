@@ -123,7 +123,7 @@ export function findAttributesOfType(
   data: VariableInfo,
   variableName: string,
   maxDepth: number = 10,
-  parentName: string = 'variable'
+  parentName: string = 'item'
 ): Array<BrowserNode<Variable>> {
   const nameToSearch = extractVariableName(variableName);
 
