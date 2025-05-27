@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "parent",
+  "name": "@axonivy/form-editor-root",
   "engines": {
     "node": ">=20.10.0"
   },
@@ -21,8 +21,8 @@
     "i18n:extract": "lerna run i18n:extract",
     "i18n:ci": "lerna run i18n:ci",
     "protocol": "npm run -w @axonivy/form-editor-protocol",
-    "dev": "npm --prefix integrations/standalone run dev",
-    "test": "npm --prefix packages/editor run test",
+    "dev": "npm run -w @axonivy/form-editor-standalone dev",
+    "test": "npm run -w @axonivy/form-editor test",
     "test:ci": "lerna run test:ci",
     "webtest": "lerna run webtest --",
     "update:axonivy:next": "npx --yes npm-check-updates @axonivy* -ws -t patch -u",
