@@ -59,7 +59,7 @@
     "button": {
       "confirm": {
         "confirmDialogHeader": "Delete Confirmation",
-        "confirmDialogMessage": "Are you sure you want to delete this row?",
+        "confirmDialogMessage": "Are you sure you want to delete row: #{row}?",
         "no": "No",
         "yes": "Yes"
       },

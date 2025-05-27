@@ -33,6 +33,11 @@ const TypeField = ({ label, value, onChange, validationPath }: GenericFieldProps
           element.config.name = '';
           element.config.icon = 'pi pi-pencil';
           element.config.confirmDialog = false;
+          element.config.confirmMessage = '';
+          element.config.confirmHeader = '';
+          element.config.confirmCancelValue = '';
+          element.config.confirmOkValue = '';
+          element.config.confirmSeverity = 'WARN';
         } else if (change === 'DELETE') {
           element.config.action = 'deleteRow'; //just placeholder, will be set from backend
           element.config.variant = 'DANGER';
