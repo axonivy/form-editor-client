@@ -8,6 +8,7 @@ import { renderIconField } from './fields/IconField';
 import { renderTypeField } from './fields/TypeField';
 import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
+import { renderConfirmDialogField } from './fields/ConfirmDialogField';
 
 type ButtonProps = Prettify<Button>;
 
@@ -61,11 +62,11 @@ export const useButtonComponent = () => {
       icon: '',
       processOnlySelf: false,
       confirmDialog: false,
-      confirmMessage: t('components.button.confirm.confirmDialogMessage'),
-      confirmHeader: t('components.button.confirm.confirmDialogHeader'),
+      confirmMessage: '',
+      confirmHeader: '',
       confirmSeverity: 'WARN',
-      confirmCancelValue: t('components.button.confirm.no'),
-      confirmOkValue: t('components.button.confirm.yes'),
+      confirmCancelValue: '',
+      confirmOkValue: '',
       ...defaultDisabledComponent,
       ...defaultBaseComponent
     } as const;
@@ -131,7 +132,8 @@ export const useButtonComponent = () => {
           section: 'Confirm',
           subsection: 'General',
           label: t('components.button.property.confirmDialog'),
-          type: 'checkbox',
+          type: 'generic',
+          render: renderConfirmDialogField,
           hide: data => data.type !== 'DELETE'
         },
         confirmSeverity: {
