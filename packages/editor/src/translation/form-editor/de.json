@@ -18,13 +18,13 @@
     "input": "Eingabe",
     "layout": "Layout",
     "options": "Optionen",
-    "paginator": "Seitennummerierung",
+    "paginator": "Seitenweise Anzeige",
     "parameters": "Parameter",
     "properties": "Eigenschaften",
     "selection": "Auswahl",
     "staticOptions": "Statische Optionen",
     "structures": "Strukturen",
-    "styling": "Gestaltung",
+    "styling": "Aussehen",
     "text": "Text"
   },
   "cms": {
@@ -72,7 +72,7 @@
       "name": "Knopf",
       "property": {
         "cancelButton": "Abbrechen-Button Wert",
-        "confirmButton": "Bestätigungsbutton Wert",
+        "confirmButton": "Bestätigungs-Button Wert",
         "confirmDialog": "Bestätigungsdialog",
         "message": "Dialognachricht",
         "rounded": "Abgerundete Ecken",
@@ -123,7 +123,7 @@
         "enablePaginator": "Seitennummerierung aktivieren",
         "rowsPerPage": "Zeilen pro Seite"
       },
-      "valueEmpty": "Wert der Datentabelle ist leer. Definiere den Wert in den Eigenschaften der Datentabelle"
+      "valueEmpty": "Keine Werte vorhanden. Definiere die Werte in den Eigenschaften der Datentabelle"
     },
     "dataTableColumn": {
       "description": "Eine Spalte für die Datentabelle",
@@ -174,7 +174,7 @@
       "spaceBetween": "Platz zwischen"
     },
     "link": {
-      "description": "Verknüpfung zu einem Ort",
+      "description": "Verlinkung einer anderen Seite",
       "name": "Verknüpfung",
       "property": {
         "href": "Href"
