@@ -1,6 +1,6 @@
 {
   "name": "@axonivy/form-editor-standalone",
-  "version": "13.1.0-next",
+  "version": "13.2.0-next",
   "private": true,
   "author": "Axon Ivy AG",
   "homepage": "https://developer.axonivy.com/",
@@ -11,17 +11,17 @@
   "dependencies": {
     "@axonivy/form-editor": "*",
     "@axonivy/form-editor-core": "*",
+    "@axonivy/jsonrpc": "~13.1.0-next.702",
     "@axonivy/ui-components": "~13.1.0-next.702",
     "@axonivy/ui-icons": "~13.1.0-next.702",
-    "@axonivy/jsonrpc": "~13.1.0-next.702",
     "@tanstack/react-query": "^5.64",
     "@tanstack/react-query-devtools": "^5.64",
     "i18next": "^25.0.0",
     "i18next-browser-languagedetector": "^8.0.4",
-    "react-i18next": "^15.4.1",
     "path-browserify": "^1.0.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.1"
   },
   "devDependencies": {
     "@types/react": "^19.0.7",
