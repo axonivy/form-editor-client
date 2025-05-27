@@ -111,7 +111,16 @@ export const useEditableDataTableField = () => {
       componentName: 'Button',
       label: '',
       value: 'deleteRow', // just placeholder, will be set from backend
-      defaultProps: { type: 'DELETE', icon: 'pi pi-trash', variant: 'DANGER', confirmDialog: true }
+      defaultProps: {
+        type: 'DELETE',
+        icon: 'pi pi-trash',
+        variant: 'DANGER',
+        confirmDialog: true,
+        confirmMessage: t('components.button.confirm.confirmDialogMessage'),
+        confirmHeader: t('components.button.confirm.confirmDialogHeader'),
+        confirmCancelValue: t('components.button.confirm.no'),
+        confirmOkValue: t('components.button.confirm.yes')
+      }
     }
   ];
 
