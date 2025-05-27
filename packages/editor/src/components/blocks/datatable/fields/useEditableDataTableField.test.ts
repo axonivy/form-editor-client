@@ -54,10 +54,10 @@ const editButton: ComponentData = {
   config: {
     action: 'editRow', // just placeholder, will be set from backend
     alignSelf: 'START',
-    confirmCancelValue: 'components.button.confirm.no',
-    confirmOkValue: 'components.button.confirm.yes',
-    confirmHeader: 'components.button.confirm.confirmDialogHeader',
-    confirmMessage: 'components.button.confirm.confirmDialogMessage',
+    confirmCancelValue: '',
+    confirmOkValue: '',
+    confirmHeader: '',
+    confirmMessage: '',
     confirmSeverity: 'WARN',
     confirmDialog: false,
     disabled: '',
@@ -81,10 +81,10 @@ const deleteButton: ComponentData = {
   config: {
     action: 'deleteRow', // just placeholder, will be set from backend
     alignSelf: 'START',
-    confirmCancelValue: 'components.button.confirm.no',
-    confirmOkValue: 'components.button.confirm.yes',
-    confirmHeader: 'components.button.confirm.confirmDialogHeader',
-    confirmMessage: 'components.button.confirm.confirmDialogMessage',
+    confirmCancelValue: 'No',
+    confirmOkValue: 'Yes',
+    confirmHeader: 'Delete Confirmation',
+    confirmMessage: 'Are you sure you want to delete row: #{row}?',
     confirmSeverity: 'WARN',
     confirmDialog: true,
     disabled: '',
