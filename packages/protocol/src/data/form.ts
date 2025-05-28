@@ -246,7 +246,6 @@ export interface Dialog {
   lgSpan: string;
   linkedComponent: string;
   mdSpan: string;
-  onApply: string;
 }
 export interface Fieldset {
   alignSelf: LayoutAlignItems;
