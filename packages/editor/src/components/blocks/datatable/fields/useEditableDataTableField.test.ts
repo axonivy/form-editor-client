@@ -44,8 +44,7 @@ const dialog: ComponentData = {
     id: '',
     lgSpan: '6',
     linkedComponent: 'datatable1',
-    mdSpan: '12',
-    onApply: 'data.persons'
+    mdSpan: '12'
   },
   type: 'Dialog'
 };
