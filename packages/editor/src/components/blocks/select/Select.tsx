@@ -22,8 +22,8 @@ export const useSelectComponent = () => {
       value: '',
       staticItems: [],
       dynamicItemsList: '',
-      dynamicItemsLabel: '',
-      dynamicItemsValue: '',
+      dynamicItemsLabel: '#{item}',
+      dynamicItemsValue: '#{item}',
       ...defaultBehaviourComponent,
       ...defaultBaseComponent
     } as const;

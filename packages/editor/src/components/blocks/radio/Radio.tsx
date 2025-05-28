@@ -30,8 +30,8 @@ export const useRadioComponent = () => {
         { label: t('property.option2'), value: 'Option 2' }
       ],
       dynamicItemsList: '',
-      dynamicItemsLabel: '',
-      dynamicItemsValue: '',
+      dynamicItemsLabel: '#{item}',
+      dynamicItemsValue: '#{item}',
       ...defaultBehaviourComponent,
       ...defaultBaseComponent
     } as const;

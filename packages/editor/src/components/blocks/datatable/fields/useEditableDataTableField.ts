@@ -1,7 +1,6 @@
 import { isTable, type ButtonType, type ComponentData, type DataTable, type TableComponent } from '@axonivy/form-editor-protocol';
 import { COLUMN_DROPZONE_ID_PREFIX, modifyData, TABLE_DROPZONE_ID_PREFIX, useData } from '../../../../data/data';
 import type { CreateComponentData } from '../../../../types/config';
-import { stripELExpression } from '../../../../utils/string';
 import { useTranslation } from 'react-i18next';
 import { useComponents } from '../../../../context/ComponentsContext';
 
@@ -87,10 +86,7 @@ export const useEditableDataTableField = () => {
       componentName: 'Dialog',
       targetId: 'canvas',
       label: t('property.editRow'),
-      value: stripELExpression(isTable(element) ? element.config.value : ''),
-      defaultProps: {
-        linkedComponent: element.cid
-      }
+      value: element.cid
     },
     {
       componentName: 'DataTableColumn',
