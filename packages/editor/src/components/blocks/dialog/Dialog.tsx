@@ -25,7 +25,6 @@ export const useDialogComponent = () => {
       components: [],
       header: '',
       linkedComponent: '',
-      onApply: '',
       ...defaultBaseComponent
     };
 
@@ -38,7 +37,7 @@ export const useDialogComponent = () => {
       description: t('components.dialog.description'),
       defaultProps: defaultDialogProps,
       render: props => <DialogUiBlock {...props} />,
-      create: ({ label, value, defaultProps }) => ({ ...defaultDialogProps, header: label, onApply: value, ...defaultProps }),
+      create: ({ label, value, defaultProps }) => ({ ...defaultDialogProps, header: label, linkedComponent: value, ...defaultProps }),
       outlineInfo: component => component.header,
       fields: {
         ...baseComponentFields,
@@ -49,7 +48,6 @@ export const useDialogComponent = () => {
           type: 'textBrowser',
           browsers: [{ type: 'CMS', options: { overrideSelection: true } }]
         },
-        onApply: { subsection: 'General', label: t('property.linkedComponent'), type: 'hidden' },
         linkedComponent: { subsection: 'General', label: t('property.linkedComponent'), type: 'hidden' }
       },
       quickActions: DEFAULT_QUICK_ACTIONS
