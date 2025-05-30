@@ -12,10 +12,6 @@ export const MasterPart = () => {
   const { data } = useData();
   const toolbarDiv = useRef<HTMLDivElement>(null);
 
-  const isClickOutside = (e: React.MouseEvent) => {
-    return e.target !== e.currentTarget && !toolbarDiv.current?.contains(e.target as Node);
-  };
-
   return (
     <ResizablePanel
       id='canvas'
@@ -24,12 +20,8 @@ export const MasterPart = () => {
       minSize={30}
       className='panel'
       onClick={e => {
-        if (isClickOutside(e)) {
+        if (e.target !== e.currentTarget && !toolbarDiv.current?.contains(e.target as Node)) {
           setSelectedElement(undefined);
-        }
-      }}
-      onDoubleClick={e => {
-        if (isClickOutside(e)) {
           setUi(old => ({ ...old, properties: !old.properties }));
         }
       }}
