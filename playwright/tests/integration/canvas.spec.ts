@@ -132,3 +132,9 @@ test.describe('quickbar', () => {
     await canvas.expectFormOrder(['Input', 'Firstname', 'Lastname', 'Address']);
   });
 });
+
+test('icon fonts', async ({ page }) => {
+  const { canvas } = await FormEditor.openForm(page);
+  await expect(canvas.locator.locator('.si').first()).toBeVisible();
+  await expect(canvas.locator.locator('.pi').first()).toBeVisible();
+});

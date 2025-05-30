@@ -86,7 +86,8 @@
           "name" : "Cancel",
           "action" : "#{ivyWorkflowView.cancel()}",
           "variant" : "SECONDARY",
-          "style" : "FLAT"
+          "style" : "FLAT",
+          "icon" : "pi pi-times"
         }
       }, {
         "cid" : "Button12",
