@@ -7,7 +7,7 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Button');
   const properties = editor.inscription.section('Properties');
   const section = properties.collapsible('General');
-  const name = section.input({ label: 'Name' });
+  const name = section.input({ label: 'Display Text' });
   const action = section.input({ label: 'Action' });
   const styleSection = properties.collapsible('Styling');
   const variant = styleSection.select({ label: 'Variant' });
