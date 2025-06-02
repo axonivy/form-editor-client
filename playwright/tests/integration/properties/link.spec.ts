@@ -7,8 +7,8 @@ test('default', async ({ page }) => {
   await editor.inscription.expectHeader('Link');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
-  const name = general.input({ label: 'Name' });
-  const href = general.input({ label: 'Href', type: 'text' });
+  const name = general.input({ label: 'Display Text' });
+  const href = general.input({ label: 'Link URL', type: 'text' });
   const behaviour = properties.behaviour();
 
   await name.expectValue('Link');
