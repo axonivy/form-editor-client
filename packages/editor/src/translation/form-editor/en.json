@@ -63,7 +63,7 @@
         "no": "No",
         "yes": "Yes"
       },
-      "description": "A button to fire actions",
+      "description": "A button to trigger actions",
       "fieldType": {
         "delete": "Delete",
         "edit": "Edit",
@@ -105,7 +105,7 @@
       "name": "Combobox"
     },
     "composite": {
-      "description": "A button for fire actions",
+      "description": "Reusable component",
       "name": "Composite",
       "property": {
         "startMethod": "Start Method"
@@ -139,7 +139,7 @@
       "datePlaceholder": " 'e.g. dd.MM.yyyy'",
       "description": "A datepicker with label for date or datetime",
       "label": "Date Picker",
-      "name": "DatePicker",
+      "name": "Date Picker",
       "property": {
         "datePattern": "Date Pattern",
         "timePattern": "Time Pattern"
@@ -147,7 +147,7 @@
       "timePlaceholder": "e.g. HH:mm"
     },
     "dialog": {
-      "description": "A flexable layout",
+      "description": "A flexible layout",
       "name": "Dialog"
     },
     "fieldset": {
@@ -177,7 +177,7 @@
       "description": "Link to somewhere",
       "name": "Link",
       "property": {
-        "href": "Href"
+        "href": "Link URL"
       }
     },
     "panel": {
@@ -312,7 +312,7 @@
     "itemValue": "Item Value",
     "label": "Label",
     "linkedComponent": "Linked Component",
-    "name": "Name",
+    "name": "Display Text",
     "number": "Number",
     "objectBoundColumns": "Object-Bound Columns",
     "option1": "Option 1",

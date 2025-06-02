@@ -150,7 +150,7 @@ test('dataTableAction', async ({ page }) => {
 
   const buttonProperties = editor.inscription.section('Properties');
   const buttonSection = buttonProperties.collapsible('General');
-  const name = buttonSection.input({ label: 'Name' });
+  const name = buttonSection.input({ label: 'Display Text' });
   await name.expectValue('Action');
   await name.fill('Delete');
 

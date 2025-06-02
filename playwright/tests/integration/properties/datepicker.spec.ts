@@ -2,9 +2,9 @@ import { expect, test } from '@playwright/test';
 import { FormEditor } from '../../page-objects/form-editor';
 
 test('default', async ({ page }) => {
-  const editor = await FormEditor.openNewForm(page, { block: 'DatePicker' });
+  const editor = await FormEditor.openNewForm(page, { block: 'Date Picker' });
   await editor.canvas.blockByNth(0).inscribe();
-  await editor.inscription.expectHeader('DatePicker');
+  await editor.inscription.expectHeader('Date Picker');
   const properties = editor.inscription.section('Properties');
   const general = properties.collapsible('General');
   const label = general.input({ label: 'Label' });
