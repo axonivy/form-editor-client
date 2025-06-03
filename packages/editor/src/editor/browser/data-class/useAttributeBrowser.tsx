@@ -60,12 +60,13 @@ export const getApplyModifierValue = (
   if (!row) {
     return { value: '' };
   }
-
-  const prefix = componentInDialog ? 'currentRow' : options?.attribute?.onlyAttributes === 'DYNAMICLIST' ? 'item' : '';
   const path = fullVariablePath(row, (componentInDialog || options?.attribute?.onlyAttributes) && false);
 
+  const hasParent = typeof row.getParentRow === 'function' && row.getParentRow();
+  const prefix = hasParent ? (componentInDialog ? 'currentRow' : options?.attribute?.onlyAttributes === 'DYNAMICLIST' ? 'item' : '') : '';
+
   return {
-    value: `${prefix}${(componentInDialog || options?.attribute?.onlyAttributes === 'DYNAMICLIST') && path.length > 0 ? '.' : ''}${path}`
+    value: `${prefix}${prefix && path ? '.' : ''}${path}`
   };
 };
 export const filterNodesWithChildren = (nodes: Array<BrowserNode<Variable>>): Array<BrowserNode<Variable>> => {
@@ -109,7 +110,7 @@ const determineTreeData = (
         const dataTable = findComponentDeep(data.components, (parentComponent.config as unknown as Dialog)?.linkedComponent);
         const table = dataTable ? dataTable.data[dataTable.index] : undefined;
         if (table && isTable(table)) {
-          return findAttributesOfType(variableInfo, stripELExpression(table.config.value), 10, 'row');
+          return findAttributesOfType(variableInfo, stripELExpression(table.config.value), 10, 'currentRow');
         }
       } else {
         return variableTreeData().of(variableInfo);
