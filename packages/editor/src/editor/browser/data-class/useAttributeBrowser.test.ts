@@ -7,6 +7,7 @@ import type { DeepPartial } from '../../../types/types';
 
 const row = {
   original: { value: 'country', info: 'String' },
+  getParentRow: () => ({ original: { value: 'data' } }) as Row<BrowserNode>,
   getParentRows: () => [{ original: { value: 'data' } }, { original: { value: 'address' } }, { original: { value: 'location' } }]
 } as Row<BrowserNode>;
 
@@ -31,7 +32,8 @@ test('returns partial path when onlyAttributes is COLUMN and componentInDialog i
 test('returns only prefix when row has no parents and componentInDialog is true', () => {
   const result = getApplyModifierValue(
     {
-      original: { value: 'variable', info: 'String' },
+      original: { value: 'currentRow', info: 'String' },
+      getParentRow: () => undefined,
       getParentRows: () => [{}]
     } as Row<BrowserNode>,
     true
