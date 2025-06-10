@@ -3,7 +3,7 @@ import { useAppContext } from '../../context/AppContext';
 import type { ComponentConfig } from '../../types/config';
 import './ComponentBlock.css';
 import { useDraggable } from '@dnd-kit/core';
-import { getParentComponent, modifyData, useData } from '../../data/data';
+import { getParentComponent, useData } from '../../data/data';
 import { dragData } from './drag-data';
 import { Button, cn, evalDotState, Flex, Popover, PopoverAnchor, PopoverContent, Separator, useReadonly } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -12,11 +12,11 @@ import { FormPalette } from '../palette/Palette';
 import { DropZone, type DropZoneProps } from './DropZone';
 import { useValidations } from '../../context/useValidation';
 import { DataClassDialog } from '../browser/data-class/DataClassDialog';
-import { useClipboard, type TextDropItem } from 'react-aria';
 import { useComponentBlockActions } from './useComponentBlockActions';
 import { useTranslation } from 'react-i18next';
 import { useComponents } from '../../context/ComponentsContext';
 import { ExtractComponentDialog } from '../browser/extract/ExtractComponentDialog';
+import { useCopyPaste } from './useCopyPaste';
 
 type ComponentBlockProps = Omit<DropZoneProps, 'id'> & {
   component: ComponentData | Component;
@@ -39,8 +39,7 @@ export type DraggableProps = {
 
 const Draggable = ({ config, data }: DraggableProps) => {
   const { setUi } = useAppContext();
-  const { data: formData, setData } = useData();
-  const { componentByName } = useComponents();
+  const { data: formData } = useData();
   const readonly = useReadonly();
   const isDataTableEditableButtons =
     data.type === 'Button' && ((data.config as ButtonType).type === 'EDIT' || (data.config as ButtonType).type === 'DELETE');
@@ -56,17 +55,7 @@ const Draggable = ({ config, data }: DraggableProps) => {
   const { createElement, duplicateElement, openComponent, onKeyDown, deleteElement, createActionButton, createActionColumn, createColumn } =
     useComponentBlockActions({ config, data, setShowExtractDialog });
   const validations = useValidations(data.cid);
-  const { clipboardProps } = useClipboard({
-    getItems() {
-      return [{ 'text/plain': data.cid }];
-    },
-    async onPaste(items) {
-      if (readonly) return;
-      const item = items.filter(item => item.kind === 'text' && item.types.has('text/plain'))[0] as TextDropItem;
-      const cid = await item.getText('text/plain');
-      setData(old => modifyData(old, { type: 'paste', data: { id: cid, targetId: data.cid } }, componentByName).newData);
-    }
-  });
+  const clipboardProps = useCopyPaste(data);
   const parentComponent = getParentComponent(formData.components, data.cid);
   if (data.type === 'Dialog') {
     return null;

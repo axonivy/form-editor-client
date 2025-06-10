@@ -6,6 +6,7 @@ import {
   isColumn,
   isStructure,
   isTable,
+  type Component,
   type ComponentData,
   type ComponentType,
   type FormData,
@@ -117,6 +118,10 @@ export const isEditableTable = (data: Array<ComponentData>, element: ComponentDa
 const addComponent = (data: Array<ComponentData>, component: ComponentData, id: string) => {
   const find = findComponent(data, id);
   if (find) {
+    if (!id.startsWith(TABLE_DROPZONE_ID_PREFIX) && !isTable(find.parent) && component.type === 'DataTableColumn') {
+      console.warn('It is not possible to add a data table column to a non-table');
+      return;
+    }
     if (isTable(find.parent) && component.type !== 'DataTableColumn') {
       console.warn('It is not possible to add something else than columns to a data table');
       return;
@@ -161,7 +166,7 @@ type ModifyAction =
     }
   | { type: 'add'; data: { componentName: ComponentType; create?: CreateData; targetId?: string } }
   | { type: 'remove' | 'moveUp' | 'moveDown'; data: { id: string } }
-  | { type: 'paste'; data: { id: string; targetId?: string } };
+  | { type: 'paste'; data: { componentName: ComponentType; clipboard: Component['config'] | ComponentData['config']; targetId: string } };
 
 const dndModify = (
   data: Array<ComponentData>,
@@ -216,15 +221,18 @@ const allCids = (components: Array<ComponentData>) => {
   return ids;
 };
 
-const pasteComponent = (data: FormData, id: string, targetId?: string) => {
-  const newComponent = structuredClone(findComponentElement(data, id));
+const pasteComponent = (
+  data: FormData,
+  config: ComponentConfig,
+  clipboard: Component['config'] | ComponentData['config'],
+  targetId: string
+) => {
+  const newComponent = createComponentData(data.components, config);
+  newComponent.cid = 'copy';
+  newComponent.config = { ...newComponent.config, ...clipboard };
   if (newComponent) {
-    let copyTarget = targetId ?? id;
-    if (newComponent.element.type === 'DataTableColumn') {
-      copyTarget = id;
-    }
-    const added = addComponent(data.components, newComponent.element, copyTarget);
-    defineNewCid(data.components, newComponent.element);
+    const added = addComponent(data.components, newComponent, targetId);
+    defineNewCid(data.components, newComponent);
     return added;
   }
   return undefined;
@@ -254,7 +262,7 @@ export const modifyData = (data: FormData, action: ModifyAction, componentByName
       );
       break;
     case 'paste':
-      pasteComponent(newData, action.data.id, action.data.targetId);
+      pasteComponent(newData, componentByName(action.data.componentName), action.data.clipboard, action.data.targetId);
       break;
     case 'remove':
       removeComponent(newData.components, action.data.id);

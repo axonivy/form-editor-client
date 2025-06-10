@@ -7,11 +7,13 @@ import { IvyIcons } from '@axonivy/ui-icons';
 import { ComponentBlock } from './ComponentBlock';
 import { EmptyBlock } from './EmptyBlock';
 import { isDragData } from './drag-data';
+import { useCopyPaste } from './useCopyPaste';
 
 export const Canvas = () => {
   const { ui, data } = useAppContext();
+  const clipboardProps = useCopyPaste();
   return (
-    <div className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.deviceMode}>
+    <div tabIndex={0} className='canvas' data-help-paddings={ui.helpPaddings} data-responsive-mode={ui.deviceMode} {...clipboardProps}>
       {data.components.map((component, index) => (
         <ComponentBlock key={component.cid} component={component} preId={data.components.at(index - 1)?.cid} />
       ))}

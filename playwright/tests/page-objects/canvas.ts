@@ -31,7 +31,7 @@ export class Canvas {
   }
 
   get dropZone() {
-    return this.locator.locator('.drop-zone');
+    return this.locator.locator('.drop-zone').last();
   }
 
   async openInitCreateDialog() {
