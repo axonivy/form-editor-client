@@ -1,13 +1,11 @@
 import { PropertyItem } from './PropertyItem';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+  BasicInscriptionTabs,
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Flex
+  Flex,
+  type InscriptionTabProps
 } from '@axonivy/ui-components';
 import { useData } from '../../data/data';
 import type { ConfigData, FormType } from '@axonivy/form-editor-protocol';
@@ -19,12 +17,13 @@ import { groupFieldsBySubsection, visibleFields, visibleSections, type VisibleFi
 import type { FieldOption } from '../../types/config';
 import { SelectField } from './fields/SelectField';
 import { useState } from 'react';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export const Properties = () => {
-  const { t } = useTranslation();
+  const { categoryTranslations: CategoryTranslations } = useBase();
   const { componentByElement } = useComponents();
   const { element, data, parent } = useData();
-  const [value, setValue] = useState(t('category.properties'));
+  const [value, setValue] = useState('Properties');
   if (element === undefined) {
     return <FormPropertySection />;
   }
@@ -32,31 +31,19 @@ export const Properties = () => {
   const elementConfig = { ...propertyConfig.defaultProps, ...element.config };
   const fields = visibleFields(propertyConfig.fields, elementConfig);
   const sections = visibleSections(fields, parent);
-  return (
-    <div style={{ overflowY: 'auto' }}>
-      <Accordion type='single' collapsible value={value} onValueChange={setValue}>
-        {[...sections].map(([section, fields]) => (
-          <PropertySection key={section} section={section} fields={fields} />
-        ))}
-      </Accordion>
-    </div>
-  );
-};
 
-const PropertySection = ({ section, fields }: { section: string; fields: VisibleFields }) => {
-  const { categoryTranslations: CategoryTranslations } = useBase();
-  return (
-    <AccordionItem key={section} value={section}>
-      <AccordionTrigger>{CategoryTranslations[section]}</AccordionTrigger>
-      <AccordionContent>
-        <Flex direction='column' gap={2}>
-          {groupFieldsBySubsection(fields).map(({ title, fields }) => (
-            <PropertySubSection key={title} title={CategoryTranslations[title]} fields={fields} />
-          ))}
-        </Flex>
-      </AccordionContent>
-    </AccordionItem>
-  );
+  const tabs: InscriptionTabProps[] = [...sections].map(([, { section, fields }]) => {
+    return {
+      content: groupFieldsBySubsection(fields).map(({ title, fields }) => (
+        <PropertySubSection key={title} title={CategoryTranslations[title]} fields={fields} />
+      )),
+      icon: section.icon,
+      id: section.name,
+      name: CategoryTranslations[section.name],
+      state: { messages: [], size: 'normal' }
+    };
+  });
+  return <BasicInscriptionTabs value={sections.has(value) ? value : 'Properties'} onChange={setValue} tabs={tabs} />;
 };
 
 const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleFields }) => {
@@ -100,34 +87,32 @@ const FormPropertySection = () => {
   ] as const;
 
   const { data, setData } = useData();
-  const [value, setValue] = useState(t('category.properties'));
-  return (
-    <Accordion type='single' collapsible value={value} onValueChange={setValue}>
-      <AccordionItem value={t('category.properties')}>
-        <AccordionTrigger>{t('category.properties')}</AccordionTrigger>
-        <AccordionContent>
-          <Flex direction='column' gap={2}>
-            <Collapsible defaultOpen={true}>
-              <CollapsibleTrigger>{t('label.general')}</CollapsibleTrigger>
-              <CollapsibleContent>
-                <Flex direction='column' gap={2}>
-                  <SelectField
-                    label={t('label.formType')}
-                    options={formTypeOptions}
-                    value={data.config.type}
-                    onChange={value => {
-                      setData(data => {
-                        data.config.type = value as FormType;
-                        return data;
-                      });
-                    }}
-                  />
-                </Flex>
-              </CollapsibleContent>
-            </Collapsible>
-          </Flex>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-  );
+  const [value, setValue] = useState('Properties');
+  const tabs: InscriptionTabProps[] = [
+    {
+      id: 'Properties',
+      name: t('category.properties'),
+      content: (
+        <Collapsible defaultOpen={true}>
+          <CollapsibleTrigger>{t('label.general')}</CollapsibleTrigger>
+          <CollapsibleContent>
+            <SelectField
+              label={t('label.formType')}
+              options={formTypeOptions}
+              value={data.config.type}
+              onChange={value => {
+                setData(data => {
+                  data.config.type = value as FormType;
+                  return data;
+                });
+              }}
+            />
+          </CollapsibleContent>
+        </Collapsible>
+      ),
+      icon: IvyIcons.List,
+      state: { messages: [], size: 'normal' }
+    }
+  ];
+  return <BasicInscriptionTabs value={value} onChange={setValue} tabs={tabs} />;
 };

@@ -153,9 +153,9 @@ test('focus jumps', async ({ page }) => {
   await expect(firstElement.block).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(editor.inscription.view).toBeVisible();
-  await expect(editor.inscription.section('Properties').trigger).not.toBeFocused();
+  await expect(editor.inscription.section('Properties').tabButtonLocator).not.toBeFocused();
   await page.keyboard.press('3');
-  await expect(editor.inscription.section('Properties').trigger).toBeFocused();
+  await expect(editor.inscription.section('Properties').tabButtonLocator).toBeFocused();
 });
 
 const consoleLog = async (page: Page) => {

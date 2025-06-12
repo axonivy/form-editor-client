@@ -1,5 +1,4 @@
 import type { ComponentConfig, Config, ItemCategory } from '../types/config';
-import { groupBy } from '../utils/array';
 import { useButtonComponent } from './blocks/button/Button';
 import { useLayoutComponent } from './blocks/layout/Layout';
 import { useInputComponent } from './blocks/input/Input';
@@ -20,6 +19,7 @@ import { usePanelComponent } from './blocks/panel/Panel';
 import { getParentComponent } from '../data/data';
 import { useCompositeComponent } from './blocks/composite/Composite';
 import { useDialogComponent } from './blocks/dialog/Dialog';
+import { groupBy } from '@axonivy/ui-components';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ComponentConfigWithoutType = Omit<ComponentConfig<any, any>, 'type'>;
