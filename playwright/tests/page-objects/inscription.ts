@@ -40,12 +40,14 @@ class InscriptionTab {
   private readonly locator: Locator;
   readonly tabButtonLocator: Locator;
   protected readonly content: Locator;
+  readonly state: Locator;
 
   constructor(page: Page, parent: Locator, title: string) {
     this.page = page;
     this.locator = page.locator('.ui-inscription-tabs');
     this.tabButtonLocator = page.getByRole('tab', { name: title });
     this.content = this.locator.locator('.ui-inscription-tabs-content');
+    this.state = this.tabButtonLocator.locator('.ui-state-dot');
   }
 
   async toggle() {
@@ -74,6 +76,14 @@ class InscriptionTab {
   async expectOpen() {
     await expect(this.tabButtonLocator).toHaveAttribute('aria-selected', 'true');
   }
+
+  async expectState(state: 'warning' | 'error' | undefined) {
+    if (state) {
+      await expect(this.state).toHaveAttribute('data-state', state);
+    } else {
+      await expect(this.state).toBeHidden();
+    }
+  }
 }
 
 export class Collapsible {
@@ -82,6 +92,7 @@ export class Collapsible {
   protected readonly trigger: Locator;
   protected readonly control: Locator;
   protected readonly content: Locator;
+  protected readonly state: Locator;
 
   constructor(page: Page, parent: Locator, title: string) {
     this.page = page;
@@ -89,6 +100,7 @@ export class Collapsible {
     this.trigger = this.collapsible.locator('.ui-collapsible-trigger');
     this.control = this.collapsible.locator('.ui-button');
     this.content = this.collapsible.locator('.ui-collapsible-content');
+    this.state = this.collapsible.locator('.ui-state-dot');
   }
 
   select(options?: { label?: string; nth?: number }) {
@@ -121,6 +133,14 @@ export class Collapsible {
   }
   async toggleControl(nth?: number) {
     await this.control.nth(nth ? nth : 0).click();
+  }
+
+  async expectState(state: 'warning' | 'error' | undefined) {
+    if (state) {
+      await expect(this.state).toHaveAttribute('data-state', state);
+    } else {
+      await expect(this.state).toBeHidden();
+    }
   }
 }
 

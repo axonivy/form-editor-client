@@ -1,6 +1,6 @@
 import type { Severity, ValidationResult } from '@axonivy/form-editor-protocol';
 import { useAppContext } from './AppContext';
-import type { MessageData } from '@axonivy/ui-components';
+import type { MessageData, StateDotProps } from '@axonivy/ui-components';
 
 export function useValidations(path: string, options?: { exact?: boolean }): Array<MessageData> {
   const { validations } = useAppContext();
@@ -22,4 +22,18 @@ function toMessageData(validation?: ValidationResult): MessageData | undefined {
     return { message: validation.message, variant: validation.severity.toLocaleLowerCase() as Lowercase<Severity> };
   }
   return undefined;
+}
+
+export function validationsForPaths(paths: string[], validations: ValidationResult[]): Array<MessageData> {
+  return validations.filter(val => paths.some(p => val.path.startsWith(p))).map<MessageData>(toMessageData);
+}
+
+export function getTabState(validations: Array<MessageData>): StateDotProps {
+  if (validations.find(message => message?.variant === 'error')) {
+    return { state: 'error', messages: validations };
+  }
+  if (validations.find(message => message?.variant === 'warning')) {
+    return { state: 'warning', messages: validations };
+  }
+  return { state: undefined, messages: validations };
 }
