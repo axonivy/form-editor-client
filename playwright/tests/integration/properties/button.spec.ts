@@ -86,3 +86,30 @@ test('confirm dialog section', async ({ page }) => {
   await expect(confirmButton.locator).toBeHidden();
   await expect(cancelButton.locator).toBeHidden();
 });
+
+test('tab state', async ({ page }) => {
+  const editor = await FormEditor.openNewForm(page, { block: 'Button' });
+  await editor.canvas.blockByNth(0).inscribe();
+  await editor.inscription.expectHeader('Button');
+  const properties = editor.inscription.section('Properties');
+  const section = properties.collapsible('General');
+  const action = section.input({ label: 'Action' });
+
+  await action.expectValue('');
+  await properties.expectState('error');
+  await section.expectState('error');
+  await action.fill('#{logic.close}');
+
+  await page.reload();
+  await editor.canvas.blockByNth(0).inscribe();
+  await action.expectValue('close');
+  await section.expectState(undefined);
+  await properties.expectState(undefined);
+
+  await action.fill('#{logic.clse}');
+  await page.reload();
+  await editor.canvas.blockByNth(0).inscribe();
+  await action.expectValue('clse');
+  await section.expectState('warning');
+  await properties.expectState('warning');
+});

@@ -3,6 +3,7 @@ import {
   BasicInscriptionTabs,
   Collapsible,
   CollapsibleContent,
+  CollapsibleState,
   CollapsibleTrigger,
   Flex,
   type InscriptionTabProps
@@ -18,11 +19,14 @@ import type { FieldOption } from '../../types/config';
 import { SelectField } from './fields/SelectField';
 import { useState } from 'react';
 import { IvyIcons } from '@axonivy/ui-icons';
+import { getTabState, validationsForPaths } from '../../context/useValidation';
+import { useAppContext } from '../../context/AppContext';
 
 export const Properties = () => {
   const { categoryTranslations: CategoryTranslations } = useBase();
   const { componentByElement } = useComponents();
   const { element, data, parent } = useData();
+  const { validations } = useAppContext();
   const [value, setValue] = useState('Properties');
   if (element === undefined) {
     return <FormPropertySection />;
@@ -40,7 +44,12 @@ export const Properties = () => {
       icon: section.icon,
       id: section.name,
       name: CategoryTranslations[section.name],
-      state: { messages: [], size: 'normal' }
+      state: getTabState(
+        validationsForPaths(
+          fields.map(field => `${element?.cid}.${field.key}`),
+          validations
+        )
+      )
     };
   });
   return <BasicInscriptionTabs value={sections.has(value) ? value : 'Properties'} onChange={setValue} tabs={tabs} />;
@@ -48,6 +57,7 @@ export const Properties = () => {
 
 const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleFields }) => {
   const { element, setElement } = useData();
+  const { validations } = useAppContext();
   const { PropertySubSectionControl } = usePropertySubSectionControl();
   if (element === undefined) {
     return null;
@@ -55,7 +65,19 @@ const PropertySubSection = ({ title, fields }: { title: string; fields: VisibleF
 
   return (
     <Collapsible defaultOpen={true}>
-      <CollapsibleTrigger control={props => <PropertySubSectionControl title={title} {...props} />}>{title}</CollapsibleTrigger>
+      <CollapsibleTrigger
+        control={props => <PropertySubSectionControl title={title} {...props} />}
+        state={
+          <CollapsibleState
+            messages={validationsForPaths(
+              fields.map(field => `${element?.cid}.${field.key}`),
+              validations
+            )}
+          />
+        }
+      >
+        {title}
+      </CollapsibleTrigger>
       <CollapsibleContent>
         <Flex direction='column' gap={2}>
           {fields.map(({ key, field, value }) => (
