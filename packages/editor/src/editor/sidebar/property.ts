@@ -1,6 +1,7 @@
 import { isAlignSelfLayout, isFreeLayout, type ComponentData, type ConfigData } from '@axonivy/form-editor-protocol';
-import { type Field, type Fields, type HiddenField } from '../../types/config';
-import { groupBy } from '../../utils/array';
+import { sections, type Field, type Fields, type HiddenField, type Section } from '../../types/config';
+import { IvyIcons } from '@axonivy/ui-icons';
+import { groupBy } from '@axonivy/ui-components';
 
 export type VisibleFields = ReturnType<typeof visibleFields>;
 
@@ -15,19 +16,29 @@ const isNotHiddenField = (field: Field): field is Exclude<Field, HiddenField> =>
   return field.type !== 'hidden';
 };
 
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
-
 export const visibleSections = (fields: VisibleFields, parent?: ComponentData) => {
   const filteredFields = fields.filter(
     field =>
       !((field.key === 'lgSpan' || field.key === 'mdSpan') && !isFreeLayout(parent)) &&
       !(field.key === 'alignSelf' && !isAlignSelfLayout(parent))
   );
+  const grouped = groupBy(filteredFields, field => field.field.section ?? 'Properties');
 
-  const sections = groupBy(filteredFields, field => field.field.section ?? 'Properties');
-  return new Map(Object.entries(sections) as Entries<typeof sections>);
+  const sectionMap = new Map<string, { section: Section; fields: VisibleFields }>();
+
+  for (const [sectionName, fields] of Object.entries(grouped)) {
+    const section = sections.find(s => s.name === sectionName) ?? {
+      name: sectionName,
+      icon: IvyIcons.List
+    };
+
+    sectionMap.set(sectionName, {
+      section,
+      fields
+    });
+  }
+
+  return sectionMap;
 };
 
 export const groupFieldsBySubsection = (fields: VisibleFields) => {

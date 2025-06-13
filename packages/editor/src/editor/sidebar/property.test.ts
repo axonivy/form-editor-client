@@ -29,13 +29,15 @@ describe('visibleSections', () => {
   ];
 
   test('no parent', () => {
-    expect(visibleSections(visibleFields)).toEqual(new Map([['Properties', [visibleFields[0], visibleFields[1]]]]));
+    expect(visibleSections(visibleFields)).toEqual(
+      new Map([['Properties', { section: { name: 'Properties', icon: 'list' }, fields: [visibleFields[0], visibleFields[1]] }]])
+    );
   });
 
   test('parent is grid layout', () => {
     expect(
       visibleSections(visibleFields, { cid: 'grid-layout', type: 'Layout', config: { gridVariant: 'GRID1', type: 'GRID', components: [] } })
-    ).toEqual(new Map([['Properties', [visibleFields[0], visibleFields[1]]]]));
+    ).toEqual(new Map([['Properties', { section: { name: 'Properties', icon: 'list' }, fields: [visibleFields[0], visibleFields[1]] }]]));
   });
 
   test('parent is free layout', () => {
@@ -43,8 +45,8 @@ describe('visibleSections', () => {
       visibleSections(visibleFields, { cid: 'free-layout', type: 'Layout', config: { gridVariant: 'FREE', type: 'GRID', components: [] } })
     ).toEqual(
       new Map([
-        ['Properties', [visibleFields[0], visibleFields[1]]],
-        ['Layout', [visibleFields[2], visibleFields[3]]]
+        ['Properties', { section: { name: 'Properties', icon: 'list' }, fields: [visibleFields[0], visibleFields[1]] }],
+        ['Layout', { section: { name: 'Layout', icon: 'dialog-layout' }, fields: [visibleFields[2], visibleFields[3]] }]
       ])
     );
   });

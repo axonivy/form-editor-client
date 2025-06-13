@@ -32,6 +32,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
   const { isFocusWithin, focusWithinProps } = useOnFocus(value, onChange);
   const { handleTextSelection, showQuickFix, getSelectedText, selection } = useTextSelection(textAreaRef);
   const height = useMemo(() => splitNewLine(value).length * 14, [value]);
+  const MINHEIGHT = 60;
   const { t } = useTranslation();
 
   return (
@@ -45,6 +46,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
               autoResize={true}
               ref={textAreaRef}
               onSelect={() => handleTextSelection()}
+              style={{ minHeight: MINHEIGHT }}
             />
             <Flex
               direction='row'
@@ -71,7 +73,7 @@ export const TextareaField = ({ label, value, onChange, message }: TextareaField
             </Flex>
           </Flex>
         ) : (
-          <InputBadgeArea value={value ?? ''} badgeProps={badgeProps} style={{ height: height }} />
+          <InputBadgeArea value={value ?? ''} badgeProps={badgeProps} style={{ height: height, minHeight: MINHEIGHT }} />
         )}
       </BasicField>
       <DialogContent style={{ height: '80vh' }}>

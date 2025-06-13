@@ -30,19 +30,19 @@ test('children in free layout', async ({ page }) => {
   const { editor, layoutBlock, properties, columns } = await layout(page);
   await editor.createBlock('Input', layoutBlock.block);
   const inputBlock = editor.canvas.blockByNth(0);
-  const layoutAccordion = editor.inscription.section('Layout');
-  const alignSelf = layoutAccordion.collapsible('General').toggleGroup({ label: 'Vertical Alignement' });
-  const largeSpan = layoutAccordion.collapsible('General').select({ label: 'Large Span' });
-  const mediumSpan = layoutAccordion.collapsible('General').select({ label: 'Medium Span' });
+  const layoutTab = editor.inscription.section('Layout');
+  const alignSelf = layoutTab.collapsible('General').toggleGroup({ label: 'Vertical Alignement' });
+  const largeSpan = layoutTab.collapsible('General').select({ label: 'Large Span' });
+  const mediumSpan = layoutTab.collapsible('General').select({ label: 'Medium Span' });
 
   await inputBlock.select();
-  await expect(layoutAccordion.item).toBeVisible();
+  await expect(layoutTab.tabButtonLocator).toBeVisible();
 
   await layoutBlock.select();
   await columns.choose('Free');
   await inputBlock.select();
-  await expect(layoutAccordion.item).toBeVisible();
-  await layoutAccordion.toggle();
+  await expect(layoutTab.tabButtonLocator).toBeVisible();
+  await layoutTab.toggle();
   await alignSelf.expectSelected('Top');
   await largeSpan.expectValue('3');
   await mediumSpan.expectValue('6');
@@ -51,18 +51,20 @@ test('children in free layout', async ({ page }) => {
   await mediumSpan.choose('2');
 
   await reload(editor);
+  await properties.expectOpen();
   await inputBlock.select();
-  await layoutAccordion.toggle();
+  await layoutTab.toggle();
   await alignSelf.expectSelected('Center');
   await largeSpan.expectValue('1');
   await mediumSpan.expectValue('2');
 
   await layoutBlock.select();
+
   await properties.toggle();
   await columns.choose('4 Columns');
   await inputBlock.select();
-  await expect(layoutAccordion.item).toBeVisible();
-  await layoutAccordion.toggle();
+  await expect(layoutTab.tabButtonLocator).toBeVisible();
+  await layoutTab.toggle();
   await expect(alignSelf.locator).toBeVisible();
   await expect(largeSpan.locator).toBeHidden();
   await expect(mediumSpan.locator).toBeHidden();
@@ -70,7 +72,7 @@ test('children in free layout', async ({ page }) => {
   await layoutBlock.select();
   await properties.toggle();
   await columns.choose('1 Column');
-  await expect(layoutAccordion.item).toBeHidden();
+  await expect(layoutTab.tabButtonLocator).toBeHidden();
 });
 
 test('1 col grid', async ({ page }) => {

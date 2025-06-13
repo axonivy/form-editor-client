@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import type { FormBrowser } from '../editor/browser/Browser';
 import type { CollapsibleControlProps, IvyIconProps } from '@axonivy/ui-components';
 import type { UpdateConsumer } from './types';
+import { IvyIcons } from '@axonivy/ui-icons';
 
 export type UiComponentProps<Props extends DefaultComponentProps = DefaultComponentProps> = Props & { id: string };
 
@@ -40,11 +41,24 @@ export type Subsection =
   | 'Layout'
   | 'Icon';
 
+export type Section = {
+  name: string;
+  icon: IvyIcons;
+};
+
+export const sections = [
+  { name: 'Properties', icon: IvyIcons.List },
+  { name: 'Layout', icon: IvyIcons.DialogLayout },
+  { name: 'Confirm', icon: IvyIcons.Comment }
+] as const satisfies Array<Section>;
+
+type SectionId = (typeof sections)[number]['name'];
+
 export type BaseField<ComponentProps extends DefaultComponentProps = DefaultComponentProps> = {
   subsection: Subsection;
   label?: string;
   hide?: (component: ComponentProps) => boolean;
-  section?: 'Layout' | 'Confirm Dialog' | (string & {});
+  section?: SectionId;
 };
 
 export type TextFieldOptions = {

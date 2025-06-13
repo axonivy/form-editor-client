@@ -21,7 +21,7 @@ export class Inscription {
   }
 
   section(title: string) {
-    return new Accordion(this.page, this.view, title);
+    return new InscriptionTab(this.page, this.view, title);
   }
 
   async toggleOutline() {
@@ -35,21 +35,21 @@ export class Inscription {
   }
 }
 
-class Accordion {
+class InscriptionTab {
   protected readonly page: Page;
-  readonly item: Locator;
-  readonly trigger: Locator;
+  private readonly locator: Locator;
+  readonly tabButtonLocator: Locator;
   protected readonly content: Locator;
 
   constructor(page: Page, parent: Locator, title: string) {
     this.page = page;
-    this.item = parent.locator(`.ui-accordion-item:has(.ui-accordion-trigger:has-text("${title}"))`);
-    this.trigger = this.item.locator('.ui-accordion-trigger');
-    this.content = this.item.locator('.ui-accordion-content');
+    this.locator = page.locator('.ui-inscription-tabs');
+    this.tabButtonLocator = page.getByRole('tab', { name: title });
+    this.content = this.locator.locator('.ui-inscription-tabs-content');
   }
 
   async toggle() {
-    await this.trigger.click();
+    await this.tabButtonLocator.click();
   }
 
   collapsible(title: string) {
@@ -69,6 +69,10 @@ class Accordion {
   visibleBehaviour() {
     const behaviourSection = this.collapsible('Behaviour');
     return new VisibleInput(behaviourSection);
+  }
+
+  async expectOpen() {
+    await expect(this.tabButtonLocator).toHaveAttribute('aria-selected', 'true');
   }
 }
 
