@@ -97,7 +97,7 @@ test.describe('keyboard', () => {
     await canvas.expectFormOrder(['Lastname', 'Firstname', 'Address']);
   });
 
-  test('paste', async ({ page, browserName }) => {
+  test('copy paste', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'Was not able to make it work on webkit');
     const { canvas } = await FormEditor.openMock(page);
     await canvas.expectFormOrder(['Firstname', 'Lastname']);
@@ -106,6 +106,20 @@ test.describe('keyboard', () => {
     await canvas.blockByText('Address').select();
     await page.keyboard.press('ControlOrMeta+v');
     await canvas.expectFormOrder(['Firstname', 'Lastname', 'Firstname']);
+  });
+
+  test('cut paste', async ({ page, browserName }) => {
+    test.skip(browserName === 'webkit', 'Was not able to make it work on webkit');
+    const editor = await FormEditor.openNewForm(page);
+    const canvas = editor.canvas;
+    await editor.createBlock('Input');
+    await canvas.expectFormOrder(['Input']);
+    await canvas.blockByNth(0).select();
+    await page.keyboard.press('ControlOrMeta+x');
+    await canvas.expectEmpty();
+    await canvas.locator.click();
+    await page.keyboard.press('ControlOrMeta+v');
+    await canvas.expectFormOrder(['Input']);
   });
 });
 

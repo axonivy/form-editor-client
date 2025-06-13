@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   EMPTY_FORM,
   type FormData,
@@ -242,22 +243,36 @@ describe('modifyData', () => {
 
   describe('paste', () => {
     test('duplicate', () => {
-      const data = modifyData(filledData(), { type: 'paste', data: { id: '1' } }, componentByName).newData;
+      const copy = findComponentElement(filledData(), '1')!.element;
+      const data = modifyData(
+        filledData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '1' } },
+        componentByName
+      ).newData;
       expect(data).not.toEqual(filledData());
       expect(data.components).toHaveLength(6);
       expectOrder(data, ['input54', '1', '2', '3', '4', '5']);
     });
 
     test('paste', () => {
-      const data = modifyData(filledData(), { type: 'paste', data: { id: '1', targetId: '4' } }, componentByName).newData;
+      const copy = findComponentElement(filledData(), '1')!.element;
+      const data = modifyData(
+        filledData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '4' } },
+        componentByName
+      ).newData;
       expect(data).not.toEqual(filledData());
       expect(data.components).toHaveLength(6);
       expectOrder(data, ['1', '2', '3', 'input54', '4', '5']);
     });
 
     test('paste datatable column', () => {
-      // paste a datatable column acts always as duplicate
-      const data = modifyData(tableData(), { type: 'paste', data: { id: '11', targetId: '1' } }, componentByName).newData;
+      const copy = findComponentElement(tableData(), '11')!.element;
+      const data = modifyData(
+        tableData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '11' } },
+        componentByName
+      ).newData;
       expect(data).not.toEqual(tableData());
       expect(data.components).toHaveLength(1);
       const component = data.components.find(c => c.cid === '1') as TableConfig;
@@ -266,8 +281,15 @@ describe('modifyData', () => {
     });
 
     test('paste datatable action column', () => {
-      // paste a datatable column acts always as duplicate
-      const data = modifyData(tableData(), { type: 'paste', data: { id: '13', targetId: '1' } }, componentByName).newData;
+      const copy = findComponentElement(tableData(), '13')!.element;
+      const data = modifyData(
+        tableData(),
+        {
+          type: 'paste',
+          data: { componentName: copy.type, clipboard: copy.config, targetId: '13' }
+        },
+        componentByName
+      ).newData;
       expect(data).not.toEqual(tableData());
       expect(data.components).toHaveLength(1);
       const component = data.components.find(c => c.cid === '1') as TableConfig;
@@ -276,18 +298,35 @@ describe('modifyData', () => {
       expect(component.config.components[2].config.components[0].cid).toEqual('button16');
     });
 
-    test('paste other things into datatable', () => {
-      // paste other things than columns into a datatable is not possible
+    test('paste other things into datatable is not possible', () => {
       const originalData = tableData();
-      originalData.components.push({ type: 'Button', cid: '2', config: {} });
-      const data = modifyData(originalData, { type: 'paste', data: { id: '2', targetId: '11' } }, componentByName).newData;
+      const data = modifyData(
+        originalData,
+        { type: 'paste', data: { componentName: 'Button', clipboard: {}, targetId: '11' } },
+        componentByName
+      ).newData;
       expect(data).toEqual(originalData);
-      expectOrder(data, ['1', '2']);
+      expectOrder(data, ['1']);
       expectOrderDeep(data, '1', ['11', '12', '13']);
     });
 
+    test('paste datatable column outside of datatable is not possible', () => {
+      const copy = findComponentElement(tableData(), '11')!.element;
+      const data = modifyData(
+        tableData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '1' } },
+        componentByName
+      ).newData;
+      expect(data).toEqual(tableData());
+    });
+
     test('duplicate deep', () => {
-      const data = modifyData(filledData(), { type: 'paste', data: { id: '31' } }, componentByName).newData;
+      const copy = findComponentElement(filledData(), '31')!.element;
+      const data = modifyData(
+        filledData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '31' } },
+        componentByName
+      ).newData;
       expect(data.components).toHaveLength(5);
       const component = data.components.find(c => c.cid === '3') as LayoutConfig;
       expect(component.config.components).toHaveLength(4);
@@ -296,7 +335,12 @@ describe('modifyData', () => {
     });
 
     test('duplicate layout', () => {
-      const data = modifyData(filledData(), { type: 'paste', data: { id: '3' } }, componentByName).newData;
+      const copy = findComponentElement(filledData(), '3')!.element;
+      const data = modifyData(
+        filledData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '3' } },
+        componentByName
+      ).newData;
       expect(data.components).toHaveLength(6);
       const component = data.components.find(c => c.cid === 'layout54') as LayoutConfig;
       expect(component.config.components).toHaveLength(3);
@@ -307,7 +351,12 @@ describe('modifyData', () => {
     });
 
     test('duplicate table', () => {
-      const data = modifyData(tableData(), { type: 'paste', data: { id: '1' } }, componentByName).newData;
+      const copy = findComponentElement(tableData(), '1')!.element;
+      const data = modifyData(
+        tableData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '1' } },
+        componentByName
+      ).newData;
       expect(data.components).toHaveLength(2);
       const component = data.components.find(c => c.cid === 'datatable15') as TableConfig;
       expect(component.config.components).toHaveLength(3);
@@ -318,7 +367,12 @@ describe('modifyData', () => {
     });
 
     test('duplicate table column', () => {
-      const data = modifyData(tableData(), { type: 'paste', data: { id: '11' } }, componentByName).newData;
+      const copy = findComponentElement(tableData(), '11')!.element;
+      const data = modifyData(
+        tableData(),
+        { type: 'paste', data: { componentName: copy.type, clipboard: copy.config, targetId: '11' } },
+        componentByName
+      ).newData;
       expectOrder(data, ['1']);
       expectOrderDeep(data, '1', ['datatablecolumn15', '11', '12', '13']);
     });

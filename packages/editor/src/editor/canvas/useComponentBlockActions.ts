@@ -27,7 +27,14 @@ export const useComponentBlockActions = ({
 
   const openComponent = useAction('openComponent');
   const duplicateElement = () => {
-    setData(oldData => modifyData(oldData, { type: 'paste', data: { id: data.cid } }, componentByName).newData);
+    setData(
+      oldData =>
+        modifyData(
+          oldData,
+          { type: 'paste', data: { componentName: data.type, clipboard: data.config, targetId: data.cid } },
+          componentByName
+        ).newData
+    );
   };
 
   const createColumn = () => {
